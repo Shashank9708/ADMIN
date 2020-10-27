@@ -13,7 +13,7 @@ import { utilityHelper} from '../_helpers';
  */
 export const userActions = {
     getUserList,
-    showUserList,
+    getDoctorList,
     resetUserState
 };
 
@@ -31,15 +31,15 @@ function getUserList(page, pageSize, sorted, filtered) {
                 response => {
                     var data = response.data;
                     var errorMsg;
-                    if(data.response_code == configConstants.SUCCESS_CODE){
-                        dispatch(success(data.result));
-                    }else if(data.response_code == configConstants.ERROR_CODE){
+                    if(data.status == configConstants.SUCCESS_CODE){
+                        dispatch(success(data.data));
+                    }else if(data.status == configConstants.ERROR_CODE){
                         errorMsg = utilityHelper.getFirstErrorMessage(data.error);
                         dispatch(failure(errorMsg));
-                    }else if(data.response_code == configConstants.EXCEPTION_CODE){
+                    }else if(data.status == configConstants.EXCEPTION_CODE){
                         errorMsg = data.message;
                         dispatch(failure(errorMsg));
-                    }else if(data.response_code == configConstants.UNAUTHENTICATE_CODE){
+                    }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
                         errorMsg = data.message;
                         dispatch(unauthorize(errorMsg));
                     }else{
@@ -64,23 +64,23 @@ function getUserList(page, pageSize, sorted, filtered) {
 * @param                 JSON user, This contains full user input data
 * @return                JSON Object
 */
-function showUserList(type) {
+function getDoctorList(type) {
     return dispatch => {
         dispatch(request());
-        userService.showUserList(type)
+        userService.getDoctorList(type)
             .then(
                 response => {
                     var data = response.data;
                     var errorMsg;
-                    if(data.response_code == configConstants.SUCCESS_CODE){
-                        dispatch(success(data.result));
-                    }else if(data.response_code == configConstants.ERROR_CODE){
+                    if(data.status == configConstants.SUCCESS_CODE){
+                        dispatch(success(data.data));
+                    }else if(data.status == configConstants.ERROR_CODE){
                         errorMsg = utilityHelper.getFirstErrorMessage(data.error);
                         dispatch(failure(errorMsg));
-                    }else if(data.response_code == configConstants.EXCEPTION_CODE){
+                    }else if(data.status == configConstants.EXCEPTION_CODE){
                         errorMsg = data.message;
                         dispatch(failure(errorMsg));
-                    }else if(data.response_code == configConstants.UNAUTHENTICATE_CODE){
+                    }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
                         errorMsg = data.message;
                         dispatch(unauthorize(errorMsg));
                     }else{
@@ -93,9 +93,9 @@ function showUserList(type) {
     };
 
 // Actions defination that will perform according dispatch call and send data to reducer
-    function request() { return { type: userConstants.CHATUSER_FETCH_REQUEST } }
-    function success(result) { return { type: userConstants.CHATUSER_FETCH_SUCCESS, result } }
-    function failure(error) { return { type: userConstants.CHATUSER_FETCH_FAILURE, error } }
+    function request() { return { type: userConstants.DOCTOR_FETCH_REQUEST } }
+    function success(result) { return { type: userConstants.DOCTOR_FETCH_SUCCESS, result } }
+    function failure(error) { return { type: userConstants.DOCTOR_FETCH_FAILURE, error } }
     function unauthorize(error) { return { type: configConstants.UNAUTHENTICATE, error } }
 }
 

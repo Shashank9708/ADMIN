@@ -1,6 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { BrowserRouter as Router, Route, hashHistory } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { utilityHelper } from '../../_helpers';
 // import firebase from "firebase";
 
@@ -48,9 +47,9 @@ export class SideMenu extends React.Component {
             <div className="=row">      
                 <div className="sidebar">
                 <ul className="box">
-                    <li><a className="button" href="/adminpaneldashboard">Dash Board</a></li>
-                    <li><a className="button" href="/users">Users</a></li>
-                    <li><a className="button" href="/doctors">Doctor</a></li>
+                    <li><Link className="button" to="/dashboard">Dash Board</Link></li>
+                    <li><Link className="button" to="/users">Users</Link></li>
+                    <li><Link className="button" to="/doctors">Doctor</Link></li>
                     <li><a className="button" href="/appointments">Appointments</a></li>
                     <li><a className="button" href="/categories">Categories</a></li>
                     <li><a className="button" href="/medicalstores">Medical Stores</a></li>

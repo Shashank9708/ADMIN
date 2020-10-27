@@ -12,7 +12,7 @@ import { utilityHelper } from '../_helpers';
  */
 export const userService = {
     getUserList,
-    showUserList,
+    getDoctorList,
     sendMail
 };
 
@@ -28,7 +28,7 @@ function getUserList(page, pageSize, sorted, filtered) {
     
     return axios({
         method  : 'get',
-        url     : configConstants.API_BASE_PATH + '/userlist',
+        url     : configConstants.API_BASE_PATH + '/admin/userlist',
     })
     .then(response => {
         return response;
@@ -44,18 +44,13 @@ function getUserList(page, pageSize, sorted, filtered) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-function showUserList(type) {
+function getDoctorList(type) {
     var loginAccessToken = utilityHelper.getLoginAccessToken();
     var getUserInfo = utilityHelper.getUserInfo();
     
     return axios({
-        method  : 'post',
-        url     : configConstants.API_BASE_PATH + 'common/showuserlist',
-        data : {"operator_id":getUserInfo._id,"user_type":getUserInfo.user_type,"type":type},
-        headers : {
-            'Authorization' : 'Bearer '+loginAccessToken,
-            'unencrypted' : '1'
-        }
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH + '/admin/doctorlist',
     })
     .then(response => {
         return response;

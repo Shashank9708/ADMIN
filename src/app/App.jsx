@@ -55,6 +55,11 @@ const UserContainer = Loadable({
     loading: Loading
 });
 
+const DoctorContainer = Loadable({
+    loader: () => import('../components/Doctor').then(object => object.DoctorContainer),
+    loading: Loading
+});
+
 
 const SettingContainer = Loadable({
     loader: () => import('../components/Setting').then(object => object.SettingContainer),
@@ -93,9 +98,9 @@ class App extends React.Component {
                         <Route exact path='/forgotpassword' component={ForgotPasswordContainer} />
                         <Route exact path='/privacy-policy' component={PrivacyPolicy} />
 
-                        <Route exact path='/dashboard' component={Dashboard} authenticated={this.props.authenticated} allowuser={[0]}/>
+                        <AdminRoute exact path='/dashboard' component={Dashboard} authenticated={this.props.authenticated} allowuser={[0]}/>
                         <AdminRoute exact path='/users' component={UserContainer} authenticated={this.props.authenticated} allowuser={[0]} />
-
+                        <AdminRoute exact path='/doctors' component={DoctorContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         {/*<AdminRoute exact path='/dashboard' component={Dashboard} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/operator' component={StaffContainer} authenticated={this.props.authenticated} allowuser={['admin']} />
                         

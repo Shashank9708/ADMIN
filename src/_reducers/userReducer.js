@@ -10,7 +10,7 @@ import { userConstants, configConstants } from '../_constants';
  */
 const initialState = {
     userList     : [],
-    chatuserList : [],
+    doctorList : [],
     blankChatList : false,
     sendingRequest  : false,
     afterUpdate     : false,
@@ -45,21 +45,21 @@ export function userReducer(state = initialState, action) {
           };
 
         // Fetch Reducer's
-        case userConstants.CHATUSER_FETCH_REQUEST:
+        case userConstants.DOCTOR_FETCH_REQUEST:
           return {
             ...state,
             errorMsg         : false,
             is_loaded:false,
           };
-        case userConstants.CHATUSER_FETCH_SUCCESS:
+        case userConstants.DOCTOR_FETCH_SUCCESS:
           return { 
             ...state,
-            chatuserList        : action.result,
+            doctorList        : action.result,
             blankChatList        : true,
             errorMsg           : false ,
             is_loaded         :false
           };
-        case userConstants.CHATUSER_FETCH_FAILURE:
+        case userConstants.DOCTOR_FETCH_FAILURE:
           return { 
             ...state,
             errorMsg        : action.error,

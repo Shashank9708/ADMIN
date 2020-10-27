@@ -3,6 +3,7 @@ import { userLoginService } from '../_services';
 import { utilityHelper} from '../_helpers';
 import { sessionService } from '../_packages/redux-react-session';
 import jwtdecode from 'jwt-decode'
+import axios from "axios";
 
 /**
  * userLoginActions
@@ -35,7 +36,9 @@ function loginSubmit(user) {
                     if(data.status == configConstants.SUCCESS_CODE){
                         // Set access token and user in cookies 
                         sessionService.saveSession(data.token);
+                        axios.defaults.headers.common["Authorization"] = data.token;
                         let user = jwtdecode(data.token);
+                        
                         sessionService.saveUser(user);
                         dispatch(success(user));                        
                     }else if(data.status == configConstants.ERROR_CODE){

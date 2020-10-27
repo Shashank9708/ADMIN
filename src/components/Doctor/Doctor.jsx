@@ -13,7 +13,7 @@ import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
 import Countdown from 'react-countdown-now';
 
-class User extends React.Component {
+class Doctor extends React.Component {
     /**
      * @DateOfCreation        26 July 2018
      * @ShortDescription      Contructor is responsible to function declaration and define intial state
@@ -28,7 +28,7 @@ class User extends React.Component {
         this.importOnSave = this.importOnSave.bind(this);
         this.exportCSV = this.exportCSV.bind(this);
 
-        this.getUserList        = this.getUserList.bind(this);
+        this.getDoctorList        = this.getDoctorList.bind(this);
         this.userSearch         = this.userSearch.bind(this);
         this.state               = this.initialState;
         
@@ -243,7 +243,7 @@ class User extends React.Component {
      * @return                refresh
      */
     importOnSave() {
-        this.getUserList(0, 10, this.state.sorted, this.state.filtered);
+        this.getDoctorList(0, 10, this.state.sorted, this.state.filtered);
     }
     /**
      * @DateOfCreation        26 July 2018
@@ -271,9 +271,9 @@ class User extends React.Component {
     * @ShortDescription      This function is responsible to get the list of user from API
     * @return                Nothing
     */
-    getUserList(page, pageSize, sorted, filtered){
+    getDoctorList(page, pageSize, sorted, filtered){
         const { dispatch }   = this.props;
-        dispatch(userActions.getUserList(page, pageSize, sorted, filtered));
+        dispatch(userActions.getDoctorList(page, pageSize, sorted, filtered));
     }
 
     /**
@@ -421,7 +421,7 @@ class User extends React.Component {
                                   
                                   <ReactTable
                                       noDataText="No found !!"
-                                      data={this.props.userList}
+                                      data={this.props.doctorList}
                                       filterable
                                       defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
                                       filtered={this.state.filtered}
@@ -455,13 +455,13 @@ class User extends React.Component {
                                               }
                                           },
                                           {
-                                            Header: 'Created at',
-                                            accessor  : "created_at",
-                                            className : 'grid-header',
-                                            filterable  : false,
-                                            filterMethod: (filter, row) => {
-                                              return row[filter.id].includes(filter.value);
-                                            }
+                                              Header: 'Created at',
+                                              accessor  : "created_at",
+                                              className : 'grid-header',
+                                              filterable  : false,
+                                              filterMethod: (filter, row) => {
+                                                return row[filter.id].includes(filter.value);
+                                              }
                                           },
                                           {
                                               Header: 'Actions',
@@ -491,7 +491,7 @@ class User extends React.Component {
                                           }
                                       ]}
                                       defaultPageSize={10}
-                                      minRows= {this.props.userList}
+                                      minRows= {this.props.doctorList}
                                       className="table table-bordered responsive"
                                       loading={this.state.loading}
                                       filterable
@@ -503,7 +503,7 @@ class User extends React.Component {
                                       pageSizeOptions={[10, 20, 50]}
                                       automatic // For server side pagination
                                       onFetchData={(state, instance) => {
-                                          this.getUserList(state.page, state.pageSize, state.sorted, state.filtered);
+                                          this.getDoctorList(state.page, state.pageSize, state.sorted, state.filtered);
                                       }}
                                   />
                               </div>
@@ -524,13 +524,13 @@ class User extends React.Component {
  */
 
 function mapStateToProps(state) {
-   const { userList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid,submitted } = state.userReducer;
+   const { doctorList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid,submitted } = state.userReducer;
    const { statusClose, editClose, renewClose } = state.commonReducer;
     return {
         statusClose,
         editClose,
         renewClose,
-        userList,
+        doctorList,
         isUserNotValid,
         loader,
         successMessage,
@@ -540,5 +540,5 @@ function mapStateToProps(state) {
         submitted
     };
 }
-const connectedUser = connect(mapStateToProps)(User);
-export { connectedUser as User };
+const connectedDoctor = connect(mapStateToProps)(Doctor);
+export { connectedDoctor as Doctor };
