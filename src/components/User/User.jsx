@@ -9,8 +9,8 @@ import { Renew } from './Renew';
 import { ImportContainer } from '../Import/ImportContainer';
 import { userActions, headerActions, commonActions } from '../../_actions';
 import { configConstants } from '../../_constants';
-import ReactTable from 'react-table';
-// import 'react-table/react-table.css';
+import ReactTable from 'react-table-v6';
+import 'react-table-v6/react-table.css'
 import Countdown from 'react-countdown-now';
 
 class User extends React.Component {
@@ -20,8 +20,8 @@ class User extends React.Component {
      * @param                 props
      * @return                Nothing
      */
-    constructor(props, context) {
-        super(props, context);
+    constructor(props) {
+        super(props);
 
         this.importShowHandle = this.importShowHandle.bind(this);
         this.importHideHandle = this.importHideHandle.bind(this);
@@ -384,21 +384,9 @@ class User extends React.Component {
         var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
             <div className="page-container">
-            <SideMenu/>
             <HeaderContainer />
-            <ImportContainer
-                onClick = { this.state.importShow }
-                onClose = { this.importHideHandle }
-                onSave = { this.importOnSave }
-                importData    = 'user_validation'
-                importSave    = 'user_save'
-                skip = {true}
-                title = 'Import User'
-                validationAction = 'import_validation'
-                saveAction = 'common/usercsv'
-                allowedFileType = 'csv'
-                maxFileSize = {fileSize}
-            />
+            <SideMenu/>
+            
             <Status
                 onClick = { this.state.statusShow }
                 onClose = { this.statusHideHandle }
@@ -425,12 +413,8 @@ class User extends React.Component {
                         <div className="col-md-12">
                           <div className="inner-content">
                                 <div className="row page-header">
-                                    <div className="col-md-6">
+                                    <div className="col-md-12">
                                         <h1 className="page-title">User</h1>
-                                    </div>
-                                    <div className="col-md-6 text-right">
-                                        <button className="blue btn text-btn import-btn" onClick={this.importShowHandle}>Import</button>
-                                        
                                     </div>
                                 </div>
                                 <div className="table-wrap">

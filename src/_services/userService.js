@@ -27,13 +27,8 @@ function getUserList(page, pageSize, sorted, filtered) {
     var getUserInfo = utilityHelper.getUserInfo();
     
     return axios({
-        method  : 'post',
-        url     : configConstants.API_BASE_PATH + 'common/userlist',
-        data : {"operator_id":getUserInfo._id,"user_type":getUserInfo.user_type},
-        headers : {
-            'Authorization' : 'Bearer '+loginAccessToken,
-            'unencrypted' : '1'
-        }
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH + '/userlist',
     })
     .then(response => {
         return response;

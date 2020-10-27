@@ -17,7 +17,7 @@ import Loadable from 'react-loadable';
 import { createBrowserHistory } from "history";
 
 // import 'react-select/dist/react-select.css';
-import "../assets/css/bootstrap.css";
+import 'bootstrap/dist/css/bootstrap.css';
 import "../assets/css/style.css";
 
 
@@ -50,11 +50,6 @@ const Dashboard = Loadable({
 
 
 //Master
-const StaffContainer = Loadable({
-    loader: () => import('../components/Staff').then(object => object.StaffContainer),
-    loading: Loading
-});
-
 const UserContainer = Loadable({
     loader: () => import('../components/User').then(object => object.UserContainer),
     loading: Loading
@@ -98,11 +93,12 @@ class App extends React.Component {
                         <Route exact path='/forgotpassword' component={ForgotPasswordContainer} />
                         <Route exact path='/privacy-policy' component={PrivacyPolicy} />
 
-                        <Route exact path='/dashboard' component={Dashboard} />
+                        <Route exact path='/dashboard' component={Dashboard} authenticated={this.props.authenticated} allowuser={[0]}/>
+                        <AdminRoute exact path='/users' component={UserContainer} authenticated={this.props.authenticated} allowuser={[0]} />
 
                         {/*<AdminRoute exact path='/dashboard' component={Dashboard} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/operator' component={StaffContainer} authenticated={this.props.authenticated} allowuser={['admin']} />
-                        <AdminRoute exact path='/user' component={UserContainer} authenticated={this.props.authenticated} allowuser={['admin', 'operator']} />
+                        
                         <AdminRoute exact path='/driver' component={DriverContainer} authenticated={this.props.authenticated} allowuser={['admin', 'operator']} />
                         <AdminRoute exact path='/live-map' component={LiveMapContainer} authenticated={this.props.authenticated} allowuser={['admin', 'operator']} />
                         <AdminRoute exact path='/energy-map' component={EnergyMapContainer} authenticated={this.props.authenticated} allowuser={['admin', 'operator']} />
