@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="96.883" height="35" viewBox="0 0 96.883 35">
+  <defs>
+    <filter id="botton_2" x="2" y="3" width="94.883" height="32" filterUnits="userSpaceOnUse">
+      <feOffset dx="1" dy="1.5" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Top_1" x="0" y="0" width="94.883" height="32" filterUnits="userSpaceOnUse">
+      <feOffset dx="-1" dy="-1.5" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1" result="blur-2"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="step-2-with-out-label_" data-name="step-2-with-out-label " transform="translate(-3.422 -13.927)">
+    <g id="Group_631" data-name="Group 631" transform="translate(-21201 -3448)">
+      <g transform="matrix(1, 0, 0, 1, 21204.42, 3461.93)" filter="url(#botton_2)">
+        <path id="botton_2-2" data-name="botton 2" d="M21208.922,3491.542v-24.615h75.383l12.5,12.5-12.5,12.5h-75.383" transform="translate(-21204.42 -3461.93)" fill="#f7f7f7" stroke="#f7f7f7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g transform="matrix(1, 0, 0, 1, 21204.42, 3461.93)" filter="url(#Top_1)">
+        <path id="Top_1-2" data-name="Top 1" d="M21208.922,3491.542v-24.615h75.383l12.5,12.5-12.5,12.5h-75.383" transform="translate(-21204.42 -3461.93)" fill="#f7f7f7" stroke="#f7f7f7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>
