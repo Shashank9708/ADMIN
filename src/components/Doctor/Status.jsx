@@ -4,8 +4,8 @@ import Select from 'react-select';
 
 
 export class Status extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.handle_close = this.handle_close.bind(this);
   }
 
@@ -27,28 +27,28 @@ render() {
             <div className="row" onChange={this.props.onChange.bind(this)}>
               <div className="col-md-4">
                 <div className="form-group">
-                  <input type="radio" name="status" value="active" 
-                       checked={'active' === this.props.payroll.status} 
+                  <input type="radio" name="status" value="1" 
+                       checked={1 === this.props.payroll.status} 
                   />
-                  <label className="control-label">Active</label>
+                  <label className="control-label">Approved</label>
                 </div>
               </div>
               <div className="col-md-4">
                 <div className="form-group">
-                  <input type="radio" name="status" value="inactive"
-                       checked={'inactive' === this.props.payroll.status}    
+                  <input type="radio" name="status" value="0"
+                       checked={this.props.payroll.status === null || 0 === this.props.payroll.status}    
                   />
-                  <label className="control-label">Inactive</label>
+                  <label className="control-label">Unapproved</label>
                 </div>
               </div>
-              <div className="col-md-4">
+              {/*<div className="col-md-4">
                 <div className="form-group">
-                  <input type="radio" name="status" value="suspended"
-                       checked={'suspended' === this.props.payroll.status} 
+                  <input type="radio" name="status" value="2"
+                       checked={'2' === this.props.payroll.status} 
                   />
                   <label className="control-label">Suspended</label>
                 </div>
-              </div>
+              </div>*/}
             </div>
           </div>
         </div>

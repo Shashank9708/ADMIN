@@ -49,6 +49,7 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/react-fontawesome": "^0.1.11",
+    "D": "^1.0.0",
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
     "d": "^1.0.1",
@@ -102,6 +103,7 @@
     "reactstrap": "^8.6.0",
     "serviceworker-webpack-plugin": "^1.0.1",
     "socket.io-client": "^2.3.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "validator": "^13.1.17"
   }
 }

@@ -61,7 +61,7 @@ class Doctor extends React.Component {
             filterAll: '',
             payload: {
               data:{
-                user_id: '',
+                doc_id: '',
                 status: ''
               }
             },
@@ -127,7 +127,7 @@ class Doctor extends React.Component {
             payload : {
                 data : {
                     ...data,
-                    user_id: id,
+                    doc_id: id,
                     status: name
                 }
             }
@@ -318,7 +318,7 @@ class Doctor extends React.Component {
                   }
             }
         });
-        var json = {'user_id':this.state.payload.data.user_id,'status':event.target.value}
+        var json = {'doc_id':this.state.payload.data.doc_id,'is_approved':event.target.value}
         const { dispatch } = this.props;
         dispatch(commonActions.statusCheck(json));
     }
@@ -462,6 +462,26 @@ class Doctor extends React.Component {
                                               filterMethod: (filter, row) => {
                                                 return row[filter.id].includes(filter.value);
                                               }
+                                          },
+                                          {
+                                            Header: 'Status',
+                                            accessor  : "is_approved",
+                                            filterable  : false,
+                                            
+                                            className : 'grid-header',
+                                            Cell: row => 
+                                                        <div>
+                                                          <a href="javascript:void(0)" 
+                                                            className="btn"
+                                                            onClick={ this.statusShowHandle.bind(null,row.original.doc_id,row.original.is_approved) } 
+                                                            disabled={ this.props.submitted ? true : false }>
+                                                            {
+                                                              row.value === 1 ?
+                                                              <span className="btn btn-success">Approved</span> :
+                                                              <span className="grey btn">Unapproved</span>
+                                                            }
+                                                          </a>
+                                                        </div>
                                           },
                                           {
                                               Header: 'Actions',

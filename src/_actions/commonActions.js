@@ -33,15 +33,15 @@ function statusCheck(data) {
             .then(
                 response => { 
                     var data = response.data;
-                    if(data.response_code == configConstants.SUCCESS_CODE){                        
+                    if(data.status == configConstants.SUCCESS_CODE){                        
                         dispatch(success(data.result));                        
-                    }else if(data.response_code == configConstants.ERROR_CODE){
+                    }else if(data.status == configConstants.ERROR_CODE){
                         var errorMsg = utilityHelper.getFirstErrorMessage(data.error);
                         dispatch(failure(errorMsg));
-                    }else if(data.response_code == configConstants.EXCEPTION_CODE){
+                    }else if(data.status == configConstants.EXCEPTION_CODE){
                         errorMsg = data.message;
                         dispatch(failure(errorMsg));
-                    }else if(data.response_code == configConstants.UNAUTHENTICATE_CODE){
+                    }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
                         errorMsg = data.message;
                         dispatch(unauthorize(errorMsg));
                     }else{
