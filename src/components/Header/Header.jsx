@@ -1,5 +1,7 @@
-import React from 'react'; import { Link } from "react-router-dom"; 
-import {Nav, NavDropdown, MenuItem} from 'react-bootstrap';
+import React from 'react'; 
+import { Link } from "react-router-dom"; 
+
+
  export const Header = (props) => 
  { return (
     <section>
@@ -17,7 +19,9 @@ import {Nav, NavDropdown, MenuItem} from 'react-bootstrap';
                         <ul class="dropdown">
                             <li class="drop">Setting</li>
                             <li class="dropdown-content">
-                                <a href="#">Log Out</a>
+                                <Link to="" onClick={props.handle_logout}  className="test">
+                                Logout
+                                </Link>
                              
                             </li>
                         </ul>

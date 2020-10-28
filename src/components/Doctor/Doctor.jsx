@@ -414,7 +414,7 @@ class Doctor extends React.Component {
                           <div className="inner-content">
                                 <div className="row page-header">
                                     <div className="col-md-12">
-                                        <h1 className="page-title">User</h1>
+                                        <h1 className="page-title">Doctor</h1>
                                     </div>
                                 </div>
                                 <div className="table-wrap">
