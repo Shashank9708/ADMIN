@@ -50,19 +50,19 @@ export class SideMenu extends React.Component {
                     <li><Link className="button" to="/dashboard">Dash Board</Link></li>
                     <li><Link className="button" to="/users">Users</Link></li>
                     <li><Link className="button" to="/doctors">Doctor</Link></li>
-                    <li><a className="button" href="/appointments">Appointments</a></li>
-                    <li><a className="button" href="/categories">Categories</a></li>
-                    <li><a className="button" href="/medicalstores">Medical Stores</a></li>
-                    <li><a className="button" href="/orders">Orders</a></li>
-                    <li><a className="button" href="/transaction">Transactions</a></li>
-                    <li><a className="button" href="/pathologycenters">Pathology Centers</a></li>
-                    <li><a className="button" href="/healthtips">Health Tips</a></li>
-                    <li><a className="button" href="/about">Best deals in tows</a></li>
-                    <li><a className="button" href="/products">Invitations Sends</a></li>
-                    <li><a className="button" href="/home">Notifications</a></li>
-                    <li><a className="button" href="/about">Promotional Activity</a></li>
-                    <li><a className="button" href="/products">Patient Notifications</a></li>
-                    <li><a className="button" href="/products">Registration Request</a></li>
+                    <li><Link className="button" to="/appointments">Appointments</Link></li>
+                    <li><Link className="button" to="/categories">Categories</Link></li>
+                    <li><Link className="button" to="/medicalstores">Medical Stores</Link></li>
+                    <li><Link className="button" to="/orders">Orders</Link></li>
+                    <li><Link className="button" to="/transaction">Transactions</Link></li>
+                    <li><Link className="button" to="/pathologycenters">Pathology Centers</Link></li>
+                    <li><Link className="button" to="/healthtips">Health Tips</Link></li>
+                    <li><Link className="button" to="/about">Best deals in tows</Link></li>
+                    <li><Link className="button" to="/products">Invitations Sends</Link></li>
+                    <li><Link className="button" to="/home">Notifications</Link></li>
+                    <li><Link className="button" to="/about">Promotional Activity</Link></li>
+                    <li><Link className="button" to="/products">Patient Notifications</Link></li>
+                    <li><Link className="button" to="/products">Registration Request</Link></li>
         
                 </ul>
                 </div>       

@@ -341,14 +341,14 @@ i.fa.fa-gear.fa-spin {
     display: inline-flex;
     padding: 12px;
 }
-section.adminpanel {
+/* section.adminpanel {
     padding: -17px 44px;
     border: 1px solid blue;
     width: 100%;
     border-left: none;
     height: 649px;
     margin-top: 20px;
-}
+} */
 /* setting button bropdown */
 .drop {
   
@@ -389,3 +389,23 @@ section.adminpanel {
 .dropdown:hover .dropdown-content {display: block;}
 
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+/* user file csss starts here */
+.main-content {
+  float: right;
+  background-color: white;
+  width: 67%;
+  height: 312px;
+  margin-top: -44%;
+  margin-right: 159px;
+}
+/* 
+side menu code for blue box */
+
+.sidebar {
+  border: 1px solid blue;
+  width: 101%;
+  border-left: none;
+  height: 661px;
+  margin-top: 20px;
+}

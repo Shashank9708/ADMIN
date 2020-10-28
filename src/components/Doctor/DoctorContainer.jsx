@@ -6,6 +6,7 @@ export const DoctorContainer = (props) => {
     return (
       <div className="page-container">
         <Doctor/>
+        
       </div>
     );
   
