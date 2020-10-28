@@ -15,12 +15,13 @@ export class Dashboard extends React.Component {
             <HeaderContainer />
             <section className="adminpanel">
                 <div className="group"> 
-                    <button className="buttonsix">APPOINTMENTS</button>
-                    <button className="buttonfive">REGISTRATION REQUEST</button>
-                    <button className="buttonfour">PATHOLOGY CENTERS</button>
-                    <button className="buttonthree">MEDICAL STORES</button>
-                    <button className="buttontwo">DOCTORS</button>
                     <button className="buttonone">USERS</button>
+                    <button className="buttontwo">DOCTORS</button>
+                    <button className="buttonthree">MEDICAL STORES</button>
+                    <button className="buttonfour">PATHOLOGY CENTERS</button>
+                    <button className="buttonfive">REGISTRATION REQUEST</button>
+                    <button className="buttonsix">APPOINTMENTS</button>
+                   
                 </div>
                 <SideMenu />
             </section>  

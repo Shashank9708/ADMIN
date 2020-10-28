@@ -51,7 +51,7 @@ body {
 .group { 
   position: relative;
     margin-bottom: 18px;
-    float: none;
+    float: right;
     margin-top: 8px;
 
 }
@@ -237,10 +237,10 @@ margin-top: 18px;
  margin-left: 24px;
 }
 h3.texts {
- color: white;
- float: right;
- margin-right: 38%;
- margin-top: 26px;
+  color: white;
+  float: right;
+  margin-top: 20px;
+  margin-right: 30%;
 }
 /* navbar related new changes here*/
 .navbar{
@@ -279,6 +279,7 @@ i.fa.fa-gear.fa-spin {
     height: 77px;
      width: 130px;
    display: inline-flex;
+   padding: 12px;
       
 }
 .buttontwo {
@@ -291,6 +292,7 @@ i.fa.fa-gear.fa-spin {
     border-radius: 20px;
     width: 130px;
     display: inline-flex;
+    padding: 12px;
 }
 .buttonthree {
   background-color:#68b383;
@@ -301,6 +303,7 @@ i.fa.fa-gear.fa-spin {
   height: 77px;
   border-radius: 20px;
   display: inline-flex;
+  padding: 12px;
 }
 .buttonfour {
   background-color: #d68274;
@@ -312,6 +315,7 @@ i.fa.fa-gear.fa-spin {
     width: 175px;
     border-radius: 15px;
     display: inline-flex;
+    padding: 11px;
 }
 .buttonfive {
   background-color: #9fa1d8;
@@ -323,6 +327,7 @@ i.fa.fa-gear.fa-spin {
     width: 187px;
     border-radius: 12px;
     display: inline-flex;
+    padding: 10px;
 }
 .buttonsix {
   background-color: #ec6c11;
@@ -334,6 +339,7 @@ i.fa.fa-gear.fa-spin {
     height: 77px;
     border-radius: 20px;
     display: inline-flex;
+    padding: 12px;
 }
 section.adminpanel {
     padding: -17px 44px;
@@ -343,3 +349,43 @@ section.adminpanel {
     height: 649px;
     margin-top: 20px;
 }
+/* setting button bropdown */
+.drop {
+  
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  list-style-type: none;
+}
+.dropdown-content {
+  display: none;
+  
+  background-color: #f1f1f1;
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 120px;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 10px 10px;
+  text-decoration: none;
+  display: block;
+}
+.navbar-collapse.collapses {
+  float: right;
+  margin-top: 10px;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
