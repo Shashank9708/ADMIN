@@ -21,7 +21,7 @@ render() {
     <div>
       <Modal show={this.props.onClick} onHide={this.handle_close}>
         <Modal.Header closeButton>
-          <Modal.Title>{ this.props.displayView == 'edit' ? 'Edit Doctor' : 'View'}</Modal.Title>
+          <Modal.Title>{ this.props.displayView == 'edit' ? 'Edit User' : 'View'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <div className="row">

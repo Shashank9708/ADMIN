@@ -42,7 +42,7 @@ export class SideMenu extends React.Component {
     render() {
 
       return (
-        <section>
+        <section class="sidemenu-part">
             <div className="container-fluid">
             <div className="=row">      
                 <div className="sidebar">

@@ -384,10 +384,14 @@ class User extends React.Component {
         var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
             <div className="page-container">
-            <HeaderContainer />
-            <SideMenu/>
-            
-            <Status
+                 <HeaderContainer />
+                <div class="container-fluid">
+                   <div class="row">
+                      <div class="col-md-2.5">
+                       <SideMenu/>
+                      </div>
+                      <div class="col-md-9">
+                      <Status
                 onClick = { this.state.statusShow }
                 onClose = { this.statusHideHandle }
                 payroll = { this.state.payload.data }
@@ -510,7 +514,11 @@ class User extends React.Component {
                           </div>
                         </div>
                   </div>
+                </div> 
+                      </div>
+                   </div>
                 </div>
+            
             </div>
 
         );

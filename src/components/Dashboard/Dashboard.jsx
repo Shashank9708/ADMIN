@@ -13,7 +13,7 @@ export class Dashboard extends React.Component {
         <div className="page-container">
             
             <HeaderContainer />
-            <section className="adminpanel">
+            {/* <section className="adminpanel">
                 <div className="group"> 
                     <button className="buttonone">USERS</button>
                     <button className="buttontwo">DOCTORS</button>
@@ -24,7 +24,27 @@ export class Dashboard extends React.Component {
                    
                 </div>
                 <SideMenu />
-            </section>  
+            </section>   */}
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="sections">
+                  <SideMenu />
+                  </div>
+                  <div class="">
+                  <section className="adminpanel">
+                <div className="group"> 
+                    <button className="buttonone">USERS</button>
+                    <button className="buttontwo">DOCTORS</button>
+                    <button className="buttonthree">MEDICAL STORES</button>
+                    <button className="buttonfour">PATHOLOGY CENTERS</button>
+                    <button className="buttonfive">REGISTRATION REQUEST</button>
+                    <button className="buttonsix">APPOINTMENTS</button>
+                   
+                </div>
+            </section> 
+                  </div>
+               </div>
+            </div>
         </div>
       );
     }

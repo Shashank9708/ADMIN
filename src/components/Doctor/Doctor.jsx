@@ -385,6 +385,140 @@ class Doctor extends React.Component {
         return (
             <div className="page-container">
             <HeaderContainer />
+            <div class="container-fluid"> 
+               <div class="row">
+                  <div class="col-md-2.5">
+                  <SideMenu/>
+                  </div>
+                  <div class="col-md-9">
+                  <Status
+                onClick = { this.state.statusShow }
+                onClose = { this.statusHideHandle }
+                payroll = { this.state.payload.data }
+                onChange = {this.statusCheck}
+            />
+            <EditView
+                onClick = { this.state.editShow }
+                onClose = { this.editHideHandle }
+                payroll = { this.state.edit }
+                handleInputChange = {this.handleInputChange}
+                onSave = {this.editSave}
+                displayView = {this.state.displayView}
+            />
+            <Renew
+                onClick = { this.state.reNewShow }
+                onClose = { this.reNewHideHandle }
+                payroll = { this.state.renew.renewdata }
+                onChange = {this.reNewPackage}
+                onSave = {this.reNewSave}
+            />
+                <div className="main-content">
+                    <div className="wrap-inner-content">
+                        <div className="col-md-12">
+                          <div className="inner-content">
+                                <div className="row page-header">
+                                    <div className="col-md-12">
+                                        <h1 className="page-title">Doctor</h1>
+                                    </div>
+                                </div>
+                                <div className="table-wrap">
+                                  
+                                  <ReactTable
+                                      noDataText="No found !!"
+                                      data={this.props.doctorList}
+                                      filterable
+                                      defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
+                                      filtered={this.state.filtered}
+                                      columns={[
+                                          
+                                          {
+                                              Header    : 'Name',
+                                              accessor  : 'name',
+                                              className : 'grid-header',
+                                              filterable  : false,
+                                              filterMethod: (filter, row) => {
+                                                  return row[filter.id].includes(filter.value);
+                                              }
+                                          },
+                                          {
+                                              Header    : 'Email',
+                                              accessor  : 'email',
+                                              className : 'grid-header',
+                                              filterable  : false,
+                                              filterMethod: (filter, row) => {
+                                                  return row[filter.id].includes(filter.value);
+                                              }
+                                          },
+                                          {
+                                              Header    : 'Contact',
+                                              accessor  : 'contact_no',
+                                              className : 'grid-header',
+                                              filterable  : false,
+                                              filterMethod: (filter, row) => {
+                                                  return row[filter.id].includes(filter.value);
+                                              }
+                                          },
+                                          {
+                                              Header: 'Created at',
+                                              accessor  : "created_at",
+                                              className : 'grid-header',
+                                              filterable  : false,
+                                              filterMethod: (filter, row) => {
+                                                return row[filter.id].includes(filter.value);
+                                              }
+                                          },
+                                          {
+                                              Header: 'Actions',
+                                              accessor  : "id",
+                                              filterable  : false,
+                                              
+                                              className : 'grid-header',
+                                              Cell: row => 
+                                                          <div>
+                                                            <a href="javascript:void(0)" 
+                                                              onClick={ this.editShowHandle.bind(null,row.original,'edit') } 
+                                                              disabled={ this.props.submitted ? true : false }
+                                                              className="btn table-btn btn-info">Edit
+                                                            </a>
+                                                            <a href="javascript:void(0)" 
+                                                              onClick={ this.editShowHandle.bind(null,row.original,'view') } 
+                                                              disabled={ this.props.submitted ? true : false }
+                                                              className="btn table-btn btn-info">View
+                                                            </a>
+                                                          </div>
+                                          }
+                                      ]}
+                                      defaultSorted={[
+                                          {
+                                              id: 'name',
+                                              desc: false
+                                          }
+                                      ]}
+                                      defaultPageSize={10}
+                                      minRows= {this.props.doctorList}
+                                      className="table table-bordered responsive"
+                                      loading={this.state.loading}
+                                      filterable
+                                      Sorted
+                                      pages={this.props.pages}
+                                      showPagination={true}
+                                      showPaginationTop={false}
+                                      showPaginationBottom={true}
+                                      pageSizeOptions={[10, 20, 50]}
+                                      automatic // For server side pagination
+                                      onFetchData={(state, instance) => {
+                                          this.getDoctorList(state.page, state.pageSize, state.sorted, state.filtered);
+                                      }}
+                                  />
+                              </div>
+                          </div>
+                        </div>
+                  </div>
+                </div>
+                  </div>
+               </div>
+            </div>
+{/*             
             <SideMenu/>
             
             <Status
@@ -510,7 +644,7 @@ class Doctor extends React.Component {
                           </div>
                         </div>
                   </div>
-                </div>
+                </div> */}
             </div>
 
         );

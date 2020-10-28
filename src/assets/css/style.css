@@ -49,11 +49,9 @@ body {
 }
 
 .group { 
-  position: relative;
-    margin-bottom: 18px;
-    float: right;
+  
     margin-top: 8px;
-
+    
 }
 
 
@@ -84,10 +82,10 @@ button.btn-s {
     margin-top: 27px;
     margin-left: 256px;
     width: 99px;
-    font-size: 19px;
+    font-size: 1px;
     border: #74c1ba;
     border-radius: 4px;
-    height: 37px;
+    height: 49px;
 }
 h5.text2 {
     text-align: center;
@@ -191,7 +189,7 @@ ul.box {
   background-color: #ec6c11;
   display: block;
   padding: 9px 6px;
-  width: 15%;
+  width: 100%;
   cursor: pointer;
   transition: 0.3s;
   font-size: 15px;
@@ -382,6 +380,7 @@ i.fa.fa-gear.fa-spin {
 .navbar-collapse.collapses {
   float: right;
   margin-top: 10px;
+  margin-right: 27px;
 }
 
 .dropdown-content a:hover {background-color: #ddd;}
@@ -392,20 +391,17 @@ i.fa.fa-gear.fa-spin {
 
 /* user file csss starts here */
 .main-content {
-  float: right;
+  margin-top: 21px;
   background-color: white;
-  width: 67%;
-  height: 312px;
-  margin-top: -44%;
-  margin-right: 159px;
+ 
 }
 /* 
 side menu code for blue box */
 
-.sidebar {
+/* .sidebar {
   border: 1px solid blue;
   width: 101%;
   border-left: none;
   height: 661px;
   margin-top: 20px;
-}
+} */
