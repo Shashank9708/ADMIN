@@ -1,8 +1,8 @@
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const common = require('./webpack.common.babel.js');
 var webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-import { ReactLoadablePlugin } from 'react-loadable/webpack';
+// import { ReactLoadablePlugin } from 'react-loadable/webpack';
 
 const envPlugin =  new webpack.DefinePlugin({ 
     'process.env': {
@@ -30,7 +30,7 @@ module.exports = merge(common, {
             compress: {
                 unused: true,
                 dead_code: true, 
-                warnings: false, 
+                // warnings: false, 
                 drop_debugger: true,
                 conditionals: true,
                 evaluate: true,
@@ -48,9 +48,13 @@ module.exports = merge(common, {
     },
    plugins: [
        envPlugin,
-       new CopyWebpackPlugin([
-        { from: 'src/.htaccess', to: '.htaccess', toType: 'file' },
-        // { from: 'src/firebase-messaging-sw.js', to: 'firebase-messaging-sw.js', toType: 'file' }
-        ])
+       new CopyWebpackPlugin(
+        { 
+          patterns: [
+            { from: 'src/.htaccess', to: '.htaccess', toType: 'file' },
+            // { from: 'src/firebase-messaging-sw.js', to: 'firebase-messaging-sw.js', toType: 'file' }
+          ]
+        }
+      )
    ]
  });

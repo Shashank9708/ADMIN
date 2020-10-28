@@ -14,18 +14,20 @@ import { Link } from "react-router-dom";
                         <h3 className="texts">Ark Admin Panel</h3>
                     </div>
                 </div>
-                <div className="col-md-8">
+                <div className="col-md-7">
                     <div className="navbar-collapse collapses">
-                        <ul class="dropdown">
-                            <li class="drop">Setting</li>
-                            <li class="dropdown-content">
+                        <ul className="dropdown">
+                            <li className="drop">Welcome {props.logged_in_user_name}</li>
+                            <li className="dropdown-content">
                                 <Link to="" onClick={props.handle_logout}  className="test">
                                 Logout
                                 </Link>
-                             
                             </li>
                         </ul>
                     </div>
+                </div>
+                <div className="col-md-1">
+
                 </div>
             </div>
         </div>

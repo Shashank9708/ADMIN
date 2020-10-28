@@ -25,14 +25,10 @@ export const commonService = {
 * @return                Response JSON jsonObj
 */
 function statusCheck(data) {
-    var loginAccessToken = utilityHelper.getLoginAccessToken();
+    // var loginAccessToken = utilityHelper.getLoginAccessToken();
     return axios({
-        method  : 'post',
-        url     : configConstants.API_BASE_PATH + 'common/userstatus',
-        data    : data,
-        headers : { 
-            'Authorization' : 'Bearer '+loginAccessToken,
-        }
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH + '/admin/doctorActive/'+data.doc_id+'/'+data.is_approved,
     })
     .then(response => {
         return response;
