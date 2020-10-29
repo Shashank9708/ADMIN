@@ -9,7 +9,7 @@ import { commonConstants } from '../_constants';
  * @ShortDescription       This is responsible for all state related to all module for drop down
  */
 const initialState = {
-    vehicleList     : [],
+    dashboardList     : {},
     locationList    : [],
     sendingRequest  : false,
     afterUpdate     : false,
@@ -114,21 +114,21 @@ export function commonReducer(state = initialState, action) {
            };
 
         // Fetch Vehicle list Reducer's
-        case commonConstants.VEHICLES_FETCH_REQUEST:
+        case commonConstants.DASHBOARD_FETCH_REQUEST:
           return {
             ...state,
             errorMsg         : false,
             is_loaded        : false
           };
-        case commonConstants.VEHICLES_FETCH_SUCCESS:
+        case commonConstants.DASHBOARD_FETCH_SUCCESS:
           return { 
             ...state,
             successMessage     : action.success, 
-            vehicleList        : action.result,
+            dashboardList        : action.result,
             errorMsg           : false ,
             is_loaded          : true
           };
-        case commonConstants.VEHICLES_FETCH_FAILURE:
+        case commonConstants.DASHBOARD_FETCH_FAILURE:
           return { 
             ...state,
             errorMsg        : action.error

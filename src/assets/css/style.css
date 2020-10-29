@@ -405,3 +405,8 @@ side menu code for blue box */
   height: 661px;
   margin-top: 20px;
 } */
+
+.dropdown-menu.show.dropdown-menu-right {
+  position: inherit !important;
+  top: -40px !important;
+}

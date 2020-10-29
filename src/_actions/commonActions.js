@@ -18,7 +18,7 @@ export const commonActions = {
     resetEditState,
     renewPackage,
     resetReNewState,
-    getVehicleList,
+    getDashboard,
 };
 
 /**
@@ -169,22 +169,22 @@ function resetReNewState(){
 * @ShortDescription      This function is responsible for Get vehicle List
 * @return                JSON Object
 */
-function getVehicleList() {
+function getDashboard() {
     return dispatch => {
         dispatch(request());
-        commonService.getVehicleList()
+        commonService.getDashboard()
             .then(
                 response => { 
                     var data = response.data;
-                    if(data.code == configConstants.SUCCESS_CODE){                        
-                        dispatch(success(data.result));                        
-                    }else if(data.code == configConstants.ERROR_CODE){
+                    if(data.status == configConstants.SUCCESS_CODE){                        
+                        dispatch(success(data.data));                        
+                    }else if(data.status == configConstants.ERROR_CODE){
                         var errorMsg = utilityHelper.getFirstErrorMessage(data.error);
                         dispatch(failure(errorMsg));
-                    }else if(data.code == configConstants.EXCEPTION_CODE){
+                    }else if(data.status == configConstants.EXCEPTION_CODE){
                         errorMsg = data.message;
                         dispatch(failure(errorMsg));
-                    }else if(data.code == configConstants.UNAUTHENTICATE_CODE){
+                    }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
                         errorMsg = data.message;
                         dispatch(unauthorize(errorMsg));
                     }else{
@@ -197,8 +197,8 @@ function getVehicleList() {
     };
 
 // Actions defination that will perform according dispatch call and send data to reducer
-    function request() { return { type: commonConstants.VEHICLES_FETCH_REQUEST } }
-    function success(result) { return { type: commonConstants.VEHICLES_FETCH_SUCCESS, result } }
-    function failure(error) { return { type: commonConstants.VEHICLES_FETCH_FAILURE, error } }
+    function request() { return { type: commonConstants.DASHBOARD_FETCH_REQUEST } }
+    function success(result) { return { type: commonConstants.DASHBOARD_FETCH_SUCCESS, result } }
+    function failure(error) { return { type: commonConstants.DASHBOARD_FETCH_FAILURE, error } }
     function unauthorize(error) { return { type: configConstants.UNAUTHENTICATE, error } }
 }

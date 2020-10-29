@@ -11,7 +11,7 @@ import { userActions, headerActions, commonActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
-import Countdown from 'react-countdown-now';
+import {DropdownButton, Dropdown} from 'react-bootstrap'
 
 class User extends React.Component {
     /**
@@ -430,7 +430,6 @@ class User extends React.Component {
                                       defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
                                       filtered={this.state.filtered}
                                       columns={[
-                                          
                                           {
                                               Header    : 'Name',
                                               accessor  : 'name',
@@ -441,7 +440,25 @@ class User extends React.Component {
                                               }
                                           },
                                           {
-                                              Header    : 'Email',
+                                            Header    : 'UIN',
+                                            accessor  : 'patient_id',
+                                            className : 'grid-header',
+                                            filterable  : false,
+                                            filterMethod: (filter, row) => {
+                                                return row[filter.id].includes(filter.value);
+                                            }
+                                          },
+                                          {
+                                            Header    : 'Mobile',
+                                            accessor  : 'contact_no',
+                                            className : 'grid-header',
+                                            filterable  : false,
+                                            filterMethod: (filter, row) => {
+                                                return row[filter.id].includes(filter.value);
+                                            }
+                                          },
+                                          {
+                                              Header    : 'Email ID',
                                               accessor  : 'email',
                                               className : 'grid-header',
                                               filterable  : false,
@@ -449,18 +466,10 @@ class User extends React.Component {
                                                   return row[filter.id].includes(filter.value);
                                               }
                                           },
+                                          
                                           {
-                                              Header    : 'Contact',
-                                              accessor  : 'contact_no',
-                                              className : 'grid-header',
-                                              filterable  : false,
-                                              filterMethod: (filter, row) => {
-                                                  return row[filter.id].includes(filter.value);
-                                              }
-                                          },
-                                          {
-                                            Header: 'Created at',
-                                            accessor  : "created_at",
+                                            Header: 'Health Info',
+                                            accessor  : "health_problems",
                                             className : 'grid-header',
                                             filterable  : false,
                                             filterMethod: (filter, row) => {
@@ -468,24 +477,29 @@ class User extends React.Component {
                                             }
                                           },
                                           {
+                                            Header: 'Status',
+                                            accessor  : "health_problems",
+                                            className : 'grid-header',
+                                            filterable  : false,
+                                            Cell: row =>
+                                              <div><a className="btn table-btn btn-info">Active</a></div>
+                                            
+                                          },
+                                          {
                                               Header: 'Actions',
-                                              accessor  : "id",
+                                              accessor  : "patient_id",
                                               filterable  : false,
                                               
                                               className : 'grid-header',
                                               Cell: row => 
-                                                          <div>
-                                                            <a href="javascript:void(0)" 
-                                                              onClick={ this.editShowHandle.bind(null,row.original,'edit') } 
-                                                              disabled={ this.props.submitted ? true : false }
-                                                              className="btn table-btn btn-info">Edit
-                                                            </a>
-                                                            <a href="javascript:void(0)" 
-                                                              onClick={ this.editShowHandle.bind(null,row.original,'view') } 
-                                                              disabled={ this.props.submitted ? true : false }
-                                                              className="btn table-btn btn-info">View
-                                                            </a>
-                                                          </div>
+                                                    <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
+                                                        <Dropdown.Item >View</Dropdown.Item>
+                                                        <Dropdown.Item >Edit</Dropdown.Item>
+                                                        <Dropdown.Item >Delete</Dropdown.Item>
+                                                        <Dropdown.Item >Appointment</Dropdown.Item>
+                                                        <Dropdown.Item >Medicine</Dropdown.Item>
+                                                        <Dropdown.Item >Lab</Dropdown.Item>
+                                                    </DropdownButton>
                                           }
                                       ]}
                                       defaultSorted={[

@@ -15,7 +15,7 @@ export const commonService = {
     statusCheck,
     editPut,
     renewPackage,
-    getVehicleList
+    getDashboard
 };
 
 /**
@@ -97,15 +97,10 @@ function renewPackage(data) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-function getVehicleList() {
-    var loginAccessToken = utilityHelper.getLoginAccessToken();
+function getDashboard() {
     return axios({
-        method  : 'post',
-        url     : configConstants.API_BASE_PATH + 'vehicle_list',
-        headers : { 
-            'Authorization' : 'Bearer '+loginAccessToken,
-            'unencrypted' : '1'
-        }
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH + '/admin/dashboard',
     })
     .then(response => {
         return response;
