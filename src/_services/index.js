@@ -4,7 +4,7 @@ export * from './commonService';
 export * from './staffService';
 export * from './userService';
 export * from './driverService';
-export * from './tripService';
+export * from './specializationService';
 export * from './chatService';
 export * from './vehicleService';
 export * from './ViewProfileService';

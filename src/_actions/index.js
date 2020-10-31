@@ -2,7 +2,7 @@ export * from './userLoginActions';
 export * from './staffActions';
 export * from './userActions';
 export * from './chatActions';
-export * from './tripActions';
+export * from './specializationActions';
 export * from './headerActions';
 export * from './commonActions';
 export * from './driverActions';

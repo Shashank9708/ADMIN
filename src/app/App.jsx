@@ -60,6 +60,11 @@ const DoctorContainer = Loadable({
     loading: Loading
 });
 
+const SpecializationContainer = Loadable({
+    loader: () => import('../components/Specialization').then(object => object.SpecializationContainer),
+    loading: Loading
+});
+
 
 const SettingContainer = Loadable({
     loader: () => import('../components/Setting').then(object => object.SettingContainer),
@@ -101,6 +106,8 @@ class App extends React.Component {
                         <AdminRoute exact path='/dashboard' component={Dashboard} authenticated={this.props.authenticated} allowuser={[0]}/>
                         <AdminRoute exact path='/users' component={UserContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/doctors' component={DoctorContainer} authenticated={this.props.authenticated} allowuser={[0]} />
+                        <AdminRoute exact path='/categories' component={SpecializationContainer} authenticated={this.props.authenticated} allowuser={[0]} />
+
                         {/*<AdminRoute exact path='/dashboard' component={Dashboard} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/operator' component={StaffContainer} authenticated={this.props.authenticated} allowuser={['admin']} />
                         

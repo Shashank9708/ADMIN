@@ -42,7 +42,7 @@ export class SideMenu extends React.Component {
     render() {
 
       return (
-        <section class="sidemenu-part">
+        <section className="sidemenu-part">
             <div className="container-fluid">
             <div className="=row">      
                 <div className="sidebar">
@@ -50,19 +50,19 @@ export class SideMenu extends React.Component {
                     <li><Link className="button" to="/dashboard">Dash Board</Link></li>
                     <li><Link className="button" to="/users">Users</Link></li>
                     <li><Link className="button" to="/doctors">Doctor</Link></li>
-                    <li><Link className="button" to="/appointments">Appointments</Link></li>
                     <li><Link className="button" to="/categories">Categories</Link></li>
-                    <li><Link className="button" to="/medicalstores">Medical Stores</Link></li>
-                    <li><Link className="button" to="/orders">Orders</Link></li>
-                    <li><Link className="button" to="/transaction">Transactions</Link></li>
-                    <li><Link className="button" to="/pathologycenters">Pathology Centers</Link></li>
-                    <li><Link className="button" to="/healthtips">Health Tips</Link></li>
-                    <li><Link className="button" to="/about">Best deals in tows</Link></li>
-                    <li><Link className="button" to="/products">Invitations Sends</Link></li>
-                    <li><Link className="button" to="/home">Notifications</Link></li>
-                    <li><Link className="button" to="/about">Promotional Activity</Link></li>
-                    <li><Link className="button" to="/products">Patient Notifications</Link></li>
-                    <li><Link className="button" to="/products">Registration Request</Link></li>
+                    <li><Link className="button" to="#">Appointments</Link></li>
+                    <li><Link className="button" to="#">Medical Stores</Link></li>
+                    <li><Link className="button" to="#">Orders</Link></li>
+                    <li><Link className="button" to="#">Transactions</Link></li>
+                    <li><Link className="button" to="#">Pathology Centers</Link></li>
+                    <li><Link className="button" to="#">Health Tips</Link></li>
+                    <li><Link className="button" to="#">Best deals in tows</Link></li>
+                    <li><Link className="button" to="#">Invitations Sends</Link></li>
+                    <li><Link className="button" to="#">Notifications</Link></li>
+                    <li><Link className="button" to="#">Promotional Activity</Link></li>
+                    <li><Link className="button" to="#">Patient Notifications</Link></li>
+                    <li><Link className="button" to="#">Registration Request</Link></li>
         
                 </ul>
                 </div>       

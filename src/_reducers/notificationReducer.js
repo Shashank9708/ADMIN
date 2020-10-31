@@ -9,7 +9,7 @@ import { notificationConstants, configConstants } from '../_constants';
  * @ShortDescription       This is responsible for all state related
  */
 const initialState = {
-    notificationList     : [],
+    categoryList     : [],
     sendingRequest  : false,
     afterUpdate     : false,
     loader          : true,
@@ -31,7 +31,7 @@ export function notificationReducer(state = initialState, action) {
           return {
             ...state,
             successMessage     : action.success,
-            notificationList        : action.result.data,
+            categoryList        : action.result,
             errorMsg           : false ,
             pages               : action.result.pages,
             is_loaded         :true
