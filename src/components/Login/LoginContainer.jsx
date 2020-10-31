@@ -24,12 +24,12 @@ class LoginContainer extends React.Component {
         this.state = {
             login: {
                 user: {
-                    email      : '',
+                    contact_no      : '',
                     password      : '',
                     // fcmtoken  : cookies.get('FCMToken')
                 },
                 userValidate: {
-                    email      : {isValid: true, message: ''},
+                    contact_no      : {isValid: true, message: ''},
                     password      : {isValid: true, message: ''}
                 }
             }
@@ -112,7 +112,7 @@ class LoginContainer extends React.Component {
         if(this.props.authenticated && !utilityHelper.isObjectEmpty(this.props.user)){
             var userinfo = this.props.user;
             // if(userinfo.role === 0){
-                console.log('-->>>--',userinfo)
+                // console.log('-->>>--',userinfo)
                 this.props.history.push('/dashboard');
             // }
         }

@@ -28,15 +28,15 @@ export const Login = (props) => {
                    <div className="group">
                         
                         
-                        <div className={props.payload.userValidate.email.isValid ? 'form-group' : 'form-group has-error'}>
+                        <div className={props.payload.userValidate.contact_no.isValid ? 'form-group' : 'form-group has-error'}>
                             <input  type="text" 
-                                    name="email"
+                                    name="contact_no"
                                     onChange={props.handle_input_change}
                                     placeholder="Username"
-                                    value={props.payload.email}
+                                    value={props.payload.contact_no}
                                     className="form-group" />
 
-                            <span className="help-block">{props.payload.userValidate.email.message}</span>
+                            <span className="help-block">{props.payload.userValidate.contact_no.message}</span>
 
                         </div>
 

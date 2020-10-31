@@ -28,22 +28,22 @@ function isLoginValid(that) {
     const validationState = {};
 
     // Check the input is number or email
-    if (!validator.isInt(validator.trim(user.email))) {
-        if(!validator.isEmail(validator.trim(user.email))){
-            validationState.email = {
-                isValid: false,
-                message: 'Please enter valid email address.'
-            }
-        }     
-    }
-    else{
-       if (user.email.length != 10) {
-           validationState.email = {
+    // if (!validator.isInt(validator.trim(user.email))) {
+    //     if(!validator.isEmail(validator.trim(user.email))){
+    //         validationState.email = {
+    //             isValid: false,
+    //             message: 'Please enter valid email address.'
+    //         }
+    //     }     
+    // }
+    // else{
+       if (user.contact_no.length != 10) {
+           validationState.contact_no = {
                 isValid: false,
                 message: 'Please enter valid mobile number.'
             } 
        }
-    }   
+    // }   
     
     if (validator.isEmpty(validator.trim(user.password))) {        
       validationState.password = {
