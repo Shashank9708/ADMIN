@@ -5,6 +5,8 @@ export * from './staffService';
 export * from './userService';
 export * from './driverService';
 export * from './specializationService';
+export * from './appointmentService';
+export * from './healthTipsService';
 export * from './chatService';
 export * from './vehicleService';
 export * from './ViewProfileService';

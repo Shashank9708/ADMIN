@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { specializationActions } from '../../_actions';
-import { AddSpecialization } from './AddSpecialization';
-import { specializationValidator } from '../../_validator';
+import { appointmentActions } from '../../_actions';
+import { AddAppointments } from './AddAppointments';
+import { appointmentValidator } from '../../_validator';
 
 
-class AddSpecializationContainer extends React.Component {
+class AddAppointmentsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.initialState;
     this.handleClose = this.handleClose.bind(this);
-    this.handleSaveSpecialization = this.handleSaveSpecialization.bind(this);
+    this.handleSaveAppointments = this.handleSaveAppointments.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
   }
@@ -103,13 +103,13 @@ class AddSpecializationContainer extends React.Component {
      * @return                Nothing
      */
   handleClose() {
-      this.props.addSpecializationHideHandle();
+      this.props.addAppointmentsHideHandle();
       const { dispatch } = this.props;
-      dispatch(specializationActions.resetSpecializationState());
+      dispatch(appointmentActions.resetAppointmentsState());
   }
 
-  handleSaveSpecialization() {
-    if(specializationValidator.is_specializationValid(this)) {
+  handleSaveAppointments() {
+    if(appointmentValidator.is_appointmentValid(this)) {
         const { detail } = this.state.notificationForm;
         // console.log(detail)
         var bodyFormData = new FormData();
@@ -118,7 +118,7 @@ class AddSpecializationContainer extends React.Component {
         bodyFormData.append('image',detail.image);
 
         const { dispatch } = this.props;
-        dispatch(specializationActions.saveSpecialization(bodyFormData, this.props.notificationList));
+        dispatch(appointmentActions.saveAppointments(bodyFormData, this.props.appointmentList));
     }
   }
 
@@ -131,10 +131,10 @@ class AddSpecializationContainer extends React.Component {
         if(newProps.closeForm == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
-                dispatch(specializationActions.getSpecializationList(1, 10, "asc", "filtered"));
+                dispatch(appointmentActions.getAppointmentList(1, 10, "asc", "filtered"));
                 
-                dispatch(specializationActions.resetSpecializationState());
-                this.props.addSpecializationHideHandle();
+                dispatch(appointmentActions.resetAppointmentsState());
+                this.props.addAppointmentsHideHandle();
                 this.setState(this.initialState);
             }.bind(this), 1500);
         }else{
@@ -143,12 +143,12 @@ class AddSpecializationContainer extends React.Component {
     }
   render() {
       return (
-            <AddSpecialization 
-              addSpecializationShow = {this.props.addSpecializationShow}
+            <AddAppointments 
+              addAppointmentsShow = {this.props.addAppointmentsShow}
               messages = { this.props.successMessage }
               errorMsg = { this.props.errorMsg }
               handleClose = {this.handleClose}
-              handleSaveSpecialization = {this.handleSaveSpecialization}
+              handleSaveAppointments = {this.handleSaveAppointments}
               handleInputChange = {this.handleInputChange}
               handleFileChange = {this.handleFileChange}
               payload = {this.state.notificationForm}
@@ -165,10 +165,10 @@ class AddSpecializationContainer extends React.Component {
  */
 
 function mapStateToProps(state) {
-   const { notificationList,loader,successMessage,sendingRequest,errorMsg,closeForm } = state.notificationReducer;
+   const { appointmentList,loader,successMessage,sendingRequest,errorMsg,closeForm } = state.appointmentReducer;
 
     return {
-        notificationList,
+        appointmentList,
         loader,
         successMessage,
         sendingRequest,
@@ -176,5 +176,5 @@ function mapStateToProps(state) {
         closeForm
     };
 }
-const connectedAddSpecializationContainer = connect(mapStateToProps)(AddSpecializationContainer);
-export { connectedAddSpecializationContainer as AddSpecializationContainer };
+const connectedAddAppointmentsContainer = connect(mapStateToProps)(AddAppointmentsContainer);
+export { connectedAddAppointmentsContainer as AddAppointmentsContainer };

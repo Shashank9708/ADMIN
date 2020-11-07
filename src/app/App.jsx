@@ -65,6 +65,16 @@ const SpecializationContainer = Loadable({
     loading: Loading
 });
 
+const AppointmentsContainer = Loadable({
+    loader: () => import('../components/Appointments').then(object => object.AppointmentsContainer),
+    loading: Loading
+});
+
+const HealthTipsContainer = Loadable({
+    loader: () => import('../components/HealthTips').then(object => object.HealthTipsContainer),
+    loading: Loading
+});
+
 
 const SettingContainer = Loadable({
     loader: () => import('../components/Setting').then(object => object.SettingContainer),
@@ -107,6 +117,8 @@ class App extends React.Component {
                         <AdminRoute exact path='/users' component={UserContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/doctors' component={DoctorContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/categories' component={SpecializationContainer} authenticated={this.props.authenticated} allowuser={[0]} />
+                        <AdminRoute exact path='/appointments' component={AppointmentsContainer} authenticated={this.props.authenticated} allowuser={[0]} />
+                        <AdminRoute exact path='/health-tips' component={HealthTipsContainer} authenticated={this.props.authenticated} allowuser={[0]} />
 
                         {/*<AdminRoute exact path='/dashboard' component={Dashboard} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/operator' component={StaffContainer} authenticated={this.props.authenticated} allowuser={['admin']} />

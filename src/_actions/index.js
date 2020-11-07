@@ -3,6 +3,8 @@ export * from './staffActions';
 export * from './userActions';
 export * from './chatActions';
 export * from './specializationActions';
+export * from './appointmentActions';
+export * from './healthTipsActions';
 export * from './headerActions';
 export * from './commonActions';
 export * from './driverActions';

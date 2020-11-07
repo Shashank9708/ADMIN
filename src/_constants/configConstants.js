@@ -11,7 +11,7 @@
 export const configConstants = {
     API_BASE_PATH       : process.env.API_BASE_PATH,
     SUCCESS_CODE        : 200,
-    ERROR_CODE          : 401,
+    ERROR_CODE          : 500,
     EXCEPTION_CODE      : '300',
     UNAUTHENTICATE_CODE : '700',
     RESOURCE_TYPE       : 1,

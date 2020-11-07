@@ -1,20 +1,20 @@
-import { configConstants, notificationConstants } from '../_constants';
-import { specializationService } from '../_services';
+import { configConstants, appointmentConstants } from '../_constants';
+import { appointmentService } from '../_services';
 import { utilityHelper} from '../_helpers';
 
 /**
- * specializationActions
+ * appointmentActions
  *
  * @package                TruckAdmin
- * @subpackage             specializationActions
+ * @subpackage             appointmentActions
  * @category               Actions
  * @DateOfCreation         26 July 2018
  * @ShortDescription       This is responsible to handle all action related
  */
-export const specializationActions = {
-    getSpecializationList,
-    saveSpecialization,
-    resetSpecializationState
+export const appointmentActions = {
+    getAppointmentList,
+    saveAppointment,
+    resetAppointmentState
 };
 
 /**
@@ -23,10 +23,10 @@ export const specializationActions = {
 * @param                 JSON user, This contains full notification input data
 * @return                JSON Object
 */
-function getSpecializationList(page, pageSize, sorted, filtered) {
+function getAppointmentList(page, pageSize, sorted, filtered) {
     return dispatch => {
         dispatch(request());
-        specializationService.getSpecializationList(page, pageSize, sorted, filtered)
+        appointmentService.getAppointmentList(page, pageSize, sorted, filtered)
             .then(
                 response => {
                     var data = response.data;
@@ -52,9 +52,9 @@ function getSpecializationList(page, pageSize, sorted, filtered) {
     };
 
     // Actions defination that will perform according dispatch call and send data to reducer
-    function request() { return { type: notificationConstants.NOTIFICATION_FETCH_REQUEST } }
-    function success(result) { return { type: notificationConstants.NOTIFICATION_FETCH_SUCCESS, result } }
-    function failure(error) { return { type: notificationConstants.NOTIFICATION_FETCH_FAILURE, error } }
+    function request() { return { type: appointmentConstants.APPOINTMENT_FETCH_REQUEST } }
+    function success(result) { return { type: appointmentConstants.APPOINTMENT_FETCH_SUCCESS, result } }
+    function failure(error) { return { type: appointmentConstants.APPOINTMENT_FETCH_FAILURE, error } }
     function unauthorize(error) { return { type: configConstants.UNAUTHENTICATE, error } }
 }
 
@@ -64,10 +64,10 @@ function getSpecializationList(page, pageSize, sorted, filtered) {
 * @param                 JSON user, This contains full user input data
 * @return                JSON Object
 */
-function saveSpecialization(category, categoryList) {
+function saveAppointment(category, categoryList) {
     return dispatch => {
         dispatch(request({ category }));
-        specializationService.saveSpecialization(category)
+        appointmentService.saveAppointment(category)
             .then(
                 response => {
                     var data = response.data;
@@ -108,13 +108,13 @@ function saveSpecialization(category, categoryList) {
     };
 
     // Actions defination that will perform according dispatch call and send data to reducer
-    function request(notification) { return { type: notificationConstants.NOTIFICATION_SAVE_REQUEST, notification } }
-    function success(successMsg) { return { type: notificationConstants.NOTIFICATION_SAVE_SUCCESS, successMsg } }
-    function failure(error) { return { type: notificationConstants.NOTIFICATION_SAVE_FAILURE, error } }
+    function request(notification) { return { type: appointmentConstants.APPOINTMENT_SAVE_REQUEST, notification } }
+    function success(successMsg) { return { type: appointmentConstants.APPOINTMENT_SAVE_SUCCESS, successMsg } }
+    function failure(error) { return { type: appointmentConstants.APPOINTMENT_SAVE_FAILURE, error } }
     function unauthorize(error) { return { type: configConstants.UNAUTHENTICATE, error } }
 }
 
-function resetSpecializationState(){
+function resetAppointmentState(){
     return dispatch => { dispatch(request()); }
-    function request() { return {type : notificationConstants.NOTIFICATION_RESET_STATE }}
+    function request() { return {type : appointmentConstants.APPOINTMENT_RESET_STATE }}
 }

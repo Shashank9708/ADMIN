@@ -2,6 +2,8 @@ export * from './configConstants';
 export * from './loginConstants';
 export * from './forgotConstants';
 export * from './headerConstants';
+export * from './appointmentConstants';
+export * from './healthTipsConstants';
 export * from './staffConstants';
 export * from './userConstants';
 export * from './driverConstants';

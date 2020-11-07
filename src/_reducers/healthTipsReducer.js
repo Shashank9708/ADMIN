@@ -1,15 +1,15 @@
-import { notificationConstants, configConstants } from '../_constants';
+import { healthTipsConstants, configConstants } from '../_constants';
 /**
- * notificationReducer
+ * healthTipsReducer
  *
  * @package                TruckAdmin
- * @subpackage             notificationReducer
+ * @subpackage             healthTipsReducer
  * @category               Reducers
  * @DateOfCreation         26 July 2018
  * @ShortDescription       This is responsible for all state related
  */
 const initialState = {
-    categoryList     : [],
+    healthTipsList     : [],
     sendingRequest  : false,
     afterUpdate     : false,
     loader          : true,
@@ -17,32 +17,32 @@ const initialState = {
     errorMsg        : false,
     detail          : {},
 };
-export function notificationReducer(state = initialState, action) {
+export function healthTipsReducer(state = initialState, action) {
     switch (action.type) {
 
         // Fetch Reducer's
-        case notificationConstants.NOTIFICATION_FETCH_REQUEST:
+        case healthTipsConstants.HEALTH_TIPS_FETCH_REQUEST:
           return {
             ...state,
             errorMsg         : false,
             is_loaded:false
           };
-        case notificationConstants.NOTIFICATION_FETCH_SUCCESS:
+        case healthTipsConstants.HEALTH_TIPS_FETCH_SUCCESS:
           return {
             ...state,
             successMessage     : action.success,
-            categoryList        : action.result,
+            healthTipsList        : action.result,
             errorMsg           : false ,
             pages               : action.result.pages,
             is_loaded         :true
           };
-        case notificationConstants.NOTIFICATION_FETCH_FAILURE:
+        case healthTipsConstants.HEALTH_TIPS_FETCH_FAILURE:
           return {
             ...state,
             errorMsg        : action.error
           };
 
-        case notificationConstants.NOTIFICATION_UPDATE_STATE:
+        case healthTipsConstants.HEALTH_TIPS_UPDATE_STATE:
         return {
           ...state,
           errorMsg      : false,
@@ -52,26 +52,26 @@ export function notificationReducer(state = initialState, action) {
         }
 
         // Add Reducer's
-        case notificationConstants.NOTIFICATION_SAVE_REQUEST:
+        case healthTipsConstants.HEALTH_TIPS_SAVE_REQUEST:
           return {
             ...state,
             errorMsg         : false,
             submitted        : false
 
           };
-        case notificationConstants.NOTIFICATION_SAVE_SUCCESS:
+        case healthTipsConstants.HEALTH_TIPS_SAVE_SUCCESS:
           return  {
               ...state,
               sendingRequest : true,
               submitted      : true,
               // successMessage : action.successMsg.message,
               loader         : false,
-              // categoryList    : [...state.categoryList],
-              // notificationList    : state.notificationList,
+              // healthTipsList    : [...state.healthTipsList],
+              // healthTipsList    : state.healthTipsList,
               errorMsg       : false,
               closeForm      : true
           };
-        case notificationConstants.NOTIFICATION_SAVE_FAILURE:
+        case healthTipsConstants.HEALTH_TIPS_SAVE_FAILURE:
           return {
             ...state,
             submitted      : false,
@@ -79,7 +79,7 @@ export function notificationReducer(state = initialState, action) {
             closeForm      : false,
            };
 
-        case notificationConstants.NOTIFICATION_RESET_STATE:
+        case healthTipsConstants.HEALTH_TIPS_RESET_STATE:
           return {
               ...state,
               sendingRequest  : false,

@@ -51,14 +51,17 @@ export class SideMenu extends React.Component {
                     <li><Link className="button" to="/users">Users</Link></li>
                     <li><Link className="button" to="/doctors">Doctor</Link></li>
                     <li><Link className="button" to="/categories">Categories</Link></li>
-                    <li><Link className="button" to="#">Appointments</Link></li>
+                    <li><Link className="button" to="/appointments">Appointments</Link></li>
+                    <li><Link className="button" to="/health-tips">Health Tips</Link></li>
+                    <li><Link className="button" to="#">Invitations Sends</Link></li>
+
+                    
                     <li><Link className="button" to="#">Medical Stores</Link></li>
                     <li><Link className="button" to="#">Orders</Link></li>
                     <li><Link className="button" to="#">Transactions</Link></li>
                     <li><Link className="button" to="#">Pathology Centers</Link></li>
-                    <li><Link className="button" to="#">Health Tips</Link></li>
                     <li><Link className="button" to="#">Best deals in tows</Link></li>
-                    <li><Link className="button" to="#">Invitations Sends</Link></li>
+                    
                     <li><Link className="button" to="#">Notifications</Link></li>
                     <li><Link className="button" to="#">Promotional Activity</Link></li>
                     <li><Link className="button" to="#">Patient Notifications</Link></li>

@@ -1,30 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { specializationActions } from '../../_actions';
-import { AddSpecialization } from './AddSpecialization';
-import { specializationValidator } from '../../_validator';
+import { healthTipsActions } from '../../_actions';
+import { AddHealthTips } from './AddHealthTips';
+import { healthTipsValidator } from '../../_validator';
 
 
-class AddSpecializationContainer extends React.Component {
+class AddHealthTipsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.initialState;
     this.handleClose = this.handleClose.bind(this);
-    this.handleSaveSpecialization = this.handleSaveSpecialization.bind(this);
+    this.handleSaveHealthTips = this.handleSaveHealthTips.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
   }
 
   get initialState() {
       return {
-          notificationForm : {
+          healthTipsForm : {
               detail : {
-                  'en_spec' : '',
+                  'title' : '',
                   'image' : '',
-                  'marathi_spec' : ''
+                  'desc_en' : ''
               },
               validate : {
-                  en_spec : { isValid : true, message : '' }
+                  title : { isValid : true, message : '' },
+                  desc_en : { isValid : true, message : '' }
               }
           }
       }
@@ -39,9 +40,9 @@ class AddSpecializationContainer extends React.Component {
   */
   handleInputChange(event) {
         const { name, value }       = event.target;
-        const { detail, validate }  = this.state.notificationForm;
+        const { detail, validate }  = this.state.healthTipsForm;
         this.setState({
-            notificationForm : {
+            healthTipsForm : {
                 validate:{
                     ...validate,
                     [name]: {
@@ -77,9 +78,9 @@ class AddSpecializationContainer extends React.Component {
         // }
         // return false;
         // const { name, value }       = e.target;
-        const { detail, validate }  = this.state.notificationForm;
+        const { detail, validate }  = this.state.healthTipsForm;
         this.setState({
-        notificationForm : {
+        healthTipsForm : {
             validate:{
                 ...validate,
                 image: {
@@ -103,22 +104,23 @@ class AddSpecializationContainer extends React.Component {
      * @return                Nothing
      */
   handleClose() {
-      this.props.addSpecializationHideHandle();
+      this.props.addHealthTipsHideHandle();
       const { dispatch } = this.props;
-      dispatch(specializationActions.resetSpecializationState());
+      dispatch(healthTipsActions.resetHealthTipsState());
   }
 
-  handleSaveSpecialization() {
-    if(specializationValidator.is_specializationValid(this)) {
-        const { detail } = this.state.notificationForm;
+  handleSaveHealthTips() {
+    if(healthTipsValidator.is_healthTipsValid(this)) {
+        const { detail } = this.state.healthTipsForm;
         // console.log(detail)
         var bodyFormData = new FormData();
-        bodyFormData.append('en_spec', detail.en_spec);
+        bodyFormData.append('title', detail.title);
+        bodyFormData.append('desc_en', detail.desc_en);
         //table structure with validation rules
         bodyFormData.append('image',detail.image);
 
         const { dispatch } = this.props;
-        dispatch(specializationActions.saveSpecialization(bodyFormData, this.props.notificationList));
+        dispatch(healthTipsActions.saveHealthTips(bodyFormData, this.props.healthTipsList));
     }
   }
 
@@ -131,10 +133,10 @@ class AddSpecializationContainer extends React.Component {
         if(newProps.closeForm == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
-                dispatch(specializationActions.getSpecializationList(1, 10, "asc", "filtered"));
+                dispatch(healthTipsActions.getHealthTipsList(1, 10, "asc", "filtered"));
                 
-                dispatch(specializationActions.resetSpecializationState());
-                this.props.addSpecializationHideHandle();
+                dispatch(healthTipsActions.resetHealthTipsState());
+                this.props.addHealthTipsHideHandle();
                 this.setState(this.initialState);
             }.bind(this), 1500);
         }else{
@@ -143,15 +145,15 @@ class AddSpecializationContainer extends React.Component {
     }
   render() {
       return (
-            <AddSpecialization 
-              addSpecializationShow = {this.props.addSpecializationShow}
+            <AddHealthTips 
+              addHealthTipsShow = {this.props.addHealthTipsShow}
               messages = { this.props.successMessage }
               errorMsg = { this.props.errorMsg }
               handleClose = {this.handleClose}
-              handleSaveSpecialization = {this.handleSaveSpecialization}
+              handleSaveHealthTips = {this.handleSaveHealthTips}
               handleInputChange = {this.handleInputChange}
               handleFileChange = {this.handleFileChange}
-              payload = {this.state.notificationForm}
+              payload = {this.state.healthTipsForm}
             />
       );
     }
@@ -165,10 +167,10 @@ class AddSpecializationContainer extends React.Component {
  */
 
 function mapStateToProps(state) {
-   const { notificationList,loader,successMessage,sendingRequest,errorMsg,closeForm } = state.notificationReducer;
+   const { healthTipsList,loader,successMessage,sendingRequest,errorMsg,closeForm } = state.healthTipsReducer;
 
     return {
-        notificationList,
+        healthTipsList,
         loader,
         successMessage,
         sendingRequest,
@@ -176,5 +178,5 @@ function mapStateToProps(state) {
         closeForm
     };
 }
-const connectedAddSpecializationContainer = connect(mapStateToProps)(AddSpecializationContainer);
-export { connectedAddSpecializationContainer as AddSpecializationContainer };
+const connectedAddHealthTipsContainer = connect(mapStateToProps)(AddHealthTipsContainer);
+export { connectedAddHealthTipsContainer as AddHealthTipsContainer };

@@ -88,7 +88,7 @@ class Specialization extends React.Component {
     }
 
     render() {
-        var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
+        // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
             <div className="page-container">
                 <HeaderContainer />
@@ -111,14 +111,14 @@ class Specialization extends React.Component {
                                             </div>
                                         </div>
                                         <div className="table-wrap">
-                                        <div className="table-search">
+                                        {/*<div className="table-search">
                                                 <input
                                                     value={this.state.filterAll}
                                                     onChange={this.notificationSearch}
                                                     className="table-search-input"
                                                     placeholder="Search"
                                                 />
-                                        </div>
+                                        </div>*/}
                                         <ReactTable
                                             noDataText="No found !!"
                                             data={this.props.categoryList}
@@ -127,17 +127,17 @@ class Specialization extends React.Component {
                                             filtered={this.state.filtered}
                                             columns={[
                                                 {
-                                                    Header    : "Image",
+                                                    Header: 'Image',
                                                     accessor  : "image",
-                                                    className : "grid-header",
+                                                    className : 'grid-header',
                                                     filterable  : false,
-                                                    filterMethod: (filter, row) => {
-                                                        return row[filter.id].includes(filter.value);
-                                                    }
+                                                    Cell: row =>
+                                                      <div><img src={'data:image/png;base64,'+row.value} width="50px" height="50px"/></div>
+                                                    
                                                 },
                                                 {
                                                     Header      : "Specialization ID",
-                                                    accessor    : "spec_id",
+                                                    accessor    : "id",
                                                     className   : "grid-header",
                                                     filterable  : false,
                                                     filterMethod: (filter, row) => {
@@ -153,10 +153,11 @@ class Specialization extends React.Component {
                                                         return row[filter.id].includes(filter.value);
                                                     }
                                                 }
+                                                
                                             ]}
                                             defaultSorted={[
                                                 {
-                                                    id: "spec_id",
+                                                    id: "id",
                                                     desc: false
                                                 }
                                             ]}
@@ -166,12 +167,12 @@ class Specialization extends React.Component {
                                             loading={this.state.loading}
                                             filterable
                                             Sorted
-                                            pages={this.props.pages}
+                                            // pages={this.props.pages}
                                             showPagination={true}
                                             showPaginationTop={true}
                                             showPaginationBottom={false}
                                             pageSizeOptions={[10, 20, 50]}
-                                            manual // For server side pagination
+                                            automatic // For server side pagination
                                             onFetchData={(state, instance) => {
                                                 this.getSpecializationList(state.page, state.pageSize, state.sorted, state.filtered);
                                             }}
@@ -201,7 +202,7 @@ class Specialization extends React.Component {
 
 function mapStateToProps(state) {
    const { categoryList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid } = state.notificationReducer;
-
+   // console.log('categoryList',categoryList)
     return {
         categoryList,
         isUserNotValid,
