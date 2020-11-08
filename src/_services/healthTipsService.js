@@ -12,7 +12,8 @@ import { utilityHelper } from '../_helpers';
  */
 export const healthTipsService = {
     getHealthTipsList,
-    saveHealthTips
+    saveHealthTips,
+    statusChange
 };
 
 /**
@@ -50,6 +51,26 @@ function saveHealthTips(notification) {
         headers : { 
             'Content-Type' : 'multipart/form-data'
         }
+    })
+    .then(response => {
+        return response;
+    })
+    .then(response => {
+        return response;
+    });
+}
+
+/**
+* @DateOfCreation        10 May 2018
+* @ShortDescription      This function is responsible to call Save notification api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function statusChange(data) {
+    // var loginAccessToken = utilityHelper.getLoginAccessToken();
+    return axios({
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH + '/admin/healthTipsActive/'+data.health_tip_id+'/'+data.status,
     })
     .then(response => {
         return response;

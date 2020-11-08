@@ -12,7 +12,8 @@ import { utilityHelper } from '../_helpers';
  */
 export const specializationService = {
     getSpecializationList,
-    saveSpecialization
+    saveSpecialization,
+    statusChange
 };
 
 /**
@@ -47,6 +48,26 @@ function saveSpecialization(notification) {
         method  : 'post',
         url     : configConstants.API_BASE_PATH + '/admin/saveCategory',
         data    : notification
+    })
+    .then(response => {
+        return response;
+    })
+    .then(response => {
+        return response;
+    });
+}
+
+/**
+* @DateOfCreation        10 May 2018
+* @ShortDescription      This function is responsible to call Save notification api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function statusChange(data) {
+    // var loginAccessToken = utilityHelper.getLoginAccessToken();
+    return axios({
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH + '/admin/categoryActive/'+data.id+'/'+data.status,
     })
     .then(response => {
         return response;

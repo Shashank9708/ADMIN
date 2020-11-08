@@ -16,6 +16,7 @@ const initialState = {
     successMessage  : '',
     errorMsg        : false,
     detail          : {},
+    status            : false,
 };
 export function healthTipsReducer(state = initialState, action) {
     switch (action.type) {
@@ -79,6 +80,29 @@ export function healthTipsReducer(state = initialState, action) {
             closeForm      : false,
            };
 
+        // Fetch Reducer's
+        case healthTipsConstants.STATUS_CHANGE_REQUEST:
+          return {
+            ...state,
+            status            : false,
+            errorMsg         : false,
+            is_loaded:false
+          };
+        case healthTipsConstants.STATUS_CHANGE_SUCCESS:
+          return {
+            ...state,
+            status            : true,
+            successMessage     : action.success,
+            errorMsg           : false,
+            is_loaded          : true
+          };
+        case healthTipsConstants.STATUS_CHANGE_FAILURE:
+          return {
+            ...state,
+            status            : false,
+            errorMsg        : action.error
+          };
+
         case healthTipsConstants.HEALTH_TIPS_RESET_STATE:
           return {
               ...state,
@@ -86,7 +110,8 @@ export function healthTipsReducer(state = initialState, action) {
               errorMsg        : false,
               successMessage  : false,
               submitted       : false,
-              closeForm       : false
+              closeForm       : false,
+              status            : false,
            };
         case configConstants.UNAUTHENTICATE:
           return {

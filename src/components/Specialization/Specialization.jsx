@@ -23,6 +23,7 @@ class Specialization extends React.Component {
         this.addSpecializationHideHandle = this.addSpecializationHideHandle.bind(this);
 
         this.getSpecializationList        = this.getSpecializationList.bind(this);
+        this.statusShowHandle = this.statusShowHandle.bind(this);
         this.notificationSearch         = this.notificationSearch.bind(this);
         this.state               = this.initialState;
     }
@@ -77,6 +78,18 @@ class Specialization extends React.Component {
 
     /**
      * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle open import modal
+     * @return                Nothing
+     */
+    statusShowHandle(id, status) {
+        var json = {'id':id,'status':status}
+        const { dispatch } = this.props;
+        dispatch(specializationActions.statusChange(json));
+
+    }
+
+    /**
+     * @DateOfCreation        26 July 2018
      * @ShortDescription      This function is responsible to handle load filtered notification list
      * @return                Nothing
     */
@@ -85,6 +98,23 @@ class Specialization extends React.Component {
         const filterAll = value;
         const filtered = [{ id: 'all', value: filterAll }];
         this.setState({ filterAll, filtered });
+    }
+
+    /**
+   * @DateOfCreation        28 June 2018
+   * @ShortDescription      This function is responsible to close import model.
+   * @return                Nothing
+  */
+    UNSAFE_componentWillReceiveProps(newProps) {
+        
+        if(newProps.status == true){
+            setTimeout(function() { 
+                const { dispatch } = this.props;
+                dispatch(specializationActions.resetSpecializationState())
+
+                this.getSpecializationList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
+            }.bind(this), 1500);
+        }
     }
 
     render() {
@@ -152,6 +182,34 @@ class Specialization extends React.Component {
                                                     filterMethod: (filter, row) => {
                                                         return row[filter.id].includes(filter.value);
                                                     }
+                                                },
+                                                {
+                                                  Header: 'Status',
+                                                  accessor  : "status",
+                                                  filterable  : false,
+                                                  
+                                                  className : 'grid-header',
+                                                  Cell: row => {
+                                                          return  (
+                                                              <div>
+                                                              {
+                                                                row.value === 1 ?
+                                                                <a href="javascript:void(0)" 
+                                                                  className="btn"
+                                                                  onClick={ this.statusShowHandle.bind(null,row.original.id,0) } 
+                                                                  disabled={ this.props.submitted ? true : false }>
+                                                                    <span className="btn btn-success">Active</span>
+                                                                </a>
+                                                                :
+                                                                <a href="javascript:void(0)" 
+                                                                  className="btn"
+                                                                  onClick={ this.statusShowHandle.bind(null,row.original.id,1) } 
+                                                                  disabled={ this.props.submitted ? true : false }>
+                                                                    <span className="grey btn">Inactive</span>   
+                                                                </a>
+                                                              }
+                                                              </div>
+                                                          )}
                                                 }
                                                 
                                             ]}
@@ -201,7 +259,7 @@ class Specialization extends React.Component {
  */
 
 function mapStateToProps(state) {
-   const { categoryList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid } = state.notificationReducer;
+   const { categoryList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status } = state.notificationReducer;
    // console.log('categoryList',categoryList)
     return {
         categoryList,
@@ -210,7 +268,8 @@ function mapStateToProps(state) {
         successMessage,
         sendingRequest,
         errorMsg,
-        pages
+        pages,
+        status
     };
 }
 const connectedSpecialization = connect(mapStateToProps)(Specialization);

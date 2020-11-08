@@ -12,6 +12,7 @@ const initialState = {
     categoryList     : [],
     sendingRequest  : false,
     afterUpdate     : false,
+    status          : false,
     loader          : true,
     successMessage  : '',
     errorMsg        : false,
@@ -79,6 +80,29 @@ export function notificationReducer(state = initialState, action) {
             closeForm      : false,
            };
 
+        // Fetch Reducer's
+        case notificationConstants.STATUS_CHANGE_REQUEST:
+          return {
+            ...state,
+            status            : false,
+            errorMsg         : false,
+            is_loaded:false
+          };
+        case notificationConstants.STATUS_CHANGE_SUCCESS:
+          return {
+            ...state,
+            status            : true,
+            successMessage     : action.success,
+            errorMsg           : false,
+            is_loaded          : true
+          };
+        case notificationConstants.STATUS_CHANGE_FAILURE:
+          return {
+            ...state,
+            status            : false,
+            errorMsg        : action.error
+          };
+
         case notificationConstants.NOTIFICATION_RESET_STATE:
           return {
               ...state,
@@ -86,7 +110,8 @@ export function notificationReducer(state = initialState, action) {
               errorMsg        : false,
               successMessage  : false,
               submitted       : false,
-              closeForm       : false
+              closeForm       : false,
+              status          : false,
            };
         case configConstants.UNAUTHENTICATE:
           return {
