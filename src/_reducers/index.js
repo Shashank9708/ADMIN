@@ -17,6 +17,8 @@ import { LiveMapReducer } from '../components/LiveMap/LiveMapReducer';
 import { notificationReducer } from './notificationReducer';
 import { appointmentReducer } from './appointmentReducer';
 import { healthTipsReducer } from './healthTipsReducer';
+import { medicalStoresReducer } from './medicalStoresReducer';
+import { pathologyCentersReducer } from './pathologyCentersReducer';
 
 const appReducer = combineReducers({
 	session: sessionReducer,
@@ -33,6 +35,8 @@ const appReducer = combineReducers({
 	viewProfileReducer,
 	appointmentReducer,
 	healthTipsReducer,
+	medicalStoresReducer,
+	pathologyCentersReducer,
 
 	vehicleReducer,
 	LiveMapReducer,

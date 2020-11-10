@@ -4,6 +4,8 @@ export * from './forgotConstants';
 export * from './headerConstants';
 export * from './appointmentConstants';
 export * from './healthTipsConstants';
+export * from './medicalStoresConstants';
+export * from './pathologyCentersConstants';
 export * from './staffConstants';
 export * from './userConstants';
 export * from './driverConstants';

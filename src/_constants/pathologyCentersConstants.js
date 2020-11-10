@@ -1,0 +1,36 @@
+/**
+ * pathologyCentersConstants
+ *
+ * @package                TruckAdmin
+ * @subpackage             Notification Constants
+ * @category               Constants
+ * @DateOfCreation         26 July 2018
+ * @ShortDescription       This is responsible for Notification Constants action names
+ */
+export const pathologyCentersConstants = {
+
+       // Fetch Action Constants
+    PATHOLOGY_CENTER_FETCH_REQUEST     : 'PATHOLOGY_CENTER_FETCH_REQUEST',
+    PATHOLOGY_CENTER_FETCH_SUCCESS     : 'PATHOLOGY_CENTER_FETCH_SUCCESS',
+    PATHOLOGY_CENTER_FETCH_FAILURE     : 'PATHOLOGY_CENTER_FETCH_FAILURE',
+
+    // Add Action Constants
+    PATHOLOGY_CENTER_SAVE_REQUEST    : 'PATHOLOGY_CENTER_SAVE_REQUEST',
+    PATHOLOGY_CENTER_SAVE_SUCCESS    : 'PATHOLOGY_CENTER_SAVE_SUCCESS',
+    PATHOLOGY_CENTER_SAVE_FAILURE    : 'PATHOLOGY_CENTER_SAVE_FAILURE',
+
+    // Add Action Constants
+    STATUS_CHANGE_REQUEST    : 'STATUS_CHANGE_REQUEST',
+    STATUS_CHANGE_SUCCESS    : 'STATUS_CHANGE_SUCCESS',
+    STATUS_CHANGE_FAILURE    : 'STATUS_CHANGE_FAILURE',
+
+    // Delete action constants
+    PATHOLOGY_CENTER_DELETE_REQUEST    : 'PATHOLOGY_CENTER_DELETE_REQUEST',
+    PATHOLOGY_CENTER_DELETE_SUCCESS    : 'PATHOLOGY_CENTER_DELETE_SUCCESS',
+    PATHOLOGY_CENTER_DELETE_FAILURE    : 'PATHOLOGY_CENTER_DELETE_FAILURE',
+
+    // Reset State
+    PATHOLOGY_CENTER_RESET_STATE     : 'PATHOLOGY_CENTER_RESET_STATE',
+    PATHOLOGY_CENTER_UPDATE_STATE    : 'PATHOLOGY_CENTER_UPDATE_STATE',
+
+};

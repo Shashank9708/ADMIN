@@ -5,6 +5,8 @@ export * from './chatActions';
 export * from './specializationActions';
 export * from './appointmentActions';
 export * from './healthTipsActions';
+export * from './medicalStoresActions';
+export * from './pathologyCentersActions';
 export * from './headerActions';
 export * from './commonActions';
 export * from './driverActions';

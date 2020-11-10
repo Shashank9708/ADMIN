@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { HeaderContainer } from '../Header';
 import { SideMenu } from '../SideMenu';
-import {AddHealthTipsContainer} from './AddHealthTipsContainer';
-import { healthTipsActions, headerActions } from '../../_actions';
+import {AddMedicalStoresContainer} from './AddMedicalStoresContainer';
+import { medicalStoresActions, headerActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
 import {DropdownButton, Dropdown} from 'react-bootstrap'
 
-class HealthTips extends React.Component {
+class MedicalStores extends React.Component {
     /**
      * @DateOfCreation        26 July 2018
      * @ShortDescription      Contructor is responsible to function declaration and define intial state
@@ -19,10 +19,10 @@ class HealthTips extends React.Component {
      */
     constructor(props) {
         super(props);
-        this.addHealthTipsShowHandle = this.addHealthTipsShowHandle.bind(this);
-        this.addHealthTipsHideHandle = this.addHealthTipsHideHandle.bind(this);
+        this.addMedicalStoresShowHandle = this.addMedicalStoresShowHandle.bind(this);
+        this.addMedicalStoresHideHandle = this.addMedicalStoresHideHandle.bind(this);
 
-        this.getHealthTipsList        = this.getHealthTipsList.bind(this);
+        this.getMedicalStoresList        = this.getMedicalStoresList.bind(this);
         this.statusShowHandle = this.statusShowHandle.bind(this);
         this.notificationSearch         = this.notificationSearch.bind(this);
         this.state               = this.initialState;
@@ -32,7 +32,7 @@ class HealthTips extends React.Component {
         return {
             loading : false,
             pages  : 0,
-            addHealthTipsShow: false
+            addMedicalStoresShow: false
         }
     }
 
@@ -41,8 +41,8 @@ class HealthTips extends React.Component {
      * @ShortDescription      This function is responsible to handle open import modal
      * @return                Nothing
      */
-     addHealthTipsShowHandle() {
-       this.setState({ addHealthTipsShow: true });
+     addMedicalStoresShowHandle() {
+       this.setState({ addMedicalStoresShow: true });
      }
 
     /**
@@ -50,8 +50,8 @@ class HealthTips extends React.Component {
      * @ShortDescription      This function is responsible to handle close modal
      * @return                Nothing
      */
-     addHealthTipsHideHandle() {
-       this.setState({ addHealthTipsShow: false });
+     addMedicalStoresHideHandle() {
+       this.setState({ addMedicalStoresShow: false });
      }
 
     /**
@@ -71,9 +71,9 @@ class HealthTips extends React.Component {
     * @ShortDescription      This function is responsible to get the list of notification from API
     * @return                Nothing
     */
-    getHealthTipsList(page, pageSize, sorted, filtered){
+    getMedicalStoresList(page, pageSize, sorted, filtered){
         const { dispatch }   = this.props;
-        dispatch(healthTipsActions.getHealthTipsList(page, pageSize, sorted, filtered));
+        dispatch(medicalStoresActions.getMedicalStoresList(page, pageSize, sorted, filtered));
     }
 
     /**
@@ -93,10 +93,10 @@ class HealthTips extends React.Component {
      * @ShortDescription      This function is responsible to handle open import modal
      * @return                Nothing
      */
-    statusShowHandle(health_tip_id, status) {
-        var json = {'health_tip_id':health_tip_id,'status':status}
+    statusShowHandle(storeid, status) {
+        var json = {'storeid':storeid,'status':status}
         const { dispatch } = this.props;
-        dispatch(healthTipsActions.statusChange(json));
+        dispatch(medicalStoresActions.statusChange(json));
 
     }
 
@@ -110,9 +110,9 @@ class HealthTips extends React.Component {
         if(newProps.status == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
-                dispatch(healthTipsActions.resetHealthTipsState())
+                dispatch(medicalStoresActions.resetMedicalStoresState())
 
-                this.getHealthTipsList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
+                this.getMedicalStoresList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
             }.bind(this), 1500);
         }
     }
@@ -134,10 +134,10 @@ class HealthTips extends React.Component {
                               <div className="inner-content">
                                       <div className="row page-header">
                                           <div className="col-md-6">
-                                              <h1 className="page-title">HealthTips</h1>
+                                              <h1 className="page-title">Medical Stores</h1>
                                           </div>
                                           <div className="col-md-6 text-right">
-                                             <button className="blue btn text-btn" onClick={this.addHealthTipsShowHandle}>Add New</button>
+                                             <button className="blue btn text-btn" onClick={this.addMedicalStoresShowHandle}>Add New</button>
                                           </div>
                                       </div>
                                       <div className="table-wrap">
@@ -151,23 +151,14 @@ class HealthTips extends React.Component {
                                       </div>*/}
                                       <ReactTable
                                           noDataText="No found !!"
-                                          data={this.props.healthTipsList}
+                                          data={this.props.medicalStoresList}
                                           filterable
                                           defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
                                           filtered={this.state.filtered}
                                           columns={[
                                               {
-                                                  Header: 'Image',
-                                                  accessor  : "image",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  Cell: row =>
-                                                    <div><img src={'data:image/png;base64,'+row.value} width="50px" height="50px"/></div>
-                                                    
-                                              },
-                                              {
-                                                  Header: 'Title',
-                                                  accessor  : "title",
+                                                  Header: 'UIN',
+                                                  accessor  : "storeid",
                                                   className : 'grid-header',
                                                   filterable  : false,
                                                   filterMethod: (filter, row) => {
@@ -175,8 +166,8 @@ class HealthTips extends React.Component {
                                                   }
                                               },
                                               {
-                                                  Header: 'Description',
-                                                  accessor  : "desc_en",
+                                                  Header: 'Name',
+                                                  accessor  : "name",
                                                   className : 'grid-header',
                                                   filterable  : false,
                                                   filterMethod: (filter, row) => {
@@ -184,6 +175,42 @@ class HealthTips extends React.Component {
                                                   }
                                               },
                                               {
+                                                  Header: 'Contact No',
+                                                  accessor  : "contact_no",
+                                                  className : 'grid-header',
+                                                  filterable  : false,
+                                                  filterMethod: (filter, row) => {
+                                                      return row[filter.id].includes(filter.value);
+                                                  }
+                                              },
+                                              {
+                                                  Header: 'Registration No',
+                                                  accessor  : "license",
+                                                  className : 'grid-header',
+                                                  filterable  : false,
+                                                  filterMethod: (filter, row) => {
+                                                      return row[filter.id].includes(filter.value);
+                                                  }
+                                              },
+                                              {
+                                                  Header: 'Home Service',
+                                                  accessor  : "homeservice",
+                                                  filterable  : false,
+                                                  
+                                                  className : 'grid-header',
+                                                  Cell: row => {
+                                                          return  (
+                                                              <div>
+                                                              {
+                                                                row.value === 1 ?
+                                                                'Yes'
+                                                                :
+                                                                'No'
+                                                              }
+                                                              </div>
+                                                          )}
+                                                },
+                                                {
                                                   Header: 'Status',
                                                   accessor  : "status",
                                                   filterable  : false,
@@ -196,14 +223,14 @@ class HealthTips extends React.Component {
                                                                 row.value === 1 ?
                                                                 <a href="javascript:void(0)" 
                                                                   className="btn"
-                                                                  onClick={ this.statusShowHandle.bind(null,row.original.health_tip_id,0) } 
+                                                                  onClick={ this.statusShowHandle.bind(null,row.original.storeid,0) } 
                                                                   disabled={ this.props.submitted ? true : false }>
                                                                     <span className="btn btn-success">Active</span>
                                                                 </a>
                                                                 :
                                                                 <a href="javascript:void(0)" 
                                                                   className="btn"
-                                                                  onClick={ this.statusShowHandle.bind(null,row.original.health_tip_id,1) } 
+                                                                  onClick={ this.statusShowHandle.bind(null,row.original.storeid,1) } 
                                                                   disabled={ this.props.submitted ? true : false }>
                                                                     <span className="grey btn">Inactive</span>   
                                                                 </a>
@@ -213,7 +240,7 @@ class HealthTips extends React.Component {
                                                 },
                                                 {
                                                     Header: 'Actions',
-                                                    accessor  : "health_tip_id",
+                                                    accessor  : "storeid",
                                                     filterable  : false,
                                                     
                                                     className : 'grid-header',
@@ -228,12 +255,12 @@ class HealthTips extends React.Component {
                                           ]}
                                           defaultSorted={[
                                               {
-                                                  id: "health_tip_id",
+                                                  id: "storeid",
                                                   desc: false
                                               }
                                           ]}
                                           defaultPageSize={10}
-                                          minRows= {this.props.healthTipsList}
+                                          minRows= {this.props.medicalStoresList}
                                           className="table table-bordered responsive"
                                           loading={this.state.loading}
                                           filterable
@@ -245,7 +272,7 @@ class HealthTips extends React.Component {
                                           pageSizeOptions={[10, 20, 50]}
                                           automatic // For server side pagination
                                           onFetchData={(state, instance) => {
-                                              this.getHealthTipsList(state.page, state.pageSize, state.sorted, state.filtered);
+                                              this.getMedicalStoresList(state.page, state.pageSize, state.sorted, state.filtered);
                                           }}
                                       />
                                   </div>
@@ -254,9 +281,9 @@ class HealthTips extends React.Component {
                           </div>
                         </div>
                       </div>
-                      <AddHealthTipsContainer
-                        addHealthTipsShow = {this.state.addHealthTipsShow}
-                        addHealthTipsHideHandle = {this.addHealthTipsHideHandle}
+                      <AddMedicalStoresContainer
+                        addMedicalStoresShow = {this.state.addMedicalStoresShow}
+                        addMedicalStoresHideHandle = {this.addMedicalStoresHideHandle}
                       />
                     </div>
                 </div>    
@@ -272,10 +299,10 @@ class HealthTips extends React.Component {
  */
 
 function mapStateToProps(state) {
-   const { healthTipsList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status } = state.healthTipsReducer;
-   // console.log('healthTipsList',healthTipsList)
+   const { medicalStoresList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status } = state.medicalStoresReducer;
+   // console.log('medicalStoresList',medicalStoresList)
     return {
-        healthTipsList,
+        medicalStoresList,
         isUserNotValid,
         loader,
         successMessage,
@@ -285,5 +312,5 @@ function mapStateToProps(state) {
         status
     };
 }
-const connectedHealthTips = connect(mapStateToProps)(HealthTips);
-export { connectedHealthTips as HealthTips };
+const connectedMedicalStores = connect(mapStateToProps)(MedicalStores);
+export { connectedMedicalStores as MedicalStores };
