@@ -6,6 +6,7 @@ export * from './appointmentConstants';
 export * from './healthTipsConstants';
 export * from './medicalStoresConstants';
 export * from './pathologyCentersConstants';
+export * from './healthTipsCategoriesConstants';
 export * from './staffConstants';
 export * from './userConstants';
 export * from './driverConstants';

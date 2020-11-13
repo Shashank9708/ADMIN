@@ -1,33 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { healthTipsActions } from '../../_actions';
-import { AddHealthTips } from './AddHealthTips';
-import { healthTipsValidator } from '../../_validator';
+import { healthTipsCategoriesActions } from '../../_actions';
+import { AddHealthTipsCategories } from './AddHealthTipsCategories';
+import { healthTipsCategoriesValidator } from '../../_validator';
 
 
-class AddHealthTipsContainer extends React.Component {
+class AddHealthTipsCategoriesContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.initialState;
     this.handleClose = this.handleClose.bind(this);
-    this.handleSaveHealthTips = this.handleSaveHealthTips.bind(this);
+    this.handleSaveHealthTipsCategories = this.handleSaveHealthTipsCategories.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
-    this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
   get initialState() {
       return {
-          healthTipsForm : {
+          healthTipsCategoriesForm : {
               detail : {
-                  'title' : '',
+                  'title_en' : '',
                   'image' : '',
-                  'healthtips_category_id' : ''
               },
               validate : {
-                  title : { isValid : true, message : '' },
-                  desc_en : { isValid : true, message : '' },
-                  healthtips_category_id : { isValid : true, message : '' }
+                  title_en : { isValid : true, message : '' }
               }
           }
       }
@@ -42,9 +38,9 @@ class AddHealthTipsContainer extends React.Component {
   */
   handleInputChange(event) {
         const { name, value }       = event.target;
-        const { detail, validate }  = this.state.healthTipsForm;
+        const { detail, validate }  = this.state.healthTipsCategoriesForm;
         this.setState({
-            healthTipsForm : {
+            healthTipsCategoriesForm : {
                 validate:{
                     ...validate,
                     [name]: {
@@ -80,9 +76,9 @@ class AddHealthTipsContainer extends React.Component {
         // }
         // return false;
         // const { name, value }       = e.target;
-        const { detail, validate }  = this.state.healthTipsForm;
+        const { detail, validate }  = this.state.healthTipsCategoriesForm;
         this.setState({
-        healthTipsForm : {
+        healthTipsCategoriesForm : {
             validate:{
                 ...validate,
                 image: {
@@ -99,55 +95,29 @@ class AddHealthTipsContainer extends React.Component {
         
         });
     }
-  /**
-  * @DateOfCreation        11 June 2018
-  * @ShortDescription      This function is responsible to handle changes in Select state
-  * @param                 Event Object
-  * @return                Nothing
-  */
-  handleSelectChange(selectedOption, name) {
-      // console.log('selectedOption',selectedOption, name)
-        const { detail, validate } = this.state.healthTipsForm;
-        this.setState({
-            healthTipsForm : {
-                detail : {
-                    ...detail,
-                    [name] : selectedOption.value
-                },
-                validate : {
-                    ...validate,
-                    [name] : {
-                        isValid : true,
-                        message : ''
-                    }
-                },
-            }
-        });
-    }
+
   /**
      * @DateOfCreation        11 June 2018
      * @ShortDescription      This function is responsible to handle close add/edit employee modal
      * @return                Nothing
      */
   handleClose() {
-      this.props.addHealthTipsHideHandle();
+      this.props.addHealthTipsCategoriesHideHandle();
       const { dispatch } = this.props;
-      dispatch(healthTipsActions.resetHealthTipsState());
+      dispatch(healthTipsCategoriesActions.resetHealthTipsCategoriesState());
   }
 
-  handleSaveHealthTips() {
-    if(healthTipsValidator.is_healthTipsValid(this)) {
-        const { detail } = this.state.healthTipsForm;
+  handleSaveHealthTipsCategories() {
+    if(healthTipsCategoriesValidator.is_healthTipsCategoriesValid(this)) {
+        const { detail } = this.state.healthTipsCategoriesForm;
         // console.log(detail)
         var bodyFormData = new FormData();
-        bodyFormData.append('title', detail.title);
-        bodyFormData.append('desc_en', detail.desc_en);
-        bodyFormData.append('healthtips_category_id', detail.healthtips_category_id);
+        bodyFormData.append('title_en', detail.title_en);
         //table structure with validation rules
         bodyFormData.append('image',detail.image);
 
         const { dispatch } = this.props;
-        dispatch(healthTipsActions.saveHealthTips(bodyFormData, this.props.healthTipsList));
+        dispatch(healthTipsCategoriesActions.saveHealthTipsCategories(bodyFormData, this.props.healthTipsCategoriesList));
     }
   }
 
@@ -160,10 +130,10 @@ class AddHealthTipsContainer extends React.Component {
         if(newProps.closeForm == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
-                dispatch(healthTipsActions.getHealthTipsList(1, 10, "asc", "filtered"));
+                dispatch(healthTipsCategoriesActions.getHealthTipsCategoriesList(1, 10, "asc", "filtered"));
                 
-                dispatch(healthTipsActions.resetHealthTipsState());
-                this.props.addHealthTipsHideHandle();
+                dispatch(healthTipsCategoriesActions.resetHealthTipsCategoriesState());
+                this.props.addHealthTipsCategoriesHideHandle();
                 this.setState(this.initialState);
             }.bind(this), 1500);
         }else{
@@ -172,17 +142,15 @@ class AddHealthTipsContainer extends React.Component {
     }
   render() {
       return (
-            <AddHealthTips 
-              addHealthTipsShow = {this.props.addHealthTipsShow}
-              healthTipsCategoriesList = {this.props.healthTipsCategoriesList}
+            <AddHealthTipsCategories 
+              addHealthTipsCategoriesShow = {this.props.addHealthTipsCategoriesShow}
               messages = { this.props.successMessage }
               errorMsg = { this.props.errorMsg }
               handleClose = {this.handleClose}
-              handleSaveHealthTips = {this.handleSaveHealthTips}
+              handleSaveHealthTipsCategories = {this.handleSaveHealthTipsCategories}
               handleInputChange = {this.handleInputChange}
               handleFileChange = {this.handleFileChange}
-              handleSelectChange = {this.handleSelectChange}
-              payload = {this.state.healthTipsForm}
+              payload = {this.state.healthTipsCategoriesForm}
             />
       );
     }
@@ -191,15 +159,15 @@ class AddHealthTipsContainer extends React.Component {
 
 /**
  * @DateOfCreation        26 July 2018
- * @ShortDescription      connect state to props on reducer and get state for notification list
- * @return                notification list and loader
+ * @ShortDescription      connect state to props on reducer and get state for healthTipsCategories list
+ * @return                healthTipsCategories list and loader
  */
 
 function mapStateToProps(state) {
-   const { healthTipsList,loader,successMessage,sendingRequest,errorMsg,closeForm } = state.healthTipsReducer;
+   const { healthTipsCategoriesList,loader,successMessage,sendingRequest,errorMsg,closeForm } = state.healthTipsCategoriesReducer;
 
     return {
-        healthTipsList,
+        healthTipsCategoriesList,
         loader,
         successMessage,
         sendingRequest,
@@ -207,5 +175,5 @@ function mapStateToProps(state) {
         closeForm
     };
 }
-const connectedAddHealthTipsContainer = connect(mapStateToProps)(AddHealthTipsContainer);
-export { connectedAddHealthTipsContainer as AddHealthTipsContainer };
+const connectedAddHealthTipsCategoriesContainer = connect(mapStateToProps)(AddHealthTipsCategoriesContainer);
+export { connectedAddHealthTipsCategoriesContainer as AddHealthTipsCategoriesContainer };

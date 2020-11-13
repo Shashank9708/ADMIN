@@ -1,8 +1,11 @@
 import React from 'react';
 import {Alert, Button, Modal, Tabs, Tab, DropdownButton, title} from 'react-bootstrap';
+import Select from 'react-select'
+
+
 
 export const AddHealthTips = (props) => { 
-    // console.log('props===>>>',props)
+    
     return (
               <div>
                 <Modal show={props.addHealthTipsShow} onHide={props.handleClose}>
@@ -22,6 +25,19 @@ export const AddHealthTips = (props) => {
                   <Modal.Body>
                       <div className="row">
                         <div className="col-md-12">
+                          
+                          <div className={ props.payload.validate.healthtips_category_id.isValid ? 'form-group' : 'form-group has-error' }>
+                            <Select
+                                placeholder = "Select HealthTips CategoriesList"
+                                onChange={ (value, name) => props.handleSelectChange(value, 'healthtips_category_id') }
+                                options={props.healthTipsCategoriesList}
+                                name='healthtips_category_id'
+                            />
+                            <span className="help-block">{ props.payload.validate.healthtips_category_id.message }</span>
+                          </div>
+                        </div>
+
+                        <div className="col-md-12">
                           <div className={ props.payload.validate.title.isValid ? 'form-group' : 'form-group has-error' }>
                             <input name="title" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Title"/>
                             <span className="help-block">{ props.payload.validate.title.message }</span>
@@ -34,6 +50,8 @@ export const AddHealthTips = (props) => {
                             <span className="help-block">{ props.payload.validate.desc_en.message }</span>
                           </div>
                         </div>
+
+                        
 
                         <div className="col-md-12">
                           <div className={ 'form-group'}>

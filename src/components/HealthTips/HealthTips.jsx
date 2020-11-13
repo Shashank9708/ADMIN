@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { HeaderContainer } from '../Header';
 import { SideMenu } from '../SideMenu';
 import {AddHealthTipsContainer} from './AddHealthTipsContainer';
-import { healthTipsActions, headerActions } from '../../_actions';
+import { healthTipsActions, healthTipsCategoriesActions, headerActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
@@ -43,6 +43,8 @@ class HealthTips extends React.Component {
      */
      addHealthTipsShowHandle() {
        this.setState({ addHealthTipsShow: true });
+       const { dispatch }   = this.props;
+       dispatch(healthTipsCategoriesActions.getHealthTipsCategoriesList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered));
      }
 
     /**
@@ -175,6 +177,15 @@ class HealthTips extends React.Component {
                                                   }
                                               },
                                               {
+                                                  Header: 'Category',
+                                                  accessor  : "title_en",
+                                                  className : 'grid-header',
+                                                  filterable  : false,
+                                                  filterMethod: (filter, row) => {
+                                                      return row[filter.id].includes(filter.value);
+                                                  }
+                                              },
+                                              {
                                                   Header: 'Description',
                                                   accessor  : "desc_en",
                                                   className : 'grid-header',
@@ -256,6 +267,7 @@ class HealthTips extends React.Component {
                       </div>
                       <AddHealthTipsContainer
                         addHealthTipsShow = {this.state.addHealthTipsShow}
+                        healthTipsCategoriesList = {this.props.healthTipsCategoriesList}
                         addHealthTipsHideHandle = {this.addHealthTipsHideHandle}
                       />
                     </div>
@@ -273,11 +285,12 @@ class HealthTips extends React.Component {
 
 function mapStateToProps(state) {
    const { healthTipsList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status } = state.healthTipsReducer;
-   // console.log('healthTipsList',healthTipsList)
+   const { healthTipsCategoriesList  } = state.healthTipsCategoriesReducer;
     return {
         healthTipsList,
         isUserNotValid,
         loader,
+        healthTipsCategoriesList,
         successMessage,
         sendingRequest,
         errorMsg,

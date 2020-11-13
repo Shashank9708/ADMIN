@@ -5,3 +5,4 @@ export * from './specializationValidator';
 export * from './healthTipsValidator';
 export * from './medicalStoresValidator';
 export * from './pathologyCentersValidator';
+export * from './healthTipsCategoriesValidator';

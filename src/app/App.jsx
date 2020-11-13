@@ -85,6 +85,11 @@ const PathologyCentersContainer = Loadable({
     loading: Loading
 });
 
+const HealthTipsCategoriesContainer = Loadable({
+    loader: () => import('../components/HealthTipsCategories').then(object => object.HealthTipsCategoriesContainer),
+    loading: Loading
+});
+
 
 const SettingContainer = Loadable({
     loader: () => import('../components/Setting').then(object => object.SettingContainer),
@@ -129,6 +134,7 @@ class App extends React.Component {
                         <AdminRoute exact path='/categories' component={SpecializationContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/appointments' component={AppointmentsContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/health-tips' component={HealthTipsContainer} authenticated={this.props.authenticated} allowuser={[0]} />
+                        <AdminRoute exact path='/health-tips-categories' component={HealthTipsCategoriesContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/medical-store' component={MedicalStoresContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/pathology-center' component={PathologyCentersContainer} authenticated={this.props.authenticated} allowuser={[0]} />
 

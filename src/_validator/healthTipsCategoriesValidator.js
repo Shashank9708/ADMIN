@@ -1,8 +1,8 @@
 /**
- * healthTipsValidator
+ * healthTipsCategoriesValidator
  *
  * @package                TruckAdmin
- * @subpackage             healthTipsValidator
+ * @subpackage             healthTipsCategoriesValidator
  * @category               Validator
  * @DateOfCreation         24 May 2018
  * @ShortDescription       This is responsible for forgot Password validation rules
@@ -11,8 +11,8 @@
 import validator from 'validator';
 import { utilityHelper } from '../_helpers';
 
-export const healthTipsValidator = {
-    is_healthTipsValid
+export const healthTipsCategoriesValidator = {
+    is_healthTipsCategoriesValid
 };
 
 
@@ -22,35 +22,21 @@ export const healthTipsValidator = {
 * @param                 JSON jsonObj
 * @return                JSON jsonObj
 */
-function is_healthTipsValid(that) {
-    const { detail } = that.state.healthTipsForm;
-    const { validate } = that.state.healthTipsForm;
+function is_healthTipsCategoriesValid(that) {
+    const { detail } = that.state.healthTipsCategoriesForm;
+    const { validate } = that.state.healthTipsCategoriesForm;
     const validationState = {};
 
-    if (validator.isEmpty(validator.trim(detail.title))) {
-        validationState.title = {
+    if (validator.isEmpty(validator.trim(detail.title_en))) {
+        validationState.title_en = {
             isValid : false,
-            message : 'Title is required.'
-        }
-    }
-
-    if (validator.isEmpty(validator.trim(detail.desc_en))) {
-        validationState.desc_en = {
-            isValid : false,
-            message : 'Description is required.'
-        }
-    }
-
-    if (validator.isEmpty(validator.trim(detail.healthtips_category_id))) {
-        validationState.healthtips_category_id = {
-            isValid : false,
-            message : 'Select Health tips category'
+            message : 'Category is required.'
         }
     }
 
     if(!utilityHelper.isObjectEmpty(validationState)) {
         that.setState({
-            healthTipsForm : {
+            healthTipsCategoriesForm : {
                 detail : {
                     ...detail
                 },
