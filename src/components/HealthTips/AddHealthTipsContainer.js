@@ -20,6 +20,7 @@ class AddHealthTipsContainer extends React.Component {
       return {
           healthTipsForm : {
               detail : {
+                  'author_name' : '',
                   'title' : '',
                   'image' : '',
                   'healthtips_category_id' : ''
@@ -140,6 +141,7 @@ class AddHealthTipsContainer extends React.Component {
         const { detail } = this.state.healthTipsForm;
         // console.log(detail)
         var bodyFormData = new FormData();
+        bodyFormData.append('author_name', detail.author_name);
         bodyFormData.append('title', detail.title);
         bodyFormData.append('desc_en', detail.desc_en);
         bodyFormData.append('healthtips_category_id', detail.healthtips_category_id);

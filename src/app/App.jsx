@@ -131,7 +131,7 @@ class App extends React.Component {
                         <AdminRoute exact path='/dashboard' component={Dashboard} authenticated={this.props.authenticated} allowuser={[0]}/>
                         <AdminRoute exact path='/users' component={UserContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/doctors' component={DoctorContainer} authenticated={this.props.authenticated} allowuser={[0]} />
-                        <AdminRoute exact path='/categories' component={SpecializationContainer} authenticated={this.props.authenticated} allowuser={[0]} />
+                        <AdminRoute exact path='/doctor-categories' component={SpecializationContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/appointments' component={AppointmentsContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/health-tips' component={HealthTipsContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/health-tips-categories' component={HealthTipsCategoriesContainer} authenticated={this.props.authenticated} allowuser={[0]} />

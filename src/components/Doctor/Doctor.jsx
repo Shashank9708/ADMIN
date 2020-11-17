@@ -470,7 +470,7 @@ class Doctor extends React.Component {
                                           },
                                           {
                                             Header    : 'Specialization',
-                                            accessor  : 'specialization',
+                                            accessor  : 'en_spec',
                                             className : 'grid-header',
                                             filterable  : false,
                                             filterMethod: (filter, row) => {

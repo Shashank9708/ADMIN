@@ -38,6 +38,12 @@ export const AddHealthTips = (props) => {
                         </div>
 
                         <div className="col-md-12">
+                          <div className='form-group'>
+                            <input name="author_name" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Author Name"/>
+                          </div>
+                        </div>
+
+                        <div className="col-md-12">
                           <div className={ props.payload.validate.title.isValid ? 'form-group' : 'form-group has-error' }>
                             <input name="title" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Title"/>
                             <span className="help-block">{ props.payload.validate.title.message }</span>
@@ -50,8 +56,6 @@ export const AddHealthTips = (props) => {
                             <span className="help-block">{ props.payload.validate.desc_en.message }</span>
                           </div>
                         </div>
-
-                        
 
                         <div className="col-md-12">
                           <div className={ 'form-group'}>
