@@ -25,6 +25,7 @@ class HealthTips extends React.Component {
         this.getHealthTipsList        = this.getHealthTipsList.bind(this);
         this.statusShowHandle = this.statusShowHandle.bind(this);
         this.notificationSearch         = this.notificationSearch.bind(this);
+        this.deleteHealthTips         = this.deleteHealthTips.bind(this);
         this.state               = this.initialState;
     }
 
@@ -99,6 +100,18 @@ class HealthTips extends React.Component {
         var json = {'health_tip_id':health_tip_id,'status':status}
         const { dispatch } = this.props;
         dispatch(healthTipsActions.statusChange(json));
+
+    }
+
+    /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle open import modal
+     * @return                Nothing
+     */
+    deleteHealthTips(health_tip_id) {
+        var json = {'health_tip_id':health_tip_id}
+        const { dispatch } = this.props;
+        dispatch(healthTipsActions.deleteHealthTip(json));
 
     }
 
@@ -195,6 +208,15 @@ class HealthTips extends React.Component {
                                                   }
                                               },
                                               {
+                                                  Header: 'Author Name',
+                                                  accessor  : "author_name",
+                                                  className : 'grid-header',
+                                                  filterable  : false,
+                                                  filterMethod: (filter, row) => {
+                                                      return row[filter.id].includes(filter.value);
+                                                  }
+                                              },
+                                              {
                                                   Header: 'Status',
                                                   accessor  : "status",
                                                   filterable  : false,
@@ -232,7 +254,7 @@ class HealthTips extends React.Component {
                                                           <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
                                                               <Dropdown.Item >View</Dropdown.Item>
                                                               <Dropdown.Item >Edit</Dropdown.Item>
-                                                              <Dropdown.Item >Delete</Dropdown.Item>
+                                                              <Dropdown.Item onClick={ this.deleteHealthTips.bind(null,row.original.health_tip_id) }>Delete</Dropdown.Item>
                                                           </DropdownButton>
                                                 }
                                               

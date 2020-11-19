@@ -103,6 +103,29 @@ export function healthTipsReducer(state = initialState, action) {
             errorMsg        : action.error
           };
 
+        // Fetch Reducer's
+        case healthTipsConstants.HEALTH_TIPS_DELETE_REQUEST:
+          return {
+            ...state,
+            status            : false,
+            errorMsg         : false,
+            is_loaded:false
+          };
+        case healthTipsConstants.HEALTH_TIPS_DELETE_SUCCESS:
+          return {
+            ...state,
+            status            : true,
+            successMessage     : action.success,
+            errorMsg           : false,
+            is_loaded          : true
+          };
+        case healthTipsConstants.HEALTH_TIPS_DELETE_FAILURE:
+          return {
+            ...state,
+            status            : false,
+            errorMsg        : action.error
+          };
+
         case healthTipsConstants.HEALTH_TIPS_RESET_STATE:
           return {
               ...state,
