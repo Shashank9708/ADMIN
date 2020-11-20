@@ -20,6 +20,7 @@ import { healthTipsReducer } from './healthTipsReducer';
 import { medicalStoresReducer } from './medicalStoresReducer';
 import { pathologyCentersReducer } from './pathologyCentersReducer';
 import { healthTipsCategoriesReducer } from './healthTipsCategoriesReducer';
+import { healthProblemReducer } from './healthProblemReducer';
 
 const appReducer = combineReducers({
 	session: sessionReducer,
@@ -39,6 +40,7 @@ const appReducer = combineReducers({
 	medicalStoresReducer,
 	pathologyCentersReducer,
 	healthTipsCategoriesReducer,
+	healthProblemReducer,
 	
 	vehicleReducer,
 	LiveMapReducer,

@@ -7,6 +7,7 @@ export * from './healthTipsConstants';
 export * from './medicalStoresConstants';
 export * from './pathologyCentersConstants';
 export * from './healthTipsCategoriesConstants';
+export * from './healthProblemConstants';
 export * from './staffConstants';
 export * from './userConstants';
 export * from './driverConstants';

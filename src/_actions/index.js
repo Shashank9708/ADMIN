@@ -8,6 +8,7 @@ export * from './healthTipsActions';
 export * from './medicalStoresActions';
 export * from './pathologyCentersActions';
 export * from './healthTipsCategoriesActions';
+export * from './healthProblemActions';
 export * from './headerActions';
 export * from './commonActions';
 export * from './driverActions';

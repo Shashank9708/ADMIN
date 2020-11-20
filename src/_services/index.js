@@ -10,6 +10,7 @@ export * from './healthTipsService';
 export * from './medicalStoresService';
 export * from './pathologyCentersService';
 export * from './healthTipsCategoriesService';
+export * from './healthProblemService';
 export * from './chatService';
 export * from './vehicleService';
 export * from './ViewProfileService';
