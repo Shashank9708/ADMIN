@@ -8,6 +8,7 @@ export * from './medicalStoresConstants';
 export * from './pathologyCentersConstants';
 export * from './healthTipsCategoriesConstants';
 export * from './healthProblemConstants';
+export * from './councilConstants';
 export * from './staffConstants';
 export * from './userConstants';
 export * from './driverConstants';

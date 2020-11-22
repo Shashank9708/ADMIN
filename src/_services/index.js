@@ -11,6 +11,7 @@ export * from './medicalStoresService';
 export * from './pathologyCentersService';
 export * from './healthTipsCategoriesService';
 export * from './healthProblemService';
+export * from './councilService';
 export * from './chatService';
 export * from './vehicleService';
 export * from './ViewProfileService';

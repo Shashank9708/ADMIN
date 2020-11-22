@@ -7,3 +7,4 @@ export * from './medicalStoresValidator';
 export * from './pathologyCentersValidator';
 export * from './healthTipsCategoriesValidator';
 export * from './healthProblemValidator';
+export * from './councilValidator';
