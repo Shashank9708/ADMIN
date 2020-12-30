@@ -9,6 +9,7 @@ export * from './medicalStoresActions';
 export * from './pathologyCentersActions';
 export * from './healthTipsCategoriesActions';
 export * from './healthProblemActions';
+export * from './doctorActions';
 export * from './councilActions';
 export * from './headerActions';
 export * from './commonActions';

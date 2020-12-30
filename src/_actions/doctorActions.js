@@ -1,0 +1,617 @@
+import { configConstants, doctorConstants } from '../_constants';
+import { doctorService } from '../_services';
+
+/**
+ * doctorActions
+ *
+ * @package                Luxury Car
+ * @subpackage             doctorActions
+ * @category               Actions
+ * @DateOfCreation         26 Sep 2020
+ * @ShortDescription       This is responsible to handle all action
+ */
+export const doctorActions = {
+    getSpecialization,
+    getDoctorsBySpecialization,
+    getDoctorsDetail,
+    bookDoctorAppointment,
+    myDoctorAppointment,
+    cancleMyDoctorAppointment,
+    doctorAppointmentList,
+    cancleByDoctorAppointment,
+    uploadPrescription,
+    getDoctorReferrals,
+    getDoctorReferred,
+    referToDoctor,
+    completeAppointment,
+    resetFirstState
+};
+
+
+/**
+* @DateOfCreation        06 July 2020
+* @ShortDescription      This function is responsible for Get Fixtures List
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function getSpecialization(url) {
+    return dispatch => {
+        dispatch(request());
+        doctorService.getSpecialization(url)
+            .then(
+                response => {
+                    if(response != "Error: Network Error"){
+                        var data = response.data;
+                        var errorMsg;
+                        if(data.status === configConstants.SUCCESS_CODE){
+                            dispatch(success(data.data));
+                        }else if(data.status === configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                        }else if(response.status !== 200){
+                            errorMsg = data.message;
+                            dispatch(failure(errorMsg));
+                        }else if(data.status === configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: doctorConstants.SPECIALIZATION_FETCH_REQUEST } }
+    function success(result) { return { type: doctorConstants.SPECIALIZATION_FETCH_SUCCESS, result } }
+    function failure(error) { return { type: doctorConstants.SPECIALIZATION_FETCH_FAILURE, error } }
+    function unauthorize(error) { return { type: doctorConstants.UNAUTHENTICATE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+
+/**
+* @DateOfCreation        06 July 2020
+* @ShortDescription      This function is responsible for Get Fixtures List
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function getDoctorsBySpecialization(url) {
+    return dispatch => {
+        dispatch(request());
+        doctorService.getDoctorsBySpecialization(url)
+            .then(
+                response => {
+                    if(response != "Error: Network Error"){
+                        var data = response.data;
+                        var errorMsg;
+                        if(data.status === configConstants.SUCCESS_CODE){
+                            dispatch(success(data));
+                        }else if(data.status === configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                        }else if(response.status !== 200){
+                            errorMsg = data.message;
+                            dispatch(failure(errorMsg));
+                        }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: doctorConstants.DOCTOR_BY_SP_FETCH_REQUEST } }
+    function success(result) { return { type: doctorConstants.DOCTOR_BY_SP_FETCH_SUCCESS, result } }
+    function failure(error) { return { type: doctorConstants.DOCTOR_BY_SP_FETCH_FAILURE, error } }
+    function unauthorize(error) { return { type: doctorConstants.UNAUTHENTICATE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+
+/**
+* @DateOfCreation        06 July 2020
+* @ShortDescription      This function is responsible for Get Fixtures List
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function getDoctorsDetail(url) {
+    return dispatch => {
+        dispatch(request());
+        doctorService.getDoctorsDetail(url)
+            .then(
+                response => {
+                    if(response != "Error: Network Error"){
+                        var data = response.data;
+                        var errorMsg;
+                        if(data.status === configConstants.SUCCESS_CODE){
+                            dispatch(success(data.data));
+                        }else if(data.status === configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                        }else if(response.status !== 200){
+                            errorMsg = data.message;
+                            dispatch(failure(errorMsg));
+                        }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: doctorConstants.DOCTOR_BY_DETAIL_FETCH_REQUEST } }
+    function success(result) { return { type: doctorConstants.DOCTOR_BY_DETAIL_FETCH_SUCCESS, result } }
+    function failure(error) { return { type: doctorConstants.DOCTOR_BY_DETAIL_FETCH_FAILURE, error } }
+    function unauthorize(error) { return { type: doctorConstants.UNAUTHENTICATE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+
+/**
+* @DateOfCreation        06 July 2020
+* @ShortDescription      This function is responsible for Get Fixtures List
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function bookDoctorAppointment(data) {
+    return dispatch => {
+        dispatch(request());
+        doctorService.bookDoctorAppointment(data)
+            .then(
+                response => {
+                    if(response != "Error: Network Error"){
+                        var data = response.data;
+                        var errorMsg;
+                        if(data.status === 201){
+                            dispatch(success(data));
+                        }else if(data.status === configConstants.SUCCESS_CODE){
+                            dispatch(success(data));
+                        }else if(data.status === configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                        }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: doctorConstants.BOOK_APPOINTMENT_DOCTOR_SAVE_REQUEST } }
+    function success(result) { return { type: doctorConstants.BOOK_APPOINTMENT_DOCTOR_SAVE_SUCCESS, result } }
+    function failure(error) { return { type: doctorConstants.BOOK_APPOINTMENT_DOCTOR_SAVE_FAILURE, error } }
+    function unauthorize(error) { return { type: doctorConstants.UNAUTHENTICATE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+
+/**
+* @DateOfCreation        06 July 2020
+* @ShortDescription      This function is responsible for Get Fixtures List
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function myDoctorAppointment() {
+    return dispatch => {
+        dispatch(request());
+        doctorService.myDoctorAppointment()
+            .then(
+                response => {
+                    if(response != "Error: Network Error"){
+                        var data = response.data;
+                        var errorMsg;
+                        if(data.status === configConstants.SUCCESS_CODE){
+                            dispatch(success(data));
+                        }else if(data.status === configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                        }else if(response.status !== 200){
+                            errorMsg = data.message;
+                            dispatch(failure(errorMsg));
+                        }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: doctorConstants.MY_DOCTOR_APPOINTMENT_REQUEST } }
+    function success(result) { return { type: doctorConstants.MY_DOCTOR_APPOINTMENT_SUCCESS, result } }
+    function failure(error) { return { type: doctorConstants.MY_DOCTOR_APPOINTMENT_FAILURE, error } }
+    function unauthorize(error) { return { type: doctorConstants.UNAUTHENTICATE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+
+/**
+* @DateOfCreation        06 July 2020
+* @ShortDescription      This function is responsible for Get Fixtures List
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function cancleMyDoctorAppointment(url) {
+    return dispatch => {
+        dispatch(request());
+        doctorService.cancleMyDoctorAppointment(url)
+            .then(
+                response => {
+                    if(response != "Error: Network Error"){
+                        var data = response.data;
+                        var errorMsg;
+                        if(data.status === configConstants.SUCCESS_CODE){
+                            dispatch(success(data));
+                        }else if(data.status === configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                        }else if(response.status !== 200){
+                            errorMsg = data.message;
+                            dispatch(failure(errorMsg));
+                        }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: doctorConstants.CANCEL_MY_DOCTOR_APPOINTMENT_REQUEST } }
+    function success(result) { return { type: doctorConstants.CANCEL_MY_DOCTOR_APPOINTMENT_SUCCESS, result } }
+    function failure(error) { return { type: doctorConstants.CANCEL_MY_DOCTOR_APPOINTMENT_FAILURE, error } }
+    function unauthorize(error) { return { type: doctorConstants.UNAUTHENTICATE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+
+/**
+* @DateOfCreation        06 Aug 2020
+* @ShortDescription      This function is responsible for Get Fixtures List
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function doctorAppointmentList() {
+    return dispatch => {
+        dispatch(request());
+        doctorService.doctorAppointmentList()
+            .then(
+                response => {
+                    if(response != "Error: Network Error"){
+                        var data = response.data;
+                        var errorMsg;
+                        if(data.status === configConstants.SUCCESS_CODE){
+                            dispatch(success(data));
+                        }else if(data.status === configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                        }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: doctorConstants.DOCTOR_APPOINTMENT_LIST_REQUEST } }
+    function success(result) { return { type: doctorConstants.DOCTOR_APPOINTMENT_LIST_SUCCESS, result } }
+    function failure(error) { return { type: doctorConstants.DOCTOR_APPOINTMENT_LIST_FAILURE, error } }
+    function unauthorize(error) { return { type: doctorConstants.UNAUTHENTICATE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+
+/**
+* @DateOfCreation        06 Aug 2020
+* @ShortDescription      This function is responsible for Get Fixtures List
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function cancleByDoctorAppointment(url) {
+    return dispatch => {
+        dispatch(request());
+        doctorService.cancleByDoctorAppointment(url)
+            .then(
+                response => {
+                    if(response != "Error: Network Error"){
+                        var data = response.data;
+                        console.log("cancleByDoctorAppointment",data)
+                        var errorMsg;
+                        if(data.status === configConstants.SUCCESS_CODE){
+                            dispatch(success(data));
+                        }else if(data.status === configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                        }else if(response.status !== 200){
+                            errorMsg = data.message;
+                            dispatch(failure(errorMsg));
+                        }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: doctorConstants.CANCEL_BY_DOCTOR_APPOINTMENT_REQUEST } }
+    function success(result) { return { type: doctorConstants.CANCEL_BY_DOCTOR_APPOINTMENT_SUCCESS, result } }
+    function failure(error) { return { type: doctorConstants.CANCEL_BY_DOCTOR_APPOINTMENT_FAILURE, error } }
+    function unauthorize(error) { return { type: doctorConstants.UNAUTHENTICATE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+
+/**
+* @DateOfCreation        06 Aug 2020
+* @ShortDescription      This function is responsible for Get Fixtures List
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function uploadPrescription(data, url) {
+    return dispatch => {
+        dispatch(request());
+        doctorService.uploadPrescription(data, url)
+            .then(
+                response => {
+                    if(response !== "Error: Network Error"){
+                        console.log("upload-->>",response)
+                        var data = response.data;
+                        var errorMsg;
+                        if(data.status === configConstants.SUCCESS_CODE){
+                            dispatch(success(data));
+                        }else if(data.status === configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                        }else if(response.status !== 200){
+                            errorMsg = data.message;
+                            dispatch(failure(errorMsg));
+                        }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: doctorConstants.UPLOAD_SAVE_REQUEST } }
+    function success(result) { return { type: doctorConstants.UPLOAD_SAVE_SUCCESS, result } }
+    function failure(error) { return { type: doctorConstants.UPLOAD_SAVE_FAILURE, error } }
+    function unauthorize(error) { return { type: doctorConstants.UNAUTHENTICATE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+
+/**
+* @DateOfCreation        06 Aug 2020
+* @ShortDescription      This function is responsible for Get Fixtures List
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function completeAppointment(data) {
+    return dispatch => {
+        dispatch(request(data));
+        doctorService.completeAppointment(data)
+            .then(
+                response => {
+                    if(response !== "Error: Network Error"){
+                        var data = response.data;
+                        console.log("data",data)
+                        var errorMsg;
+                        if(data.status === configConstants.SUCCESS_CODE){
+                            dispatch(success(data));
+                        }else if(data.status === configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                        }else if(response.status !== 200){
+                            errorMsg = data.message;
+                            dispatch(failure(errorMsg));
+                        }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: doctorConstants.COMPLETE_APPOINTMENT_REQUEST } }
+    function success(result) { return { type: doctorConstants.COMPLETE_APPOINTMENT_SUCCESS, result } }
+    function failure(error) { return { type: doctorConstants.COMPLETE_APPOINTMENT_FAILURE, error } }
+    function unauthorize(error) { return { type: doctorConstants.UNAUTHENTICATE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+
+/**
+* @DateOfCreation        06 Aug 2020
+* @ShortDescription      This function is responsible for Get Fixtures List
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function getDoctorReferrals(data) {
+    return dispatch => {
+        dispatch(request());
+        doctorService.getDoctorReferrals(data)
+            .then(
+                response => {
+                    if(response != "Error: Network Error"){
+                        var data = response.data;
+                        var errorMsg;
+                        if(data.status === configConstants.SUCCESS_CODE){
+                            dispatch(success(data));
+                        }else if(data.status === configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                        }else if(response.status !== 200){
+                            errorMsg = data.message;
+                            dispatch(failure(errorMsg));
+                        }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: doctorConstants.DOCTOR_REFERRAL_REQUEST } }
+    function success(result) { return { type: doctorConstants.DOCTOR_REFERRAL_SUCCESS, result } }
+    function failure(error) { return { type: doctorConstants.DOCTOR_REFERRAL_FAILURE, error } }
+    function unauthorize(error) { return { type: doctorConstants.UNAUTHENTICATE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+
+/**
+* @DateOfCreation        06 Aug 2020
+* @ShortDescription      This function is responsible for Get Fixtures List
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function getDoctorReferred(data) {
+    return dispatch => {
+        dispatch(request());
+        doctorService.getDoctorReferred(data)
+            .then(
+                response => {
+                    if(response != "Error: Network Error"){
+                        var data = response.data;
+                        var errorMsg;
+                        if(data.status === configConstants.SUCCESS_CODE){
+                            dispatch(success(data));
+                        }else if(data.status === configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                        }else if(response.status !== 200){
+                            errorMsg = data.message;
+                            dispatch(failure(errorMsg));
+                        }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: doctorConstants.DOCTOR_REFERRED_REQUEST } }
+    function success(result) { return { type: doctorConstants.DOCTOR_REFERRED_SUCCESS, result } }
+    function failure(error) { return { type: doctorConstants.DOCTOR_REFERRED_FAILURE, error } }
+    function unauthorize(error) { return { type: doctorConstants.UNAUTHENTICATE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+
+/**
+* @DateOfCreation        06 Aug 2020
+* @ShortDescription      This function is responsible for Get Fixtures List
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function referToDoctor(data) {
+    return dispatch => {
+        dispatch(request());
+        doctorService.referToDoctor(data)
+            .then(
+                response => {
+                    if(response != "Error: Network Error"){
+                        var data = response.data;
+                        var errorMsg;
+                        if(data.status === 201){
+                            dispatch(success(data));
+                        }else if(data.status === configConstants.SUCCESS_CODE){
+                            dispatch(success(data));
+                        }else if(data.status === configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                        }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: doctorConstants.REFERTO_DOCTOR_REQUEST } }
+    function success(result) { return { type: doctorConstants.REFERTO_DOCTOR_SUCCESS, result } }
+    function failure(error) { return { type: doctorConstants.REFERTO_DOCTOR_FAILURE, error } }
+    function unauthorize(error) { return { type: doctorConstants.UNAUTHENTICATE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+
+function resetFirstState(){
+    return dispatch => { dispatch(request()); }
+    function request() { return {type : doctorConstants.FIRST_RESET_STATE }}
+}

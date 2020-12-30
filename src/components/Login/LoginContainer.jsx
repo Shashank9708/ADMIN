@@ -111,10 +111,13 @@ class LoginContainer extends React.Component {
     componentDidUpdate(){
         if(this.props.authenticated && !utilityHelper.isObjectEmpty(this.props.user)){
             var userinfo = this.props.user;
-            // if(userinfo.role === 0){
+            console.log('userinfo',userinfo)
+            if(userinfo.role === 0){
                 // console.log('-->>>--',userinfo)
                 this.props.history.push('/dashboard');
-            // }
+            }else{
+                this.props.history.push('/ddashboard');
+            }
         }
     }
 
