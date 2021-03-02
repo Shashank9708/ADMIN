@@ -26,7 +26,7 @@ class LoginContainer extends React.Component {
                 user: {
                     contact_no      : '',
                     password      : '',
-                    // fcmtoken  : cookies.get('FCMToken')
+                    device_id  : 'FCMToken'
                 },
                 userValidate: {
                     contact_no      : {isValid: true, message: ''},

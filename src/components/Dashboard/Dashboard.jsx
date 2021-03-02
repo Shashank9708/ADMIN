@@ -4,11 +4,36 @@ import {Button} from 'react-bootstrap';
 import {HeaderContainer} from '../Header';
 import {SideMenu} from '../SideMenu';
 import { headerActions, commonActions } from '../../_actions';
+import { Doughnut } from 'react-chartjs-2';
+
 
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      name: 'React',
+      data: {
+        datasets: [{
+          data: [10, 20, 30],
+          backgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56'
+            ],
+            hoverBackgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56'
+            ]
+        }],
+        labels: [
+          'Red',
+          'Yellow',
+          'Blue'
+        ]
+      }
+    }
   }
 
   componentDidMount(){
@@ -17,7 +42,9 @@ class Dashboard extends React.Component {
   }
 
   /**
-     * @DateOfCreation        26 July 2018
+     * @DateOfCreation        2import { Doughnut } from 'react-chartjs-2';
+
+     6 July 2018
      * @ShortDescription      This function is responsible to redirect unauthorise users
      * @return                Redirect
      */
@@ -30,6 +57,113 @@ class Dashboard extends React.Component {
 
   render() {
     const {dashboardList} = this.props
+    var data = {}
+    var dataP = {}
+    var dataD = {}
+    var dataM = {}
+    var dataP = {}
+    if(dashboardList){
+      var total =  dashboardList.userCount + dashboardList.doctorCount + dashboardList.medicalCount + dashboardList.labCount
+      data = {
+          labels: [
+            'PATIENTS',
+            'DOCTORS',
+            'MEDICAL STORES',
+            'PATHOLOGY',
+          ],
+          datasets: [{
+            data: [dashboardList.userCount, dashboardList.doctorCount, dashboardList.medicalCount, dashboardList.labCount],
+            backgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#d68274'
+            ],
+            hoverBackgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#d68274'
+            ]
+          }],
+          text: '20%'
+        };
+      dataP = {
+          labels: [
+            'PATIENTS',
+            'ALL'
+          ],
+          datasets: [{
+            data: [dashboardList.userCount, 500000 - dashboardList.userCount],
+            backgroundColor: [
+            '#FF6384',
+            '#FFFFFF'
+            ],
+            hoverBackgroundColor: [
+            '#FF6384',
+            '#36A2EB'
+            ]
+          }],
+          text: '20%'
+        }; 
+      dataD = {
+          labels: [
+            'DOCTORS',
+            'ALL'
+          ],
+          datasets: [{
+            data: [dashboardList.doctorCount, 40000 - dashboardList.doctorCount],
+            backgroundColor: [
+            '#36A2EB',
+            '#FFFFFF'
+            ],
+            hoverBackgroundColor: [
+            '#36A2EB',
+            '#FFCE56'
+            ]
+          }],
+          text: '20%'
+        };
+      dataM = {
+          labels: [
+            'MEDICAL STORES',
+            'ALL',
+          ],
+          datasets: [{
+            data: [dashboardList.medicalCount, 40000 - dashboardList.medicalCount],
+            backgroundColor: [
+            '#FFCE56',
+            '#FFFFFF'
+            ],
+            hoverBackgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#d68274'
+            ]
+          }],
+          text: '20%'
+        };
+      dataP = {
+          labels: [
+            'PATHOLOGY',
+            'ALL'
+          ],
+          datasets: [{
+            data: [dashboardList.labCount, 40000 - dashboardList.labCount],
+            backgroundColor: [
+            '#d68274',
+            '#FFFFFF'
+            ],
+            hoverBackgroundColor: [
+            '#d68274',
+            '#FFFFFF'
+            ]
+          }],
+          text: '20%'
+        };
+    }
+    
     return (
         <div className="page-container">
             
@@ -50,6 +184,44 @@ class Dashboard extends React.Component {
                           <button className="buttonsix">APPOINTMENTS <br/> {dashboardList.appointmentCount || '-'}</button>
                         
                       </div>
+                      <Doughnut 
+                        data={data}
+                          options={{
+                            responsive: true,
+                            maintainAspectRatio: true,
+                          }}
+                      />
+
+                      <Doughnut 
+                        data={dataP}
+                          options={{
+                            responsive: true,
+                            maintainAspectRatio: true,
+                          }}
+                      />
+
+                      <Doughnut 
+                        data={dataD}
+                          options={{
+                            responsive: true,
+                            maintainAspectRatio: true,
+                          }}
+                      />
+
+                      <Doughnut 
+                        data={dataM}
+                          options={{
+                            responsive: true,
+                            maintainAspectRatio: true,
+                          }}
+                      />
+                      <Doughnut 
+                        data={dataP}
+                          options={{
+                            responsive: true,
+                            maintainAspectRatio: true,
+                          }}
+                      />
                     </section> 
                   </div>
                </div>

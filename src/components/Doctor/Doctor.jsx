@@ -348,6 +348,17 @@ class Doctor extends React.Component {
         const { dispatch } = this.props;
         dispatch(commonActions.editPut(editdata));
     }
+
+    makePractioner(doc_id){
+        const { dispatch } = this.props;
+        dispatch(userActions.makePractitinor(doc_id)).then((res) => {
+          if(res.status === 200){
+
+            // console.log('makePractioner',res)
+            this.getDoctorList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered)
+          }
+        })
+    }
   /**
    * @DateOfCreation        28 June 2018
    * @ShortDescription      This function is responsible to close import model.
@@ -443,7 +454,7 @@ class Doctor extends React.Component {
                                           },
                                           {
                                             Header    : 'UIN',
-                                            accessor  : 'doctor_id',
+                                            accessor  : 'user_id',
                                             className : 'grid-header',
                                             filterable  : false,
                                             filterMethod: (filter, row) => {
@@ -478,7 +489,7 @@ class Doctor extends React.Component {
                                             }
                                           },
                                           {
-                                            Header    : 'Registration Number',
+                                            Header    : 'Reg. Number',
                                             accessor  : 'registratration_number',
                                             className : 'grid-header',
                                             filterable  : false,
@@ -487,8 +498,8 @@ class Doctor extends React.Component {
                                             }
                                           },
                                           {
-                                            Header    : 'City',
-                                            accessor  : 'city',
+                                            Header    : 'Reg. Year',
+                                            accessor  : 'registration_year',
                                             className : 'grid-header',
                                             filterable  : false,
                                             filterMethod: (filter, row) => {
@@ -522,6 +533,27 @@ class Doctor extends React.Component {
                                                               <span className="grey btn">Unapproved</span>
                                                             }
                                                           </a>
+                                                        </div>
+                                          },
+                                          {
+                                            Header: 'Practitioner',
+                                            accessor  : "practioner",
+                                            filterable  : false,
+                                            
+                                            className : 'grid-header',
+                                            Cell: row => 
+                                                        <div>
+                                                        {
+                                                          row.value === 0 ?
+                                                          <a href="javascript:void(0)" 
+                                                            className="btn"
+                                                            onClick={()  => this.makePractioner(row.original.doc_id) } 
+                                                            disabled={ this.props.submitted ? true : false }>
+                                                              <span className="btn btn-success">Make</span>
+                                                          </a>
+                                                          : 
+                                                              <span className="btn btn-success">Practitioner</span>
+                                                        }
                                                         </div>
                                           },
                                           {

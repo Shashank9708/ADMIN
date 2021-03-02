@@ -13,7 +13,8 @@ import { utilityHelper } from '../_helpers';
 export const userService = {
     getUserList,
     getDoctorList,
-    sendMail
+    sendMail,
+    makePractitinor
 };
 
 /**
@@ -77,6 +78,27 @@ function sendMail(data) {
             'Authorization' : 'Bearer '+loginAccessToken,
             'unencrypted' : '1',
         }
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+
+/**
+* @DateOfCreation        17 July 2018
+* @ShortDescription      This function is responsible to call Fetch company api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function makePractitinor(doc_id) {
+    console.log(configConstants.API_BASE_PATH + '/admin/changeDoctorToPractioner/'+doc_id)
+    var loginAccessToken = utilityHelper.getLoginAccessToken();
+    return axios({
+        method  : 'post',
+        url     : configConstants.API_BASE_PATH + '/admin/changeDoctorToPractioner/'+doc_id
     })
     .then(response => {
         return response;
