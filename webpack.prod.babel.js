@@ -9,7 +9,7 @@ const envPlugin =  new webpack.DefinePlugin({
       'NODE_ENV': JSON.stringify('production'),
       'API_BASE_PATH':JSON.stringify('http://ec2-13-234-225-190.ap-south-1.compute.amazonaws.com:3100'),
       'BASENAME':JSON.stringify('/'),
-      'STATIC_IMAGE_BASE_PATH':JSON.stringify('http://ec2-13-234-225-190.ap-south-1.compute.amazonaws.com:3100')
+      'STATIC_IMAGE_BASE_PATH':JSON.stringify('http://ec2-13-234-225-190.ap-south-1.compute.amazonaws.com:3100/')
     }
 });  
 

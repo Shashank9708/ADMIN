@@ -15,6 +15,8 @@ export * from './headerActions';
 export * from './commonActions';
 export * from './driverActions';
 export * from './ViewProfileActions';
+export * from './clinicActions';
+export * from './clinicSlotActions';
 
 export * from './forgotPasswordActions';
 export * from './vehicleActions';

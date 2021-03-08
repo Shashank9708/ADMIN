@@ -16,6 +16,8 @@ export * from './councilService';
 export * from './chatService';
 export * from './vehicleService';
 export * from './ViewProfileService';
+export * from './clinicService';
+export * from './clinicSlotService';
 
 export * from './forgotPasswordService';
 export * from './notificationService';

@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loadable from 'react-loadable';
 import { createBrowserHistory } from "history";
-
+import axios from "axios";
 // import 'react-select/dist/react-select.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import "../assets/css/style.css";
@@ -67,6 +67,11 @@ const SpecializationContainer = Loadable({
 
 const AppointmentsContainer = Loadable({
     loader: () => import('../components/Appointments').then(object => object.AppointmentsContainer),
+    loading: Loading
+});
+
+const ReferredContainer = Loadable({
+    loader: () => import('../components/Referred').then(object => object.ReferredContainer),
     loading: Loading
 });
 
@@ -142,6 +147,17 @@ class App extends React.Component {
     }
 
     render() {
+        (function () {
+             const token = localStorage.getItem("accessToken");
+             if (token) {
+              axios.defaults.headers.common["Authorization"] = token;
+             } else {
+              axios.defaults.headers.common["Authorization"] = null;
+              /*if setting null does not remove `Authorization` header then try     
+                      delete axios.defaults.headers.common['Authorization'];
+              */
+             }
+            })();
         return (
             <Router basename={process.env.BASENAME} >
                 { this.props.checked &&
@@ -155,6 +171,7 @@ class App extends React.Component {
                         <AdminRoute exact path='/doctors' component={DoctorContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/doctor-categories' component={SpecializationContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/appointments' component={AppointmentsContainer} authenticated={this.props.authenticated} allowuser={[0]} />
+                        <AdminRoute exact path='/referred' component={ReferredContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/health-tips' component={HealthTipsContainer} authenticated={this.props.authenticated} allowuser={[0, 1]} />
                         <AdminRoute exact path='/health-tips-categories' component={HealthTipsCategoriesContainer} authenticated={this.props.authenticated} allowuser={[0, 1]} />
                         <AdminRoute exact path='/medical-store' component={MedicalStoresContainer} authenticated={this.props.authenticated} allowuser={[0]} />

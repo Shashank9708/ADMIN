@@ -5,14 +5,17 @@ import { HeaderContainer } from '../Header';
 import { SideMenu } from '../SideMenu';
 import { EditView } from './EditView';
 import { Status } from './Status';
-import { Renew } from './Renew';
+import { Clinic } from './Clinic';
+import { Appointment } from './Appointment';
 import { ImportContainer } from '../Import/ImportContainer';
-import { userActions, headerActions, commonActions } from '../../_actions';
+import { userActions, headerActions, commonActions, clinicActions, doctorActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
 import Countdown from 'react-countdown-now';
 import {DropdownButton, Dropdown} from 'react-bootstrap'
+
+
 
 class Doctor extends React.Component {
     /**
@@ -26,28 +29,27 @@ class Doctor extends React.Component {
 
         this.importShowHandle = this.importShowHandle.bind(this);
         this.importHideHandle = this.importHideHandle.bind(this);
-        this.importOnSave = this.importOnSave.bind(this);
-        this.exportCSV = this.exportCSV.bind(this);
+        this.importOnSave     = this.importOnSave.bind(this);
+        this.exportCSV        = this.exportCSV.bind(this);
 
-        this.getDoctorList        = this.getDoctorList.bind(this);
-        this.userSearch         = this.userSearch.bind(this);
-        this.state               = this.initialState;
-        
+        this.getDoctorList    = this.getDoctorList.bind(this);
+        this.userSearch       = this.userSearch.bind(this);
+        this.state            = this.initialState;
 
         this.statusShowHandle = this.statusShowHandle.bind(this);
         this.statusHideHandle = this.statusHideHandle.bind(this);
-        this.statusCheck         = this.statusCheck.bind(this);
+        this.statusCheck      = this.statusCheck.bind(this);
 
-        this.editShowHandle = this.editShowHandle.bind(this);
-        this.editHideHandle = this.editHideHandle.bind(this);
+        this.editShowHandle   = this.editShowHandle.bind(this);
+        this.editHideHandle   = this.editHideHandle.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.editSave = this.editSave.bind(this);
 
-        this.reNewShowHandle = this.reNewShowHandle.bind(this);
-        this.reNewHideHandle = this.reNewHideHandle.bind(this);
+        this.clinicShowHandle = this.clinicShowHandle.bind(this);
+        this.clinicHideHandle = this.clinicHideHandle.bind(this);
         this.reNewPackage = this.reNewPackage.bind(this);
         this.reNewSave = this.reNewSave.bind(this);
-        
+
     }
 
     get initialState() {
@@ -57,7 +59,8 @@ class Doctor extends React.Component {
             importShow: false,
             statusShow: false,
             editShow: false,
-            reNewShow: false,
+            clinicShow: false,
+            AppointmentShow: false,
             filtered: [],
             filterAll: '',
             payload: {
@@ -95,7 +98,10 @@ class Doctor extends React.Component {
                 package_type: '',
                 status: 'active'
               }
-            }
+            },
+            clinics: [],
+            appointments: [],
+            doc_id: ''
         }
     }
 
@@ -150,8 +156,8 @@ class Doctor extends React.Component {
      * @ShortDescription      This function is responsible to handle open import modal
      * @return                Nothing
      */
-    reNewShowHandle(id, package_type) {
-        this.setState({ reNewShow: true });
+    clinicShowHandle(id, package_type) {
+        this.setState({ clinicShow: true });
         const { renewdata }  = this.state.renew;
         this.setState({
             renew : {
@@ -162,14 +168,6 @@ class Doctor extends React.Component {
                 }
             }
         });
-    }
-    /**
-     * @DateOfCreation        26 July 2018
-     * @ShortDescription      This function is responsible to handle close modal
-     * @return                Nothing
-     */
-    reNewHideHandle() {
-        this.setState({ reNewShow: false });
     }
 
     /**
@@ -349,9 +347,9 @@ class Doctor extends React.Component {
         dispatch(commonActions.editPut(editdata));
     }
 
-    makePractioner(doc_id){
+    makePractioner(doc_id, practioner){
         const { dispatch } = this.props;
-        dispatch(userActions.makePractitinor(doc_id)).then((res) => {
+        dispatch(userActions.makePractitinor(doc_id, practioner)).then((res) => {
           if(res.status === 200){
 
             // console.log('makePractioner',res)
@@ -359,11 +357,115 @@ class Doctor extends React.Component {
           }
         })
     }
-  /**
-   * @DateOfCreation        28 June 2018
-   * @ShortDescription      This function is responsible to close import model.
-   * @return                Nothing
-  */
+
+    viewClinic(row){
+      this.setState({ clinicShow: true, doc_id: row.doc_id });
+
+        const { dispatch } = this.props;
+        dispatch(clinicActions.getClinicList(row.doc_id)).then((res) => {
+            // console.log('viewClinic',res)
+          if(res.status === 200){
+            let clinics = res.data
+            if(clinics.length > 0){
+              let displayClinic = []
+              clinics.map((row) => {
+                displayClinic.push({
+                  clinic_id: row.id,
+                  name: row.clinic_name,
+                  number: row.clinic_number,
+                  fees: row.clinic_fees,
+                  patient_attend_time: row.patient_attend_time,
+                  address: row.clinic_address,
+                  city: row.clinic_city_id, 
+                  state: row.clinic_state_id, 
+                  pincode: row.clinic_pincode, 
+                  status: row.status,
+                  action: 'Appointments',
+                })
+              })
+              this.setState({clinics: displayClinic})
+            }
+                    
+          }
+        })
+
+    }
+
+
+    /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle close modal
+     * @return                Nothing
+     */
+    clinicHideHandle() {
+        this.setState({ clinicShow: false, clinics: [], doc_id: '' });
+    }
+
+    viewAppointments(clinic_id){
+      let data = {
+                      state_date: "",
+                      end_date: "",
+                      clinic_id: clinic_id
+                  }
+      this.setState({ AppointmentShow: true });
+
+        const { dispatch } = this.props;
+        dispatch(doctorActions.doctorAppointmentList(data, this.state.doc_id)).then((res) => {
+            // console.log('viewAppointments',res)
+          if(res.status === 200){
+            let appointment = res.data
+            if(appointment.length > 0){
+              let displayAppointment = []
+              // appointment.map((row) => {
+              //   displayAppointment.push({
+              //     name: row.clinic_name,
+              //     number: row.clinic_number,
+              //     fees: row.clinic_fees,
+              //     patient_attend_time: row.patient_attend_time,
+              //     address: row.clinic_address,
+              //     city: row.clinic_city_id, 
+              //     state: row.clinic_state_id, 
+              //     pincode: row.clinic_pincode, 
+              //     status: row.status
+              //   })
+              // })
+              this.setState({appointments: displayAppointment})
+            }else{
+              this.setState({appointments: []})
+            }
+          }
+        })
+    }
+
+    /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle close modal
+     * @return                Nothing
+     */
+    appointmentsHideHandle() {
+        this.setState({ AppointmentShow: false, appointments: [] });
+    }
+
+    /**
+     * @DateOfCreation        06 Mar 2021
+     * @ShortDescription      This function is responsible to handle delete doctor
+     * @return                Nothing
+     */
+    deleteDoctor(row){
+
+        const { dispatch } = this.props;
+        dispatch(doctorActions.DoctorRemove(row.user_id)).then((res) => {
+            console.log('DoctorRemove',res)
+          if(res.status === 200){
+              // this.setState({appointments: displayAppointment})
+          }
+        })
+    }
+    /**
+     * @DateOfCreation        28 June 2018
+     * @ShortDescription      This function is responsible to close import model.
+     * @return                Nothing
+    */
     UNSAFE_componentWillReceiveProps(newProps) {
         if(newProps.statusClose == true){
             setTimeout(function() { 
@@ -383,7 +485,7 @@ class Doctor extends React.Component {
         }
         if(newProps.renewClose == true){
             setTimeout(function() { 
-                this.reNewHideHandle();
+                this.clinicHideHandle();
                 this.importOnSave();
                 const { dispatch } = this.props;
                 dispatch(commonActions.resetReNewState())
@@ -393,7 +495,7 @@ class Doctor extends React.Component {
 
 
     render() {
-        var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
+        // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
             <div className="page-container">
             <HeaderContainer />
@@ -417,12 +519,15 @@ class Doctor extends React.Component {
                         onSave = {this.editSave}
                         displayView = {this.state.displayView}
                     />
-                    <Renew
-                        onClick = { this.state.reNewShow }
-                        onClose = { this.reNewHideHandle }
-                        payroll = { this.state.renew.renewdata }
-                        onChange = {this.reNewPackage}
-                        onSave = {this.reNewSave}
+                    <Clinic
+                        onClick = { this.state.clinicShow }
+                        onClose = { this.clinicHideHandle }
+                        clinics = { this.state.clinics }
+                    />
+                    <Appointment
+                        onClick = { this.state.appointmentShow }
+                        onClose = { this.appointmentsHideHandle }
+                        appointments = { this.state.appointments }
                     />
                   <div className="main-content">
                     <div className="wrap-inner-content">
@@ -507,13 +612,38 @@ class Doctor extends React.Component {
                                             }
                                           },
                                           {
-                                            Header    : 'State',
-                                            accessor  : 'state',
+                                            Header    : 'Reg. Proof',
+                                            accessor  : 'registraion_proof',
                                             className : 'grid-header',
                                             filterable  : false,
-                                            filterMethod: (filter, row) => {
-                                                return row[filter.id].includes(filter.value);
-                                            }
+                                            Cell: row => 
+                                                        <div>
+                                                          {row.value &&
+                                                            <a href={process.env.STATIC_IMAGE_BASE_PATH+row.value} 
+                                                              className="btn"
+                                                              target="_blank"
+                                                              >
+                                                              <img src={process.env.STATIC_IMAGE_BASE_PATH+row.value} width={80}/>
+                                                            </a>
+                                                          }
+                                                        </div>
+                                          },
+                                          {
+                                            Header    : 'ID Proof',
+                                            accessor  : 'id_proof',
+                                            className : 'grid-header',
+                                            filterable  : false,
+                                            Cell: row => 
+                                                        <div>
+                                                        {row.value &&
+                                                          <a href={process.env.STATIC_IMAGE_BASE_PATH+row.value} 
+                                                            className="btn"
+                                                            target="_blank"
+                                                            >
+                                                            <img src={process.env.STATIC_IMAGE_BASE_PATH+row.value} width={80}/>
+                                                          </a>
+                                                        }
+                                                        </div>
                                           },
                                           {
                                             Header: 'Status',
@@ -547,12 +677,17 @@ class Doctor extends React.Component {
                                                           row.value === 0 ?
                                                           <a href="javascript:void(0)" 
                                                             className="btn"
-                                                            onClick={()  => this.makePractioner(row.original.doc_id) } 
+                                                            onClick={()  => this.makePractioner(row.original.doc_id, row.value) } 
                                                             disabled={ this.props.submitted ? true : false }>
                                                               <span className="btn btn-success">Make</span>
                                                           </a>
                                                           : 
-                                                              <span className="btn btn-success">Practitioner</span>
+                                                            <a href="javascript:void(0)" 
+                                                              className="btn"
+                                                              onClick={()  => this.makePractioner(row.original.doc_id, row.value) } 
+                                                              disabled={ this.props.submitted ? true : false }>
+                                                                <span className="btn btn-success">Remove</span>
+                                                            </a>
                                                         }
                                                         </div>
                                           },
@@ -564,11 +699,9 @@ class Doctor extends React.Component {
                                               className : 'grid-header',
                                               Cell: row => 
                                                         <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
-                                                            <Dropdown.Item >View</Dropdown.Item>
-                                                            <Dropdown.Item >Edit</Dropdown.Item>
-                                                            <Dropdown.Item >Delete</Dropdown.Item>
-                                                            <Dropdown.Item >Appointment</Dropdown.Item>
-                                                            <Dropdown.Item >Feedback</Dropdown.Item>
+                                                            <Dropdown.Item onClick={() => this.viewClinic(row.original)}>View Clinic</Dropdown.Item>
+                                                            <Dropdown.Item onClick={() => this.viewAppointments(row.original)}>Appointment</Dropdown.Item>
+                                                            <Dropdown.Item onClick={() => this.deleteDoctor(row.original)}>Delete</Dropdown.Item>
                                                         </DropdownButton>
                                           }
                                       ]}

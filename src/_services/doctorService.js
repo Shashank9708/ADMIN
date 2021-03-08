@@ -24,7 +24,8 @@ export const doctorService = {
     completeAppointment,
     getDoctorReferrals,
     getDoctorReferred,
-    referToDoctor
+    referToDoctor,
+    DoctorRemove
 };
 
 
@@ -35,7 +36,7 @@ export const doctorService = {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-async function getSpecialization(url) {
+function getSpecialization(url) {
     console.log(axios.defaults.headers.common['Authorization'])
     // console.log(configConstants.API_BASE_PATH +  '/auth/categories')
     return axios({
@@ -56,7 +57,7 @@ async function getSpecialization(url) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-async function getDoctorsBySpecialization(url) {
+function getDoctorsBySpecialization(url) {
     // console.log(axios.defaults.headers.common['Authorization'])
     // console.log(configConstants.API_BASE_PATH +  '/doctor/getdoctorsbyspecialization?' + url)
     return axios({
@@ -76,7 +77,7 @@ async function getDoctorsBySpecialization(url) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-async function getDoctorsDetail(url) {
+function getDoctorsDetail(url) {
     console.log(configConstants.API_BASE_PATH +  '/doctor/' + url)
     return axios({
         method  : 'get',
@@ -96,7 +97,7 @@ async function getDoctorsDetail(url) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-async function bookDoctorAppointment(data) {
+function bookDoctorAppointment(data) {
     // console.log(configConstants.API_BASE_PATH +  '/patient/bookAppointment')
     return axios({
         method  : 'post',
@@ -117,7 +118,7 @@ async function bookDoctorAppointment(data) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-async function myDoctorAppointment() {
+function myDoctorAppointment() {
     let userToken;
     let patient_id = '';
     userToken = null;
@@ -146,7 +147,7 @@ async function myDoctorAppointment() {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-async function cancleMyDoctorAppointment(data) {
+function cancleMyDoctorAppointment(data) {
     // console.log(configConstants.API_BASE_PATH +  '/patient/appointments/',data)
     return axios({
         method  : 'post',
@@ -167,21 +168,12 @@ async function cancleMyDoctorAppointment(data) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-async function doctorAppointmentList() {
-    // console.log(axios.defaults.headers.common['Authorization'])
-    let doc_id = '';
-    let userToken = null;
-    // try {
-    //     userToken = await AsyncStorage.getItem('userToken');
-    //     console.log(jwtdecode(userToken))
-    //     doc_id = jwtdecode(userToken).doc_id
-    // } catch(e) {
-    //     console.log(e);
-    // }
+function doctorAppointmentList(data, doc_id) {
     // console.log(configConstants.API_BASE_PATH +  '/doctor/appointmentlist/' + doc_id)
     return axios({
-        method  : 'get',
+        method  : 'post',
         url     : configConstants.API_BASE_PATH +  '/doctor/appointmentlist/' + doc_id,
+        data    : data
     })
     .then(response => {
         return response;
@@ -197,7 +189,7 @@ async function doctorAppointmentList() {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-async function cancleByDoctorAppointment(data) {
+function cancleByDoctorAppointment(data) {
     console.log(configConstants.API_BASE_PATH +  '/doctor/cancelappointments/',data)
     return axios({
         method  : 'get',
@@ -218,7 +210,7 @@ async function cancleByDoctorAppointment(data) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-async function uploadPrescription(data, url) {
+function uploadPrescription(data, url) {
     // console.log(axios.defaults.headers.common['Authorization']).  
     console.log(configConstants.API_BASE_PATH + url)
     return axios({
@@ -241,7 +233,7 @@ async function uploadPrescription(data, url) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-async function getDoctorReferrals(data) {
+function getDoctorReferrals(data) {
     let doc_id = '';
     let userToken = null;
     // try {
@@ -270,7 +262,7 @@ async function getDoctorReferrals(data) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-async function getDoctorReferred(data) {
+function getDoctorReferred(data) {
     let doc_id = '';
     let userToken = null;
     // try {
@@ -300,7 +292,7 @@ async function getDoctorReferred(data) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-async function referToDoctor(data) {
+function referToDoctor(data) {
     console.log(configConstants.API_BASE_PATH +  '/doctor/refer')
     return axios({
         method  : 'post',
@@ -321,11 +313,31 @@ async function referToDoctor(data) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-async function completeAppointment(id) {
+function completeAppointment(id) {
     console.log(configConstants.API_BASE_PATH +  '/doctor/completeappointment/'+ id)
     return axios({
         method  : 'post',
         url     : configConstants.API_BASE_PATH +  '/doctor/completeappointment/' + id
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+
+/**
+* @DateOfCreation        06 March 2020
+* @ShortDescription      This function is responsible to call Save import api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function DoctorRemove(user_id) {
+    console.log(configConstants.API_BASE_PATH +  '/admin/deleteDoctor/'+ user_id)
+    return axios({
+        method  : 'post',
+        url     : configConstants.API_BASE_PATH +  '/admin/deleteDoctor/' + user_id
     })
     .then(response => {
         return response;

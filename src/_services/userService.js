@@ -93,12 +93,13 @@ function sendMail(data) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-function makePractitinor(doc_id) {
+function makePractitinor(doc_id,practioner) {
     console.log(configConstants.API_BASE_PATH + '/admin/changeDoctorToPractioner/'+doc_id)
     var loginAccessToken = utilityHelper.getLoginAccessToken();
     return axios({
         method  : 'post',
-        url     : configConstants.API_BASE_PATH + '/admin/changeDoctorToPractioner/'+doc_id
+        url     : configConstants.API_BASE_PATH + '/admin/changeDoctorToPractioner/'+doc_id,
+        data    : {practioner: (practioner === 0) ? 1 : 0}
     })
     .then(response => {
         return response;

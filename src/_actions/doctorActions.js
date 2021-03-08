@@ -24,6 +24,7 @@ export const doctorActions = {
     getDoctorReferred,
     referToDoctor,
     completeAppointment,
+    DoctorRemove,
     resetFirstState
 };
 
@@ -303,10 +304,10 @@ function cancleMyDoctorAppointment(url) {
 * @param                 JSON user, This contains full route input data
 * @return                JSON Object
 */
-function doctorAppointmentList() {
+function doctorAppointmentList(data, doc_id) {
     return dispatch => {
-        dispatch(request());
-        doctorService.doctorAppointmentList()
+        dispatch(request(data, doc_id));
+        return doctorService.doctorAppointmentList(data, doc_id)
             .then(
                 response => {
                     if(response != "Error: Network Error"){
@@ -314,8 +315,10 @@ function doctorAppointmentList() {
                         var errorMsg;
                         if(data.status === configConstants.SUCCESS_CODE){
                             dispatch(success(data));
+                            return data
                         }else if(data.status === configConstants.ERROR_CODE){
                             dispatch(failure(data.message));
+                            return data
                         }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
                             errorMsg = data.message;
                             dispatch(unauthorize(errorMsg));
@@ -607,6 +610,52 @@ function referToDoctor(data) {
     function request() { return { type: doctorConstants.REFERTO_DOCTOR_REQUEST } }
     function success(result) { return { type: doctorConstants.REFERTO_DOCTOR_SUCCESS, result } }
     function failure(error) { return { type: doctorConstants.REFERTO_DOCTOR_FAILURE, error } }
+    function unauthorize(error) { return { type: doctorConstants.UNAUTHENTICATE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+
+
+
+/**
+* @DateOfCreation        06 Aug 2020
+* @ShortDescription      This function is responsible for Get Fixtures List
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function DoctorRemove(user_id) {
+    return dispatch => {
+        dispatch(request(user_id));
+        return doctorService.DoctorRemove(user_id)
+            .then(
+                response => {
+                    if(response != "Error: Network Error"){
+                        var data = response.data;
+                        var errorMsg;
+                        if(data.status === configConstants.SUCCESS_CODE){
+                            dispatch(success(data));
+                            return data
+                        }else if(data.status === configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                            return data
+                        }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: doctorConstants.DOCTOR_APPOINTMENT_LIST_REQUEST } }
+    function success(result) { return { type: doctorConstants.DOCTOR_APPOINTMENT_LIST_SUCCESS, result } }
+    function failure(error) { return { type: doctorConstants.DOCTOR_APPOINTMENT_LIST_FAILURE, error } }
     function unauthorize(error) { return { type: doctorConstants.UNAUTHENTICATE, error } }
     function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
 }

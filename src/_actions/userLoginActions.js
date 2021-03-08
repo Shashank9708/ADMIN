@@ -38,7 +38,7 @@ function loginSubmit(user) {
                         sessionService.saveSession(data.token);
                         axios.defaults.headers.common["Authorization"] = data.token;
                         let user = jwtdecode(data.token);
-                        
+                        localStorage.setItem('accessToken', data.token);
                         sessionService.saveUser(user);
                         dispatch(success(user));                        
                     }else if(data.status == configConstants.ERROR_CODE){

@@ -53,6 +53,7 @@
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
     "chart.js": "^2.9.4",
+    "country-state-city": "^2.0.0",
     "d": "^1.0.1",
     "dateformat": "^3.0.3",
     "dom-to-image": "^2.6.0",

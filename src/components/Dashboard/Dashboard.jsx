@@ -61,7 +61,7 @@ class Dashboard extends React.Component {
     var dataP = {}
     var dataD = {}
     var dataM = {}
-    var dataP = {}
+    var dataL = {}
     if(dashboardList){
       var total =  dashboardList.userCount + dashboardList.doctorCount + dashboardList.medicalCount + dashboardList.labCount
       data = {
@@ -144,7 +144,7 @@ class Dashboard extends React.Component {
           }],
           text: '20%'
         };
-      dataP = {
+      dataL = {
           labels: [
             'PATHOLOGY',
             'ALL'
@@ -170,59 +170,107 @@ class Dashboard extends React.Component {
             <HeaderContainer />
             <div className="container-fluid">
                <div className="row">
-                  <div className="sections">
-                    <SideMenu />
-                  </div>
-                  <div className="">
-                    <section className="adminpanel">
-                      <div className="group"> 
-                          <button className="buttonone">USERS <br/> {dashboardList.userCount || '-'}</button>
-                          <button className="buttontwo">DOCTORS <br/> {dashboardList.doctorCount || '-'}</button>
-                          <button className="buttonthree">MEDICAL STORES <br/> {dashboardList.medicalCount || '-'}</button>
-                          <button className="buttonfour">PATHOLOGY CENTERS <br/> {dashboardList.labCount || '-'}</button>
-                          <button className="buttonfive">REGISTRATION REQUEST <br/> {dashboardList.regRequestCount || '-'}</button>
-                          <button className="buttonsix">APPOINTMENTS <br/> {dashboardList.appointmentCount || '-'}</button>
-                        
+                  <div className="row">
+                      <div className="col-md-2.5">
+                        <SideMenu />
                       </div>
-                      <Doughnut 
-                        data={data}
-                          options={{
-                            responsive: true,
-                            maintainAspectRatio: true,
-                          }}
-                      />
-
-                      <Doughnut 
-                        data={dataP}
-                          options={{
-                            responsive: true,
-                            maintainAspectRatio: true,
-                          }}
-                      />
-
-                      <Doughnut 
-                        data={dataD}
-                          options={{
-                            responsive: true,
-                            maintainAspectRatio: true,
-                          }}
-                      />
-
-                      <Doughnut 
-                        data={dataM}
-                          options={{
-                            responsive: true,
-                            maintainAspectRatio: true,
-                          }}
-                      />
-                      <Doughnut 
-                        data={dataP}
-                          options={{
-                            responsive: true,
-                            maintainAspectRatio: true,
-                          }}
-                      />
-                    </section> 
+                      
+                      <div className="col-md-9">
+                        <section className="adminpanel">
+                          <div className="group"> 
+                              <button className="buttonone">USERS <br/> {dashboardList.userCount || '-'}</button>
+                              <button className="buttontwo">DOCTORS <br/> {dashboardList.doctorCount || '-'}</button>
+                              <button className="buttonthree">MEDICAL STORES <br/> {dashboardList.medicalCount || '-'}</button>
+                              <button className="buttonfour">PATHOLOGY CENTERS <br/> {dashboardList.labCount || '-'}</button>
+                              <button className="buttonfive">REGISTRATION REQUEST <br/> {dashboardList.regRequestCount || '-'}</button>
+                              <button className="buttonsix">APPOINTMENTS <br/> {dashboardList.appointmentCount || '-'}</button>
+                            
+                          </div>
+                          <div className="row">
+                            <div className="col-md-12">
+                              <label className="dashboard-text">ALL USERS</label>
+                              <Doughnut 
+                                data={data}
+                                  options={{
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    legend: {
+                                      position: "right",
+                                      fullWidth: true,
+                                      labels: {
+                                          fontColor: '#fff'
+                                      }
+                                    }
+                                  }}
+                              />
+                            </div>
+                            <div className="col-md-6">
+                              <label className="dashboard-text">PATIENTS</label>
+                              <Doughnut 
+                                data={dataP}
+                                  options={{
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    legend: {
+                                      position: "right",
+                                      labels: {
+                                          fontColor: '#fff'
+                                      }
+                                    }
+                                  }}
+                              />
+                            </div>
+                            <div className="col-md-6">
+                              <label className="dashboard-text">DOCTORS</label>
+                              <Doughnut 
+                                data={dataD}
+                                  options={{
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    legend: {
+                                      position: "right",
+                                      labels: {
+                                          fontColor: '#fff'
+                                      }
+                                    }
+                                  }}
+                              />
+                            </div>  
+                            <div className="col-md-6">
+                              <label className="dashboard-text">MEDICAL</label>
+                              <Doughnut 
+                                data={dataM}
+                                  options={{
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    legend: {
+                                      position: "right",
+                                      labels: {
+                                          fontColor: '#fff'
+                                      }
+                                    }
+                                  }}
+                              />
+                            </div>  
+                            <div className="col-md-6">
+                              <label className="dashboard-text">PATHOLOGY</label>
+                              <Doughnut 
+                                data={dataL}
+                                  options={{
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    legend: {
+                                      position: "right",
+                                      labels: {
+                                          fontColor: '#fff'
+                                      }
+                                    }
+                                  }}
+                              />
+                            </div>  
+                          </div>
+                        </section> 
+                      </div>
                   </div>
                </div>
             </div>

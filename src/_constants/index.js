@@ -17,6 +17,8 @@ export * from './commonConstants';
 export * from './chatConstants';
 export * from './tripConstants';
 export * from './ViewProfileConstants';
+export * from './clinicConstants';
+export * from './clinicSlotConstants';
 
 export * from './vehicleConstants';
 export * from './notificationConstants';

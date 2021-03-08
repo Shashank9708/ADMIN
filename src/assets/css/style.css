@@ -49,7 +49,7 @@ body {
 }
 
 .group { 
-  
+  display: flex;
     margin-top: 8px;
     
 }
@@ -274,7 +274,7 @@ i.fa.fa-gear.fa-spin {
   font-size: 15px;
   border-radius: 20px;
   margin-top: 10px;
-    height: 77px;
+    height: 100px;
      width: 130px;
    display: inline-flex;
    padding: 12px;
@@ -286,7 +286,7 @@ i.fa.fa-gear.fa-spin {
     font-size: 15px;
     margin-left: 27px;
     margin-top: 10px;
-    height: 77px;
+    height: 100px;
     border-radius: 20px;
     width: 130px;
     display: inline-flex;
@@ -298,7 +298,7 @@ i.fa.fa-gear.fa-spin {
  font-size: 15px;
   margin-left: 27px;
   margin-top: 10px;  
-  height: 77px;
+  height: 100px;
   border-radius: 20px;
   display: inline-flex;
   padding: 12px;
@@ -309,7 +309,7 @@ i.fa.fa-gear.fa-spin {
     font-size: 13px;
     margin-left: 27px;
     margin-top: 10px;
-    height: 77px;
+    height: 100px;
     width: 175px;
     border-radius: 15px;
     display: inline-flex;
@@ -321,7 +321,7 @@ i.fa.fa-gear.fa-spin {
     font-size: 13px;
     margin-left: 27px;
     margin-top: 10px;
-    height: 77px;
+    height: 100px;
     width: 187px;
     border-radius: 12px;
     display: inline-flex;
@@ -334,7 +334,7 @@ i.fa.fa-gear.fa-spin {
     margin-right: 29px;
     margin-top: 10px;
     margin-left: 18px;
-    height: 77px;
+    height: 100px;
     border-radius: 20px;
     display: inline-flex;
     padding: 12px;
@@ -409,4 +409,11 @@ side menu code for blue box */
 .dropdown-menu.show.dropdown-menu-right {
   position: inherit !important;
   top: -40px !important;
+}
+
+.dashboard-text {
+  color: white;
+  text-align: center;
+  min-width: -webkit-fill-available;
+  margin-top: 20px;
 }

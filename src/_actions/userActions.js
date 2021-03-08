@@ -148,10 +148,10 @@ function sendMail(data) {
 * @param                 JSON user, This contains full companyUser input data
 * @return                JSON Object
 */
-function makePractitinor(id) {
+function makePractitinor(id,practioner) {
     return dispatch => {
         dispatch(request());
-        return userService.makePractitinor(id)
+        return userService.makePractitinor(id,practioner)
             .then(
                 response => {
                     var data = response.data;
