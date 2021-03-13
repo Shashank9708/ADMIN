@@ -136,8 +136,6 @@ class Dashboard extends React.Component {
             '#FFFFFF'
             ],
             hoverBackgroundColor: [
-            '#FF6384',
-            '#36A2EB',
             '#FFCE56',
             '#d68274'
             ]
@@ -157,7 +155,7 @@ class Dashboard extends React.Component {
             ],
             hoverBackgroundColor: [
             '#d68274',
-            '#FFFFFF'
+            '#FFCE56'
             ]
           }],
           text: '20%'

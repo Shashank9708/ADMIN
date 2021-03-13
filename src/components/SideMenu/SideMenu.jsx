@@ -60,6 +60,10 @@ export class SideMenu extends React.Component {
                     <li><Link className="button" to="/health-problem">Health Problems</Link></li>
                     <li><Link className="button" to="/council">Council</Link></li>
 
+                    <li><Link className="button" to="/product-categories">Product Categories</Link></li>
+                    <li><Link className="button" to="/product">Products</Link></li>
+                    
+
                     <li><Link className="button" to="#">Invitations Sends</Link></li>
                     <li><Link className="button" to="#">Transactions</Link></li>
                     

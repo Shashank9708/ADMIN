@@ -211,6 +211,42 @@ class MedicalStores extends React.Component {
                                                           )}
                                                 },
                                                 {
+                                                  Header    : 'Subscription start date',
+                                                  accessor  : 'en_spec',
+                                                  className : 'grid-header',
+                                                  filterable  : false,
+                                                  filterMethod: (filter, row) => {
+                                                      return row[filter.id].includes(filter.value);
+                                                  }
+                                                },
+                                                {
+                                                  Header    : 'Subscription end date',
+                                                  accessor  : 'en_spec',
+                                                  className : 'grid-header',
+                                                  filterable  : false,
+                                                  filterMethod: (filter, row) => {
+                                                      return row[filter.id].includes(filter.value);
+                                                  }
+                                                },
+                                                {
+                                                  Header    : 'Plan',
+                                                  accessor  : 'en_spec',
+                                                  className : 'grid-header',
+                                                  filterable  : false,
+                                                  filterMethod: (filter, row) => {
+                                                      return row[filter.id].includes(filter.value);
+                                                  }
+                                                },
+                                                {
+                                                  Header    : 'Subscription amount',
+                                                  accessor  : 'en_spec',
+                                                  className : 'grid-header',
+                                                  filterable  : false,
+                                                  filterMethod: (filter, row) => {
+                                                      return row[filter.id].includes(filter.value);
+                                                  }
+                                                },
+                                                {
                                                   Header: 'Status',
                                                   accessor  : "status",
                                                   filterable  : false,

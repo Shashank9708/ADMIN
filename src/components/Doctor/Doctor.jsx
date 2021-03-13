@@ -646,6 +646,42 @@ class Doctor extends React.Component {
                                                         </div>
                                           },
                                           {
+                                            Header    : 'Subscription start date',
+                                            accessor  : 'subscription',
+                                            className : 'grid-header',
+                                            filterable  : false,
+                                            filterMethod: (filter, row) => {
+                                                return row[filter.id].includes(filter.value);
+                                            }
+                                          },
+                                          {
+                                            Header    : 'Subscription end date',
+                                            accessor  : 'subscription',
+                                            className : 'grid-header',
+                                            filterable  : false,
+                                            filterMethod: (filter, row) => {
+                                                return row[filter.id].includes(filter.value);
+                                            }
+                                          },
+                                          {
+                                            Header    : 'Plan',
+                                            accessor  : 'subscription',
+                                            className : 'grid-header',
+                                            filterable  : false,
+                                            filterMethod: (filter, row) => {
+                                                return row[filter.id].includes(filter.value);
+                                            }
+                                          },
+                                          {
+                                            Header    : 'Subscription amount',
+                                            accessor  : 'subscription',
+                                            className : 'grid-header',
+                                            filterable  : false,
+                                            filterMethod: (filter, row) => {
+                                                return row[filter.id].includes(filter.value);
+                                            }
+                                          },
+                                          {
                                             Header: 'Status',
                                             accessor  : "is_approved",
                                             filterable  : false,

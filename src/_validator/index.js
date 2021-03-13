@@ -8,3 +8,5 @@ export * from './pathologyCentersValidator';
 export * from './healthTipsCategoriesValidator';
 export * from './healthProblemValidator';
 export * from './councilValidator';
+export * from './productCategoriesValidator';
+export * from './productValidator';

@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { HeaderContainer } from '../Header';
 import { SideMenu } from '../SideMenu';
-import {AddPathologyCentersContainer} from './AddPathologyCentersContainer';
-import { pathologyCentersActions, headerActions } from '../../_actions';
+import {AddProductsContainer} from './AddProductsContainer';
+import { productActions, productCategoriesActions, headerActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
 import {DropdownButton, Dropdown} from 'react-bootstrap'
 
-class PathologyCenters extends React.Component {
+class Products extends React.Component {
     /**
      * @DateOfCreation        26 July 2018
      * @ShortDescription      Contructor is responsible to function declaration and define intial state
@@ -19,12 +19,13 @@ class PathologyCenters extends React.Component {
      */
     constructor(props) {
         super(props);
-        this.addPathologyCentersShowHandle = this.addPathologyCentersShowHandle.bind(this);
-        this.addPathologyCentersHideHandle = this.addPathologyCentersHideHandle.bind(this);
+        this.addProductsShowHandle = this.addProductsShowHandle.bind(this);
+        this.addProductsHideHandle = this.addProductsHideHandle.bind(this);
 
-        this.getPathologyCentersList        = this.getPathologyCentersList.bind(this);
+        this.getProductsList        = this.getProductsList.bind(this);
         this.statusShowHandle = this.statusShowHandle.bind(this);
         this.notificationSearch         = this.notificationSearch.bind(this);
+        this.deleteProducts         = this.deleteProducts.bind(this);
         this.state               = this.initialState;
     }
 
@@ -32,7 +33,7 @@ class PathologyCenters extends React.Component {
         return {
             loading : false,
             pages  : 0,
-            addPathologyCentersShow: false
+            addProductsShow: false
         }
     }
 
@@ -41,8 +42,10 @@ class PathologyCenters extends React.Component {
      * @ShortDescription      This function is responsible to handle open import modal
      * @return                Nothing
      */
-     addPathologyCentersShowHandle() {
-       this.setState({ addPathologyCentersShow: true });
+     addProductsShowHandle() {
+       this.setState({ addProductsShow: true });
+       const { dispatch }   = this.props;
+       dispatch(productCategoriesActions.getProductCategoriesList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered));
      }
 
     /**
@@ -50,8 +53,8 @@ class PathologyCenters extends React.Component {
      * @ShortDescription      This function is responsible to handle close modal
      * @return                Nothing
      */
-     addPathologyCentersHideHandle() {
-       this.setState({ addPathologyCentersShow: false });
+     addProductsHideHandle() {
+       this.setState({ addProductsShow: false });
      }
 
     /**
@@ -71,9 +74,9 @@ class PathologyCenters extends React.Component {
     * @ShortDescription      This function is responsible to get the list of notification from API
     * @return                Nothing
     */
-    getPathologyCentersList(page, pageSize, sorted, filtered){
+    getProductsList(page, pageSize, sorted, filtered){
         const { dispatch }   = this.props;
-        dispatch(pathologyCentersActions.getPathologyCentersList(page, pageSize, sorted, filtered));
+        dispatch(productActions.getProductList(page, pageSize, sorted, filtered));
     }
 
     /**
@@ -93,10 +96,22 @@ class PathologyCenters extends React.Component {
      * @ShortDescription      This function is responsible to handle open import modal
      * @return                Nothing
      */
-    statusShowHandle(lab_id, status) {
-        var json = {'lab_id':lab_id,'status':status}
+    statusShowHandle(id, status) {
+        var json = {'id':id,'status':status}
         const { dispatch } = this.props;
-        dispatch(pathologyCentersActions.statusChange(json));
+        dispatch(productActions.statusChange(json));
+
+    }
+
+    /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle open import modal
+     * @return                Nothing
+     */
+    deleteProducts(id) {
+        var json = {'id':id}
+        const { dispatch } = this.props;
+        dispatch(productActions.deleteProduct(json));
 
     }
 
@@ -110,14 +125,15 @@ class PathologyCenters extends React.Component {
         if(newProps.status == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
-                dispatch(pathologyCentersActions.resetPathologyCentersState())
+                dispatch(productActions.resetProductState())
 
-                this.getPathologyCentersList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
+                this.getProductsList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
             }.bind(this), 1500);
         }
     }
 
     render() {
+      // console.log("this.props.productList",this.props.productList)
         // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
             <div className="page-container">
@@ -134,10 +150,10 @@ class PathologyCenters extends React.Component {
                               <div className="inner-content">
                                       <div className="row page-header">
                                           <div className="col-md-6">
-                                              <h1 className="page-title">PathologyCenters</h1>
+                                              <h1 className="page-title">Products</h1>
                                           </div>
                                           <div className="col-md-6 text-right">
-                                             <button className="blue btn text-btn" onClick={this.addPathologyCentersShowHandle}>Add New</button>
+                                             <button className="blue btn text-btn" onClick={this.addProductsShowHandle}>Add New</button>
                                           </div>
                                       </div>
                                       <div className="table-wrap">
@@ -151,14 +167,23 @@ class PathologyCenters extends React.Component {
                                       </div>*/}
                                       <ReactTable
                                           noDataText="No found !!"
-                                          data={this.props.pathologyCentersList}
+                                          data={this.props.productList}
                                           filterable
                                           defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
                                           filtered={this.state.filtered}
                                           columns={[
                                               {
-                                                  Header: 'UIN',
-                                                  accessor  : "lab_id",
+                                                  Header: 'Image',
+                                                  accessor  : "product_image",
+                                                  className : 'grid-header',
+                                                  filterable  : false,
+                                                  Cell: row =>
+                                                    <div><img src={configConstants.API_BASE_PATH+"/"+row.value} width="50px" height="50px"/></div>
+                                                    
+                                              },
+                                              {
+                                                  Header: 'Title',
+                                                  accessor  : "product_name",
                                                   className : 'grid-header',
                                                   filterable  : false,
                                                   filterMethod: (filter, row) => {
@@ -166,8 +191,8 @@ class PathologyCenters extends React.Component {
                                                   }
                                               },
                                               {
-                                                  Header: 'Name',
-                                                  accessor  : "name",
+                                                  Header: 'Category',
+                                                  accessor  : "cat_name",
                                                   className : 'grid-header',
                                                   filterable  : false,
                                                   filterMethod: (filter, row) => {
@@ -175,8 +200,8 @@ class PathologyCenters extends React.Component {
                                                   }
                                               },
                                               {
-                                                  Header: 'Contact No',
-                                                  accessor  : "contact_no",
+                                                  Header: 'Description',
+                                                  accessor  : "product_description",
                                                   className : 'grid-header',
                                                   filterable  : false,
                                                   filterMethod: (filter, row) => {
@@ -184,8 +209,8 @@ class PathologyCenters extends React.Component {
                                                   }
                                               },
                                               {
-                                                  Header: 'Registration No',
-                                                  accessor  : "license",
+                                                  Header: 'Quantity',
+                                                  accessor  : "quantity",
                                                   className : 'grid-header',
                                                   filterable  : false,
                                                   filterMethod: (filter, row) => {
@@ -193,58 +218,31 @@ class PathologyCenters extends React.Component {
                                                   }
                                               },
                                               {
-                                                  Header: 'Home Service',
-                                                  accessor  : "homeservice",
-                                                  filterable  : false,
-                                                  
+                                                  Header: 'Price',
+                                                  accessor  : "price",
                                                   className : 'grid-header',
-                                                  Cell: row => {
-                                                          return  (
-                                                              <div>
-                                                              {
-                                                                row.value === 1 ?
-                                                                'Yes'
-                                                                :
-                                                                'No'
-                                                              }
-                                                              </div>
-                                                          )}
+                                                  filterable  : false,
+                                                  filterMethod: (filter, row) => {
+                                                      return row[filter.id].includes(filter.value);
+                                                  }
                                               },
                                               {
-                                                Header    : 'Subscription start date',
-                                                accessor  : 'en_spec',
-                                                className : 'grid-header',
-                                                filterable  : false,
-                                                filterMethod: (filter, row) => {
-                                                    return row[filter.id].includes(filter.value);
-                                                }
+                                                  Header: 'Discount Percent',
+                                                  accessor  : "discount_percent",
+                                                  className : 'grid-header',
+                                                  filterable  : false,
+                                                  filterMethod: (filter, row) => {
+                                                      return row[filter.id].includes(filter.value);
+                                                  }
                                               },
                                               {
-                                                Header    : 'Subscription end date',
-                                                accessor  : 'en_spec',
-                                                className : 'grid-header',
-                                                filterable  : false,
-                                                filterMethod: (filter, row) => {
-                                                    return row[filter.id].includes(filter.value);
-                                                }
-                                              },
-                                              {
-                                                Header    : 'Plan',
-                                                accessor  : 'en_spec',
-                                                className : 'grid-header',
-                                                filterable  : false,
-                                                filterMethod: (filter, row) => {
-                                                    return row[filter.id].includes(filter.value);
-                                                }
-                                              },
-                                              {
-                                                Header    : 'Subscription amount',
-                                                accessor  : 'en_spec',
-                                                className : 'grid-header',
-                                                filterable  : false,
-                                                filterMethod: (filter, row) => {
-                                                    return row[filter.id].includes(filter.value);
-                                                }
+                                                  Header: 'Sale Price',
+                                                  accessor  : "sale_price",
+                                                  className : 'grid-header',
+                                                  filterable  : false,
+                                                  filterMethod: (filter, row) => {
+                                                      return row[filter.id].includes(filter.value);
+                                                  }
                                               },
                                               {
                                                   Header: 'Status',
@@ -259,14 +257,14 @@ class PathologyCenters extends React.Component {
                                                                 row.value === 1 ?
                                                                 <a href="javascript:void(0)" 
                                                                   className="btn"
-                                                                  onClick={ this.statusShowHandle.bind(null,row.original.lab_id,0) } 
+                                                                  onClick={ this.statusShowHandle.bind(null,row.original.product_id,0) } 
                                                                   disabled={ this.props.submitted ? true : false }>
                                                                     <span className="btn btn-success">Active</span>
                                                                 </a>
                                                                 :
                                                                 <a href="javascript:void(0)" 
                                                                   className="btn"
-                                                                  onClick={ this.statusShowHandle.bind(null,row.original.lab_id,1) } 
+                                                                  onClick={ this.statusShowHandle.bind(null,row.original.product_id,1) } 
                                                                   disabled={ this.props.submitted ? true : false }>
                                                                     <span className="grey btn">Inactive</span>   
                                                                 </a>
@@ -276,27 +274,25 @@ class PathologyCenters extends React.Component {
                                                 },
                                                 {
                                                     Header: 'Actions',
-                                                    accessor  : "lab_id",
+                                                    accessor  : "product_id",
                                                     filterable  : false,
                                                     
                                                     className : 'grid-header',
                                                     Cell: row => 
                                                           <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
-                                                              <Dropdown.Item >View</Dropdown.Item>
-                                                              <Dropdown.Item >Edit</Dropdown.Item>
-                                                              <Dropdown.Item >Delete</Dropdown.Item>
+                                                              <Dropdown.Item onClick={ this.deleteProducts.bind(null,row.original.product_id) }>Delete</Dropdown.Item>
                                                           </DropdownButton>
                                                 }
                                               
                                           ]}
                                           defaultSorted={[
                                               {
-                                                  id: "lab_id",
+                                                  id: "product_id",
                                                   desc: false
                                               }
                                           ]}
                                           defaultPageSize={10}
-                                          minRows= {this.props.pathologyCentersList}
+                                          // minRows= {this.props.productList}
                                           className="table table-bordered responsive"
                                           loading={this.state.loading}
                                           filterable
@@ -308,7 +304,7 @@ class PathologyCenters extends React.Component {
                                           pageSizeOptions={[10, 20, 50]}
                                           automatic // For server side pagination
                                           onFetchData={(state, instance) => {
-                                              this.getPathologyCentersList(state.page, state.pageSize, state.sorted, state.filtered);
+                                              this.getProductsList(state.page, state.pageSize, state.sorted, state.filtered);
                                           }}
                                       />
                                   </div>
@@ -317,9 +313,10 @@ class PathologyCenters extends React.Component {
                           </div>
                         </div>
                       </div>
-                      <AddPathologyCentersContainer
-                        addPathologyCentersShow = {this.state.addPathologyCentersShow}
-                        addPathologyCentersHideHandle = {this.addPathologyCentersHideHandle}
+                      <AddProductsContainer
+                        addProductsShow = {this.state.addProductsShow}
+                        productCategoriesList = {this.props.productCategoriesList}
+                        addProductsHideHandle = {this.addProductsHideHandle}
                       />
                     </div>
                 </div>    
@@ -335,12 +332,13 @@ class PathologyCenters extends React.Component {
  */
 
 function mapStateToProps(state) {
-   const { pathologyCentersList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status } = state.pathologyCentersReducer;
-   // console.log('pathologyCentersList',pathologyCentersList)
+   const { productList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status } = state.productReducer;
+   const { productCategoriesList  } = state.productCategoriesReducer;
     return {
-        pathologyCentersList,
+        productList,
         isUserNotValid,
         loader,
+        productCategoriesList,
         successMessage,
         sendingRequest,
         errorMsg,
@@ -348,5 +346,5 @@ function mapStateToProps(state) {
         status
     };
 }
-const connectedPathologyCenters = connect(mapStateToProps)(PathologyCenters);
-export { connectedPathologyCenters as PathologyCenters };
+const connectedProducts = connect(mapStateToProps)(Products);
+export { connectedProducts as Products };

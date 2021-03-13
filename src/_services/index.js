@@ -18,6 +18,8 @@ export * from './vehicleService';
 export * from './ViewProfileService';
 export * from './clinicService';
 export * from './clinicSlotService';
+export * from './productCategoriesService';
+export * from './productService';
 
 export * from './forgotPasswordService';
 export * from './notificationService';
