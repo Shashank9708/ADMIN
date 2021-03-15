@@ -8,7 +8,7 @@ import { utilityHelper } from '../../_helpers';
 /**
  * HeaderContainer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             HeaderContainer
  * @category               Container Component
  * @DateOfCreation         22 May 2018

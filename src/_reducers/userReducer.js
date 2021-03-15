@@ -2,7 +2,7 @@ import { userConstants, configConstants } from '../_constants';
 /**
  * userReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             userReducer
  * @category               Reducers
  * @DateOfCreation         26 July 2018

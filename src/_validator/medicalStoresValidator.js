@@ -1,7 +1,7 @@
 /**
  * medicalStoresValidator
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             medicalStoresValidator
  * @category               Validator
  * @DateOfCreation         24 May 2018

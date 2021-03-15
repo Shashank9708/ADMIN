@@ -1,7 +1,7 @@
 /**
  * userLoginValidator
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             userLoginValidator
  * @category               Validator
  * @DateOfCreation         22 May 2018

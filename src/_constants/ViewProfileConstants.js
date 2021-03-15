@@ -1,7 +1,7 @@
 /**
  * viewProfileConstants
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             View Profile Constants
  * @category               Constants
  * @DateOfCreation         19 Mar 2019

@@ -1,7 +1,7 @@
 /**
  * staffConstants
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             Staff Constants
  * @category               Constants
  * @DateOfCreation         26 July 2018

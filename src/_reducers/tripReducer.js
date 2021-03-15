@@ -2,7 +2,7 @@ import { tripConstants, configConstants } from '../_constants';
 /**
  * tripReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             tripReducer
  * @category               Reducers
  * @DateOfCreation         14 Aug 2018

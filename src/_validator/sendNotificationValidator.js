@@ -1,7 +1,7 @@
 /**
  * sendNotificationValidator
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             sendNotificationValidator
  * @category               Validator
  * @DateOfCreation         24 May 2018

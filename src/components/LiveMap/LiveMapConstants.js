@@ -1,7 +1,7 @@
 /**
  * LiveMapConstants
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             live Map Constants
  * @category               Constants
  * @DateOfCreation         26 July 2018

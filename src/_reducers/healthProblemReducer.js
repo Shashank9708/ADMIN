@@ -2,7 +2,7 @@ import { healthProblemConstants, configConstants } from '../_constants';
 /**
  * healthProblemReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             healthProblemReducer
  * @healthProblem               Reducers
  * @DateOfCreation         26 July 2018

@@ -1,7 +1,7 @@
 /**
  * configConstants
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             configConstants
  * @category               Constants
  * @DateOfCreation         11 May 2018

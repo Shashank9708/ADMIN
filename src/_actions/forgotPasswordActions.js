@@ -6,7 +6,7 @@ import { utilityHelper } from '../_helpers';
 /**
  * forgotPasswordActions
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             forgotPasswordActions
  * @category               Actions
  * @DateOfCreation         15 May 2018

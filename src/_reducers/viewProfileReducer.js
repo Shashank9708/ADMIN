@@ -2,7 +2,7 @@ import { ViewProfileConstants, configConstants } from '../_constants';
 /**
  * viewProfileReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             viewProfileReducer
  * @category               Reducers
  * @DateOfCreation         19 Mar 2019

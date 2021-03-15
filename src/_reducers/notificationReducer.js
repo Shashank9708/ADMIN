@@ -2,7 +2,7 @@ import { notificationConstants, configConstants } from '../_constants';
 /**
  * notificationReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             notificationReducer
  * @category               Reducers
  * @DateOfCreation         26 July 2018

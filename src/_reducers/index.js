@@ -27,6 +27,7 @@ import { clinicReducer } from './clinicReducer';
 import { clinicSlotReducer } from './clinicSlotReducer';
 import { productCategoriesReducer } from './productCategoriesReducer';
 import { productReducer } from './productReducer';
+import { vendorCategoriesReducer } from './vendorCategoriesReducer';
 
 const appReducer = combineReducers({
 	session: sessionReducer,
@@ -53,6 +54,8 @@ const appReducer = combineReducers({
 	clinicSlotReducer,
 	productCategoriesReducer,
 	productReducer,
+	vendorCategoriesReducer,
+
 	
 	vehicleReducer,
 	LiveMapReducer,

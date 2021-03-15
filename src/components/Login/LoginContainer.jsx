@@ -9,7 +9,7 @@ import { Cookies } from 'react-cookie';
 /**
  * LoginContainer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             LoginContainer
  * @category               Container Component
  * @DateOfCreation         16 July 2018

@@ -2,7 +2,7 @@ import { productConstants, configConstants } from '../_constants';
 /**
  * productReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             productReducer
  * @category               Reducers
  * @DateOfCreation         26 July 2018

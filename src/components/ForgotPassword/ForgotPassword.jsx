@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 /**
  * ForgotPassword
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             ForgotPassword
  * @category               Presentational Component
  * @DateOfCreation         20 July 2018

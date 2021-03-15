@@ -1,7 +1,7 @@
 /**
  * forgotPasswordValidator
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             forgotPasswordValidator
  * @category               Validator
  * @DateOfCreation         24 May 2018

@@ -2,7 +2,7 @@ import { healthTipsConstants, configConstants } from '../_constants';
 /**
  * healthTipsReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             healthTipsReducer
  * @category               Reducers
  * @DateOfCreation         26 July 2018

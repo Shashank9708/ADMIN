@@ -1,7 +1,7 @@
 /**
  * importConstants
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             Import Constants
  * @category               Constants
  * @DateOfCreation         22 May 2018

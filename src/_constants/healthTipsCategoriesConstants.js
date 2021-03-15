@@ -1,7 +1,7 @@
 /**
  * healthTipsCategoriesConstants
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             Notification Constants
  * @category               Constants
  * @DateOfCreation         26 July 2018

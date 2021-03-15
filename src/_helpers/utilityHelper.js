@@ -5,7 +5,7 @@ import { sessionService } from '../_packages/redux-react-session';
 /**
  * utilityHelper
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             utilityHelper
  * @category               Helper
  * @DateOfCreation         11 May 2018

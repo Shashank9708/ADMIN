@@ -2,7 +2,7 @@ import { LiveMapConstants } from './LiveMapConstants';
 /**
  * LiveMapReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             LiveMapReducer
  * @category               Reducers
  * @DateOfCreation         26 July 2018

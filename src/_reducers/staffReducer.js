@@ -2,7 +2,7 @@ import { staffConstants, configConstants } from '../_constants';
 /**
  * staffReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             staffReducer
  * @category               Reducers
  * @DateOfCreation         26 July 2018

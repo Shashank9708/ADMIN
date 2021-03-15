@@ -5,7 +5,7 @@ import { Alert } from 'react-bootstrap';
 /**
  * PrivacyPolicy
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             PrivacyPolicy
  * @category               Presentational Component
  * @DateOfCreation         12 March 2019

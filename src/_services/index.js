@@ -20,6 +20,7 @@ export * from './clinicService';
 export * from './clinicSlotService';
 export * from './productCategoriesService';
 export * from './productService';
+export * from './vendorCategoriesService';
 
 export * from './forgotPasswordService';
 export * from './notificationService';

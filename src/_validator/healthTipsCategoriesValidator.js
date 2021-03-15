@@ -1,7 +1,7 @@
 /**
  * healthTipsCategoriesValidator
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             healthTipsCategoriesValidator
  * @category               Validator
  * @DateOfCreation         24 May 2018

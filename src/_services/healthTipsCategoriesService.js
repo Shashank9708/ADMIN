@@ -4,7 +4,7 @@ import { utilityHelper } from '../_helpers';
 /**
  * get healthTipsCategoriesService
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             healthTipsCategoriesService
  * @category               Service
  * @DateOfCreation         26 July 2018

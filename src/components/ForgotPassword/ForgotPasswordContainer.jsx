@@ -8,7 +8,7 @@ import { forgotPasswordValidator } from '../../_validator';
 /**
  * ForgotPasswordContainer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             ForgotPasswordContainer
  * @category               Container Component
  * @DateOfCreation         16 May 2018

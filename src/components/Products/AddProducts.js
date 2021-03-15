@@ -1,12 +1,20 @@
-import React from 'react';
+// import React from 'react';
+import React, {useState, useRef} from 'react';
+
 import {Alert, Button, Modal, Tabs, Tab, DropdownButton, title} from 'react-bootstrap';
 import Select from 'react-select'
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import JoditEditor from "jodit-react";
+
 
 
 export const AddProducts = (props) => { 
 
+  // const editor = useRef(null)
+  // const [content, setContent] = useState('')
+  
+    const config = {
+        readonly: false // all options from https://xdsoft.net/jodit/doc/
+    }
     return (
               <div>
                 <Modal show={props.addProductsShow} onHide={props.handleClose}>
@@ -46,13 +54,13 @@ export const AddProducts = (props) => {
                           </div>
                         </div>
                         <div className="col-md-12">
-                          <Editor 
-                            initialContentState={props.payload.detail.contentState}
-                            wrapperClassName="wrapper-class"
-                            editorClassName="editor-class"
-                            toolbarClassName="toolbar-class"
-                            onContentStateChange={props.onContentStateChange}
-                          />
+                            <JoditEditor
+                                value={props.payload.detail.contentState}
+                                config={config}
+                                tabIndex={1} // tabIndex of textarea
+                                onBlur={event => props.onContentStateChange(event.target.innerHTML)} // preferred to use only this option to update the content for performance reasons
+                                onChange={newContent => {}}
+                            />
                         </div>                          
 
                         <div className="col-md-12">
@@ -63,27 +71,27 @@ export const AddProducts = (props) => {
 
                         <div className="col-md-12">
                           <div className={ props.payload.validate.quantity.isValid ? 'form-group' : 'form-group has-error' }>
-                            <input name="quantity" type="number" className="form-control" onChange = { props.handleInputChange } placeholder="quantity"/>
+                            <input min='0' name="quantity" type="number" className="form-control" onChange = { props.handleInputChange } placeholder="quantity"/>
                             <span className="help-block">{ props.payload.validate.quantity.message }</span>
                           </div>
                         </div>
 
                         <div className="col-md-12">
                           <div className={ props.payload.validate.price.isValid ? 'form-group' : 'form-group has-error' }>
-                            <input name="price" type="number" className="form-control" onChange = { props.handleInputPriceChange } placeholder="price"/>
+                            <input min='0' name="price" type="number" className="form-control" onChange = { props.handleInputPriceChange } placeholder="price"/>
                             <span className="help-block">{ props.payload.validate.price.message }</span>
                           </div>
                         </div>
 
                         <div className="col-md-12">
                           <div className='form-group'>
-                            <input name="discount_percent" type="number" className="form-control" onChange = { props.handleInputPriceChange } placeholder="Product discount percent"/>
+                            <input min='0' name="discount_percent" type="number" className="form-control" onChange = { props.handleInputPriceChange } placeholder="Product discount percent"/>
                           </div>
                         </div>
 
                         <div className="col-md-12">
                           <div className='form-group'>
-                            <input name="sale_price" value={props.payload.detail.sale_price} type="number" className="form-control" placeholder="Product selling price" readOnly/>
+                            <input min='0' name="sale_price" value={props.payload.detail.sale_price} type="number" className="form-control" placeholder="Product selling price" readOnly/>
                           </div>
                         </div>
 

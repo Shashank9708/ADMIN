@@ -1,7 +1,7 @@
 /**
  * productCategoriesValidator
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             productCategoriesValidator
  * @category               Validator
  * @DateOfCreation         24 May 2018

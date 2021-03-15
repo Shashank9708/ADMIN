@@ -2,7 +2,7 @@ import { appointmentConstants, configConstants } from '../_constants';
 /**
  * appointmentReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             appointmentReducer
  * @category               Reducers
  * @DateOfCreation         26 July 2018

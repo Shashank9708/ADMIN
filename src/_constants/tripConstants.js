@@ -1,7 +1,7 @@
 /**
  * tripConstants
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             Trip Constants
  * @category               Constants
  * @DateOfCreation         14 Aug 2018

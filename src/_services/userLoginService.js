@@ -5,7 +5,7 @@ import { utilityHelper, history } from '../_helpers';
 /**
  * loginService
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             loginService
  * @category               Service
  * @DateOfCreation         10 May 2018

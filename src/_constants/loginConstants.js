@@ -1,7 +1,7 @@
 /**
  * loginConstants
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             loginConstants
  * @category               Constants
  * @DateOfCreation         10 May 2018

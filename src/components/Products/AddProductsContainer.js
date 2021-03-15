@@ -17,6 +17,8 @@ class AddProductsContainer extends React.Component {
     this.handleSelectChange = this.handleSelectChange.bind(this);
     this.percentage = this.percentage.bind(this);
     this.onContentStateChange = this.onContentStateChange.bind(this);
+
+
   }
 
   get initialState() {
@@ -85,12 +87,12 @@ class AddProductsContainer extends React.Component {
         if(name === 'price'){
           if(detail.quantity){
             discount_price = this.percentage(detail.quantity, value)
-            console.log("discount_price", discount_price)
+            // console.log("discount_price", discount_price)
           }
         }else{
           if(detail.price){
             discount_price = this.percentage(value, detail.price)
-            console.log("discount_price", discount_price)
+            // console.log("discount_price", discount_price)
           }
         }
 
@@ -119,8 +121,27 @@ class AddProductsContainer extends React.Component {
        return ((percent/ 100) * totalValue)
     } 
 
-    onContentStateChange(contentState){
-      console.log("contentState",contentState)
+    onContentStateChange(value){
+      console.log("contentState",value)
+      // let name = 'contentState'
+      const { detail, validate }  = this.state.productForm;
+      this.setState({
+            productForm : {
+                validate:{
+                    ...validate,
+                    [name]: {
+                        isValid: true,
+                        message: ''
+                    }
+                },
+                detail : {
+                    ...detail,
+                    [name]: value
+                }
+            }
+        }, function(){
+          
+        });
     }
 
     /**
@@ -193,10 +214,11 @@ class AddProductsContainer extends React.Component {
   handleClose() {
       this.props.addProductsHideHandle();
       const { dispatch } = this.props;
-      dispatch(productActions.resetProductsState());
+      dispatch(productActions.resetProductState());
   }
 
   handleSaveProducts() {
+
     if(productValidator.is_productValid(this)) {
         const { detail } = this.state.productForm;
         // console.log(detail)

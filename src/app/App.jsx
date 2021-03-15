@@ -1,7 +1,7 @@
 /**
  * App
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             App
  * @category               Component
  * @DateOfCreation         17 July 2018
@@ -115,6 +115,11 @@ const ProductsContainer = Loadable({
     loading: Loading
 });
 
+const VendorCategoriesContainer = Loadable({
+    loader: () => import('../components/VendorCategories').then(object => object.VendorCategoriesContainer),
+    loading: Loading
+});
+
 const SettingContainer = Loadable({
     loader: () => import('../components/Setting').then(object => object.SettingContainer),
     loading: Loading
@@ -190,6 +195,7 @@ class App extends React.Component {
                         
                         <AdminRoute exact path='/product-categories' component={ProductsCategoriesContainer} authenticated={this.props.authenticated} allowuser={[0, 1]} />
                         <AdminRoute exact path='/product' component={ProductsContainer} authenticated={this.props.authenticated} allowuser={[0, 1]} />
+                        <AdminRoute exact path='/vendor-categories' component={VendorCategoriesContainer} authenticated={this.props.authenticated} allowuser={[0, 1]} />
 
                         <DoctorRoute exact path='/ddashboard' component={DoctorDashboard} authenticated={this.props.authenticated} allowuser={[1]} />
 

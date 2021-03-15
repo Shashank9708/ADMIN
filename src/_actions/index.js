@@ -19,6 +19,7 @@ export * from './clinicActions';
 export * from './clinicSlotActions';
 export * from './productCategoriesActions';
 export * from './productActions';
+export * from './vendorCategoriesActions';
 
 
 export * from './forgotPasswordActions';

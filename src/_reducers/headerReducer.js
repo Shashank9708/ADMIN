@@ -2,7 +2,7 @@ import { headerConstants } from '../_constants';
 /**
 * headerReducer
 *
-* @package                TruckAdmin
+* @package                ARKAdmin
 * @subpackage             headerReducer
 * @category               Reducers
 * @DateOfCreation         22 May 2018

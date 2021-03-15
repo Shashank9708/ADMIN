@@ -1,7 +1,7 @@
 /**
  * appointmentValidator
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             appointmentValidator
  * @category               Validator
  * @DateOfCreation         24 May 2018

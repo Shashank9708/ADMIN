@@ -4,7 +4,7 @@ import { utilityHelper } from '../../_helpers';
 /**
  * get LiveMapService
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             LiveMapService
  * @category               Service
  * @DateOfCreation         26 July 2018

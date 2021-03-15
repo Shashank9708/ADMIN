@@ -2,7 +2,7 @@ import { driverConstants, configConstants } from '../_constants';
 /**
  * driverReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             driverReducer
  * @category               Reducers
  * @DateOfCreation         26 July 2018

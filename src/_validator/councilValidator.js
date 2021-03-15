@@ -1,7 +1,7 @@
 /**
  * councilValidator
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             councilValidator
  * @category               Validator
  * @DateOfCreation         24 May 2018

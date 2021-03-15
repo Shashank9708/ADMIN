@@ -2,7 +2,7 @@ import { pathologyCentersConstants, configConstants } from '../_constants';
 /**
  * pathologyCentersReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             pathologyCentersReducer
  * @category               Reducers
  * @DateOfCreation         26 July 2018

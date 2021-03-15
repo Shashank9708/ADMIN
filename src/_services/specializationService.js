@@ -4,7 +4,7 @@ import { utilityHelper } from '../_helpers';
 /**
  * get specializationService
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             specializationService
  * @category               Service
  * @DateOfCreation         26 July 2018

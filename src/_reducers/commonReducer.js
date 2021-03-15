@@ -2,7 +2,7 @@ import { commonConstants } from '../_constants';
 /**
  * commonConstants
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             commonConstants
  * @category               Reducers
  * @DateOfCreation         17 May 2018

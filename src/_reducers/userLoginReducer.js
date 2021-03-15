@@ -2,7 +2,7 @@ import { loginConstants } from '../_constants';
 /**
  * userLogin
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             userLogin
  * @category               Reducers
  * @DateOfCreation         10 May 2018

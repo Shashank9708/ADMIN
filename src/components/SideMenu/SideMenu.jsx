@@ -49,29 +49,30 @@ export class SideMenu extends React.Component {
                 <ul className="box">
                     <li><Link className="button" to="/dashboard">DashBoard</Link></li>
                     <li><Link className="button" to="/users">Users</Link></li>
-                    <li><Link className="button" to="/doctors">Doctor</Link></li>
+                    <li><Link className="button" to="/health-problem">Health Problems</Link></li>
+                    
                     <li><Link className="button" to="/doctor-categories">Doctor Categories</Link></li>
+                    <li><Link className="button" to="/doctors">Doctor</Link></li>
+                    <li><Link className="button" to="/council">Council</Link></li>
+                    
                     <li><Link className="button" to="/appointments">Appointments</Link></li>
                     <li><Link className="button" to="/referred">Referred Details</Link></li>
+
                     <li><Link className="button" to="/health-tips-categories">Health Tips Categories</Link></li>
                     <li><Link className="button" to="/health-tips">Health Tips</Link></li>
+
                     <li><Link className="button" to="/medical-store">Medical Stores</Link></li>
                     <li><Link className="button" to="/pathology-center">Pathology Centers</Link></li>
-                    <li><Link className="button" to="/health-problem">Health Problems</Link></li>
-                    <li><Link className="button" to="/council">Council</Link></li>
 
                     <li><Link className="button" to="/product-categories">Product Categories</Link></li>
                     <li><Link className="button" to="/product">Products</Link></li>
-                    
 
+                    <li><Link className="button" to="/vendor-categories">Best Deals Vendor Categories</Link></li>
+                    <li><Link className="button" to="/vendor">Vendor</Link></li>
+                    
                     <li><Link className="button" to="#">Invitations Sends</Link></li>
                     <li><Link className="button" to="#">Transactions</Link></li>
-                    
                     <li><Link className="button" to="#">Orders</Link></li>
-                    
-                    
-                    <li><Link className="button" to="#">Best deals in tows</Link></li>
-                    
                     <li><Link className="button" to="#">Notifications</Link></li>
                     <li><Link className="button" to="#">Promotional Activity</Link></li>
                     <li><Link className="button" to="#">Patient Notifications</Link></li>

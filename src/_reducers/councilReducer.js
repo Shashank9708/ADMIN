@@ -2,7 +2,7 @@ import { councilConstants, configConstants } from '../_constants';
 /**
  * councilReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             councilReducer
  * @council               Reducers
  * @DateOfCreation         26 July 2018

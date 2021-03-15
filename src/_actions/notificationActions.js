@@ -5,7 +5,7 @@ import { utilityHelper} from '../_helpers';
 /**
  * notificationActions
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             notificationActions
  * @category               Actions
  * @DateOfCreation         26 July 2018

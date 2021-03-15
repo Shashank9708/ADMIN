@@ -2,7 +2,7 @@ import { forgotConstants } from '../_constants';
 /**
  * forgotPass
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             forgotPass
  * @category               Reducers
  * @DateOfCreation         15 May 2018

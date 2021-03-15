@@ -1,7 +1,7 @@
 /**
  * specializationValidator
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             specializationValidator
  * @category               Validator
  * @DateOfCreation         24 May 2018

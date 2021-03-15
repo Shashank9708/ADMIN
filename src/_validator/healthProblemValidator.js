@@ -1,7 +1,7 @@
 /**
  * healthProblemValidator
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             healthProblemValidator
  * @category               Validator
  * @DateOfCreation         24 May 2018

@@ -2,7 +2,7 @@ import { medicalStoresConstants, configConstants } from '../_constants';
 /**
  * medicalStoresReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             medicalStoresReducer
  * @category               Reducers
  * @DateOfCreation         26 July 2018

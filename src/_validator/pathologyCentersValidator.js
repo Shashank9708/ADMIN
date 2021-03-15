@@ -1,7 +1,7 @@
 /**
  * pathologyCentersValidator
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             pathologyCentersValidator
  * @category               Validator
  * @DateOfCreation         24 May 2018

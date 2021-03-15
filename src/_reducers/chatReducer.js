@@ -2,7 +2,7 @@ import { chatConstants, configConstants } from '../_constants';
 /**
  * chatReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             chatReducer
  * @category               Reducers
  * @DateOfCreation         26 July 2018

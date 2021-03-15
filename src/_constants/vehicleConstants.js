@@ -1,7 +1,7 @@
 /**
  * vehicleConstants
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             Vehicle Constants
  * @category               Constants
  * @DateOfCreation         26 July 2018

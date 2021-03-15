@@ -4,7 +4,7 @@ import { utilityHelper } from '../_helpers';
 /**
  * chatService
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             chatService
  * @category               Service
  * @DateOfCreation         26 July 2018

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 /**
  * Login
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             Login
  * @category               Presentational Component
  * @DateOfCreation         16 July 2018

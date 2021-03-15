@@ -2,7 +2,7 @@ import { ImportConstants } from './ImportConstants';
 /**
  * importReducer
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             importReducer
  * @category               Reducers
  * @DateOfCreation         28 June 2018

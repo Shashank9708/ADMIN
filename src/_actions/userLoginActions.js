@@ -8,7 +8,7 @@ import axios from "axios";
 /**
  * userLoginActions
  *
- * @package                TruckAdmin
+ * @package                ARKAdmin
  * @subpackage             userLoginActions
  * @category               Actions
  * @DateOfCreation         10 May 2018
