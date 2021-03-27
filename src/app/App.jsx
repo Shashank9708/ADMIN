@@ -120,6 +120,11 @@ const VendorCategoriesContainer = Loadable({
     loading: Loading
 });
 
+const PlanContainer = Loadable({
+    loader: () => import('../components/Plan').then(object => object.PlanContainer),
+    loading: Loading
+});
+
 const SettingContainer = Loadable({
     loader: () => import('../components/Setting').then(object => object.SettingContainer),
     loading: Loading
@@ -196,6 +201,7 @@ class App extends React.Component {
                         <AdminRoute exact path='/product-categories' component={ProductsCategoriesContainer} authenticated={this.props.authenticated} allowuser={[0, 1]} />
                         <AdminRoute exact path='/product' component={ProductsContainer} authenticated={this.props.authenticated} allowuser={[0, 1]} />
                         <AdminRoute exact path='/vendor-categories' component={VendorCategoriesContainer} authenticated={this.props.authenticated} allowuser={[0, 1]} />
+                        <AdminRoute exact path='/plan' component={PlanContainer} authenticated={this.props.authenticated} allowuser={[0, 1]} />
 
                         <DoctorRoute exact path='/ddashboard' component={DoctorDashboard} authenticated={this.props.authenticated} allowuser={[1]} />
 

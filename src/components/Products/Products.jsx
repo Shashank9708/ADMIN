@@ -245,6 +245,21 @@ class Products extends React.Component {
                                                   }
                                               },
                                               {
+                                                  Header: 'Content',
+                                                  accessor  : "content",
+                                                  className : 'grid-header',
+                                                  filterable  : false,
+                                                  Cell: row => {
+                                                          return  (
+                                                              <div>
+                                                              {
+                                                                row.value &&
+                                                                <span dangerouslySetInnerHTML={{__html: JSON.parse(row.value)}} />
+                                                              }
+                                                              </div>
+                                                          )}
+                                              },
+                                              {
                                                   Header: 'Status',
                                                   accessor  : "status",
                                                   filterable  : false,

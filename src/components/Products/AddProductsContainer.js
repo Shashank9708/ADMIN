@@ -33,7 +33,7 @@ class AddProductsContainer extends React.Component {
                   'discount_percent' : '',
                   'sale_price' : '',
                   'product_image' : '',
-                  'contentState': '' 
+                  'content': '' 
               },
               validate : {
                   category_id : { isValid : true, message : '' },
@@ -122,8 +122,8 @@ class AddProductsContainer extends React.Component {
     } 
 
     onContentStateChange(value){
-      console.log("contentState",value)
-      // let name = 'contentState'
+      console.log("content",value)
+      let name = 'content'
       const { detail, validate }  = this.state.productForm;
       this.setState({
             productForm : {
@@ -218,10 +218,8 @@ class AddProductsContainer extends React.Component {
   }
 
   handleSaveProducts() {
-
     if(productValidator.is_productValid(this)) {
         const { detail } = this.state.productForm;
-        // console.log(detail)
         var bodyFormData = new FormData();
         bodyFormData.append('category_id', detail.category_id);
         bodyFormData.append('product_name', detail.product_name);
@@ -232,6 +230,7 @@ class AddProductsContainer extends React.Component {
         bodyFormData.append('sale_price', detail.sale_price);
         //table structure with validation rules
         bodyFormData.append('image',detail.product_image);
+        bodyFormData.append('content',JSON.stringify(detail.content));
 
         const { dispatch } = this.props;
         dispatch(productActions.saveProduct(bodyFormData, this.props.productList));

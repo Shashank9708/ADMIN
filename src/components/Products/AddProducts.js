@@ -55,7 +55,7 @@ export const AddProducts = (props) => {
                         </div>
                         <div className="col-md-12">
                             <JoditEditor
-                                value={props.payload.detail.contentState}
+                                value={props.payload.detail.content}
                                 config={config}
                                 tabIndex={1} // tabIndex of textarea
                                 onBlur={event => props.onContentStateChange(event.target.innerHTML)} // preferred to use only this option to update the content for performance reasons

@@ -2,19 +2,19 @@ import axios from 'axios';
 import { configConstants } from '../_constants';
 import { utilityHelper } from '../_helpers';
 /**
- * get vendorCategoriesService
+ * get planService
  *
  * @package                ARKAdmin
- * @subpackage             vendorCategoriesService
+ * @subpackage             planService
  * @category               Service
  * @DateOfCreation         26 July 2018
  * @ShortDescription       This is responsible for calling API
  */
-export const vendorCategoriesService = {
-    getVendorCategoriesList,
-    saveVendorCategories,
+export const planService = {
+    getPlanList,
+    savePlan,
     statusChange,
-    deleteVendorCategory
+    deletePlan
 };
 
 /**
@@ -23,11 +23,11 @@ export const vendorCategoriesService = {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-function getVendorCategoriesList(page, pageSize, sorted, filtered) {
+function getPlanList(page, pageSize, sorted, filtered) {
     
     return axios({
         method  : 'get',
-        url     : configConstants.API_BASE_PATH + '/admin/getBestDealCategory',
+        url     : configConstants.API_BASE_PATH + '/admin/getPlanList',
     })
     .then(response => {
         return response;
@@ -43,12 +43,13 @@ function getVendorCategoriesList(page, pageSize, sorted, filtered) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-function saveVendorCategories(vendor) {
+function savePlan(plan) {
     // var loginAccessToken = utilityHelper.getLoginAccessToken();
+    console.log("plan",plan)
     return axios({
         method  : 'post',
-        url     : configConstants.API_BASE_PATH + '/admin/saveBestDealCategory',
-        data    : vendor
+        url     : configConstants.API_BASE_PATH + '/admin/savePlans',
+        data    : plan
     })
     .then(response => {
         return response;
@@ -68,7 +69,7 @@ function statusChange(data) {
     // var loginAccessToken = utilityHelper.getLoginAccessToken();
     return axios({
         method  : 'post',
-        url     : configConstants.API_BASE_PATH + '/admin/changeBestDealCategoryStatus',
+        url     : configConstants.API_BASE_PATH + '/admin/changePlanStatus',
         data    : data
     })
     .then(response => {
@@ -87,11 +88,11 @@ function statusChange(data) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-function deleteVendorCategory(data) {
+function deletePlan(data) {
     // var loginAccessToken = utilityHelper.getLoginAccessToken();
     return axios({
         method  : 'post',
-        url     : configConstants.API_BASE_PATH + '/admin/deleteBestDealCategory',
+        url     : configConstants.API_BASE_PATH + '/admin/deletePlan',
         data    : data
     })
     .then(response => {

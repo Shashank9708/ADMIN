@@ -7,8 +7,9 @@ import { EditView } from './EditView';
 import { Status } from './Status';
 import { Clinic } from './Clinic';
 import { Appointment } from './Appointment';
+import { ReNew } from './ReNew';
 import { ImportContainer } from '../Import/ImportContainer';
-import { userActions, headerActions, commonActions, clinicActions, doctorActions } from '../../_actions';
+import { userActions, headerActions, commonActions, clinicActions, doctorActions, planActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
@@ -47,7 +48,12 @@ class Doctor extends React.Component {
 
         this.clinicShowHandle = this.clinicShowHandle.bind(this);
         this.clinicHideHandle = this.clinicHideHandle.bind(this);
-        this.reNewPackage = this.reNewPackage.bind(this);
+
+
+        this.reNewShowHandle = this.reNewShowHandle.bind(this);
+        this.reNewHideHandle = this.reNewHideHandle.bind(this);
+        this.reNewhandleInputChange = this.reNewhandleInputChange.bind(this);
+        this.reNewhandleSelectChange = this.reNewhandleSelectChange.bind(this);
         this.reNewSave = this.reNewSave.bind(this);
 
     }
@@ -61,6 +67,7 @@ class Doctor extends React.Component {
             editShow: false,
             clinicShow: false,
             AppointmentShow: false,
+            reNewShow: false,
             filtered: [],
             filterAll: '',
             payload: {
@@ -171,11 +178,43 @@ class Doctor extends React.Component {
     }
 
     /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle open import modal
+     * @return                Nothing
+     */
+    reNewShowHandle(data) {
+
+        const { dispatch }   = this.props;
+        dispatch(planActions.getPlanList(1, 10, '', ''));
+
+        this.setState({ reNewShow: true });
+        const { renewdata }  = this.state.renew;
+        // this.setState({
+        //     renew : {
+        //         renewdata : {
+        //             ...renewdata,
+        //             // user_id: id,
+        //             // package_type: package_type
+        //         }
+        //     }
+        // });
+    }
+
+    /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle close modal
+     * @return                Nothing
+     */
+    reNewHideHandle() {
+        this.setState({ reNewShow: false, doc_id: '' });
+    }
+
+    /**
      * @DateOfCreation        01 August 2018
      * @ShortDescription      This function is responsible to sending mail.
      * @return                Void
      */
-    reNewPackage(event) {
+    reNewhandleInputChange(event) {
         const { renewdata }  = this.state.renew;
         this.setState({
             renew : {
@@ -186,6 +225,22 @@ class Doctor extends React.Component {
             }
         });
         
+    }
+    /**
+     * @DateOfCreation        01 August 2018
+     * @ShortDescription      This function is responsible to sending mail.
+     * @return                Void
+     */
+    reNewhandleSelectChange(selectedOption, name) {
+        const { renewdata }  = this.state.renew;
+        this.setState({
+            renew : {
+                renewdata : {
+                    ...renewdata,
+                    [name] : selectedOption.value
+                  }
+            }
+        });
     }
     reNewSave(){
         const { renewdata }  = this.state.renew;
@@ -519,6 +574,15 @@ class Doctor extends React.Component {
                         onSave = {this.editSave}
                         displayView = {this.state.displayView}
                     />
+                    <ReNew
+                        onClick = { this.state.reNewShow }
+                        onClose = { this.reNewHideHandle }
+                        payload = { this.state.renew }
+                        planList = { this.props.planList }
+                        handleInputChange = {this.reNewhandleInputChange}
+                        handleSelectChange = {this.reNewhandleSelectChange}
+                        reNewSave = {this.reNewSave}
+                    />
                     <Clinic
                         onClick = { this.state.clinicShow }
                         onClose = { this.clinicHideHandle }
@@ -735,6 +799,7 @@ class Doctor extends React.Component {
                                               className : 'grid-header',
                                               Cell: row => 
                                                         <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
+                                                            <Dropdown.Item onClick={() => this.reNewShowHandle(row.original)}>Renew Plan</Dropdown.Item>
                                                             <Dropdown.Item onClick={() => this.viewClinic(row.original)}>View Clinic</Dropdown.Item>
                                                             <Dropdown.Item onClick={() => this.viewAppointments(row.original)}>Appointment</Dropdown.Item>
                                                             <Dropdown.Item onClick={() => this.deleteDoctor(row.original)}>Delete</Dropdown.Item>
@@ -785,6 +850,7 @@ class Doctor extends React.Component {
 function mapStateToProps(state) {
    const { doctorList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid,submitted } = state.userReducer;
    const { statusClose, editClose, renewClose } = state.commonReducer;
+   const { planList } = state.planReducer;
     return {
         statusClose,
         editClose,
@@ -796,7 +862,8 @@ function mapStateToProps(state) {
         sendingRequest,
         errorMsg,
         pages,
-        submitted
+        submitted,
+        planList
     };
 }
 const connectedDoctor = connect(mapStateToProps)(Doctor);

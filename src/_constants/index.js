@@ -22,6 +22,7 @@ export * from './clinicSlotConstants';
 export * from './productCategoriesConstants';
 export * from './productConstants';
 export * from './vendorCategoriesConstants';
+export * from './planConstants';
 
 
 export * from './vehicleConstants';
