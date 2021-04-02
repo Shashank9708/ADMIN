@@ -4,11 +4,14 @@ import { Button } from 'react-bootstrap';
 import { HeaderContainer } from '../Header';
 import { SideMenu } from '../SideMenu';
 import {AddMedicalStoresContainer} from './AddMedicalStoresContainer';
-import { medicalStoresActions, headerActions } from '../../_actions';
+import { medicalStoresActions, headerActions, commonActions, planActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
 import {DropdownButton, Dropdown} from 'react-bootstrap'
+import { ReNew } from '../Doctor/ReNew';
+
+
 
 class MedicalStores extends React.Component {
     /**
@@ -26,13 +29,28 @@ class MedicalStores extends React.Component {
         this.statusShowHandle = this.statusShowHandle.bind(this);
         this.notificationSearch         = this.notificationSearch.bind(this);
         this.state               = this.initialState;
+
+        this.reNewShowHandle = this.reNewShowHandle.bind(this);
+        this.reNewHideHandle = this.reNewHideHandle.bind(this);
+        this.reNewhandleInputChange = this.reNewhandleInputChange.bind(this);
+        this.reNewhandleSelectChange = this.reNewhandleSelectChange.bind(this);
+        this.reNewSave = this.reNewSave.bind(this);
     }
 
     get initialState() {
         return {
             loading : false,
             pages  : 0,
-            addMedicalStoresShow: false
+            addMedicalStoresShow: false,
+            renew: {
+              renewdata: {
+                user_id: '',
+                plan_id: '',
+                payment_type: '',
+                transaction_id: '',
+                amount: ''
+              }
+            }
         }
     }
 
@@ -101,18 +119,114 @@ class MedicalStores extends React.Component {
     }
 
     /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle open import modal
+     * @return                Nothing
+     */
+    reNewShowHandle(data) {
+      // console.log("data",data)
+        const { dispatch }   = this.props;
+        dispatch(planActions.getPlanList(1, 10, '', ''));
+
+        this.setState({ reNewShow: true });
+        const { renewdata }  = this.state.renew;
+        this.setState({
+            renew : {
+              renewdata: {
+                user_id: data.user_id,
+                plan_id: data.plan_id,
+                payment_type: '',
+                transaction_id: '',
+                amount: ''
+              }
+            }
+        });
+    }
+
+    /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle close modal
+     * @return                Nothing
+     */
+    reNewHideHandle() {
+        this.setState({ reNewShow: false, doc_id: '' });
+    }
+
+    /**
+     * @DateOfCreation        01 August 2018
+     * @ShortDescription      This function is responsible to sending mail.
+     * @return                Void
+     */
+    reNewhandleInputChange(event) {
+      const { name, value }       = event.target;
+        const { renewdata }  = this.state.renew;
+        this.setState({
+            renew : {
+                renewdata : {
+                    ...renewdata,
+                    [name]: value
+                  }
+            }
+        });
+        
+    }
+    /**
+     * @DateOfCreation        01 August 2018
+     * @ShortDescription      This function is responsible to sending mail.
+     * @return                Void
+     */
+    reNewhandleSelectChange(selectedOption, name) {
+        const { renewdata }  = this.state.renew;
+        if(name === 'plan_id'){
+          this.setState({
+              renew : {
+                  renewdata : {
+                      ...renewdata,
+                      [name] : selectedOption.value,
+                      'amount' : selectedOption.sale_price
+                    }
+              }
+          });
+        }else{
+          this.setState({
+              renew : {
+                  renewdata : {
+                      ...renewdata,
+                      [name] : selectedOption.value
+                  }
+              }
+          });  
+        }
+        
+    }
+    reNewSave(){
+        const { renewdata }  = this.state.renew;
+        // console.log("save",renewdata)
+        const { dispatch } = this.props;
+        dispatch(commonActions.renewPackage(renewdata));
+    }
+
+    /**
    * @DateOfCreation        28 June 2018
    * @ShortDescription      This function is responsible to close import model.
    * @return                Nothing
   */
     UNSAFE_componentWillReceiveProps(newProps) {
-        
+        console.log("newProps",newProps)
         if(newProps.status == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
                 dispatch(medicalStoresActions.resetMedicalStoresState())
 
                 this.getMedicalStoresList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
+            }.bind(this), 1500);
+        }
+        if(newProps.renewClose == true){
+            setTimeout(function() { 
+                this.reNewHideHandle();
+                this.getMedicalStoresList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
+                const { dispatch } = this.props;
+                dispatch(commonActions.resetReNewState())
             }.bind(this), 1500);
         }
     }
@@ -211,35 +325,41 @@ class MedicalStores extends React.Component {
                                                           )}
                                                 },
                                                 {
-                                                  Header    : 'Subscription start date',
-                                                  accessor  : 'en_spec',
+                                                  Header    : 'Subscription',
+                                                  accessor  : 'plan_name',
                                                   className : 'grid-header',
                                                   filterable  : false,
                                                   filterMethod: (filter, row) => {
                                                       return row[filter.id].includes(filter.value);
                                                   }
+                                                },
+                                                {
+                                                  Header    : 'Subscription start date',
+                                                  accessor  : 'start_date',
+                                                  className : 'grid-header',
+                                                  filterable  : false,
+                                                  Cell: row => 
+                                                              <div>
+                                                                  {
+                                                                    new Date(row.value).toLocaleDateString("en-US")
+                                                                  }
+                                                              </div>  
                                                 },
                                                 {
                                                   Header    : 'Subscription end date',
-                                                  accessor  : 'en_spec',
+                                                  accessor  : 'plan_expiry_date',
                                                   className : 'grid-header',
                                                   filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                                },
-                                                {
-                                                  Header    : 'Plan',
-                                                  accessor  : 'en_spec',
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
+                                                  Cell: row => 
+                                                              <div>
+                                                                  {
+                                                                    new Date(row.value).toLocaleDateString("en-US")
+                                                                  }
+                                                              </div>    
                                                 },
                                                 {
                                                   Header    : 'Subscription amount',
-                                                  accessor  : 'en_spec',
+                                                  accessor  : 'amount',
                                                   className : 'grid-header',
                                                   filterable  : false,
                                                   filterMethod: (filter, row) => {
@@ -282,6 +402,7 @@ class MedicalStores extends React.Component {
                                                     className : 'grid-header',
                                                     Cell: row => 
                                                           <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
+                                                              <Dropdown.Item onClick={() => this.reNewShowHandle(row.original)}>Renew Plan</Dropdown.Item>
                                                               <Dropdown.Item >View</Dropdown.Item>
                                                               <Dropdown.Item >Edit</Dropdown.Item>
                                                               <Dropdown.Item >Delete</Dropdown.Item>
@@ -321,6 +442,16 @@ class MedicalStores extends React.Component {
                         addMedicalStoresShow = {this.state.addMedicalStoresShow}
                         addMedicalStoresHideHandle = {this.addMedicalStoresHideHandle}
                       />
+                      <ReNew
+                        onClick = { this.state.reNewShow }
+                        onClose = { this.reNewHideHandle }
+                        payload = { this.state.renew }
+                        planList = { this.props.planList }
+                        handleInputChange = {this.reNewhandleInputChange}
+                        handleSelectChange = {this.reNewhandleSelectChange}
+                        reNewSave = {this.reNewSave}
+                        type={3}
+                    />
                     </div>
                 </div>    
             </div>
@@ -337,6 +468,8 @@ class MedicalStores extends React.Component {
 function mapStateToProps(state) {
    const { medicalStoresList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status } = state.medicalStoresReducer;
    // console.log('medicalStoresList',medicalStoresList)
+   const { statusClose, editClose, renewClose } = state.commonReducer;
+   const { planList } = state.planReducer;
     return {
         medicalStoresList,
         isUserNotValid,
@@ -345,7 +478,11 @@ function mapStateToProps(state) {
         sendingRequest,
         errorMsg,
         pages,
-        status
+        status,
+        planList,
+        statusClose,
+        editClose,
+        renewClose
     };
 }
 const connectedMedicalStores = connect(mapStateToProps)(MedicalStores);

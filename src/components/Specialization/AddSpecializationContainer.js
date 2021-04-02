@@ -26,7 +26,8 @@ class AddSpecializationContainer extends React.Component {
               validate : {
                   en_spec : { isValid : true, message : '' }
               }
-          }
+          },
+          id: ''
       }
   }
 
@@ -109,16 +110,22 @@ class AddSpecializationContainer extends React.Component {
   }
 
   handleSaveSpecialization() {
-    if(specializationValidator.is_specializationValid(this)) {
-        const { detail } = this.state.notificationForm;
-        // console.log(detail)
-        var bodyFormData = new FormData();
-        bodyFormData.append('en_spec', detail.en_spec);
-        //table structure with validation rules
-        bodyFormData.append('image',detail.image);
+    
+      if(specializationValidator.is_specializationValid(this)) {
+          const { detail } = this.state.notificationForm;
+          // console.log(detail)
+          var bodyFormData = new FormData();
+          bodyFormData.append('en_spec', detail.en_spec);
+          //table structure with validation rules
+          bodyFormData.append('image',detail.image);
 
-        const { dispatch } = this.props;
-        dispatch(specializationActions.saveSpecialization(bodyFormData, this.props.notificationList));
+          const { dispatch } = this.props;
+          if(this.props.flag){
+            bodyFormData.append('id',this.state.id);
+            dispatch(specializationActions.editSpecialization(bodyFormData, this.props.notificationList));
+          }else{
+            dispatch(specializationActions.saveSpecialization(bodyFormData, this.props.notificationList));
+          }
     }
   }
 
@@ -128,6 +135,24 @@ class AddSpecializationContainer extends React.Component {
      * @return                Nothing
      */
     componentWillReceiveProps(newProps) {
+        if(newProps.payload){
+            this.setState({
+              notificationForm : {
+                detail : {
+                    'en_spec' : newProps.payload.en_spec,
+                    'image' : newProps.payload.image,
+                    'marathi_spec' : ''
+                },
+                validate : {
+                    en_spec : { isValid : true, message : '' }
+                }
+              },
+              id: newProps.payload.id
+            });
+    
+        }else{
+            this.setState(this.initialState);
+        }
         if(newProps.closeForm == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
@@ -137,8 +162,6 @@ class AddSpecializationContainer extends React.Component {
                 this.props.addSpecializationHideHandle();
                 this.setState(this.initialState);
             }.bind(this), 1500);
-        }else{
-            this.setState(this.initialState);
         }
     }
   render() {
@@ -152,6 +175,7 @@ class AddSpecializationContainer extends React.Component {
               handleInputChange = {this.handleInputChange}
               handleFileChange = {this.handleFileChange}
               payload = {this.state.notificationForm}
+              flag = { this.props.flag }
             />
       );
     }

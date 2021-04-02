@@ -207,6 +207,15 @@ class ProductsCategories extends React.Component {
                                                     }
                                                 },
                                                 {
+                                                    Header    : "GST",
+                                                    accessor  : "gst",
+                                                    className : "grid-header",
+                                                    filterable  : false,
+                                                    filterMethod: (filter, row) => {
+                                                        return row[filter.id].includes(filter.value);
+                                                    }
+                                                },
+                                                {
                                                   Header: 'Status',
                                                   accessor  : "status",
                                                   filterable  : false,

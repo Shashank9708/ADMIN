@@ -71,14 +71,11 @@ function editPut(data) {
 * @return                Response JSON jsonObj
 */
 function renewPackage(data) {
-    var loginAccessToken = utilityHelper.getLoginAccessToken();
+    // console.log("data",data,configConstants.API_BASE_PATH + 'admin/assignPlan')
     return axios({
         method  : 'post',
-        url     : configConstants.API_BASE_PATH + 'common/renewpackage',
-        data    : data,
-        headers : { 
-            'Authorization' : 'Bearer '+loginAccessToken,
-        }
+        url     : configConstants.API_BASE_PATH + '/admin/assignPlan',
+        data    : data
     })
     .then(response => {
         return response;

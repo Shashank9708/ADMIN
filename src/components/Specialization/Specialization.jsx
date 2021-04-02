@@ -8,6 +8,8 @@ import { specializationActions, headerActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
+import {DropdownButton, Dropdown} from 'react-bootstrap'
+
 
 
 class Specialization extends React.Component {
@@ -25,6 +27,8 @@ class Specialization extends React.Component {
         this.getSpecializationList        = this.getSpecializationList.bind(this);
         this.statusShowHandle = this.statusShowHandle.bind(this);
         this.notificationSearch         = this.notificationSearch.bind(this);
+        this.editSpecializationShowHandle         = this.editSpecializationShowHandle.bind(this);
+        this.deleteSpecialization         = this.deleteSpecialization.bind(this);
         this.state               = this.initialState;
     }
 
@@ -32,7 +36,9 @@ class Specialization extends React.Component {
         return {
             loading : false,
             pages  : 0,
-            addSpecializationShow: false
+            addSpecializationShow: false,
+            payload: '',
+            flag: false
         }
     }
 
@@ -51,7 +57,7 @@ class Specialization extends React.Component {
      * @return                Nothing
      */
      addSpecializationHideHandle() {
-       this.setState({ addSpecializationShow: false });
+       this.setState({ addSpecializationShow: false, payload: '', flag: false });
      }
 
     /**
@@ -117,6 +123,30 @@ class Specialization extends React.Component {
         }
     }
 
+    /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle open import modal
+     * @return                Nothing
+     */
+     editSpecializationShowHandle(data) {
+       this.setState({ addSpecializationShow: true, payload: data, flag:true });
+     }
+
+    /**
+     * @DateOfCreation        06 Mar 2021
+     * @ShortDescription      This function is responsible to handle delete doctor
+     * @return                Nothing
+     */
+    deleteSpecialization(row){
+        // var json = {'id':row.id}
+        const { dispatch } = this.props;
+        dispatch(specializationActions.deleteSpecialization(row.id)).then((res) => {
+          if(res.status === 200){
+              // this.setState({appointments: displayAppointment})
+          }
+        })
+    }
+
     render() {
         // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
@@ -158,11 +188,11 @@ class Specialization extends React.Component {
                                             columns={[
                                                 {
                                                     Header: 'Image',
-                                                    accessor  : "image",
+                                                    accessor  : "image_url",
                                                     className : 'grid-header',
                                                     filterable  : false,
                                                     Cell: row =>
-                                                      <div><img src={'data:image/png;base64,'+row.value} width="50px" height="50px"/></div>
+                                                      <div><img src={configConstants.API_BASE_PATH+"/"+row.value} width="50px" height="50px"/></div>
                                                     
                                                 },
                                                 {
@@ -210,6 +240,18 @@ class Specialization extends React.Component {
                                                               }
                                                               </div>
                                                           )}
+                                                },
+                                                {
+                                                    Header: 'Actions',
+                                                    accessor  : "id",
+                                                    filterable  : false,
+                                                    
+                                                    className : 'grid-header',
+                                                    Cell: row => 
+                                                              <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
+                                                                  <Dropdown.Item onClick={() => this.editSpecializationShowHandle(row.original)}>Edit</Dropdown.Item>
+                                                                  <Dropdown.Item onClick={() => this.deleteSpecialization(row.original)}>Delete</Dropdown.Item>
+                                                              </DropdownButton>
                                                 }
                                                 
                                             ]}
@@ -244,6 +286,8 @@ class Specialization extends React.Component {
                       <AddSpecializationContainer
                         addSpecializationShow = {this.state.addSpecializationShow}
                         addSpecializationHideHandle = {this.addSpecializationHideHandle}
+                        payload = {this.state.payload}
+                        flag = {this.state.flag}
                       />
                     </div>
                 </div>    

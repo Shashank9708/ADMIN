@@ -19,7 +19,7 @@ render() {
             { label: 'Cash', value: 'Cash' },
             { label: 'Cheque', value: 'Cheque' }
           ]
-  console.log("planList",this.props.planList)
+  // console.log("planList",this.props)
   return (
     <div>
       <Modal show={this.props.onClick} onHide={this.handle_close}>
@@ -33,7 +33,7 @@ render() {
               <Select
                   placeholder = "Select Plan"
                   onChange={ (value, name) => this.props.handleSelectChange(value, 'plan_id') }
-                  options={this.props.planList}
+                  options={this.props.planList.filter(arg => arg.type === this.props.type)}
                   name='plan_id'
               />
             </div>
@@ -53,10 +53,16 @@ render() {
               <input name="transaction_id" type="text" className="form-control" onChange = { this.props.handleInputChange } placeholder="Transaction Number or Cheque Number"/>
             </div>
           </div>
+
+          <div className="col-md-12">
+            <div className={ 'form-group' }>
+              <input name="amount" type="number" value={this.props.payload.renewdata.amount} className="form-control" onChange = { this.props.handleInputChange } placeholder="Plan Amount"/>
+            </div>
+          </div>
         </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="btn text-btn red" onClick={this.props.handleClose}>Close</Button>
+          <Button className="btn text-btn red" onClick={this.handle_close}>Close</Button>
           <Button className="btn text-btn green" onClick={this.props.reNewSave}>Save</Button>
         </Modal.Footer>
       </Modal>

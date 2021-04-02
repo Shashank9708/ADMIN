@@ -21,6 +21,7 @@ class AddProductsCategoriesContainer extends React.Component {
               detail : {
                   'name' : '',
                   'details' : '',
+                  'gst' : '',
                   'image' : '',
               },
               validate : {
@@ -115,6 +116,7 @@ class AddProductsCategoriesContainer extends React.Component {
         var bodyFormData = new FormData();
         bodyFormData.append('name', detail.name);
         bodyFormData.append('details', detail.details);
+        bodyFormData.append('gst', detail.gst);
         //table structure with validation rules
         bodyFormData.append('image',detail.image);
 

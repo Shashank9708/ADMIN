@@ -102,8 +102,10 @@ class Doctor extends React.Component {
             renew: {
               renewdata: {
                 user_id: '',
-                package_type: '',
-                status: 'active'
+                plan_id: '',
+                payment_type: '',
+                transaction_id: '',
+                amount: ''
               }
             },
             clinics: [],
@@ -183,21 +185,23 @@ class Doctor extends React.Component {
      * @return                Nothing
      */
     reNewShowHandle(data) {
-
+      // console.log("data",data)
         const { dispatch }   = this.props;
         dispatch(planActions.getPlanList(1, 10, '', ''));
 
         this.setState({ reNewShow: true });
         const { renewdata }  = this.state.renew;
-        // this.setState({
-        //     renew : {
-        //         renewdata : {
-        //             ...renewdata,
-        //             // user_id: id,
-        //             // package_type: package_type
-        //         }
-        //     }
-        // });
+        this.setState({
+            renew : {
+              renewdata: {
+                user_id: data.user_id,
+                plan_id: data.plan_id,
+                payment_type: '',
+                transaction_id: '',
+                amount: ''
+              }
+            }
+        });
     }
 
     /**
@@ -215,12 +219,13 @@ class Doctor extends React.Component {
      * @return                Void
      */
     reNewhandleInputChange(event) {
+      const { name, value }       = event.target;
         const { renewdata }  = this.state.renew;
         this.setState({
             renew : {
                 renewdata : {
                     ...renewdata,
-                    package_type: event.target.value
+                    [name]: value
                   }
             }
         });
@@ -233,20 +238,33 @@ class Doctor extends React.Component {
      */
     reNewhandleSelectChange(selectedOption, name) {
         const { renewdata }  = this.state.renew;
-        this.setState({
-            renew : {
-                renewdata : {
-                    ...renewdata,
-                    [name] : selectedOption.value
+        if(name === 'plan_id'){
+          this.setState({
+              renew : {
+                  renewdata : {
+                      ...renewdata,
+                      [name] : selectedOption.value,
+                      'amount' : selectedOption.sale_price
+                    }
+              }
+          });
+        }else{
+          this.setState({
+              renew : {
+                  renewdata : {
+                      ...renewdata,
+                      [name] : selectedOption.value
                   }
-            }
-        });
+              }
+          });  
+        }
+        
     }
     reNewSave(){
         const { renewdata }  = this.state.renew;
-        var json = {'user_id':renewdata.user_id,'status':'active','package_type':renewdata.package_type}
+        // console.log("save",renewdata)
         const { dispatch } = this.props;
-        dispatch(commonActions.renewPackage(json));
+        dispatch(commonActions.renewPackage(renewdata));
     }
     /**
      * @DateOfCreation        26 July 2018
@@ -510,8 +528,9 @@ class Doctor extends React.Component {
 
         const { dispatch } = this.props;
         dispatch(doctorActions.DoctorRemove(row.user_id)).then((res) => {
-            console.log('DoctorRemove',res)
+            // console.log('DoctorRemove',res)
           if(res.status === 200){
+            this.importOnSave();
               // this.setState({appointments: displayAppointment})
           }
         })
@@ -540,7 +559,7 @@ class Doctor extends React.Component {
         }
         if(newProps.renewClose == true){
             setTimeout(function() { 
-                this.clinicHideHandle();
+                this.reNewHideHandle();
                 this.importOnSave();
                 const { dispatch } = this.props;
                 dispatch(commonActions.resetReNewState())
@@ -582,6 +601,7 @@ class Doctor extends React.Component {
                         handleInputChange = {this.reNewhandleInputChange}
                         handleSelectChange = {this.reNewhandleSelectChange}
                         reNewSave = {this.reNewSave}
+                        type={1}
                     />
                     <Clinic
                         onClick = { this.state.clinicShow }
@@ -710,35 +730,41 @@ class Doctor extends React.Component {
                                                         </div>
                                           },
                                           {
-                                            Header    : 'Subscription start date',
-                                            accessor  : 'subscription',
+                                            Header    : 'Subscription',
+                                            accessor  : 'plan_name',
                                             className : 'grid-header',
                                             filterable  : false,
                                             filterMethod: (filter, row) => {
                                                 return row[filter.id].includes(filter.value);
                                             }
+                                          },
+                                          {
+                                            Header    : 'Subscription start date',
+                                            accessor  : 'start_date',
+                                            className : 'grid-header',
+                                            filterable  : false,
+                                            Cell: row => 
+                                                        <div>
+                                                            {
+                                                              new Date(row.value).toLocaleDateString("en-US")
+                                                            }
+                                                        </div>  
                                           },
                                           {
                                             Header    : 'Subscription end date',
-                                            accessor  : 'subscription',
+                                            accessor  : 'plan_expiry_date',
                                             className : 'grid-header',
                                             filterable  : false,
-                                            filterMethod: (filter, row) => {
-                                                return row[filter.id].includes(filter.value);
-                                            }
-                                          },
-                                          {
-                                            Header    : 'Plan',
-                                            accessor  : 'subscription',
-                                            className : 'grid-header',
-                                            filterable  : false,
-                                            filterMethod: (filter, row) => {
-                                                return row[filter.id].includes(filter.value);
-                                            }
+                                            Cell: row => 
+                                                        <div>
+                                                            {
+                                                              new Date(row.value).toLocaleDateString("en-US")
+                                                            }
+                                                        </div>    
                                           },
                                           {
                                             Header    : 'Subscription amount',
-                                            accessor  : 'subscription',
+                                            accessor  : 'amount',
                                             className : 'grid-header',
                                             filterable  : false,
                                             filterMethod: (filter, row) => {

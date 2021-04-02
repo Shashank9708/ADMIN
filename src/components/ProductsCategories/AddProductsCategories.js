@@ -35,6 +35,11 @@ export const AddProductsCategories = (props) => {
                           </div>
                         </div>
                         <div className="col-md-12">
+                          <div className={ 'form-group' }>
+                            <input name="gst" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Product Category GST"/>
+                          </div>
+                        </div>
+                        <div className="col-md-12">
                           <div className={ 'form-group'}>
                             <input name="image" type="file" className="form-control" onChange = { props.handleFileChange }/>
                             

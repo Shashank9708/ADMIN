@@ -7,7 +7,7 @@ export const AddSpecialization = (props) => {
               <div>
                 <Modal show={props.addSpecializationShow} onHide={props.handleClose}>
                   <Modal.Header closeButton>
-                    <Modal.Title>Add Specialization</Modal.Title>
+                    <Modal.Title>{props.flag ? 'Edit' : 'New'} Specialization</Modal.Title>
                     { props.messages &&
                       <Alert bsStyle="success">
                       { props.messages }
@@ -23,7 +23,7 @@ export const AddSpecialization = (props) => {
                       <div className="row">
                         <div className="col-md-12">
                           <div className={ props.payload.validate.en_spec.isValid ? 'form-group' : 'form-group has-error' }>
-                            <input name="en_spec" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Specialization"/>
+                            <input name="en_spec" type="text" value={props.payload.detail.en_spec} className="form-control" onChange = { props.handleInputChange } placeholder="Specialization"/>
                             <span className="help-block">{ props.payload.validate.en_spec.message }</span>
                           </div>
                         </div>

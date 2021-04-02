@@ -67,7 +67,7 @@ function statusChange(data) {
     // var loginAccessToken = utilityHelper.getLoginAccessToken();
     return axios({
         method  : 'get',
-        url     : configConstants.API_BASE_PATH + '/admin/labActive/'+data.lab_id+'/'+data.status,
+        url     : configConstants.API_BASE_PATH + '/admin/medicalStoresActive/'+data.storeid+'/'+data.status,
     })
     .then(response => {
         return response;
