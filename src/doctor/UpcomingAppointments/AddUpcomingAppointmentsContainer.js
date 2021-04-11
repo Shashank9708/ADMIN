@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { doctorActions } from '../../_actions';
+import { doctorActions, clinicSlotActions } from '../../_actions';
 import { AddUpcomingAppointments } from './AddUpcomingAppointments';
-import { healthTipsValidator } from '../../_validator';
+import { upcomingAppointmentValidator } from '../../_validator';
 
 
 class AddUpcomingAppointmentsContainer extends React.Component {
@@ -12,23 +12,27 @@ class AddUpcomingAppointmentsContainer extends React.Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleSaveUpcomingAppointments = this.handleSaveUpcomingAppointments.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleFileChange = this.handleFileChange.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
+    this.onSelectDate = this.onSelectDate.bind(this);
+    this.onSelectTime = this.onSelectTime.bind(this);
   }
 
   get initialState() {
       return {
-          healthTipsForm : {
+          Form : {
               detail : {
-                  'author_name' : '',
-                  'title' : '',
-                  'image' : '',
-                  'healthtips_category_id' : ''
+                  'name' : '',
+                  'contact_no' : '',
+                  'health_problem_id' : '',
+                  'clinic_id' : '',
+                  'appointment_date' : '',
+                  'appointment_time' : '',
               },
               validate : {
-                  title : { isValid : true, message : '' },
-                  desc_en : { isValid : true, message : '' },
-                  healthtips_category_id : { isValid : true, message : '' }
+                  name : { isValid : true, message : '' },
+                  contact_no : { isValid : true, message : '' },
+                  health_problem_id : { isValid : true, message : '' },
+                  clinic_id : { isValid : true, message : '' }
               }
           }
       }
@@ -43,9 +47,9 @@ class AddUpcomingAppointmentsContainer extends React.Component {
   */
   handleInputChange(event) {
         const { name, value }       = event.target;
-        const { detail, validate }  = this.state.healthTipsForm;
+        const { detail, validate }  = this.state.Form;
         this.setState({
-            healthTipsForm : {
+            Form : {
                 validate:{
                     ...validate,
                     [name]: {
@@ -63,43 +67,7 @@ class AddUpcomingAppointmentsContainer extends React.Component {
         });
     }
 
-    /**
-     * @DateOfCreation        11 June 2018
-     * @ShortDescription      This function is responsible to handle changes in Select state
-     * @param                 Event Object
-     * @return                Nothing
-     */
-    handleFileChange(e) {
-        const target = e.target.name;
-        let file = e.target.files[0];
-        let fileName = file.name;
-        // console.log(fileName,file)
-        // if (file.type.includes("png") || file.type.includes("jpeg") || file.type.includes("jpg")) {
-        
-        // } else {
-        //     this.setState({ [target + "TypeError"]: true })
-        // }
-        // return false;
-        // const { name, value }       = e.target;
-        const { detail, validate }  = this.state.healthTipsForm;
-        this.setState({
-        healthTipsForm : {
-            validate:{
-                ...validate,
-                image: {
-                    isValid: true,
-                    message: ''
-                }
-            },
-            detail : {
-                ...detail,
-                image: file
-            }
-        }
-        }, function(){
-        
-        });
-    }
+    
   /**
   * @DateOfCreation        11 June 2018
   * @ShortDescription      This function is responsible to handle changes in Select state
@@ -108,12 +76,12 @@ class AddUpcomingAppointmentsContainer extends React.Component {
   */
   handleSelectChange(selectedOption, name) {
       // console.log('selectedOption',selectedOption, name)
-        const { detail, validate } = this.state.healthTipsForm;
+        const { detail, validate } = this.state.Form;
         this.setState({
-            healthTipsForm : {
+            Form : {
                 detail : {
                     ...detail,
-                    [name] : selectedOption.value
+                    [name] : selectedOption
                 },
                 validate : {
                     ...validate,
@@ -124,6 +92,47 @@ class AddUpcomingAppointmentsContainer extends React.Component {
                 },
             }
         });
+        if(name === 'clinic_id'){
+          let data = {
+                  clinic_id: selectedOption.id,
+                  date: new Date()
+                }
+
+          const { dispatch } = this.props;
+          dispatch(clinicSlotActions.getClinicSlotDate(data));
+          dispatch(clinicSlotActions.getClinicSlotForAppointment(data));
+        }
+    }
+
+    onSelectDate (appointment_date) {
+        // console.log('appointment_date',appointment_date)
+        // this.setState({appointment_date: appointment_date, appointment_time: ''})
+        // let {errors} = this.state
+        // errors.appointment_date = ""
+        // this.setState({errors})
+        const { detail, validate } = this.state.Form;
+
+        let data = {
+                  clinic_id: detail.clinic_id,
+                  date: appointment_date
+                }
+        const { dispatch } = this.props;
+        dispatch(clinicSlotActions.getClinicSlotForAppointment(data));
+    }
+
+    onSelectTime (appointment_time) {
+        // console.log('appointment_date',appointment_date)
+        // this.setState({appointment_date: appointment_date, appointment_time: ''})
+        // let {errors} = this.state
+        // errors.appointment_date = ""
+        // this.setState({errors})
+        const { detail, validate } = this.state.Form;
+
+        let data = {
+                  clinic_id: detail.clinic_id,
+                  date: appointment_date
+                }
+    
     }
   /**
      * @DateOfCreation        11 June 2018
@@ -133,23 +142,27 @@ class AddUpcomingAppointmentsContainer extends React.Component {
   handleClose() {
       this.props.addUpcomingAppointmentsHideHandle();
       const { dispatch } = this.props;
-      dispatch(doctorActions.resetUpcomingAppointmentsState());
+      dispatch(doctorActions.resetFirstState());
   }
 
   handleSaveUpcomingAppointments() {
-    if(healthTipsValidator.is_healthTipsValid(this)) {
-        const { detail } = this.state.healthTipsForm;
+    if(upcomingAppointmentValidator.is_upcomingAppointmentValid(this)) {
+        const { detail } = this.state.Form;
         // console.log(detail)
-        var bodyFormData = new FormData();
-        bodyFormData.append('author_name', detail.author_name);
-        bodyFormData.append('title', detail.title);
-        bodyFormData.append('desc_en', detail.desc_en);
-        bodyFormData.append('healthtips_category_id', detail.healthtips_category_id);
-        //table structure with validation rules
-        bodyFormData.append('image',detail.image);
 
+        let data = {
+                      "name": detail.name,
+                      "contact_no": detail.contact_no,
+                      "health_problem_id": detail.health_problem_id,
+                      "clinic_id": detail.clinic_id,
+                      "doc_id": JSON.parse(localStorage.user).doc_id,
+                      // "typeing_area": detail.typeing_area,
+                      // "details": detail.inputData
+                    }
+
+            // console.log("----------",data)
         const { dispatch } = this.props;
-        // dispatch(doctorActions.saveUpcomingAppointments(bodyFormData, this.props.healthTipsList));
+        dispatch(doctorActions.newPatientAppointment(data));
     }
   }
 
@@ -162,9 +175,9 @@ class AddUpcomingAppointmentsContainer extends React.Component {
         if(newProps.closeForm == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
-                // dispatch(doctorActions.getUpcomingAppointmentsList(1, 10, "asc", "filtered"));
+                dispatch(doctorActions.doctorAppointmentList(1, 10, "asc", "filtered"));
                 
-                // dispatch(doctorActions.resetUpcomingAppointmentsState());
+                dispatch(doctorActions.resetFirstState());
                 this.props.addUpcomingAppointmentsHideHandle();
                 this.setState(this.initialState);
             }.bind(this), 1500);
@@ -176,15 +189,19 @@ class AddUpcomingAppointmentsContainer extends React.Component {
       return (
             <AddUpcomingAppointments 
               addUpcomingAppointmentsShow = {this.props.addUpcomingAppointmentsShow}
-              healthTipsCategoriesList = {this.props.healthTipsCategoriesList}
+              clinicList = {this.props.clinicList}
+              healthProblem = {this.props.healthProblem}
+              clinicSlotDate = {this.props.clinicSlotDate}
+              clinicSlotManage = {this.props.clinicSlotManage}
               messages = { this.props.successMessage }
               errorMsg = { this.props.errorMsg }
               handleClose = {this.handleClose}
               handleSaveUpcomingAppointments = {this.handleSaveUpcomingAppointments}
               handleInputChange = {this.handleInputChange}
-              handleFileChange = {this.handleFileChange}
               handleSelectChange = {this.handleSelectChange}
-              payload = {this.state.healthTipsForm}
+              payload = {this.state.Form}
+              slotDate={this.onSelectDate}
+              slotTime={this.onSelectTime}
             />
       );
     }
@@ -198,15 +215,17 @@ class AddUpcomingAppointmentsContainer extends React.Component {
  */
 
 function mapStateToProps(state) {
-   const { healthTipsList,loader,successMessage,sendingRequest,errorMsg,closeForm } = state.healthTipsReducer;
-
+   const { loader,successMessage,sendingRequest,errorMsg,closeForm } = state.doctorReducer;
+   const { clinicSlotManage, clinicSlotDate, dateSlot } = state.clinicSlotReducer;
     return {
-        healthTipsList,
         loader,
         successMessage,
         sendingRequest,
         errorMsg,
-        closeForm
+        closeForm,
+        clinicSlotManage, 
+        clinicSlotDate, 
+        dateSlot
     };
 }
 const connectedAddUpcomingAppointmentsContainer = connect(mapStateToProps)(AddUpcomingAppointmentsContainer);

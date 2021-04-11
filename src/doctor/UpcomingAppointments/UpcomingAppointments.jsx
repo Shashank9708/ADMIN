@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { HeaderContainer } from '../../components/Header';
 import { DoctorSideMenu } from '../../components/SideMenu';
-// import {AddUpcomingAppointmentsContainer} from './AddUpcomingAppointmentsContainer';
-import { doctorActions  , headerActions } from '../../_actions';
+import {AddUpcomingAppointmentsContainer} from './AddUpcomingAppointmentsContainer';
+import {AddDigitalPrescription} from './AddDigitalPrescription';
+import { doctorActions, clinicActions, patientActions, headerActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
@@ -28,9 +29,18 @@ class UpcomingAppointments extends React.Component {
         this.getUpcomingAppointmentsList        = this.getUpcomingAppointmentsList.bind(this);
         this.statusShowHandle = this.statusShowHandle.bind(this);
         this.notificationSearch         = this.notificationSearch.bind(this);
-        this.deleteUpcomingAppointments         = this.deleteUpcomingAppointments.bind(this);
         this.handleInputChange         = this.handleInputChange.bind(this);
-        // this.cancelAll         = this.cancelAll.bind(this);
+        this.cancelAll         = this.cancelAll.bind(this);
+
+        this.addDigitalPrescriptionShowHandle = this.addDigitalPrescriptionShowHandle.bind(this);
+        this.addDigitalPrescriptionHideHandle = this.addDigitalPrescriptionHideHandle.bind(this);
+        this.handleSaveDigitalPrescription = this.handleSaveDigitalPrescription.bind(this);
+        this.handleTextChangeDP = this.handleTextChangeDP.bind(this);
+        this.handleInputChangeDP = this.handleInputChangeDP.bind(this);
+        this.handleSelectChangeDP = this.handleSelectChangeDP.bind(this);
+        this.handleRemoveClick = this.handleRemoveClick.bind(this);
+        this.handleAddClick = this.handleAddClick.bind(this);
+
         this.state               = this.initialState;
     }
 
@@ -39,8 +49,15 @@ class UpcomingAppointments extends React.Component {
             loading : false,
             pages  : 0,
             addUpcomingAppointmentsShow: false,
+            addDigitalPrescriptionShow: false,
             startDate: new Date(), 
-            endDate: new Date()
+            endDate: new Date(),
+            inputList: [{ medicine: "", days: "", whentotake: "" }],
+            typing_area: '',
+            appointment_id:  '',
+            patient_id: '',
+            doctor_id: JSON.parse(localStorage.user).doc_id
+
         }
     }
 
@@ -52,7 +69,8 @@ class UpcomingAppointments extends React.Component {
      addUpcomingAppointmentsShowHandle() {
        this.setState({ addUpcomingAppointmentsShow: true });
        const { dispatch }   = this.props;
-       // dispatch(healthTipsCategoriesActions.getUpcomingAppointmentsCategoriesList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered));
+       dispatch(clinicActions.getClinicList(this.state.doctor_id));
+       dispatch(patientActions.getHealthProblem());
      }
 
     /**
@@ -64,6 +82,79 @@ class UpcomingAppointments extends React.Component {
        this.setState({ addUpcomingAppointmentsShow: false });
      }
 
+     /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle open import modal
+     * @return                Nothing
+     */
+     addDigitalPrescriptionShowHandle() {
+       this.setState({ addDigitalPrescriptionShow: true });
+     }
+
+    /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle close modal
+     * @return                Nothing
+     */
+     addDigitalPrescriptionHideHandle() {
+       this.setState({ addDigitalPrescriptionShow: false });
+     }
+
+    // handle input change
+    handleInputChangeDP (e, index){
+      const { name, value } = e.target;
+      this.setState({[name]: value})
+    };
+
+    // handle input change
+    handleTextChangeDP (e, index){
+      const { name, value } = e.target;
+      const { inputList } = this.state;
+      const list = [...inputList];
+      list[index][name] = value;
+      this.setState({inputList: list})
+    };
+
+    // handle input change
+    handleSelectChangeDP (selectedOption, name, index){
+      const { inputList } = this.state;
+      const list = [...inputList];
+      list[index][name] = selectedOption;
+      this.setState({inputList: list})
+    };
+   
+    // handle click event of the Remove button
+    handleRemoveClick (index){
+      const { inputList } = this.state;
+      inputList.splice(index, 1);
+      this.setState(inputList);
+    };
+   
+    // handle click event of the Add button
+    handleAddClick () {
+      const { inputList } = this.state;
+      inputList.push({ medicine: "", days: "", whentotake: "" })
+      this.setState({inputList: inputList});
+    };
+
+
+    handleSaveDigitalPrescription(){
+        // if(this.state.inputList.length > 0){
+
+          let url = '/doctor/uploadprescription'
+          const formData = new FormData();
+          formData.append('appointment_id', this.state.appointment_id)
+          formData.append('patient_id', this.state.patient_id)
+          formData.append('doctor_id', this.state.doctor_id)
+          formData.append('details', JSON.stringify(this.state.inputList))
+          formData.append('prescription', '');
+          formData.append('typing_area', this.state.typing_area);
+          
+          const { dispatch } = this.props;
+          dispatch(doctorActions.uploadPrescription(formData, url));
+          
+        // }
+    }
     /**
      * @DateOfCreation        26 July 2018
      * @ShortDescription      This function is responsible to redirect unauthorise users
@@ -116,18 +207,6 @@ class UpcomingAppointments extends React.Component {
     }
 
     /**
-     * @DateOfCreation        26 July 2018
-     * @ShortDescription      This function is responsible to handle open import modal
-     * @return                Nothing
-     */
-    deleteUpcomingAppointments(health_tip_id) {
-        var json = {'health_tip_id':health_tip_id}
-        const { dispatch } = this.props;
-        dispatch(healthTipsActions.deleteHealthTip(json));
-
-    }
-
-    /**
    * @DateOfCreation        28 June 2018
    * @ShortDescription      This function is responsible to close import model.
    * @return                Nothing
@@ -154,24 +233,15 @@ class UpcomingAppointments extends React.Component {
     }
 
     cancelAll(row){
-      console.log(row)
-      // if (this.state.appointment_id === "checkAll") {
-      //   let arg= []
-      //   const newData = this.state.appoinementList.filter(function(item) {
-      //     //applying filter for the inserted text in search bar
-      //     arg.push(item.appointment_id)
-      //   });
-      //   // console.log('data',arg )
-      //   let data = {appointment_ids: [arg]}
-      //   dispatch(doctorActions.cancleByDoctorAppointment(data));
-      // }else{
-        // appointment_ids
+      // console.log(row)
         let data = {appointment_ids: [row.appointment_id]}
         const { dispatch } = this.props;
         dispatch(doctorActions.cancleByDoctorAppointment(data));
       // }
         // this.hideAlert();
     }
+
+    
 
 
     render() {
@@ -192,7 +262,7 @@ class UpcomingAppointments extends React.Component {
                               <div className="inner-content">
                                       <div className="row page-header">
                                           <div className="col-md-6">
-                                              <h1 className="page-title">UpcomingAppointments</h1>
+                                              <h1 className="page-title">Upcoming Appointments</h1>
                                           </div>
                                           <div className="col-md-6 text-right">
                                              <button className="blue btn text-btn" onClick={this.addUpcomingAppointmentsShowHandle}>Add New</button>
@@ -314,6 +384,10 @@ class UpcomingAppointments extends React.Component {
                                                     Cell: row => 
                                                           <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
                                                               <Dropdown.Item onClick={() => this.cancelAll(row.original)}>Cancel</Dropdown.Item>
+                                                              <Dropdown.Item onClick={() => this.addDigitalPrescriptionShowHandle()}>Digital Prescription</Dropdown.Item>
+                                                              <Dropdown.Item >Manual Prescription</Dropdown.Item>
+                                                              <Dropdown.Item >Refer to Doctor</Dropdown.Item>
+                                                              <Dropdown.Item >Complete Appointment</Dropdown.Item>
                                                           </DropdownButton>
                                                 }
                                               
@@ -346,11 +420,24 @@ class UpcomingAppointments extends React.Component {
                           </div>
                         </div>
                       </div>
-                      {/*<AddUpcomingAppointmentsContainer
+                      <AddUpcomingAppointmentsContainer
                         addUpcomingAppointmentsShow = {this.state.addUpcomingAppointmentsShow}
-                        healthTipsCategoriesList = {this.props.healthTipsCategoriesList}
+                        clinicList = {this.props.clinicList}
+                        healthProblem = {this.props.healthProblem}
                         addUpcomingAppointmentsHideHandle = {this.addUpcomingAppointmentsHideHandle}
-                      />*/}
+                      />
+
+                      <AddDigitalPrescription
+                        addDigitalPrescriptionShow = {this.state.addDigitalPrescriptionShow}
+                        handleClose = {this.addDigitalPrescriptionHideHandle}
+                        handleSaveDigitalPrescription = {this.handleSaveDigitalPrescription}
+                        inputList = {this.state.inputList}
+                        handleTextChange = {this.handleTextChangeDP}
+                        handleInputChange = {this.handleInputChangeDP}
+                        handleSelectChange = {this.handleSelectChangeDP}
+                        handleRemoveClick = {this.handleRemoveClick}
+                        handleAddClick = {this.handleAddClick}
+                      />
                     </div>
                 </div>    
             </div>
@@ -365,13 +452,15 @@ class UpcomingAppointments extends React.Component {
  */
 
 function mapStateToProps(state) {
-   const { doctorAppoinementList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status } = state.doctorReducer;
-   // const { healthTipsCategoriesList  } = state.healthTipsCategoriesReducer;
+    const { doctorAppoinementList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status } = state.doctorReducer;
+    const { clinicList } = state.clinicReducer;
+    const { healthProblem } = state.patientReducer;
     return {
         doctorAppoinementList,
         isUserNotValid,
         loader,
-        // healthTipsCategoriesList,
+        clinicList,
+        healthProblem,
         successMessage,
         sendingRequest,
         errorMsg,
