@@ -9,6 +9,7 @@ import { configConstants, clinicConstants } from '../_constants';
  */
 const initialState = {
     clinicList      : [],
+    cityList        : [],
     addClinic       : false,
     updateClinic    : false,
     deleteClinic    : false,
@@ -39,7 +40,6 @@ export function clinicReducer(state = initialState, action) {
               ...state,
               clinicList     : action.result,
               sendingRequest : true,
-              clinicUpdate    : true,
               loader         : false,
               errorMsg       : false
           };
@@ -151,6 +151,31 @@ export function clinicReducer(state = initialState, action) {
             loader         : false,
             errorMsg       : action.error
            };
+        // CITY_
+        case clinicConstants.CITY_REQUEST:
+          return {
+            ...state,
+            errorMsg         : false,
+            loader           : true,
+            cityList       : [],
+            submitted        : false 
+
+          };
+        case clinicConstants.CITY_SUCCESS:
+          return  { 
+              ...state,
+              cityList     : action.result,
+              sendingRequest : true,
+              loader         : false,
+              errorMsg       : false
+          };
+        case clinicConstants.CITY_FAILURE:
+          return {
+            ...state, 
+            submitted      : false,
+            loader         : false,
+            errorMsg       : action.error
+           };
 
         case clinicConstants.CLINIC_RESET_STATE:
           return {
@@ -162,7 +187,6 @@ export function clinicReducer(state = initialState, action) {
               clinicUpdate    : false,
               successResult   : false, 
               errorMsg        : false,
-              clinicUpdate    : false,
               submitted       : false,
               loader          : false,
               closeForm       : false              

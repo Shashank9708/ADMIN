@@ -23,6 +23,8 @@ export * from './productCategoriesConstants';
 export * from './productConstants';
 export * from './vendorCategoriesConstants';
 export * from './planConstants';
+export * from './patientConstants';
+export * from './profileConstants';
 
 
 export * from './vehicleConstants';

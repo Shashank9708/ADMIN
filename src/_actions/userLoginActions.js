@@ -28,7 +28,7 @@ export const userLoginActions = {
 function loginSubmit(user) {
     return dispatch => {
         dispatch(request({ user }));
-        userLoginService.login(user)
+        return userLoginService.login(user)
             .then(
                 response => { 
                     var data = response.data;
@@ -39,17 +39,21 @@ function loginSubmit(user) {
                         axios.defaults.headers.common["Authorization"] = data.token;
                         let user = jwtdecode(data.token);
                         localStorage.setItem('accessToken', data.token);
+                        localStorage.setItem('user', JSON.stringify(user));
                         sessionService.saveUser(user);
-                        dispatch(success(user));                        
+                        dispatch(success(user));
+                        return {status:  200, user: user}                        
                     }else if(data.status == configConstants.ERROR_CODE){
                         error_message = data.message;
                         dispatch(failure(error_message));
-
+                        return {status:  401, user: error_message}
                     }else if(data.status == configConstants.EXCEPTION_CODE){
                         error_message  = data.message;
                         dispatch(failure(error_message));
+                        return {status:  401, user: error_message}
                     }else{
                         dispatch(failure(response));
+                        return {status:  401, user: error_message}
                     }
                 }
             ).catch(function (response) {

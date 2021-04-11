@@ -22,6 +22,8 @@ export * from './productCategoriesService';
 export * from './productService';
 export * from './vendorCategoriesService';
 export * from './planService';
+export * from './patientService';
+export * from './profileService';
 
 export * from './forgotPasswordService';
 export * from './notificationService';

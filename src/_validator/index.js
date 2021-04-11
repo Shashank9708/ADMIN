@@ -12,3 +12,5 @@ export * from './productCategoriesValidator';
 export * from './productValidator';
 export * from './vendorCategoriesValidator';
 export * from './planValidator';
+export * from './favoritValidator';
+export * from './profileValidator';

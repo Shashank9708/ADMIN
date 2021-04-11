@@ -14,6 +14,7 @@ import jwtdecode from 'jwt-decode'
 export const doctorService = {
     getSpecialization,
     getDoctorsBySpecialization,
+    getDoctorsBySpecializationD,
     getDoctorsDetail,
     bookDoctorAppointment,
     myDoctorAppointment,
@@ -25,7 +26,13 @@ export const doctorService = {
     getDoctorReferrals,
     getDoctorReferred,
     referToDoctor,
-    DoctorRemove
+    DoctorRemove,
+    newPatientAppointment,
+    getfavorite,
+    addfavorite,
+    removefavorite,
+    appointmentReport,
+    referredReport
 };
 
 
@@ -71,6 +78,29 @@ function getDoctorsBySpecialization(url) {
         return response;
     });
 }
+
+
+/**
+* @DateOfCreation        06 March 2020
+* @ShortDescription      This function is responsible to call Save import api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function getDoctorsBySpecializationD(url) {
+    // console.log(axios.defaults.headers.common['Authorization'])
+    // console.log(configConstants.API_BASE_PATH +  url)
+    return axios({
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH +  url
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+
 /**
 * @DateOfCreation        06 March 2020
 * @ShortDescription      This function is responsible to call Save import api
@@ -122,12 +152,6 @@ function myDoctorAppointment() {
     let userToken;
     let patient_id = '';
     userToken = null;
-    // try {
-    //     userToken = await AsyncStorage.getItem('userToken');
-    //     patient_id = jwtdecode(userToken).patient_id
-    // } catch(e) {
-    //     console.log(e);
-    // }
     console.log(configConstants.API_BASE_PATH +  '/patient/appointments/' + patient_id)
     return axios({
         method  : 'get',
@@ -168,7 +192,8 @@ function cancleMyDoctorAppointment(data) {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-function doctorAppointmentList(data, doc_id) {
+function doctorAppointmentList(data) {
+    let doc_id = JSON.parse(localStorage.user).doc_id
     // console.log(configConstants.API_BASE_PATH +  '/doctor/appointmentlist/' + doc_id)
     return axios({
         method  : 'post',
@@ -190,11 +215,11 @@ function doctorAppointmentList(data, doc_id) {
 * @return                Response JSON jsonObj
 */
 function cancleByDoctorAppointment(data) {
-    console.log(configConstants.API_BASE_PATH +  '/doctor/cancelappointments/',data)
+    console.log(configConstants.API_BASE_PATH +  '/doctor/cancelappointments')
     return axios({
-        method  : 'get',
-        url     : configConstants.API_BASE_PATH +  '/doctor/cancelappointments/'+data,
-        // data    : data
+        method  : 'post',
+        url     : configConstants.API_BASE_PATH +  '/doctor/cancelappointments',
+        data    : data
     })
     .then(response => {
         return response;
@@ -234,16 +259,8 @@ function uploadPrescription(data, url) {
 * @return                Response JSON jsonObj
 */
 function getDoctorReferrals(data) {
-    let doc_id = '';
-    let userToken = null;
-    // try {
-    //     userToken = await AsyncStorage.getItem('userToken');
-    //     console.log(jwtdecode(userToken))
-    //     doc_id = jwtdecode(userToken).doc_id
-    // } catch(e) {
-    //     console.log(e);
-    // }
-    console.log(configConstants.API_BASE_PATH +  '/doctor/getrefferedtome/' + doc_id)
+    let doc_id = JSON.parse(localStorage.user).doc_id
+    // console.log(configConstants.API_BASE_PATH +  '/doctor/getrefferedtome/' + doc_id)
     return axios({
         method  : 'get',
         url     : configConstants.API_BASE_PATH +  '/doctor/getrefferedtome/' + doc_id,
@@ -263,17 +280,9 @@ function getDoctorReferrals(data) {
 * @return                Response JSON jsonObj
 */
 function getDoctorReferred(data) {
-    let doc_id = '';
-    let userToken = null;
-    // try {
-    //     userToken = await AsyncStorage.getItem('userToken');
-    //     console.log(jwtdecode(userToken))
-    //     doc_id = jwtdecode(userToken).doc_id
-    // } catch(e) {
-    //     console.log(e);
-    // }
 
-    console.log(configConstants.API_BASE_PATH +  '/doctor/getrefferedbyme/' + doc_id)
+    let doc_id = JSON.parse(localStorage.user).doc_id
+    // console.log(configConstants.API_BASE_PATH +  '/doctor/getrefferedbyme/' + doc_id)
     return axios({
         method  : 'get',
         url     : configConstants.API_BASE_PATH +  '/doctor/getrefferedbyme/' + doc_id,
@@ -338,6 +347,140 @@ function DoctorRemove(user_id) {
     return axios({
         method  : 'post',
         url     : configConstants.API_BASE_PATH +  '/admin/deleteDoctor/' + user_id
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+
+
+/**
+* @DateOfCreation        06 March 2020
+* @ShortDescription      This function is responsible to call Save import api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function newPatientAppointment(data) {
+    console.log(configConstants.API_BASE_PATH +  '/patient/add-patient-by-doctor')
+    return axios({
+        method  : 'post',
+        url     : configConstants.API_BASE_PATH +  '/patient/add-patient-by-doctor',
+        data    : data
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+
+/**
+* @DateOfCreation        06 March 2020
+* @ShortDescription      This function is responsible to call Save import api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function getfavorite() {
+    let user_id = JSON.parse(localStorage.user).user_id
+    // console.log(configConstants.API_BASE_PATH +  '/doctor/get-favorite-doctor/'+user_id)
+    return axios({
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH +  '/doctor/get-favorite-doctor/'+user_id
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+/**
+* @DateOfCreation        06 March 2020
+* @ShortDescription      This function is responsible to call Save import api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function addfavorite(doc_id) {
+    let user_id = JSON.parse(localStorage.user).user_id
+    let param = {
+                    doctor_id: doc_id,
+                    user_id : user_id
+                }
+    // console.log(configConstants.API_BASE_PATH +  '/doctor/save-favorite-doctor')
+    return axios({
+        method  : 'post',
+        url     : configConstants.API_BASE_PATH +  '/doctor/save-favorite-doctor',
+        data    : param
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+/**
+* @DateOfCreation        06 March 2020
+* @ShortDescription      This function is responsible to call Save import api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function removefavorite(id) {
+    let user_id = JSON.parse(localStorage.user).user_id
+    let param = {
+                    id: id,
+                    user_id : user_id
+                }
+    // console.log("param",param)            
+    // console.log(configConstants.API_BASE_PATH +  '/doctor/remove-favorite-doctor')
+    return axios({
+        method  : 'post',
+        url     : configConstants.API_BASE_PATH +  '/doctor/remove-favorite-doctor',
+        data    : param
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+/**
+* @DateOfCreation        06 March 2020
+* @ShortDescription      This function is responsible to call Save import api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function appointmentReport() {
+    let doc_id = JSON.parse(localStorage.user).doc_id        
+    // console.log(configConstants.API_BASE_PATH +  '/doctor/appointment-graph/'+doc_id)
+    return axios({
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH +  '/doctor/appointment-graph/'+doc_id
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+/**
+* @DateOfCreation        06 March 2020
+* @ShortDescription      This function is responsible to call Save import api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function referredReport() {
+    let doc_id = JSON.parse(localStorage.user).doc_id
+    // console.log(configConstants.API_BASE_PATH +  '/doctor/referred-graph/'+doc_id)
+    return axios({
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH +  '/doctor/referred-graph/'+doc_id
     })
     .then(response => {
         return response;

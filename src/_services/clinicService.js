@@ -14,7 +14,8 @@ export const clinicService = {
     addClinicProfile,
     updateClinicProfile,
     deleteClinicProfile,
-    clinicStatusChange
+    clinicStatusChange,
+    getCityList
 };
 
 /**
@@ -24,7 +25,7 @@ export const clinicService = {
 * @return                Response JSON jsonObj
 */
 function getClinicList(id) {
-    console.log(configConstants.API_BASE_PATH + '/clinic/list-clinic/'+id)
+    // console.log(configConstants.API_BASE_PATH + '/clinic/list-clinic/'+id)
     return axios({
         method  : 'get',
         url     : configConstants.API_BASE_PATH + '/clinic/list-clinic/'+id
@@ -44,7 +45,7 @@ function getClinicList(id) {
 * @return                Response JSON jsonObj
 */
 function addClinicProfile(data) {
-    console.log(configConstants.API_BASE_PATH + '/clinic/create-clinic')
+    // console.log(configConstants.API_BASE_PATH + '/clinic/create-clinic')
     return axios({
         method  : 'post',
         url     : configConstants.API_BASE_PATH + '/clinic/create-clinic',
@@ -84,7 +85,7 @@ function updateClinicProfile(data) {
 * @return                Response JSON jsonObj
 */
 function deleteClinicProfile(id) {
-    console.log(configConstants.API_BASE_PATH + '/clinic/delete-clinic/'+id)
+    // console.log(configConstants.API_BASE_PATH + '/clinic/delete-clinic/'+id)
     return axios({
         method  : 'delete',
         url     : configConstants.API_BASE_PATH + '/clinic/delete-clinic/'+id
@@ -108,6 +109,26 @@ function clinicStatusChange(data) {
         method  : 'post',
         url     : configConstants.API_BASE_PATH + '/clinic/delete-clinic/'+id,
         data    : data
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+
+/**
+* @DateOfCreation        27 Nov 2020
+* @ShortDescription      This function is responsible to call Save import api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function getCityList(id) {
+    // console.log(configConstants.API_BASE_PATH + '/clinic/list-clinic/'+id)
+    return axios({
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH + '/auth/getCities/'+id
     })
     .then(response => {
         return response;

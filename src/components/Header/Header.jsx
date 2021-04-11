@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
  export const Header = (props) => 
  { return (
     <section>
-        <div className="container-fluid">
+        <div className="header-container">
             <div className="row">
                 <div className="col-md-4">
                     <div>
@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
                 <div className="col-md-7">
                     <div className="navbar-collapse collapses">
                         <ul className="dropdown">
-                            <li className="drop">Welcome {props.logged_in_user_name}</li>
+                            <li className="drop texts">Welcome {props.logged_in_user_name}</li>
                             <li className="dropdown-content">
                                 <Link to="" onClick={props.handle_logout}  className="test">
                                 Logout

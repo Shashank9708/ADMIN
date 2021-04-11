@@ -99,7 +99,18 @@ class LoginContainer extends React.Component {
             const { dispatch }  = this.props;
             const { user }      = this.state.login;
             //Call the action function with dispatch
-            dispatch(userLoginActions.loginSubmit(user));
+            dispatch(userLoginActions.loginSubmit(user))
+            // .then((res)=>{
+            //     if(res.status ===200){
+            //         if(res.user.role === 0){
+            //             this.props.history.push('/dashboard');
+            //         }else if(res.user.role === 1){
+            //             this.props.history.push('/ddashboard');
+            //         }else{
+            //             this.props.history.push('/login');
+            //         }
+            //     }
+            // });
         }
     }
     /**
@@ -112,11 +123,18 @@ class LoginContainer extends React.Component {
         if(this.props.authenticated && !utilityHelper.isObjectEmpty(this.props.user)){
             var userinfo = this.props.user;
             console.log('userinfo',userinfo)
+            // if(userinfo.role === 0){
+            //     // console.log('-->>>--',userinfo)
+            //     this.props.history.push('/dashboard');
+            // }else{
+            //     this.props.history.push('/ddashboard');
+            // }
             if(userinfo.role === 0){
-                // console.log('-->>>--',userinfo)
                 this.props.history.push('/dashboard');
-            }else{
+            }else if(userinfo.role === 1){
                 this.props.history.push('/ddashboard');
+            }else{
+                this.props.history.push('/login');
             }
         }
     }

@@ -21,6 +21,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import "../assets/css/style.css";
 
 
+
 const browserHistory = createBrowserHistory();
 
 const Loading = () =>
@@ -142,9 +143,40 @@ const DoctorRoute = Loadable({
 });
 
 const DoctorDashboard = Loadable({
-    loader: () => import('../components/Dashboard').then(object => object.DoctorDashboard),
+    loader: () => import('../doctor/Dashboard').then(object => object.DoctorDashboard),
     loading: Loading
 });
+
+const UpcomingAppointments = Loadable({
+    loader: () => import('../doctor/UpcomingAppointments').then(object => object.UpcomingAppointments),
+    loading: Loading
+});
+
+const MyPatient = Loadable({
+    loader: () => import('../doctor/MyPatient').then(object => object.MyPatient),
+    loading: Loading
+});
+
+const ReferredDoctor = Loadable({
+    loader: () => import('../doctor/ReferredDoctor').then(object => object.ReferredDoctor),
+    loading: Loading
+});
+
+const ReferralDoctor = Loadable({
+    loader: () => import('../doctor/ReferralDoctor').then(object => object.ReferralDoctor),
+    loading: Loading
+});
+
+const FavoriteDoctor = Loadable({
+    loader: () => import('../doctor/FavoriteDoctor').then(object => object.FavoriteDoctor),
+    loading: Loading
+});
+
+const ViewProfile = Loadable({
+    loader: () => import('../doctor/ViewProfile').then(object => object.ViewProfile),
+    loading: Loading
+});
+
 
 
 
@@ -204,6 +236,12 @@ class App extends React.Component {
                         <AdminRoute exact path='/plan' component={PlanContainer} authenticated={this.props.authenticated} allowuser={[0, 1]} />
 
                         <DoctorRoute exact path='/ddashboard' component={DoctorDashboard} authenticated={this.props.authenticated} allowuser={[1]} />
+                        <DoctorRoute exact path='/upcoming-appointments' component={UpcomingAppointments} authenticated={this.props.authenticated} allowuser={[1]} />
+                        <DoctorRoute exact path='/my-patients' component={MyPatient} authenticated={this.props.authenticated} allowuser={[1]} />
+                        <DoctorRoute exact path='/doctor-referred' component={ReferredDoctor} authenticated={this.props.authenticated} allowuser={[1]} />
+                        <DoctorRoute exact path='/doctor-referral' component={ReferralDoctor} authenticated={this.props.authenticated} allowuser={[1]} />
+                        <DoctorRoute exact path='/doctor-favorite' component={FavoriteDoctor} authenticated={this.props.authenticated} allowuser={[1]} />
+                        <DoctorRoute exact path='/doctor-profile' component={ViewProfile} authenticated={this.props.authenticated} allowuser={[1]} />
 
 
 

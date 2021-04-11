@@ -21,6 +21,8 @@ export * from './productCategoriesActions';
 export * from './productActions';
 export * from './vendorCategoriesActions';
 export * from './planActions';
+export * from './patientActions';
+export * from './profileActions';
 
 
 export * from './forgotPasswordActions';

@@ -47,15 +47,15 @@ export class DoctorSideMenu extends React.Component {
             <div className="=row">      
                 <div className="sidebar">
                 <ul className="box">
-                    <li><Link className="button" to="/dashboard">DashBoard</Link></li>
+                    <li><Link className="button" to="/ddashboard">DashBoard</Link></li>
                     <li><Link className="button" to="/upcoming-appointments">Upcoming Appointments</Link></li>
-                    <li><Link className="button" to="/users">My Patients</Link></li>
-                    <li><Link className="button" to="/doctors">Referral Patients</Link></li>
-                    <li><Link className="button" to="/doctors">Referred Patients</Link></li>
-                    <li><Link className="button" to="/doctors">Medical History</Link></li>
-                    <li><Link className="button" to="/doctors">Personal Doctor</Link></li>
-                    <li><Link className="button" to="/doctors">Profile</Link></li>
-                    <li><Link className="button" to="/doctors">Manage Calender</Link></li>
+                    <li><Link className="button" to="/my-patients">My Patients</Link></li>
+                    <li><Link className="button" to="/doctor-referral">Referral Patients</Link></li>
+                    <li><Link className="button" to="/doctor-referred">Referred Patients</Link></li>
+                    <li><Link className="button" to="/doctor-favorite">Personal Doctor</Link></li>
+                    <li><Link className="button" to="/doctor-profile">Profile</Link></li>
+                    <li><Link className="button" to="/manage-calendar">Manage Calendar</Link></li>
+                    {/*<li><Link className="button" to="/#">Medical History</Link></li>*/}
                     <li><Link className="button" to="/health-tips">Health Tips</Link></li>
                     
                 </ul>

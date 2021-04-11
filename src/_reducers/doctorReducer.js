@@ -17,14 +17,19 @@ const initialState = {
     doctorAppoinementList    : [],
     doctorReferred    : [],
     doctorReferral    : [],
+    favoriteList    : [],
     cancelMessage          : false,
     referToDoctor          : false,
+    newPatient          : false,
+    dAppointment          : false,
+    uploaded_url          : '',
     uploaded          : false,
     loader          : false,
     errorMsg        : false,
     watchData       : false,
     complete       : false,
-    serverDown      : false
+    serverDown      : false,
+    status      : false,
 };
 export function doctorReducer(state = initialState, action) {
     switch (action.type) {
@@ -65,7 +70,7 @@ export function doctorReducer(state = initialState, action) {
         case doctorConstants.DOCTOR_BY_SP_FETCH_SUCCESS:
           return  { 
               ...state,
-              doctorList     : action.result,
+              doctorList     : action.result.data,
               loader         : false,
               errorMsg       : false
           };
@@ -204,6 +209,7 @@ export function doctorReducer(state = initialState, action) {
             ...state,
             errorMsg         : false,
             loader           : true,
+            status           : false,
             submitted        : false 
           };
         case doctorConstants.CANCEL_BY_DOCTOR_APPOINTMENT_SUCCESS:
@@ -211,6 +217,7 @@ export function doctorReducer(state = initialState, action) {
               ...state,
               cancelMessage     : action.result,
               loader         : false,
+              status       : true,
               errorMsg       : false
           };
         case doctorConstants.CANCEL_BY_DOCTOR_APPOINTMENT_FAILURE:
@@ -218,6 +225,7 @@ export function doctorReducer(state = initialState, action) {
             ...state, 
             submitted      : false,
             loader         : false,
+            status         : false,
             errorMsg       : action.error
            };
 
@@ -279,7 +287,7 @@ export function doctorReducer(state = initialState, action) {
         case doctorConstants.DOCTOR_REFERRAL_SUCCESS:
           return  { 
               ...state,
-              doctorReferral     : action.result,
+              doctorReferral     : action.result.data,
               loader         : false,
               errorMsg       : false
           };
@@ -303,7 +311,7 @@ export function doctorReducer(state = initialState, action) {
         case doctorConstants.DOCTOR_REFERRED_SUCCESS:
           return  { 
               ...state,
-              doctorReferred     : action.result,
+              doctorReferred     : action.result.data,
               loader         : false,
               errorMsg       : false
           };
@@ -337,6 +345,78 @@ export function doctorReducer(state = initialState, action) {
             loader         : false,
             errorMsg       : action.error
            };
+        
+        // Fetch 
+        case doctorConstants.NEW_PATIENT_BY_DOC_REQUEST:
+          return {
+            ...state,
+            errorMsg         : false,
+            loader           : true,
+            submitted        : false 
+          };
+        case doctorConstants.NEW_PATIENT_BY_DOC_SUCCESS:
+          return  { 
+              ...state,
+              newPatient     : action.result,
+              loader         : false,
+              errorMsg       : false
+          };
+        case doctorConstants.NEW_PATIENT_BY_DOC_FAILURE:
+          return {
+            ...state, 
+            submitted      : false,
+            loader         : false,
+            errorMsg       : action.error
+           };
+
+        // Fetch 
+        case doctorConstants.FAVORITE_LIST_REQUEST:
+          return {
+            ...state,
+            errorMsg         : false,
+            favoriteList     : [],
+            loader           : true,
+            submitted        : false 
+          };
+        case doctorConstants.FAVORITE_LIST_SUCCESS:
+          return  { 
+              ...state,
+              favoriteList     : action.result.data,
+              loader         : false,
+              errorMsg       : false
+          };
+        case doctorConstants.FAVORITE_LIST_FAILURE:
+          return {
+            ...state, 
+            submitted      : false,
+            loader         : false,
+            errorMsg       : action.error
+           };
+
+        // Fetch 
+        case doctorConstants.FAVORITE_SAVE_REQUEST:
+          return {
+            ...state,
+            closeForm         : false,
+            errorMsg         : false,
+            loader           : true,
+            submitted        : false 
+          };
+        case doctorConstants.FAVORITE_SAVE_SUCCESS:
+          return  { 
+              ...state,
+              closeForm      : true,
+              loader         : false,
+              errorMsg       : false
+          };
+        case doctorConstants.FAVORITE_SAVE_FAILURE:
+          return {
+            ...state, 
+            closeForm      : false,
+            submitted      : false,
+            loader         : false,
+            errorMsg       : action.error
+           };
        
         case doctorConstants.FIRST_UPDATE_STATE:
           return {
@@ -351,7 +431,9 @@ export function doctorReducer(state = initialState, action) {
               ...state,
               errorMsg        : false,
               submitted       : false,
-              closeForm       : false              
+              closeForm       : false,
+              status          : false,
+
            };
         case doctorConstants.FIRST_UNAUTHENTICATE:
           return {
