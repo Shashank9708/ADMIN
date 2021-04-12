@@ -9,7 +9,7 @@ export const AddDigitalPrescription = (props) => {
     <div>
       <Modal show={props.addDigitalPrescriptionShow} onHide={props.handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Upcoming Appointments</Modal.Title>
+          <Modal.Title>Prescription Upload</Modal.Title>
           { props.messages &&
             <Alert bsStyle="success">
             { props.messages }
@@ -24,8 +24,18 @@ export const AddDigitalPrescription = (props) => {
         <Modal.Body>
         <div className="row">
           <div className="col-md-12">
+            Manual Prescription
             <div className={ 'form-group' }>
-              <textarea name="typeing_area" className="form-control" onChange = { props.handleTextChange } placeholder="Typing Area"> </textarea>
+              <input name="prescription" type="file" className="form-control" onChange = { props.handleFileChange }/>
+            </div>
+          </div>
+          <div className="col-md-12">OR
+            <br/>
+            Digital Prescription
+          </div>
+          <div className="col-md-12">
+            <div className={ 'form-group' }>
+              <textarea name="typing_area" className="form-control" onChange = { props.handleInputChange } placeholder="Typing Area"> </textarea>
             </div>
           </div>
             {props.inputList.map((x, i) => {
@@ -38,7 +48,7 @@ export const AddDigitalPrescription = (props) => {
                       name="medicine"
                       placeholder="Enter medicine name"
                       value={x.medicine}
-                      onChange={e => props.handleInputChange(e, i)}
+                      onChange={e => props.handleTextChange(e, i)}
                     />
                     </div>
                   </div>

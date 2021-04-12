@@ -410,7 +410,6 @@ function cancleByDoctorAppointment(url) {
                 response => {
                     if(response != "Error: Network Error"){
                         var data = response.data;
-                        console.log("cancleByDoctorAppointment",data)
                         var errorMsg;
                         if(data.status === configConstants.SUCCESS_CODE){
                             dispatch(success(data));

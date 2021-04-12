@@ -1472,6 +1472,35 @@ color: #fff;
   line-height: 40px;
 }
 
+.timeslot-selected {
+  background-color: var(--dark-blue);
+  width: auto;
+  height: 20px;
+  color: white;
+  padding:7px;
+  margin-top: 5px;
+  font-size: 14px;
+  border-radius: 3px;
+  vertical-align: center;
+  text-align:center;
+  line-height: 40px;
+}
+
+.timeslot-not-selected {
+  background-color: var(--light-red-bg);
+  width: auto;
+  height: 20px;
+  color: white;
+  padding:7px;
+  margin-top: 5px;
+  font-size: 14px;
+  border-radius: 3px;
+  vertical-align: center;
+  text-align:center;
+  line-height: 40px;
+}
+
+
 .timeslot:hover { 
   background-color: #2CA893;
   cursor: pointer;

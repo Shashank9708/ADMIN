@@ -364,10 +364,10 @@ function DoctorRemove(user_id) {
 * @return                Response JSON jsonObj
 */
 function newPatientAppointment(data) {
-    console.log(configConstants.API_BASE_PATH +  '/patient/add-patient-by-doctor')
+    // console.log(configConstants.API_BASE_PATH +  '/admin/addPatientByDoctor')
     return axios({
         method  : 'post',
-        url     : configConstants.API_BASE_PATH +  '/patient/add-patient-by-doctor',
+        url     : configConstants.API_BASE_PATH +  '/admin/addPatientByDoctor',
         data    : data
     })
     .then(response => {

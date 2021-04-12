@@ -351,6 +351,7 @@ export function doctorReducer(state = initialState, action) {
           return {
             ...state,
             errorMsg         : false,
+            closeForm         : false,
             loader           : true,
             submitted        : false 
           };
@@ -359,6 +360,7 @@ export function doctorReducer(state = initialState, action) {
               ...state,
               newPatient     : action.result,
               loader         : false,
+              closeForm       : true,
               errorMsg       : false
           };
         case doctorConstants.NEW_PATIENT_BY_DOC_FAILURE:
@@ -433,6 +435,7 @@ export function doctorReducer(state = initialState, action) {
               submitted       : false,
               closeForm       : false,
               status          : false,
+              complete        : false,
 
            };
         case doctorConstants.FIRST_UNAUTHENTICATE:

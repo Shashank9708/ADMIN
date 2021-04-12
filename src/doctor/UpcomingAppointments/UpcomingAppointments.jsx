@@ -12,6 +12,8 @@ import 'react-table-v6/react-table.css'
 import {DropdownButton, Dropdown} from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 class UpcomingAppointments extends React.Component {
@@ -40,6 +42,10 @@ class UpcomingAppointments extends React.Component {
         this.handleSelectChangeDP = this.handleSelectChangeDP.bind(this);
         this.handleRemoveClick = this.handleRemoveClick.bind(this);
         this.handleAddClick = this.handleAddClick.bind(this);
+        this.handleFileChange = this.handleFileChange.bind(this);
+        
+
+        this.completedApi = this.completedApi.bind(this);
 
         this.state               = this.initialState;
     }
@@ -87,8 +93,8 @@ class UpcomingAppointments extends React.Component {
      * @ShortDescription      This function is responsible to handle open import modal
      * @return                Nothing
      */
-     addDigitalPrescriptionShowHandle() {
-       this.setState({ addDigitalPrescriptionShow: true });
+     addDigitalPrescriptionShowHandle(row) {console.log(row)
+       this.setState({ addDigitalPrescriptionShow: true, patient_id: row.patient_id, appointment_id: row.appointment_id });
      }
 
     /**
@@ -97,7 +103,7 @@ class UpcomingAppointments extends React.Component {
      * @return                Nothing
      */
      addDigitalPrescriptionHideHandle() {
-       this.setState({ addDigitalPrescriptionShow: false });
+       this.setState({ addDigitalPrescriptionShow: false, patient_id: '', appointment_id: ''  });
      }
 
     // handle input change
@@ -140,7 +146,15 @@ class UpcomingAppointments extends React.Component {
 
     handleSaveDigitalPrescription(){
         // if(this.state.inputList.length > 0){
-
+        this.state.inputList.filter((row) =>{
+          if(row.days.label){
+            row.days= row.days.value
+          }
+          if(row.whentotake.label){
+            row.whentotake= row.whentotake.value
+          }
+        })
+        console.log(this.state.inputList)
           let url = '/doctor/uploadprescription'
           const formData = new FormData();
           formData.append('appointment_id', this.state.appointment_id)
@@ -154,6 +168,25 @@ class UpcomingAppointments extends React.Component {
           dispatch(doctorActions.uploadPrescription(formData, url));
           
         // }
+    }
+
+    handleFileChange(e) {
+        const target = e.target.name;
+        let file = e.target.files[0];
+        let fileName = file.name;
+
+            const formData = new FormData();
+            formData.append('appointment_id', this.state.appointment_id)
+            formData.append('patient_id', this.state.patient_id)
+            formData.append('doctor_id', this.state.doctor_id)
+            formData.append('details', "")
+            formData.append('typing_area', "")
+            formData.append('prescription', file);
+
+            let url = '/doctor/uploadprescription/'
+            const { dispatch } = this.props;
+            dispatch(doctorActions.uploadPrescription(formData, url));
+
     }
     /**
      * @DateOfCreation        26 July 2018
@@ -206,6 +239,12 @@ class UpcomingAppointments extends React.Component {
 
     }
 
+    completedApi(appointment_id) {
+        const { dispatch } = this.props;
+        dispatch(doctorActions.completeAppointment(appointment_id));
+        
+    }
+
     /**
    * @DateOfCreation        28 June 2018
    * @ShortDescription      This function is responsible to close import model.
@@ -213,11 +252,11 @@ class UpcomingAppointments extends React.Component {
   */
     UNSAFE_componentWillReceiveProps(newProps) {
         
-        if(newProps.status == true){
+        if(newProps.status == true || newProps.complete == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
                 // dispatch(healthTipsActions.resetUpcomingAppointmentsState())
-
+                toast("Successfully")
                 this.getUpcomingAppointmentsList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
             }.bind(this), 1500);
         }
@@ -228,7 +267,9 @@ class UpcomingAppointments extends React.Component {
           [name] : date
         });
         if(name === 'endDate'){
-          this.getUpcomingAppointmentsList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
+          setTimeout(function() { 
+            this.getUpcomingAppointmentsList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
+          }.bind(this), 1000);
         }
     }
 
@@ -246,6 +287,7 @@ class UpcomingAppointments extends React.Component {
 
     render() {
       const {startDate, endDate} = this.state
+      console.log(this.state.endDate)
         // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
             <div className="page-container">
@@ -384,10 +426,9 @@ class UpcomingAppointments extends React.Component {
                                                     Cell: row => 
                                                           <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
                                                               <Dropdown.Item onClick={() => this.cancelAll(row.original)}>Cancel</Dropdown.Item>
-                                                              <Dropdown.Item onClick={() => this.addDigitalPrescriptionShowHandle()}>Digital Prescription</Dropdown.Item>
-                                                              <Dropdown.Item >Manual Prescription</Dropdown.Item>
+                                                              <Dropdown.Item onClick={() => this.addDigitalPrescriptionShowHandle(row.original)}>Prescription  Upload</Dropdown.Item>
                                                               <Dropdown.Item >Refer to Doctor</Dropdown.Item>
-                                                              <Dropdown.Item >Complete Appointment</Dropdown.Item>
+                                                              <Dropdown.Item onClick={()=> this.completedApi(row.original.appointment_id)}>Complete Appointment</Dropdown.Item>
                                                           </DropdownButton>
                                                 }
                                               
@@ -425,6 +466,7 @@ class UpcomingAppointments extends React.Component {
                         clinicList = {this.props.clinicList}
                         healthProblem = {this.props.healthProblem}
                         addUpcomingAppointmentsHideHandle = {this.addUpcomingAppointmentsHideHandle}
+                        getUpcomingAppointmentsList = {this.getUpcomingAppointmentsList}
                       />
 
                       <AddDigitalPrescription
@@ -437,8 +479,10 @@ class UpcomingAppointments extends React.Component {
                         handleSelectChange = {this.handleSelectChangeDP}
                         handleRemoveClick = {this.handleRemoveClick}
                         handleAddClick = {this.handleAddClick}
+                        handleFileChange = {this.handleFileChange}
                       />
                     </div>
+                    <ToastContainer />
                 </div>    
             </div>
         );
@@ -452,7 +496,7 @@ class UpcomingAppointments extends React.Component {
  */
 
 function mapStateToProps(state) {
-    const { doctorAppoinementList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status } = state.doctorReducer;
+    const { doctorAppoinementList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete } = state.doctorReducer;
     const { clinicList } = state.clinicReducer;
     const { healthProblem } = state.patientReducer;
     return {
@@ -465,7 +509,8 @@ function mapStateToProps(state) {
         sendingRequest,
         errorMsg,
         pages,
-        status
+        status,
+        complete
     };
 }
 const connectedUpcomingAppointments = connect(mapStateToProps)(UpcomingAppointments);

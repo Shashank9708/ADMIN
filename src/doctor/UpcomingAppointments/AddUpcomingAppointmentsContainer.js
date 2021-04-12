@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { doctorActions, clinicSlotActions } from '../../_actions';
 import { AddUpcomingAppointments } from './AddUpcomingAppointments';
 import { upcomingAppointmentValidator } from '../../_validator';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 class AddUpcomingAppointmentsContainer extends React.Component {
@@ -25,14 +27,16 @@ class AddUpcomingAppointmentsContainer extends React.Component {
                   'contact_no' : '',
                   'health_problem_id' : '',
                   'clinic_id' : '',
-                  'appointment_date' : '',
+                  'appointment_date' : new Date().toJSON().slice(0,10),
                   'appointment_time' : '',
               },
               validate : {
                   name : { isValid : true, message : '' },
                   contact_no : { isValid : true, message : '' },
                   health_problem_id : { isValid : true, message : '' },
-                  clinic_id : { isValid : true, message : '' }
+                  clinic_id : { isValid : true, message : '' },
+                  appointment_date : { isValid : true, message : '' },
+                  appointment_time : { isValid : true, message : '' }
               }
           }
       }
@@ -94,7 +98,7 @@ class AddUpcomingAppointmentsContainer extends React.Component {
         });
         if(name === 'clinic_id'){
           let data = {
-                  clinic_id: selectedOption.id,
+                  clinic_id: selectedOption.value,
                   date: new Date()
                 }
 
@@ -105,15 +109,29 @@ class AddUpcomingAppointmentsContainer extends React.Component {
     }
 
     onSelectDate (appointment_date) {
-        // console.log('appointment_date',appointment_date)
-        // this.setState({appointment_date: appointment_date, appointment_time: ''})
-        // let {errors} = this.state
-        // errors.appointment_date = ""
-        // this.setState({errors})
-        const { detail, validate } = this.state.Form;
+        
+        const { detail, validate }  = this.state.Form;
+        this.setState({
+            Form : {
+                validate:{
+                    ...validate,
+                    'appointment_date': {
+                        isValid: true,
+                        message: ''
+                    }
+                },
+                detail : {
+                    ...detail,
+                    'appointment_date': appointment_date
+                }
+            }
+        }, function(){
+          
+        });
+
 
         let data = {
-                  clinic_id: detail.clinic_id,
+                  clinic_id: detail.clinic_id.value,
                   date: appointment_date
                 }
         const { dispatch } = this.props;
@@ -121,17 +139,24 @@ class AddUpcomingAppointmentsContainer extends React.Component {
     }
 
     onSelectTime (appointment_time) {
-        // console.log('appointment_date',appointment_date)
-        // this.setState({appointment_date: appointment_date, appointment_time: ''})
-        // let {errors} = this.state
-        // errors.appointment_date = ""
-        // this.setState({errors})
-        const { detail, validate } = this.state.Form;
-
-        let data = {
-                  clinic_id: detail.clinic_id,
-                  date: appointment_date
+        const { detail, validate }  = this.state.Form;
+        this.setState({
+            Form : {
+                validate:{
+                    ...validate,
+                    'appointment_time': {
+                        isValid: true,
+                        message: ''
+                    }
+                },
+                detail : {
+                    ...detail,
+                    'appointment_time': appointment_time
                 }
+            }
+        }, function(){
+          
+        });
     
     }
   /**
@@ -146,24 +171,24 @@ class AddUpcomingAppointmentsContainer extends React.Component {
   }
 
   handleSaveUpcomingAppointments() {
-    if(upcomingAppointmentValidator.is_upcomingAppointmentValid(this)) {
+    // if(upcomingAppointmentValidator.is_upcomingAppointmentValid(this)) {
         const { detail } = this.state.Form;
         // console.log(detail)
 
         let data = {
                       "name": detail.name,
                       "contact_no": detail.contact_no,
-                      "health_problem_id": detail.health_problem_id,
-                      "clinic_id": detail.clinic_id,
+                      "health_problem_id": detail.health_problem_id.value,
+                      "clinic_id": detail.clinic_id.value,
                       "doc_id": JSON.parse(localStorage.user).doc_id,
-                      // "typeing_area": detail.typeing_area,
-                      // "details": detail.inputData
+                      "appointment_date": detail.appointment_date,
+                      "appointment_time": detail.appointment_time
                     }
 
             // console.log("----------",data)
         const { dispatch } = this.props;
         dispatch(doctorActions.newPatientAppointment(data));
-    }
+    // }
   }
 
   /**
@@ -175,18 +200,17 @@ class AddUpcomingAppointmentsContainer extends React.Component {
         if(newProps.closeForm == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
-                dispatch(doctorActions.doctorAppointmentList(1, 10, "asc", "filtered"));
-                
+                toast("Successfully Booked")
                 dispatch(doctorActions.resetFirstState());
+                this.props.getUpcomingAppointmentsList(1, 10, "asc", "filtered");
                 this.props.addUpcomingAppointmentsHideHandle();
                 this.setState(this.initialState);
             }.bind(this), 1500);
-        }else{
-            this.setState(this.initialState);
         }
     }
   render() {
       return (
+        <>
             <AddUpcomingAppointments 
               addUpcomingAppointmentsShow = {this.props.addUpcomingAppointmentsShow}
               clinicList = {this.props.clinicList}
@@ -203,6 +227,8 @@ class AddUpcomingAppointmentsContainer extends React.Component {
               slotDate={this.onSelectDate}
               slotTime={this.onSelectTime}
             />
+            <ToastContainer />
+        </>    
       );
     }
 }

@@ -66,10 +66,16 @@ export const AddUpcomingAppointments = (props) => {
                         <div className="col-md-12">
                           <label>Select Appointment Date</label>
                           <div className="row">
-                            {props.clinicSlotDate.length > 0 && 
+                            {props.clinicSlotDate.length > 0 ?  
                               props.clinicSlotDate.map((row)=>{
-                                return <div className="col-md-3"><span className="timeslot" onClick={() => props.slotDate(row.day)}>{row.day}</span></div>
+                                let select = false
+                                if(row.day == props.payload.detail.appointment_date){  
+                                   select = true
+                                }  
+                                return <div className="col-md-3"><span className={select ? "timeslot-selected" : "timeslot"} onClick={() => props.slotDate(row.day)}>{row.day}</span></div>
                               })
+                              :
+                              <div>No Date available</div>
                             }
                           </div>
                         </div>
@@ -78,10 +84,16 @@ export const AddUpcomingAppointments = (props) => {
                         <div className="col-md-12">
                           <label>Select Appointment Slot</label>
                           <div className="row">
-                            {props.clinicSlotManage.length > 0 && 
+                            {props.clinicSlotManage.length > 0 ? 
                               props.clinicSlotManage.map((row)=>{
-                                return <div className="col-md-3"><span className="timeslot" onClick={() => props.slotTime(row.start)}>{row.start}</span></div>
+                                let select = false
+                                if(row.start == props.payload.detail.appointment_time){  
+                                   select = true
+                                }  
+                                return <div className="col-md-3"><span className={row.available === 1 ? select ? "timeslot-selected" : "timeslot" : "timeslot-not-selected"} onClick={() => props.slotTime(row.start)}>{row.start}</span></div>
                               })
+                              :
+                              <div>No Time Slot available</div>
                             }
                           </div>
                         </div>
