@@ -5,6 +5,7 @@ import { HeaderContainer } from '../../components/Header';
 import { DoctorSideMenu } from '../../components/SideMenu';
 import {AddUpcomingAppointmentsContainer} from './AddUpcomingAppointmentsContainer';
 import {AddDigitalPrescription} from './AddDigitalPrescription';
+import {ReferToDoctor} from './ReferToDoctor';
 import { doctorActions, clinicActions, patientActions, headerActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
@@ -45,6 +46,12 @@ class UpcomingAppointments extends React.Component {
         this.handleFileChange = this.handleFileChange.bind(this);
         
 
+        this.addReferToDoctorShowHandle = this.addReferToDoctorShowHandle.bind(this);
+        this.addReferToDoctorHideHandle = this.addReferToDoctorHideHandle.bind(this);
+        this.handleSelectDoctor = this.handleSelectDoctor.bind(this);
+        this.handleReferToDoctor = this.handleReferToDoctor.bind(this);
+        
+
         this.completedApi = this.completedApi.bind(this);
 
         this.state               = this.initialState;
@@ -56,13 +63,16 @@ class UpcomingAppointments extends React.Component {
             pages  : 0,
             addUpcomingAppointmentsShow: false,
             addDigitalPrescriptionShow: false,
+            addReferToDoctorShow: false,
             startDate: new Date(), 
             endDate: new Date(),
             inputList: [{ medicine: "", days: "", whentotake: "" }],
             typing_area: '',
             appointment_id:  '',
             patient_id: '',
-            doctor_id: JSON.parse(localStorage.user).doc_id
+            doctor_id: JSON.parse(localStorage.user).doc_id,
+            referData: '',
+            referTOdoctor: ''
 
         }
     }
@@ -93,7 +103,7 @@ class UpcomingAppointments extends React.Component {
      * @ShortDescription      This function is responsible to handle open import modal
      * @return                Nothing
      */
-     addDigitalPrescriptionShowHandle(row) {console.log(row)
+     addDigitalPrescriptionShowHandle(row) {
        this.setState({ addDigitalPrescriptionShow: true, patient_id: row.patient_id, appointment_id: row.appointment_id });
      }
 
@@ -154,7 +164,7 @@ class UpcomingAppointments extends React.Component {
             row.whentotake= row.whentotake.value
           }
         })
-        console.log(this.state.inputList)
+
           let url = '/doctor/uploadprescription'
           const formData = new FormData();
           formData.append('appointment_id', this.state.appointment_id)
@@ -183,11 +193,47 @@ class UpcomingAppointments extends React.Component {
             formData.append('typing_area', "")
             formData.append('prescription', file);
 
-            let url = '/doctor/uploadprescription/'
+            let url = '/admin/uploadprescription'
             const { dispatch } = this.props;
             dispatch(doctorActions.uploadPrescription(formData, url));
 
     }
+
+    /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle open import modal
+     * @return                Nothing
+     */
+     addReferToDoctorShowHandle(data) {
+       this.setState({ addReferToDoctorShow: true, referData:  data });
+       const { dispatch }   = this.props;
+       dispatch(doctorActions.getfavorite());
+     }
+
+    /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle close modal
+     * @return                Nothing
+     */
+     addReferToDoctorHideHandle() {
+       this.setState({ addReferToDoctorShow: false, referData:  '' });
+     }
+
+     handleSelectDoctor(selectedOption, name){
+        this.setState({[name]: selectedOption})
+     }
+
+     handleReferToDoctor(){
+      let data = {
+                      "referred_by": this.state.doctor_id,
+                      "referred_to_id": this.state.referTOdoctor.doc_id,
+                      "referred_to_name": this.state.referTOdoctor.name,
+                      "patient_id": this.state.referData.patient_id
+                  }
+        // console.log(data)
+        const { dispatch } = this.props;
+        dispatch(doctorActions.referToDoctor(data));
+     }
     /**
      * @DateOfCreation        26 July 2018
      * @ShortDescription      This function is responsible to redirect unauthorise users
@@ -252,11 +298,28 @@ class UpcomingAppointments extends React.Component {
   */
     UNSAFE_componentWillReceiveProps(newProps) {
         
-        if(newProps.status == true || newProps.complete == true){
+        if(newProps.status == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
-                // dispatch(healthTipsActions.resetUpcomingAppointmentsState())
+                dispatch(doctorActions.resetFirstState())
                 toast("Successfully")
+                this.getUpcomingAppointmentsList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
+            }.bind(this), 1500);
+        }
+        if(newProps.complete == true){
+            setTimeout(function() { 
+                const { dispatch } = this.props;
+                dispatch(doctorActions.resetFirstState())
+                toast("Complete Successfully")
+                this.getUpcomingAppointmentsList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
+            }.bind(this), 1500);
+        }
+        if(newProps.referStatus == true){
+            setTimeout(function() { 
+                const { dispatch } = this.props;
+                dispatch(doctorActions.resetFirstState())
+                toast("Referred  Successfully")
+                this.addReferToDoctorHideHandle();
                 this.getUpcomingAppointmentsList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
             }.bind(this), 1500);
         }
@@ -304,7 +367,7 @@ class UpcomingAppointments extends React.Component {
                               <div className="inner-content">
                                       <div className="row page-header">
                                           <div className="col-md-6">
-                                              <h1 className="page-title">Upcoming Appointments</h1>
+                                              <h1 className="page-title">Appointments</h1>
                                           </div>
                                           <div className="col-md-6 text-right">
                                              <button className="blue btn text-btn" onClick={this.addUpcomingAppointmentsShowHandle}>Add New</button>
@@ -427,8 +490,8 @@ class UpcomingAppointments extends React.Component {
                                                           <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
                                                               <Dropdown.Item onClick={() => this.cancelAll(row.original)}>Cancel</Dropdown.Item>
                                                               <Dropdown.Item onClick={() => this.addDigitalPrescriptionShowHandle(row.original)}>Prescription  Upload</Dropdown.Item>
-                                                              <Dropdown.Item >Refer to Doctor</Dropdown.Item>
-                                                              <Dropdown.Item onClick={()=> this.completedApi(row.original.appointment_id)}>Complete Appointment</Dropdown.Item>
+                                                              <Dropdown.Item onClick={() => this.addReferToDoctorShowHandle(row.original)}>Refer to Doctor</Dropdown.Item>
+                                                              <Dropdown.Item onClick={() => this.completedApi(row.original.appointment_id)}>Complete Appointment</Dropdown.Item>
                                                           </DropdownButton>
                                                 }
                                               
@@ -481,6 +544,14 @@ class UpcomingAppointments extends React.Component {
                         handleAddClick = {this.handleAddClick}
                         handleFileChange = {this.handleFileChange}
                       />
+
+                      <ReferToDoctor
+                        addReferToDoctorShow = {this.state.addReferToDoctorShow}
+                        favoriteList = {this.props.favoriteList}
+                        handleClose = {this.addReferToDoctorHideHandle}
+                        handleSelectDoctor = {this.handleSelectDoctor}
+                        handleReferToDoctor = {this.handleReferToDoctor}
+                      />
                     </div>
                     <ToastContainer />
                 </div>    
@@ -496,11 +567,12 @@ class UpcomingAppointments extends React.Component {
  */
 
 function mapStateToProps(state) {
-    const { doctorAppoinementList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete } = state.doctorReducer;
+    const { doctorAppoinementList, favoriteList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete } = state.doctorReducer;
     const { clinicList } = state.clinicReducer;
     const { healthProblem } = state.patientReducer;
     return {
         doctorAppoinementList,
+        favoriteList,
         isUserNotValid,
         loader,
         clinicList,
@@ -510,7 +582,8 @@ function mapStateToProps(state) {
         errorMsg,
         pages,
         status,
-        complete
+        complete,
+        referStatus
     };
 }
 const connectedUpcomingAppointments = connect(mapStateToProps)(UpcomingAppointments);

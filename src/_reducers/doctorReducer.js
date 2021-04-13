@@ -335,6 +335,7 @@ export function doctorReducer(state = initialState, action) {
           return  { 
               ...state,
               referToDoctor  : action.result,
+              referStatus    : true,
               loader         : false,
               errorMsg       : false
           };
@@ -342,6 +343,7 @@ export function doctorReducer(state = initialState, action) {
           return {
             ...state, 
             submitted      : false,
+            referStatus         : false,
             loader         : false,
             errorMsg       : action.error
            };
@@ -435,6 +437,7 @@ export function doctorReducer(state = initialState, action) {
               submitted       : false,
               closeForm       : false,
               status          : false,
+              referStatus          : false,
               complete        : false,
 
            };

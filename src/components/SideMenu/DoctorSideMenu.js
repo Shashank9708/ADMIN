@@ -48,7 +48,7 @@ export class DoctorSideMenu extends React.Component {
                 <div className="sidebar">
                 <ul className="box">
                     <li><Link className="button" to="/ddashboard">DashBoard</Link></li>
-                    <li><Link className="button" to="/upcoming-appointments">Upcoming Appointments</Link></li>
+                    <li><Link className="button" to="/upcoming-appointments">Appointments</Link></li>
                     <li><Link className="button" to="/my-patients">My Patients</Link></li>
                     <li><Link className="button" to="/doctor-referral">Referral Patients</Link></li>
                     <li><Link className="button" to="/doctor-referred">Referred Patients</Link></li>
