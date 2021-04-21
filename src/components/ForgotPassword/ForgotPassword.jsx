@@ -1,6 +1,8 @@
 import React from 'react';
 import { Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import "./ForgotPassword.scss";
+import arklogo from "../../assets/images/arklogo.png";
 
 /**
  * ForgotPassword
@@ -13,61 +15,59 @@ import { Link } from 'react-router-dom';
  */
 export const ForgotPassword = (props) => {
     return (
-        <section class="starts">
-           <div class="container">
+       
+           <div class="forgot-password-page__container">
               
-                <a class="logoimg"><img src="src/assets/img/logo1.jpg"/></a>
-                 <h3 class="heading1">ARK</h3>
-                 <h3 class="heading1">Forgot your password</h3>
-                <div class="row">
+                <div className="">
+                    <img className="forgot-password-page__logo" src={arklogo}/>
+                </div>
+                <div className="">
+                    <div className="forgot-password-page__heading H4DesktopWhite">FORGOT YOUR PASSWORD</div>
+                </div>                
+                
+                <div class="forgot-password-page__form">
                     {/* Show server side Error message */}
-                    {props.success_message &&
-                    <Alert bsStyle="success">
-                        {props.success_message}
-                    </Alert>
+                    {
+                        props.success_message &&
+                        <Alert bsStyle="success">
+                            {props.success_message}
+                        </Alert>
                     }
 
                     {/* Show server side Error message */}
-                    {props.error_message &&
-                    <Alert bsStyle="danger">
-                        {props.error_message}
-                    </Alert>
+                    {
+                        props.error_message &&
+                        <Alert bsStyle="danger">
+                            {props.error_message}
+                        </Alert>
                     }
-                  <div class="col-md-7">
-                   <div class="group">
-                        
-                        
+                    
+                    <div class="">
+                        <div className="">{props.payload.userValidate.email.message}</div>
                         <div className={props.payload.userValidate.email.isValid ? 'form-group' : 'form-group has-error'}>
                                 <input
                                     type="text"
                                     name="email"
                                     onChange={props.handle_input_change}
-                                    placeholder="Email/Mobile"
+                                    placeholder="Email Address / Mobile Number"
                                     value={props.email}
                                     className="form-control"
                                 />
-                                <span className="help-block">{props.payload.userValidate.email.message}</span>
                         </div>
-                                                  
                     </div>
                     
-                    <Link class="text1"  to="/">Go to login?</Link>
-                  </div>
-                  <div class="col-md-9">
-
-                   <button
-                        className="btn-s green text-btn" 
-                        onClick={props.handle_forgot_submit}>Send
-                    </button> 
-
-                  </div>
-                  
+                    <div className="forgot-password-page__login">
+                        <Link className="CTAWhite" to="/">Go to login?</Link>
+                    </div>                    
+                    
+                    <div class="forgot-password-page__send-btn">
+                        <button
+                            className="" 
+                            onClick={props.handle_forgot_submit}>Send
+                        </button> 
+                    </div>
                 </div>    
-              
            </div>
-           
-        </section>
-
             
     );
 }

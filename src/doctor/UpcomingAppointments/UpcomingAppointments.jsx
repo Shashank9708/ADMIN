@@ -15,6 +15,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CardComponent from '../../components/CardComponent/CardComponent';
+
 
 
 class UpcomingAppointments extends React.Component {
@@ -353,209 +355,237 @@ class UpcomingAppointments extends React.Component {
       console.log(this.state.endDate)
         // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
-            <div className="page-container">
-                <HeaderContainer />
-                <div className="container-fluid">
-                   <div className="row">
-                      <div className="col-md-2.5">
-                        <DoctorSideMenu/>
-                      </div>
-                      <div className="col-md-9">
-                        <div className="main-content">
-                          <div className="wrap-inner-content">
-                            <div className="col-md-12">
-                              <div className="inner-content">
-                                      <div className="row page-header">
-                                          <div className="col-md-6">
-                                              <h1 className="page-title">Appointments</h1>
-                                          </div>
-                                          <div className="col-md-6 text-right">
-                                             <button className="blue btn text-btn" onClick={this.addUpcomingAppointmentsShowHandle}>Add New</button>
-                                          </div>
-                                      </div>
-                                      <div className="table-wrap">
-                                      <DatePicker
-                                        selected={startDate}
-                                        onChange={date => this.handleInputChange('startDate',date)}
-                                        selectsStart
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                      />
-                                      <DatePicker
-                                        selected={endDate}
-                                        onChange={date => this.handleInputChange('endDate',date)}
-                                        selectsEnd
-                                        minDate={startDate}
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                      />
-                                      {/*<div className="table-search">
-                                              <input
-                                                  value={this.state.filterAll}
-                                                  onChange={this.notificationSearch}
-                                                  className="table-search-input"
-                                                  placeholder="Search"
-                                              />
+          <React.Fragment>
+            <HeaderContainer />
+            <div className="container-fluid">
+               <div className="row">
+                  <DoctorSideMenu/>
+                  <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
-                                      </div>*/}
-                                      {/*
-                                                  Header: 'Image',
-                                                  accessor  : "image",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  Cell: row =>
-                                                    <div><img src={'data:image/png;base64,'+row.value} width="50px" height="50px"/></div>
-                                                    
-                                              */}
-                                      <ReactTable
-                                          noDataText="No found !!"
-                                          data={this.props.doctorAppoinementList}
-                                          filterable
-                                          defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
-                                          filtered={this.state.filtered}
-                                          columns={[
-                                              
-                                              {
-                                                  Header: 'Patient Name',
-                                                  accessor  : "name",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header: 'Health Problem',
-                                                  accessor  : "health_problem_title",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header: 'Appointment Date',
-                                                  accessor  : "appointment_date",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header: 'Appointment Time',
-                                                  accessor  : "appointment_time",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header: 'Payment Mode',
-                                                  accessor  : "appointment_type",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header: 'Clinic Name',
-                                                  accessor  : "clinic_name",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header: 'Status',
-                                                  accessor  : "status",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                                },
-                                                {
-                                                    Header: 'Actions',
-                                                    accessor  : "appointment_id",
-                                                    filterable  : false,
-                                                    
-                                                    className : 'grid-header',
-                                                    Cell: row => 
-                                                          <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
-                                                              <Dropdown.Item onClick={() => this.cancelAll(row.original)}>Cancel</Dropdown.Item>
-                                                              <Dropdown.Item onClick={() => this.addDigitalPrescriptionShowHandle(row.original)}>Prescription  Upload</Dropdown.Item>
-                                                              <Dropdown.Item onClick={() => this.addReferToDoctorShowHandle(row.original)}>Refer to Doctor</Dropdown.Item>
-                                                              <Dropdown.Item onClick={() => this.completedApi(row.original.appointment_id)}>Complete Appointment</Dropdown.Item>
-                                                          </DropdownButton>
-                                                }
-                                              
-                                          ]}
-                                          defaultSorted={[
-                                              {
-                                                  id: "appointment_id",
-                                                  desc: false
-                                              }
-                                          ]}
-                                          defaultPageSize={10}
-                                          minRows= {this.props.doctorAppoinementList}
-                                          className="table table-bordered responsive"
-                                          loading={this.state.loading}
-                                          filterable
-                                          Sorted
-                                          // pages={this.props.pages}
-                                          showPagination={true}
-                                          showPaginationTop={true}
-                                          showPaginationBottom={false}
-                                          pageSizeOptions={[10, 20, 50]}
-                                          automatic // For server side pagination
-                                          onFetchData={(state, instance) => {
-                                              this.getUpcomingAppointmentsList(state.page, state.pageSize, state.sorted, state.filtered);
-                                          }}
-                                      />
-                                  </div>
-                              </div>
-                            </div>
-                          </div>
+                    
+                    <div className="page-heading">
+                      <div className="page-heading__title-container">
+                          <h1 className="page-heading__title">Today's Appointments</h1>
+                      </div>
+                      
+                      <div className="page-heading__btn-container">
+                         <button className="page-heading__btn btn-sm" onClick={this.addUpcomingAppointmentsShowHandle}>Book New Appointment</button>
+                      </div>
+                      
+                      <div>
+                        <div className="btn-group" role="group" aria-label="Basic example">
+                          <button type="button" className="btn btn-sm"><i className="fa fa-th" aria-hidden="true"></i></button>
+                          <button type="button" className="btn btn-sm"><i className="fa fa-list" aria-hidden="true"></i></button>
                         </div>
                       </div>
-                      <AddUpcomingAppointmentsContainer
-                        addUpcomingAppointmentsShow = {this.state.addUpcomingAppointmentsShow}
-                        clinicList = {this.props.clinicList}
-                        healthProblem = {this.props.healthProblem}
-                        addUpcomingAppointmentsHideHandle = {this.addUpcomingAppointmentsHideHandle}
-                        getUpcomingAppointmentsList = {this.getUpcomingAppointmentsList}
-                      />
-
-                      <AddDigitalPrescription
-                        addDigitalPrescriptionShow = {this.state.addDigitalPrescriptionShow}
-                        handleClose = {this.addDigitalPrescriptionHideHandle}
-                        handleSaveDigitalPrescription = {this.handleSaveDigitalPrescription}
-                        inputList = {this.state.inputList}
-                        handleTextChange = {this.handleTextChangeDP}
-                        handleInputChange = {this.handleInputChangeDP}
-                        handleSelectChange = {this.handleSelectChangeDP}
-                        handleRemoveClick = {this.handleRemoveClick}
-                        handleAddClick = {this.handleAddClick}
-                        handleFileChange = {this.handleFileChange}
-                      />
-
-                      <ReferToDoctor
-                        addReferToDoctorShow = {this.state.addReferToDoctorShow}
-                        favoriteList = {this.props.favoriteList}
-                        handleClose = {this.addReferToDoctorHideHandle}
-                        handleSelectDoctor = {this.handleSelectDoctor}
-                        handleReferToDoctor = {this.handleReferToDoctor}
-                      />
                     </div>
-                    <ToastContainer />
-                </div>    
-            </div>
+                    
+   
+                    <div className="page-filter">
+                      <div className="page-filter__from-date">
+                        <DatePicker
+                          selected={startDate}
+                          onChange={date => this.handleInputChange('startDate',date)}
+                          selectsStart
+                          startDate={startDate}
+                          endDate={endDate}
+                          dateFormat="dd/MM/yyyy"
+                        />
+                      </div>
+                      <div className="page-filter__to-date">
+                        <DatePicker
+                          selected={endDate}
+                          onChange={date => this.handleInputChange('endDate',date)}
+                          selectsEnd
+                          minDate={startDate}
+                          startDate={startDate}
+                          endDate={endDate}
+                          dateFormat="dd/MM/yyyy"
+                        />
+                      </div>
+                      <div className="page-filter__searchbox">
+                        <input type="text" placeholder="Search"/>
+                      </div>
+                      <div className="page-filter__others">
+                        <div className="dropdown">
+                          <button className="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Status
+                          </button>
+                          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a className="dropdown-item" href="#">Booked</a>
+                            <a className="dropdown-item" href="#">Cancelled</a>
+                            <a className="dropdown-item" href="#">Completed</a>
+                          </div>
+                        </div>
+                      </div>                    
+                    </div>  
+                    
+                    <div className="row">
+                      <div className="col-sm-6">
+                        <CardComponent />
+                      </div>
+                      <div className="col-sm-6">
+                        <CardComponent />
+                      </div>
+                      <div className="col-sm-6">
+                        <CardComponent />
+                      </div>
+                      <div className="col-sm-6">
+                        <CardComponent />
+                      </div>                      
+                    </div>                    
+                    
+
+                        
+{/*                     
+                    <div className="row">
+                      <ReactTable
+                          noDataText="No found !!"
+                          data={this.props.doctorAppoinementList}
+                          filterable
+                          defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
+                          filtered={this.state.filtered}
+                          columns={[
+                              
+                              {
+                                  Header: 'Patient Name',
+                                  accessor  : "name",
+                                  className : 'grid-header',
+                                  filterable  : false,
+                                  filterMethod: (filter, row) => {
+                                      return row[filter.id].includes(filter.value);
+                                  }
+                              },
+                              {
+                                  Header: 'Health Problem',
+                                  accessor  : "health_problem_title",
+                                  className : 'grid-header',
+                                  filterable  : false,
+                                  filterMethod: (filter, row) => {
+                                      return row[filter.id].includes(filter.value);
+                                  }
+                              },
+                              {
+                                  Header: 'Appointment Date',
+                                  accessor  : "appointment_date",
+                                  className : 'grid-header',
+                                  filterable  : false,
+                                  filterMethod: (filter, row) => {
+                                      return row[filter.id].includes(filter.value);
+                                  }
+                              },
+                              {
+                                  Header: 'Appointment Time',
+                                  accessor  : "appointment_time",
+                                  className : 'grid-header',
+                                  filterable  : false,
+                                  filterMethod: (filter, row) => {
+                                      return row[filter.id].includes(filter.value);
+                                  }
+                              },
+                              {
+                                  Header: 'Payment Mode',
+                                  accessor  : "appointment_type",
+                                  className : 'grid-header',
+                                  filterable  : false,
+                                  filterMethod: (filter, row) => {
+                                      return row[filter.id].includes(filter.value);
+                                  }
+                              },
+                              {
+                                  Header: 'Clinic Name',
+                                  accessor  : "clinic_name",
+                                  className : 'grid-header',
+                                  filterable  : false,
+                                  filterMethod: (filter, row) => {
+                                      return row[filter.id].includes(filter.value);
+                                  }
+                              },
+                              {
+                                  Header: 'Status',
+                                  accessor  : "status",
+                                  className : 'grid-header',
+                                  filterable  : false,
+                                  filterMethod: (filter, row) => {
+                                      return row[filter.id].includes(filter.value);
+                                  }
+                                },
+                                {
+                                    Header: 'Actions',
+                                    accessor  : "appointment_id",
+                                    filterable  : false,
+                                    
+                                    className : 'grid-header',
+                                    Cell: row => 
+                                          <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
+                                              <Dropdown.Item onClick={() => this.cancelAll(row.original)}>Cancel</Dropdown.Item>
+                                              <Dropdown.Item onClick={() => this.addDigitalPrescriptionShowHandle(row.original)}>Prescription  Upload</Dropdown.Item>
+                                              <Dropdown.Item onClick={() => this.addReferToDoctorShowHandle(row.original)}>Refer to Doctor</Dropdown.Item>
+                                              <Dropdown.Item onClick={() => this.completedApi(row.original.appointment_id)}>Complete Appointment</Dropdown.Item>
+                                          </DropdownButton>
+                                }
+                              
+                          ]}
+                          defaultSorted={[
+                              {
+                                  id: "appointment_id",
+                                  desc: false
+                              }
+                          ]}
+                          defaultPageSize={10}
+                          minRows= {this.props.doctorAppoinementList}
+                          className="table table-bordered responsive"
+                          loading={this.state.loading}
+                          filterable
+                          Sorted
+                          // pages={this.props.pages}
+                          showPagination={true}
+                          showPaginationTop={true}
+                          showPaginationBottom={false}
+                          pageSizeOptions={[10, 20, 50]}
+                          automatic // For server side pagination
+                          onFetchData={(state, instance) => {
+                              this.getUpcomingAppointmentsList(state.page, state.pageSize, state.sorted, state.filtered);
+                          }}
+                      />
+                    </div>  
+                    */}
+                  
+                  </main>
+                  
+                    {/* <AddUpcomingAppointmentsContainer
+                      addUpcomingAppointmentsShow = {this.state.addUpcomingAppointmentsShow}
+                      clinicList = {this.props.clinicList}
+                      healthProblem = {this.props.healthProblem}
+                      addUpcomingAppointmentsHideHandle = {this.addUpcomingAppointmentsHideHandle}
+                      getUpcomingAppointmentsList = {this.getUpcomingAppointmentsList}
+                    />
+
+                    <AddDigitalPrescription
+                      addDigitalPrescriptionShow = {this.state.addDigitalPrescriptionShow}
+                      handleClose = {this.addDigitalPrescriptionHideHandle}
+                      handleSaveDigitalPrescription = {this.handleSaveDigitalPrescription}
+                      inputList = {this.state.inputList}
+                      handleTextChange = {this.handleTextChangeDP}
+                      handleInputChange = {this.handleInputChangeDP}
+                      handleSelectChange = {this.handleSelectChangeDP}
+                      handleRemoveClick = {this.handleRemoveClick}
+                      handleAddClick = {this.handleAddClick}
+                      handleFileChange = {this.handleFileChange}
+                    />
+
+                    <ReferToDoctor
+                      addReferToDoctorShow = {this.state.addReferToDoctorShow}
+                      favoriteList = {this.props.favoriteList}
+                      handleClose = {this.addReferToDoctorHideHandle}
+                      handleSelectDoctor = {this.handleSelectDoctor}
+                      handleReferToDoctor = {this.handleReferToDoctor}
+                    /> */}
+                </div>
+                <ToastContainer />
+            </div>    
+          </React.Fragment>
+        
         );
     }
 }

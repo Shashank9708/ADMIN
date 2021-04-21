@@ -42,29 +42,36 @@ export class DoctorSideMenu extends React.Component {
     render() {
 
       return (
-        <section className="sidemenu-part">
-            <div className="container-fluid">
-            <div className="=row">      
-                <div className="sidebar">
-                <ul className="box">
-                    <li><Link className="button" to="/ddashboard">DashBoard</Link></li>
-                    <li><Link className="button" to="/upcoming-appointments">Appointments</Link></li>
-                    <li><Link className="button" to="/my-patients">My Patients</Link></li>
-                    <li><Link className="button" to="/doctor-referral">Referral Patients</Link></li>
-                    <li><Link className="button" to="/doctor-referred">Referred Patients</Link></li>
-                    <li><Link className="button" to="/doctor-favorite">Personal Doctor</Link></li>
-                    <li><Link className="button" to="/doctor-profile">Profile</Link></li>
-                    <li><Link className="button" to="/manage-calendar">Manage Calendar</Link></li>
-                    {/*<li><Link className="button" to="/#">Medical History</Link></li>*/}
-                    <li><Link className="button" to="/health-tips">Health Tips</Link></li>
-                    
-                </ul>
-                </div>       
-                
-            </div>
-            </div>
-        </section>
-        
+        <React.Fragment>
+            <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div className="sidebar-sticky pt-3">
+                    <ul className="nav flex-column">
+                        <li className="nav-item"><Link className="nav-link" to="/ddashboard"> <i className="fa fa-home" aria-hidden="true"></i> Dashboard</Link></li>
+                        <li className="nav-item dropdown">
+                            <Link className="nav-link dropdown-toggle" to="#" id="doctorAppointments" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i className="fa fa-address-book" aria-hidden="true"></i> Appointments
+                            </Link>
+                            <div className="dropdown-menu" aria-labelledby="doctorAppointments">
+                              <Link className="dropdown-item" to="/upcoming-appointments"> <i className="fa fa-address-book" aria-hidden="true"></i> Today's Appointments</Link>
+                              <div className="dropdown-divider"></div>
+                              <Link className="dropdown-item" to="/upcoming-appointments"> <i className="fa fa-address-book" aria-hidden="true"></i> All Appointments</Link>
+                            </div>
+                        </li>                         
+                        
+                        <li className="nav-item"><Link className="nav-link" to="/my-patients"><i className="fa fa-stethoscope" aria-hidden="true"></i> My Patients</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/doctor-referral"><i className="fa fa-share-alt" aria-hidden="true"></i> Referral Patients</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/doctor-referred"><i className="fa fa-handshake" aria-hidden="true"></i> Referred Patients</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/doctor-favorite"><i className="fa fa-user-md" aria-hidden="true"></i> Colleagues</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/doctor-profile"><i className="fa fa-user" aria-hidden="true"></i> Profile</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/ddashboard"><i className="fa fa-calendar" aria-hidden="true"></i> Manage Calendar</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/ddashboard"><i className="fa fa-medkit" aria-hidden="true"></i> Health Tips</Link></li>
+                        
+                       
+                        
+                    </ul>
+                </div>
+            </nav>    
+        </React.Fragment>
       );
     }
 }

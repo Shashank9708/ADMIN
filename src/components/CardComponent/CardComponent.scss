@@ -1,0 +1,66 @@
+@import "../../../src/assets/scss/Variable.scss";
+// @import "../../../src/assets/scss/Typography.scss";
+
+.card {
+  margin-bottom: 10px;
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    &.bg-ark {
+      background: $fill-ark;
+      color: $fill-white;
+      font-weight: bold;
+    }
+    &__name {
+    }
+    &__action-btn {
+      .dropdown-toggle {
+        cursor: pointer;
+      }
+    }
+  }
+  .card-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__profile-with-user-details {
+      display: flex;
+      align-items: center;
+
+      &__profile {
+        .card-profile-image {
+          width: 100px;
+          height: 100px;
+          margin-right: 1.25rem;
+        }
+      }
+    }
+
+    &__action {
+      i {
+        color: $fill-red;
+      }
+    }
+  }
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    &__status-text {
+    }
+    &__status-value {
+    }
+    &__booked {
+      color: $fill-orange;
+      font-weight: bold;
+    }
+    &__complete {
+      color: $fill-dark-green;
+      font-weight: bold;
+    }
+    &__cancel {
+      color: $fill-red;
+      font-weight: bold;
+    }
+  }
+}

@@ -616,244 +616,233 @@ class ViewProfile extends React.Component {
       const profile = this.state.profile
 
         return (
-            <div className="page-container">
+              <React.Fragment>
                 <HeaderContainer />
                 <div className="container-fluid">
                    <div className="row">
-                      <div className="col-md-2.5">
-                        <DoctorSideMenu/>
-                      </div>
-                      <div className="col-md-9">          
-                        <div className="main-content">
-                            <div className="wrap-inner-content">
-                                <div className="col-md-12">
-                                  <div className="inner-content">
-                                    <div className="row">
-                                          <div className="col-md-3">
-                                            <label>Profile Pic</label>
-                                            <div>
-                                              <img src={configConstants.API_BASE_PATH+"/"+profile.detail.display_pic} className="upload-img"/>
-                                            </div>
-                                              <input name="display_pic" type="file" className="form-control" onChange = { this.handleFileChange }/>
-                                          </div>
-                                          <div className="col-md-3">
-                                            <label>Logo</label>
-                                            <div>
-                                              <img src={configConstants.API_BASE_PATH+"/"+profile.detail.logo}  className="upload-img"/>
-                                            </div>
-                                              <input name="logo" type="file" className="form-control" onChange = { this.handleFileChange }/>
-                                          </div>
-                                          <div className="col-md-6">
-                                            <div className={ profile.validate.name.isValid ? 'form-group' : 'form-group has-error' }>
-                                              <input name="name" type="text" className="form-control" onChange = { this.handleInputChange } placeholder="Name" value={profile.detail.name}/>
-                                              <span className="help-block">{ profile.validate.name.message }</span>
-                                            </div>
-                                            <div className={ 'form-group' }>
-                                              <input name="email" type="email" className="form-control" onChange = { this.handleInputChange } placeholder="Name" value={profile.detail.email}/>
-                                            </div>
-                                            <div className={ 'form-group' }>
-                                              <label>DOB: {profile.detail.dob}</label>
-                                              <DatePicker
-                                                // selected={profile.detail.dob}
-                                                onChange={date => this.handleInputChange('dob',date)}
-                                                dateFormat="dd/MM/yyyy"
-                                                showMonthDropdown
-                                                peekNextMonth
-                                                showYearDropdown
-                                                dropdownMode="select"
-                                              />
-                                            </div>
-                                            <div className="form-group">
-                                                <div className="checkbox-section">
-                                                  <label><input type="checkbox" name="video" onChange={() =>this.handleCheckboxChange('video',profile.detail.video)} checked={(profile.detail.video === 1) ? true : false} className="option-input"/><span>Video</span></label>
-                                                </div>
-                                              </div>
-                                            <div className={ 'form-group' }>
-                                              <Select
-                                                  placeholder = "Select Gender"
-                                                  onChange={ (value, name) => this.handleSelectChange(value, 'gender') }
-                                                  options={[
-                                                      {label: 'Male', value: 'Male'},
-                                                      {label: 'Female', value: 'Female'}
-                                                    ]}
-                                                  name='council_id'
-                                                  value={profile.detail.gender}
-                                              />
-                                            </div>
-                                          </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                          <label>Specialization</label>
-                                          <div className={ profile.validate.spec_id.isValid ? 'form-group' : 'form-group has-error' }>
-                                            <Select
-                                                placeholder = "Select Specialization"
-                                                onChange={ (value, name) => this.handleSelectChange(value, 'spec_id') }
-                                                options={this.props.spList}
-                                                name='spec_id'
-                                                value={this.optionList(profile.detail.spec_id, this.props.spList)}
-                                            />
-                                            <span className="help-block">{ profile.validate.spec_id.message }</span>
-                                          </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                          <label>Experience</label>
-                                          <div className={ 'form-group' }>
-                                            <input name="expirience" type="text" className="form-control" onChange = { this.handleInputChange } placeholder="Experience" value={profile.detail.expirience}/>
-                                          </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        
-                                        <div className="col-md-12">
-                                          <label>About</label>
-                                          <div className="form-group">
-                                            <textarea name="about" className="form-control" onChange = { this.handleInputChange } placeholder="About">{profile.detail.about}</textarea>
-                                          </div>
-                                        </div>
-                                        <div className="col-md-12 text-right">
-                                          <button className="blue btn text-btn" onClick={this.addEducation}>Add Education</button>
-                                        </div>
-                                        <div className="col-md-12 table-wrap">
-                                          <table className="table table-bordered responsive">
-                                            <thead>
-                                              <tr>
-                                                <th>Qualification</th>
-                                                <th>Year</th>
-                                                <th></th>
-                                              </tr>
-                                            </thead>
-                                            <tbody>
-                                            {profile && profile.detail && profile.detail.educational_qualification.length > 0 && profile.detail.educational_qualification.map((row, i) => {
-                                              return <tr key={i}>
-                                                  <td>{row.degree}</td>
-                                                  <td>{row.year}</td>
-                                                  <td className="help-block" onClick={() => this.removeEducation(i)}>X</td>
-                                              </tr>
-                                            })}
-                                            </tbody>
-                                          </table>
-                                        </div>
-
-                                    </div>
-                                    
-                                    <div className="row">
-                                      <div className="col-md-6">
-                                        <label>Contact Number</label>
-                                        <div className={ profile.validate.contact_no.isValid ? 'form-group' : 'form-group has-error' }>
-                                          <input name="contact_no" type="number" className="form-control" onChange = { this.handleNumberChange } placeholder="Contact No." value={profile.detail.contact_no}/>
-                                          <span className="help-block">{ profile.validate.contact_no.message }</span>
-                                        </div>
-                                        {this.state.sendOTP &&
-                                          <div className="col-md-12 text-right">
-                                            <a href="javascript:void(0);" className="" onClick={() => this.send()}>SEND OTP</a>
-                                          </div>
-                                        }
-                                        {this.props.otp && 
-                                          <>
-                                            <input name="code" type="number" className="form-control" onChange = { this.handleChange } placeholder="Enter OTP" />
-                                            <div className="col-md-12 text-right">
-                                              <a href="javascript:void(0);" className="" onClick={() => this.submitOTP()}>Submit</a>
-                                            </div>
-                                          </>
-                                        }
-                                      </div>
-                                      <div className="col-md-6">
-                                        <label>Council</label>
-                                        <div className={ profile.validate.council_id.isValid ? 'form-group' : 'form-group has-error' }>
-                                          <Select
-                                              placeholder = "Select Council"
-                                              onChange={ (value, name) => this.handleSelectChange(value, 'council_id') }
-                                              options={this.props.councilList}
-                                              name='council_id'
-                                              value={this.optionList(profile.detail.council_id, this.props.councilList)}
-                                          />
-                                          <span className="help-block">{ profile.validate.council_id.message }</span>
-                                        </div>
-                                      </div>
-                                      <div className="col-md-6">
-                                        <label>Registration Number</label>
-                                        <div className={ profile.validate.registratration_number.isValid ? 'form-group' : 'form-group has-error' }>
-                                          <input name="registratration_number" type="text" className="form-control" onChange = { this.handleInputChange } placeholder="Registration Number" value={profile.detail.registratration_number}/>
-                                          <span className="help-block">{ profile.validate.registratration_number.message }</span>
-                                        </div>
-                                      </div>
-                                      <div className="col-md-6">
-                                        <label>Registration Year</label>
-                                        <div className={ profile.validate.registration_year.isValid ? 'form-group' : 'form-group has-error' }>
-                                          <input name="registration_year" type="text" className="form-control" onChange = { this.handleInputChange } placeholder="Registration Year" value={profile.detail.registration_year}/>
-                                          <span className="help-block">{ profile.validate.registration_year.message }</span>
-                                        </div>
-                                      </div>
-                                      <div className="col-md-6">
-                                        <label>Registration Proof {profile.detail.registration_proof && <a href={configConstants.API_BASE_PATH+"/"+profile.detail.registration_proof} target="_blank">View</a>}</label>
-                                          <div className={ 'form-group'}>
-                                            <input name="registration_proof" type="file" className="form-control" onChange = { this.handleFileChange }/>
-                                            
-                                          </div>
-                                      </div>
-                                      <div className="col-md-6">
-                                        <label>ID Proof {profile.detail.id_proof && <a href={configConstants.API_BASE_PATH+"/"+profile.detail.id_proof} target="_blank">View</a> }</label>
-                                          <div className={ 'form-group'}>
-                                            <input name="id_proof" type="file" className="form-control" onChange = { this.handleFileChange }/>
-                                            
-                                          </div>
-                                      </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-md-12 text-right">
-                                          <button className="blue btn text-btn" onClick={this.addClinic}>Add Clinic</button>
-                                        </div>
-                                        <div className="col-md-12 table-wrap">
-                                          <table className="table table-bordered responsive">
-                                            <thead>
-                                              <tr>
-                                                <th>Name</th>
-                                                <th>Number</th>
-                                                <th>Address</th>
-                                                <th>Slot Interval</th>
-                                                <th>State</th>
-                                                <th>City</th>
-                                                <th>Pincode</th>
-                                                <th>Fees</th>
-                                                <th></th>
-                                              </tr>
-                                            </thead>
-                                            <tbody>
-                                            {profile && profile.detail && profile.detail.clinics.length > 0 && profile.detail.clinics.map((row, i) => {
-                                              return <tr key={i}>
-                                                  <td>{row.clinic_name}</td>
-                                                  <td>{row.clinic_number}</td>
-                                                  <td>{row.clinic_address}</td>
-                                                  <td>{row.patient_attend_time}</td>
-                                                  <td>{row.clinic_state_id}</td>
-                                                  <td>{row.clinic_city_id}</td>
-                                                  <td>{row.clinic_pincode}</td>
-                                                  <td>{row.clinic_fees}</td>
-                                                  <td>
-                                                    <DropdownButton id={"dropdown-"+row.id} title="Action" menuAlign="right">
-                                                        <Dropdown.Item onClick={() => this.editClinic(row)}>Edit</Dropdown.Item>
-                                                        <Dropdown.Item onClick={() => this.removeClinic(row.id)}>Remove</Dropdown.Item>
-                                                    </DropdownButton>
-                                                  </td>
-                                              </tr>
-                                            })}
-                                            </tbody>
-                                          </table>
-                                        </div>
-                                    </div>
-
-                                        <div className="col-md-12">
-
-                                          <div className="form-group">
-                                            <button className="btn text-btn green" onClick={this.handleSave}>Update Information</button>
-                                          </div>
-                                        </div>
-                                  </div>
+                      <DoctorSideMenu/>
+                      <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">          
+                        <div className="row">
+                              <div className="col-md-3">
+                                <label>Profile Pic</label>
+                                <div>
+                                  <img src={configConstants.API_BASE_PATH+"/"+profile.detail.display_pic} className="upload-img"/>
                                 </div>
+                                  <input name="display_pic" type="file" className="form-control" onChange = { this.handleFileChange }/>
+                              </div>
+                              <div className="col-md-3">
+                                <label>Logo</label>
+                                <div>
+                                  <img src={configConstants.API_BASE_PATH+"/"+profile.detail.logo}  className="upload-img"/>
+                                </div>
+                                  <input name="logo" type="file" className="form-control" onChange = { this.handleFileChange }/>
+                              </div>
+                              <div className="col-md-6">
+                                <div className={ profile.validate.name.isValid ? 'form-group' : 'form-group has-error' }>
+                                  <input name="name" type="text" className="form-control" onChange = { this.handleInputChange } placeholder="Name" value={profile.detail.name}/>
+                                  <span className="help-block">{ profile.validate.name.message }</span>
+                                </div>
+                                <div className={ 'form-group' }>
+                                  <input name="email" type="email" className="form-control" onChange = { this.handleInputChange } placeholder="Name" value={profile.detail.email}/>
+                                </div>
+                                <div className={ 'form-group' }>
+                                  <label>DOB: {profile.detail.dob}</label>
+                                  <DatePicker
+                                    // selected={profile.detail.dob}
+                                    onChange={date => this.handleInputChange('dob',date)}
+                                    dateFormat="dd/MM/yyyy"
+                                    showMonthDropdown
+                                    peekNextMonth
+                                    showYearDropdown
+                                    dropdownMode="select"
+                                  />
+                                </div>
+                                <div className="form-group">
+                                    <div className="checkbox-section">
+                                      <label><input type="checkbox" name="video" onChange={() =>this.handleCheckboxChange('video',profile.detail.video)} checked={(profile.detail.video === 1) ? true : false} className="option-input"/><span>Video</span></label>
+                                    </div>
+                                  </div>
+                                <div className={ 'form-group' }>
+                                  <Select
+                                      placeholder = "Select Gender"
+                                      onChange={ (value, name) => this.handleSelectChange(value, 'gender') }
+                                      options={[
+                                          {label: 'Male', value: 'Male'},
+                                          {label: 'Female', value: 'Female'}
+                                        ]}
+                                      name='council_id'
+                                      value={profile.detail.gender}
+                                  />
+                                </div>
+                              </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-6">
+                              <label>Specialization</label>
+                              <div className={ profile.validate.spec_id.isValid ? 'form-group' : 'form-group has-error' }>
+                                <Select
+                                    placeholder = "Select Specialization"
+                                    onChange={ (value, name) => this.handleSelectChange(value, 'spec_id') }
+                                    options={this.props.spList}
+                                    name='spec_id'
+                                    value={this.optionList(profile.detail.spec_id, this.props.spList)}
+                                />
+                                <span className="help-block">{ profile.validate.spec_id.message }</span>
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <label>Experience</label>
+                              <div className={ 'form-group' }>
+                                <input name="expirience" type="text" className="form-control" onChange = { this.handleInputChange } placeholder="Experience" value={profile.detail.expirience}/>
+                              </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            
+                            <div className="col-md-12">
+                              <label>About</label>
+                              <div className="form-group">
+                                <textarea name="about" className="form-control" onChange = { this.handleInputChange } placeholder="About">{profile.detail.about}</textarea>
+                              </div>
+                            </div>
+                            <div className="col-md-12 text-right">
+                              <button className="blue btn text-btn" onClick={this.addEducation}>Add Education</button>
+                            </div>
+                            <div className="col-md-12 table-wrap">
+                              <table className="table table-bordered responsive">
+                                <thead>
+                                  <tr>
+                                    <th>Qualification</th>
+                                    <th>Year</th>
+                                    <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                {profile && profile.detail && profile.detail.educational_qualification.length > 0 && profile.detail.educational_qualification.map((row, i) => {
+                                  return <tr key={i}>
+                                      <td>{row.degree}</td>
+                                      <td>{row.year}</td>
+                                      <td className="help-block" onClick={() => this.removeEducation(i)}>X</td>
+                                  </tr>
+                                })}
+                                </tbody>
+                              </table>
+                            </div>
+
+                        </div>
+                        <div className="row">
+                          <div className="col-md-6">
+                            <label>Contact Number</label>
+                            <div className={ profile.validate.contact_no.isValid ? 'form-group' : 'form-group has-error' }>
+                              <input name="contact_no" type="number" className="form-control" onChange = { this.handleNumberChange } placeholder="Contact No." value={profile.detail.contact_no}/>
+                              <span className="help-block">{ profile.validate.contact_no.message }</span>
+                            </div>
+                            {this.state.sendOTP &&
+                              <div className="col-md-12 text-right">
+                                <a href="javascript:void(0);" className="" onClick={() => this.send()}>SEND OTP</a>
+                              </div>
+                            }
+                            {this.props.otp && 
+                              <>
+                                <input name="code" type="number" className="form-control" onChange = { this.handleChange } placeholder="Enter OTP" />
+                                <div className="col-md-12 text-right">
+                                  <a href="javascript:void(0);" className="" onClick={() => this.submitOTP()}>Submit</a>
+                                </div>
+                              </>
+                            }
+                          </div>
+                          <div className="col-md-6">
+                            <label>Council</label>
+                            <div className={ profile.validate.council_id.isValid ? 'form-group' : 'form-group has-error' }>
+                              <Select
+                                  placeholder = "Select Council"
+                                  onChange={ (value, name) => this.handleSelectChange(value, 'council_id') }
+                                  options={this.props.councilList}
+                                  name='council_id'
+                                  value={this.optionList(profile.detail.council_id, this.props.councilList)}
+                              />
+                              <span className="help-block">{ profile.validate.council_id.message }</span>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <label>Registration Number</label>
+                            <div className={ profile.validate.registratration_number.isValid ? 'form-group' : 'form-group has-error' }>
+                              <input name="registratration_number" type="text" className="form-control" onChange = { this.handleInputChange } placeholder="Registration Number" value={profile.detail.registratration_number}/>
+                              <span className="help-block">{ profile.validate.registratration_number.message }</span>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <label>Registration Year</label>
+                            <div className={ profile.validate.registration_year.isValid ? 'form-group' : 'form-group has-error' }>
+                              <input name="registration_year" type="text" className="form-control" onChange = { this.handleInputChange } placeholder="Registration Year" value={profile.detail.registration_year}/>
+                              <span className="help-block">{ profile.validate.registration_year.message }</span>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <label>Registration Proof {profile.detail.registration_proof && <a href={configConstants.API_BASE_PATH+"/"+profile.detail.registration_proof} target="_blank">View</a>}</label>
+                              <div className={ 'form-group'}>
+                                <input name="registration_proof" type="file" className="form-control" onChange = { this.handleFileChange }/>
+                                
+                              </div>
+                          </div>
+                          <div className="col-md-6">
+                            <label>ID Proof {profile.detail.id_proof && <a href={configConstants.API_BASE_PATH+"/"+profile.detail.id_proof} target="_blank">View</a> }</label>
+                              <div className={ 'form-group'}>
+                                <input name="id_proof" type="file" className="form-control" onChange = { this.handleFileChange }/>
+                                
+                              </div>
                           </div>
                         </div>
-                      </div>
+                        <div className="row">
+                            <div className="col-md-12 text-right">
+                              <button className="blue btn text-btn" onClick={this.addClinic}>Add Clinic</button>
+                            </div>
+                            <div className="col-md-12 table-wrap">
+                              <table className="table table-bordered responsive">
+                                <thead>
+                                  <tr>
+                                    <th>Name</th>
+                                    <th>Number</th>
+                                    <th>Address</th>
+                                    <th>Slot Interval</th>
+                                    <th>State</th>
+                                    <th>City</th>
+                                    <th>Pincode</th>
+                                    <th>Fees</th>
+                                    <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                {profile && profile.detail && profile.detail.clinics.length > 0 && profile.detail.clinics.map((row, i) => {
+                                  return <tr key={i}>
+                                      <td>{row.clinic_name}</td>
+                                      <td>{row.clinic_number}</td>
+                                      <td>{row.clinic_address}</td>
+                                      <td>{row.patient_attend_time}</td>
+                                      <td>{row.clinic_state_id}</td>
+                                      <td>{row.clinic_city_id}</td>
+                                      <td>{row.clinic_pincode}</td>
+                                      <td>{row.clinic_fees}</td>
+                                      <td>
+                                        <DropdownButton id={"dropdown-"+row.id} title="Action" menuAlign="right">
+                                            <Dropdown.Item onClick={() => this.editClinic(row)}>Edit</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => this.removeClinic(row.id)}>Remove</Dropdown.Item>
+                                        </DropdownButton>
+                                      </td>
+                                  </tr>
+                                })}
+                                </tbody>
+                              </table>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-12">
+                              <div className="form-group">
+                                <button className="btn text-btn green" onClick={this.handleSave}>Update Information</button>
+                              </div>
+                            </div>
+                        </div>
+                      </main>
                     </div>
                 </div>
                 <AddEducation
@@ -873,7 +862,7 @@ class ViewProfile extends React.Component {
                   cityList={this.props.cityList}
                 />
                 <ToastContainer />
-            </div>
+              </React.Fragment>
 
         );
     }

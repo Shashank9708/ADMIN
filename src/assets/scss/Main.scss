@@ -1,0 +1,195 @@
+@import "./Variable.scss";
+@import "./Typography.scss";
+body {
+  font-family: inter;
+}
+
+a {
+  color: $fill-ark;
+}
+/*
+ * Sidebar
+ */
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 48px 0 0; /* Height of navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    top: 5rem;
+  }
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+@supports ((position: -webkit-sticky) or (position: sticky)) {
+  .sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+}
+
+.sidebar {
+  .nav-link {
+    display: flex;
+    align-items: center;
+    @extend .CTAGrey;
+
+    &.active {
+      color: $fill-ark;
+    }
+    &:hover {
+      color: $fill-ark;
+    }
+    .feather {
+      margin-right: 4px;
+      color: $fill-dark-grey;
+    }
+    i {
+      font-size: 20px;
+      width: 25px;
+      margin-right: 10px;
+    }
+  }
+}
+
+/*
+ * Navbar
+ */
+.navbar {
+  &.navbar-dark {
+    background-color: rgba($fill-ark, 1) !important;
+    .navbar-nav {
+      .nav-link {
+        color: rgba($fill-white, 1);
+        .header-profile-image {
+          width: 25px;
+          height: 25px;
+          border-radius: 100%;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}
+.navbar-brand {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 1rem;
+  background-color: rgba($fill-ark, 1);
+  box-shadow: inset -1px 0 0 rgba($fill-ark, 0.25);
+}
+
+.navbar .navbar-toggler {
+  top: 0.25rem;
+  right: 1rem;
+}
+
+.navbar .form-control {
+  padding: 0.75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+/*
+ * Page Heading
+ */
+
+.page-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  &__title-container {
+  }
+  &__title {
+    font-family: "Montserrat", sans-serif;
+    font-size: 21px;
+    font-weight: 600;
+    margin-bottom: 0px;
+  }
+}
+
+/*
+ * Page Heading
+ */
+
+.page-filter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  &__others {
+    padding: 5px;
+  }
+  &__from-date {
+    padding: 5px;
+    input[type="text"] {
+      margin-bottom: 0px;
+    }
+  }
+  &__to-date {
+    padding: 5px;
+    input[type="text"] {
+      margin-bottom: 0px;
+    }
+  }
+  &__searchbox {
+    input[type="text"] {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+/*
+ * Page Heading
+ */
+
+/*
+ * Patient Details Page
+ */
+
+.patient-details {
+  .card {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    .card-body {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: space-between;
+      &__profile-details-combo {
+        display: flex;
+
+        &__profile-section {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 15px;
+
+          .profile-image {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+}
