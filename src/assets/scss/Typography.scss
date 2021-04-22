@@ -1,0 +1,443 @@
+@import "./Variable.scss";
+
+@font-face {
+  font-family: Inter;
+  src: local(Inter-Regular),
+    url(../fonts/inter/Inter-Regular.woff2) format("woff2"),
+    url(../fonts/inter/Inter-Regular.woff) format("woff"),
+    url(../fonts/inter/Inter-Regular.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: Inter;
+  src: local(Inter-Medium),
+    url(../fonts/inter/Inter-Medium.woff2) format("woff2"),
+    url(../fonts/inter/Inter-Medium.woff) format("woff"),
+    url(../fonts/inter/Inter-Medium.ttf) format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: Inter;
+  src: local(Inter-Bold), url(../fonts/inter/Inter-Bold.woff2) format("woff2"),
+    url(../fonts/inter/Inter-Bold.woff) format("woff"),
+    url(../fonts/inter/Inter-Bold.ttf) format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+}
+
+.H1DesktopWhite {
+  font-family: "Montserrat", sans-serif;
+  font-size: 54px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.11;
+  letter-spacing: normal;
+  color: $fill-light-grey;
+}
+.H1DesktopGreen {
+  font-family: "Montserrat", sans-serif;
+  font-size: 54px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.11;
+  letter-spacing: normal;
+  color: $fill-green;
+}
+.H1DesktopBlack {
+  font-family: "Montserrat", sans-serif;
+  font-size: 54px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.11;
+  letter-spacing: normal;
+  color: $fill-black;
+}
+.H2DesktopGreen {
+  font-family: "Montserrat", sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.11;
+  letter-spacing: normal;
+  color: $fill-green;
+}
+.H2DesktopARK {
+  font-family: "Montserrat", sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.11;
+  letter-spacing: normal;
+  color: $fill-ark;
+}
+.H3WhiteDesktop {
+  font-family: "Montserrat", sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.07;
+  letter-spacing: normal;
+  color: $fill-white;
+}
+.H3BlackDesktop {
+  font-family: "Montserrat", sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.07;
+  letter-spacing: normal;
+  color: $fill-black;
+}
+.H5DesktopGreen {
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: $fill-green;
+}
+.H5DesktopGrey {
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: $fill-grey;
+}
+.H5DesktopBlack {
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: $fill-black;
+}
+.H4DesktopWhite {
+  font-family: "Montserrat", sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.52;
+  letter-spacing: normal;
+  text-align: center;
+  color: $fill-white;
+}
+.H4DesktopBlack-2 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.52;
+  letter-spacing: normal;
+  color: $fill-black;
+}
+.H4DesktopBlack {
+  font-family: "Montserrat", sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.52;
+  letter-spacing: normal;
+  color: $fill-black;
+}
+.H6DesktopWhite {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: $fill-white;
+}
+.H6DesktopGrey {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: $fill-grey;
+}
+.H6DesktopGreen {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: $fill-green;
+}
+.H6DesktopBlack {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: $fill-black;
+}
+.BodyLargeWhite {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: $fill-white;
+}
+.BodyDefaultBoldWhite {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: $fill-white;
+}
+.BodyDefaultBoldGrey {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: $fill-grey;
+}
+.BodyDefaultBoldBlack {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: $fill-black;
+}
+.BodyDefaultRegularGrey {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: $fill-grey;
+}
+.BodyDefaultRegularBlack {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: $fill-black;
+}
+.BodySmallMediumWhite {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.71;
+  letter-spacing: normal;
+  color: $fill-white;
+}
+.BodySmallMediumGrey {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.71;
+  letter-spacing: normal;
+  color: $fill-grey;
+}
+.BodySmallMediumBlack {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.71;
+  letter-spacing: normal;
+  color: $fill-black;
+}
+.CTAWhite {
+  font-family: "Zilla Slab", serif;
+  font-size: 14px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: italic;
+  line-height: 1.14;
+  letter-spacing: 0.5px;
+  color: $fill-white;
+}
+.CTAGrey {
+  font-family: "Zilla Slab", serif;
+  font-size: 14px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: italic;
+  line-height: 1.14;
+  letter-spacing: 0.5px;
+  color: $fill-dark-grey;
+}
+.CTAGreen {
+  font-family: "Zilla Slab", serif;
+  font-size: 14px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: italic;
+  line-height: 1.14;
+  letter-spacing: 0.5px;
+  color: $fill-green;
+}
+.CTABlue {
+  font-family: "Zilla Slab", serif;
+  font-size: 14px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: italic;
+  line-height: 1.14;
+  letter-spacing: 0.5px;
+  color: $fill-blue;
+}
+.CTABlack {
+  font-family: "Zilla Slab", serif;
+  font-size: 14px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: italic;
+  line-height: 1.14;
+  letter-spacing: 0.5px;
+  color: $fill-black;
+}
+.BodySmallRegularWhite {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.71;
+  letter-spacing: normal;
+  color: $fill-white;
+}
+.BodySmallRegularGrey {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.71;
+  letter-spacing: normal;
+  color: $fill-dark-grey;
+}
+.BodySmallRegularGreen {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.71;
+  letter-spacing: normal;
+  color: $fill-green;
+}
+.BodySmallRegularBlack {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.71;
+  letter-spacing: normal;
+  color: $fill-black;
+}
+.LabelWhite {
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: $fill-white;
+}
+.LabelGrey {
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: $fill-dark-grey;
+}
+.EyebrowWhite {
+  font-family: Inter;
+  font-size: 10px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: 0.75px;
+  color: $fill-white;
+}
+.EyebrowGrey {
+  font-family: Inter;
+  font-size: 10px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: 0.75px;
+  color: $fill-dark-grey;
+}
+.EyebrowGreen {
+  font-family: Inter;
+  font-size: 10px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: 0.75px;
+  color: $fill-green;
+}
+.EyebrowBlack {
+  font-family: Inter;
+  font-size: 10px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: 0.75px;
+  color: $fill-black;
+}

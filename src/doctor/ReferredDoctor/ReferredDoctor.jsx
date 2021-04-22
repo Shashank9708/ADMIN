@@ -69,118 +69,97 @@ class ReferredDoctor extends React.Component {
     render() {
         // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
-            <div className="page-container">
+            <React.Fragment>
                 <HeaderContainer />
                 <div className="container-fluid">
                    <div className="row">
-                      <div className="col-md-2.5">
                         <DoctorSideMenu/>
-                      </div>
-                      <div className="col-md-9">
-                        <div className="main-content">
-                          <div className="wrap-inner-content">
-                            <div className="col-md-12">
-                              <div className="inner-content">
-                                      <div className="row page-header">
-                                          <div className="col-md-6">
-                                              <h1 className="page-title">Referred</h1>
-                                          </div>
-                                 
-                                      </div>
-                                      <div className="table-wrap">
-                                      {/*<div className="table-search">
-                                              <input
-                                                  value={this.state.filterAll}
-                                                  onChange={this.notificationSearch}
-                                                  className="table-search-input"
-                                                  placeholder="Search"
-                                              />
-                                      </div>*/}
-                                      <ReactTable
-                                          noDataText="No found !!"
-                                          data={this.props.doctorReferred}
-                                          filterable
-                                          defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
-                                          filtered={this.state.filtered}
-                                          columns={[
-                                              {
-                                                  Header: 'Referred Doctor Name',
-                                                  accessor  : "refer_doc_name",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header: 'Spec',
-                                                  accessor  : "en_spec",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header: 'Patient Name',
-                                                  accessor  : "patient_name",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header    : "Health Problem",
-                                                  accessor  : "health_problem_title",
-                                                  className : "grid-header",
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header    : "Status",
-                                                  accessor  : "status",
-                                                  className : "grid-header",
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              }
-                                              
-                                          ]}
-                                          defaultSorted={[
-                                              {
-                                                  id: "id",
-                                                  desc: false
-                                              }
-                                          ]}
-                                          defaultPageSize={10}
-                                          minRows= {this.props.doctorReferred}
-                                          className="table table-bordered responsive"
-                                          loading={this.state.loading}
-                                          filterable
-                                          Sorted
-                                          // pages={this.props.pages}
-                                          showPagination={true}
-                                          showPaginationTop={true}
-                                          showPaginationBottom={false}
-                                          pageSizeOptions={[10, 20, 50]}
-                                          automatic // For server side pagination
-                                          onFetchData={(state, instance) => {
-                                              this.getReferredList(state.page, state.pageSize, state.sorted, state.filtered);
-                                          }}
-                                      />
-                                  </div>
-                              </div>
+                        <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                            <div className="row">
+                                <h1 className="page-title">Referred</h1>
                             </div>
-                          </div>
-                        </div>
-                      </div>
+                            <div className="row">
+                              <ReactTable
+                                  noDataText="No found !!"
+                                  data={this.props.doctorReferred}
+                                  filterable
+                                  defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
+                                  filtered={this.state.filtered}
+                                  columns={[
+                                      {
+                                          Header: 'Referred Doctor Name',
+                                          accessor  : "refer_doc_name",
+                                          className : 'grid-header',
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header: 'Spec',
+                                          accessor  : "en_spec",
+                                          className : 'grid-header',
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header: 'Patient Name',
+                                          accessor  : "patient_name",
+                                          className : 'grid-header',
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header    : "Health Problem",
+                                          accessor  : "health_problem_title",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header    : "Status",
+                                          accessor  : "status",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      }
+                                      
+                                  ]}
+                                  defaultSorted={[
+                                      {
+                                          id: "id",
+                                          desc: false
+                                      }
+                                  ]}
+                                  defaultPageSize={10}
+                                  minRows= {this.props.doctorReferred}
+                                  className="table table-bordered responsive"
+                                  loading={this.state.loading}
+                                  filterable
+                                  Sorted
+                                  // pages={this.props.pages}
+                                  showPagination={true}
+                                  showPaginationTop={true}
+                                  showPaginationBottom={false}
+                                  pageSizeOptions={[10, 20, 50]}
+                                  automatic // For server side pagination
+                                  onFetchData={(state, instance) => {
+                                      this.getReferredList(state.page, state.pageSize, state.sorted, state.filtered);
+                                  }}
+                              />
+                            </div>
+                        </main>
                     </div>
                 </div>    
-            </div>
+            </React.Fragment>
         );
     }
 }

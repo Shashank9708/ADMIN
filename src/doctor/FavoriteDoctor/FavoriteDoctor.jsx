@@ -146,113 +146,84 @@ class FavoriteDoctor extends React.Component {
     render() {
         // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
-            <div className="page-container">
+            <React.Fragment>
                 <HeaderContainer />
                 <div className="container-fluid">
                    <div className="row">
-                      <div className="col-md-2.5">
                         <DoctorSideMenu/>
-                      </div>
-                      <div className="col-md-9">
-                        <div className="main-content">
-                          <div className="wrap-inner-content">
-                            <div className="col-md-12">
-                              <div className="inner-content">
-                                      <div className="row page-header">
-                                          <div className="col-md-6">
-                                              <h1 className="page-title">Favorite Doctor</h1>
-                                          </div>
-                                          <div className="col-md-6 text-right">
-                                             <button className="blue btn text-btn" onClick={this.addFavoriteDoctorShowHandle}>Add New</button>
-                                          </div>
-                                      </div>
-                                      <div className="table-wrap">
-                                      
-                                      {/*<div className="table-search">
-                                              <input
-                                                  value={this.state.filterAll}
-                                                  onChange={this.notificationSearch}
-                                                  className="table-search-input"
-                                                  placeholder="Search"
-                                              />
-
-                                      </div>*/}
-                                      {/*
-                                                  Header: 'Image',
-                                                  accessor  : "image",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  Cell: row =>
-                                                    <div><img src={'data:image/png;base64,'+row.value} width="50px" height="50px"/></div>
-                                                    
-                                              */}
-                                      <ReactTable
-                                          noDataText="No found !!"
-                                          data={this.props.favoriteList}
-                                          filterable
-                                          defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
-                                          filtered={this.state.filtered}
-                                          columns={[
-                                              
-                                              {
-                                                  Header: 'Doctor Name',
-                                                  accessor  : "name",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header: 'Specialization',
-                                                  accessor  : "en_spec",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header: 'Actions',
-                                                  accessor  : "favorite_id",
-                                                  filterable  : false,
-                                                  
-                                                  className : 'grid-header',
-                                                  Cell: row => 
-                                                        <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
-                                                            <Dropdown.Item onClick={() => this.removeFavorite(row.original)}>Remove</Dropdown.Item>
-                                                        </DropdownButton>
-                                              }
-                                              
-                                          ]}
-                                          defaultSorted={[
-                                              {
-                                                  id: "favorite_id",
-                                                  desc: false
-                                              }
-                                          ]}
-                                          defaultPageSize={10}
-                                          minRows= {this.props.favoriteList}
-                                          className="table table-bordered responsive"
-                                          loading={this.state.loading}
-                                          filterable
-                                          Sorted
-                                          // pages={this.props.pages}
-                                          showPagination={true}
-                                          showPaginationTop={true}
-                                          showPaginationBottom={false}
-                                          pageSizeOptions={[10, 20, 50]}
-                                          automatic // For server side pagination
-                                          onFetchData={(state, instance) => {
-                                              this.getFavoriteDoctorList(state.page, state.pageSize, state.sorted, state.filtered);
-                                          }}
-                                      />
-                                  </div>
-                              </div>
+                        <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <h1 className="page-title">Favorite Doctor</h1>
+                                </div>
+                                <div className="col-md-6 text-right">
+                                    <button className="blue btn text-btn" onClick={this.addFavoriteDoctorShowHandle}>Add New</button>
+                                </div>
                             </div>
-                          </div>
-                        </div>
-                      </div>
+                            <div className="row">
+                                <ReactTable
+                                  noDataText="No found !!"
+                                  data={this.props.favoriteList}
+                                  filterable
+                                  defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
+                                  filtered={this.state.filtered}
+                                  columns={[
+                                      
+                                      {
+                                          Header: 'Doctor Name',
+                                          accessor  : "name",
+                                          className : 'grid-header',
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header: 'Specialization',
+                                          accessor  : "en_spec",
+                                          className : 'grid-header',
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header: 'Actions',
+                                          accessor  : "favorite_id",
+                                          filterable  : false,
+                                          
+                                          className : 'grid-header',
+                                          Cell: row => 
+                                                <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
+                                                    <Dropdown.Item onClick={() => this.removeFavorite(row.original)}>Remove</Dropdown.Item>
+                                                </DropdownButton>
+                                      }
+                                      
+                                  ]}
+                                  defaultSorted={[
+                                      {
+                                          id: "favorite_id",
+                                          desc: false
+                                      }
+                                  ]}
+                                  defaultPageSize={10}
+                                  minRows= {this.props.favoriteList}
+                                  className="table table-bordered responsive"
+                                  loading={this.state.loading}
+                                  filterable
+                                  Sorted
+                                  // pages={this.props.pages}
+                                  showPagination={true}
+                                  showPaginationTop={true}
+                                  showPaginationBottom={false}
+                                  pageSizeOptions={[10, 20, 50]}
+                                  automatic // For server side pagination
+                                  onFetchData={(state, instance) => {
+                                      this.getFavoriteDoctorList(state.page, state.pageSize, state.sorted, state.filtered);
+                                  }}
+                                />
+                            </div>
+                        </main>
                       <AddFavoriteDoctorContainer
                         addFavoriteDoctorShow = {this.state.addFavoriteDoctorShow}
                         getDoctor={this.getDoctor}
@@ -262,7 +233,7 @@ class FavoriteDoctor extends React.Component {
                       />
                     </div>
                 </div>    
-            </div>
+            </React.Fragment>
         );
     }
 }

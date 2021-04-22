@@ -18,8 +18,10 @@ import { createBrowserHistory } from "history";
 import axios from "axios";
 // import 'react-select/dist/react-select.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import "../assets/css/style.css";
-
+import '../assets/scss/Variable.scss';
+import '../assets/scss/Typography.scss';
+import '../assets/scss/Main.scss';
+import '../assets/scss/BootstrapExtended.scss';
 
 
 const browserHistory = createBrowserHistory();

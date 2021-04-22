@@ -163,130 +163,19 @@ class DoctorDashboard extends React.Component {
     }
     
     return (
-        <div className="page-container main-panel">
-            
-            <HeaderContainer />
-            <div className="container-fluid content-wrapper">
+        <React.Fragment>
+          <HeaderContainer />
+          <div className="container-fluid">
+            <div className="row">
+              <DoctorSideMenu />
+              <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div className="row">
-                    <div className="col-md-2.5">
-                      <DoctorSideMenu />
-                    </div>
-                    
-                    <div className="col-md-9">
-                      <section className="adminpanel">
-                        <div class="group row">
-                          <div class="col-md-4 stretch-card grid-margin">
-                            <div class="card bg-gradient-danger card-img-holder text-white">
-                              <div class="card-body">
-                                <img src="src/assets/images/circle.svg" class="card-img-absolute" alt="circle-image" />
-                                <h4 class="font-weight-normal mb-3">Upcoming appointments <i class="mdi mdi-chart-line mdi-24px float-right"></i>
-                                </h4>
-                                <h2 class="mb-5">{dashboardList.userCount || '-'}</h2>
-                                
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 stretch-card grid-margin">
-                            <div class="card bg-gradient-info card-img-holder text-white">
-                              <div class="card-body">
-                                <img src="src/assets/images/circle.svg" class="card-img-absolute" alt="circle-image" />
-                                <h4 class="font-weight-normal mb-3">Referrals <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
-                                </h4>
-                                <h2 class="mb-5">{dashboardList.doctorCount || '-'}</h2>
-                                
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="row">
-                          {/*<div className="col-md-12">
-                            <label className="dashboard-text">ALL USERS</label>
-                            <Doughnut 
-                              data={data}
-                                options={{
-                                  responsive: true,
-                                  maintainAspectRatio: true,
-                                  legend: {
-                                    position: "right",
-                                    fullWidth: true,
-                                    labels: {
-                                        fontColor: '#b66dff'
-                                    }
-                                  }
-                                }}
-                            />
-                          </div>
-                          <div className="col-md-6">
-                            <label className="dashboard-text">PATIENTS</label>
-                            <Doughnut 
-                              data={dataP}
-                                options={{
-                                  responsive: true,
-                                  maintainAspectRatio: true,
-                                  legend: {
-                                    position: "right",
-                                    labels: {
-                                        fontColor: '#b66dff'
-                                    }
-                                  }
-                                }}
-                            />
-                          </div>
-                          <div className="col-md-6">
-                            <label className="dashboard-text">DOCTORS</label>
-                            <Doughnut 
-                              data={dataD}
-                                options={{
-                                  responsive: true,
-                                  maintainAspectRatio: true,
-                                  legend: {
-                                    position: "right",
-                                    labels: {
-                                        fontColor: '#b66dff'
-                                    }
-                                  }
-                                }}
-                            />
-                          </div>  
-                          <div className="col-md-6">
-                            <label className="dashboard-text">MEDICAL</label>
-                            <Doughnut 
-                              data={dataM}
-                                options={{
-                                  responsive: true,
-                                  maintainAspectRatio: true,
-                                  legend: {
-                                    position: "right",
-                                    labels: {
-                                        fontColor: '#b66dff'
-                                    }
-                                  }
-                                }}
-                            />
-                          </div>  
-                          <div className="col-md-6">
-                            <label className="dashboard-text">PATHOLOGY</label>
-                            <Doughnut 
-                              data={dataL}
-                                options={{
-                                  responsive: true,
-                                  maintainAspectRatio: true,
-                                  legend: {
-                                    position: "right",
-                                    labels: {
-                                        fontColor: '#b66dff'
-                                    }
-                                  }
-                                }}
-                            />
-                          </div>*/}  
-                        </div>
-                      </section> 
-                    </div>
+                  <h1 className="page-title">Dashboard</h1>
                 </div>
+              </main>
             </div>
-        </div>
+          </div>
+        </React.Fragment>
       );
     }
   }

@@ -147,7 +147,7 @@ class LoginContainer extends React.Component {
     */
     render() {
         return (
-            <div className="">
+            <React.Fragment>
                 <Login
                     submitted         = {this.props.submitted}
                     error_message       = {this.props.error_message}
@@ -156,7 +156,7 @@ class LoginContainer extends React.Component {
                     handle_enter_press_submit = {this.handle_enter_press_submit}
                     payload           = {this.state.login}
                 />
-            </div>
+            </React.Fragment>
         );
     }
 }

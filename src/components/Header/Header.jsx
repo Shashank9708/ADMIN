@@ -1,37 +1,20 @@
 import React from 'react'; 
 import { Link } from "react-router-dom"; 
 
-
- export const Header = (props) => 
- { return (
-    <section>
-        <div className="header-container">
-            <div className="row">
-                <div className="col-md-4">
-                    <div>
-                        <p className="circle"></p>
-                        <img className="logoimg" src="src/assets/img/logo.svg" alt="logo" />
-                        <h3 className="texts">Ark Admin Panel</h3>
-                    </div>
-                </div>
-                <div className="col-md-7">
-                    <div className="navbar-collapse collapses">
-                        <ul className="dropdown">
-                            <li className="drop texts">Welcome {props.logged_in_user_name}</li>
-                            <li className="dropdown-content">
-                                <Link to="" onClick={props.handle_logout}  className="test">
-                                Logout
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div className="col-md-1">
-
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    ); }
+ export const Header = (props) => { 
+    return (
+            <nav className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+                <a className="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Ark Panel</a>
+                  <button className="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                  </button>
+                {/* <input className="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" /> */}
+                <ul className="navbar-nav px-3">
+                    <li className="nav-item text-nowrap">
+                        <a className="nav-link" href="#" onClick={props.handle_logout} ><img className="header-profile-image" src="https://www.michiganlutheran.org/wp-content/uploads/2019/09/placeholder-profile-sq.jpg" /> Welcome {props.logged_in_user_name}</a>
+                    </li>
+                </ul>
+            </nav>
+          ); 
+}
     
