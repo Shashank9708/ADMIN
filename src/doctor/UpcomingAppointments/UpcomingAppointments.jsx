@@ -378,7 +378,6 @@ class UpcomingAppointments extends React.Component {
                         </div>
                       </div>
                     </div>
-                    
    
                     <div className="page-filter">
                       <div className="page-filter__from-date">
@@ -434,6 +433,46 @@ class UpcomingAppointments extends React.Component {
                       </div>                      
                     </div>                    
                     
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="patient-details">
+                        <div className="card">
+                          <div className="card-body">
+                            <div className="card-body__profile-details-combo">                            
+                              <div className="card-body__profile-details-combo__profile-section">
+                                <div>
+                                  <img className="profile-image" src="https://www.michiganlutheran.org/wp-content/uploads/2019/09/placeholder-profile-sq.jpg" />
+                                </div>
+                                <div>
+                                  <button className="btn btn-sm" type="button">Refer To Doctor</button>
+                                </div>
+                              </div>
+                              <div className="card-body__profile-details-combo__details-section">
+                                <div>Name: Chetan Wagh</div>
+                                <div>Age: 26</div>
+                                <div>Health Problem: Thyroid</div>
+                                <div>Appointment Date: 2021-04-13</div>
+                                <div>Appointment Time: 11:30:00</div>
+                                <div>Payment Mode: cash</div>
+                                <div>Clinic Name: Agastya Clinic</div>
+                              </div>
+                            </div>
+                            <div className="">
+                              <div className="card-body__action-btn">
+                                  <button className="btn btn-sm btn-block" type="button">Get Detail History</button>
+                                  <button className="btn btn-sm btn-block" type="button">Upload Manual Prescription</button>
+                                  <button className="btn btn-sm btn-block" type="button">Upload Digital Prescription</button>
+                                  <button className="btn btn-sm btn-block" type="button">Mark As Complete</button>
+                              </div>                          
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      </div>
+                      <div className="col-md-4">
+
+                      </div>
+                    </div>                    
 
                         
                     
@@ -504,7 +543,7 @@ class UpcomingAppointments extends React.Component {
                                 {
                                     Header: 'Status',
                                     accessor  : "status",
-                                    className : 'grid-header',
+                                    className : 'grid-header list-view-booking-status__container',
                                     filterable  : false,
                                     filterMethod: (filter, row) => {
                                         return row[filter.id].includes(filter.value);

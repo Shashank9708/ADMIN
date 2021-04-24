@@ -74,6 +74,27 @@ button,
       .rt-th {
         padding-top: 10px;
         padding-bottom: 10px;
+        &.-sort-asc {
+          box-shadow: inset 0 3px 0 0 rgba($fill-black, 0.6);
+        }
+      }
+    }
+    .rt-tbody {
+      .rt-tr-group {
+        .list-view-booking-status__container {
+          text-transform: capitalize;
+        }
+        .list-view-status__container {
+          text-transform: capitalize;
+        }
+
+        .list-view-action-btn__container {
+          text-align: center;
+          .fa-times-circle {
+            color: $fill-red;
+            cursor: pointer;
+          }
+        }
       }
     }
   }
