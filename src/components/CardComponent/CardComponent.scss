@@ -12,6 +12,9 @@
       font-weight: bold;
     }
     &__name {
+      a {
+        color: $fill-white;
+      }
     }
     &__action-btn {
       .dropdown-toggle {
@@ -40,6 +43,7 @@
     &__action {
       i {
         color: $fill-red;
+        cursor: pointer;
       }
     }
   }

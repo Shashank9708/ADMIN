@@ -361,8 +361,7 @@ class UpcomingAppointments extends React.Component {
                <div className="row">
                   <DoctorSideMenu/>
                   <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-
-                    
+                  
                     <div className="page-heading">
                       <div className="page-heading__title-container">
                           <h1 className="page-heading__title">Today's Appointments</h1>
@@ -437,7 +436,7 @@ class UpcomingAppointments extends React.Component {
                     
 
                         
-{/*                     
+                    
                     <div className="row">
                       <ReactTable
                           noDataText="No found !!"
@@ -549,11 +548,11 @@ class UpcomingAppointments extends React.Component {
                           }}
                       />
                     </div>  
-                    */}
+                   
                   
                   </main>
                   
-                    {/* <AddUpcomingAppointmentsContainer
+                    <AddUpcomingAppointmentsContainer
                       addUpcomingAppointmentsShow = {this.state.addUpcomingAppointmentsShow}
                       clinicList = {this.props.clinicList}
                       healthProblem = {this.props.healthProblem}
@@ -580,7 +579,7 @@ class UpcomingAppointments extends React.Component {
                       handleClose = {this.addReferToDoctorHideHandle}
                       handleSelectDoctor = {this.handleSelectDoctor}
                       handleReferToDoctor = {this.handleReferToDoctor}
-                    /> */}
+                    />
                 </div>
                 <ToastContainer />
             </div>    
