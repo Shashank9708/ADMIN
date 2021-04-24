@@ -37,3 +37,44 @@ button,
   border-radius: 4px;
   padding: 0.5rem 1rem;
 }
+
+/*
+ *  React Table
+ */
+
+.ReactTable {
+  .pagination-top {
+    .-pagination {
+      box-shadow: none;
+      border-top: 0px;
+      .-previous {
+      }
+      .-center {
+        .-pageSizeOptions {
+          select {
+            margin-bottom: 0px;
+            height: 35px !important;
+          }
+        }
+      }
+      .-next {
+      }
+    }
+  }
+  .rt-table {
+    .rt-thead {
+      &.-header {
+        box-shadow: none;
+        background: $fill-ark;
+        color: $fill-white;
+        margin-top: 15px;
+      }
+      &.-filters {
+      }
+      .rt-th {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    }
+  }
+}

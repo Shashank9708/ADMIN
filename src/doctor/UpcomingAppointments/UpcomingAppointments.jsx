@@ -438,115 +438,115 @@ class UpcomingAppointments extends React.Component {
                         
                     
                     <div className="row">
-                      <ReactTable
-                          noDataText="No found !!"
-                          data={this.props.doctorAppoinementList}
-                          filterable
-                          defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
-                          filtered={this.state.filtered}
-                          columns={[
-                              
-                              {
-                                  Header: 'Patient Name',
-                                  accessor  : "name",
-                                  className : 'grid-header',
-                                  filterable  : false,
-                                  filterMethod: (filter, row) => {
-                                      return row[filter.id].includes(filter.value);
-                                  }
-                              },
-                              {
-                                  Header: 'Health Problem',
-                                  accessor  : "health_problem_title",
-                                  className : 'grid-header',
-                                  filterable  : false,
-                                  filterMethod: (filter, row) => {
-                                      return row[filter.id].includes(filter.value);
-                                  }
-                              },
-                              {
-                                  Header: 'Appointment Date',
-                                  accessor  : "appointment_date",
-                                  className : 'grid-header',
-                                  filterable  : false,
-                                  filterMethod: (filter, row) => {
-                                      return row[filter.id].includes(filter.value);
-                                  }
-                              },
-                              {
-                                  Header: 'Appointment Time',
-                                  accessor  : "appointment_time",
-                                  className : 'grid-header',
-                                  filterable  : false,
-                                  filterMethod: (filter, row) => {
-                                      return row[filter.id].includes(filter.value);
-                                  }
-                              },
-                              {
-                                  Header: 'Payment Mode',
-                                  accessor  : "appointment_type",
-                                  className : 'grid-header',
-                                  filterable  : false,
-                                  filterMethod: (filter, row) => {
-                                      return row[filter.id].includes(filter.value);
-                                  }
-                              },
-                              {
-                                  Header: 'Clinic Name',
-                                  accessor  : "clinic_name",
-                                  className : 'grid-header',
-                                  filterable  : false,
-                                  filterMethod: (filter, row) => {
-                                      return row[filter.id].includes(filter.value);
-                                  }
-                              },
-                              {
-                                  Header: 'Status',
-                                  accessor  : "status",
-                                  className : 'grid-header',
-                                  filterable  : false,
-                                  filterMethod: (filter, row) => {
-                                      return row[filter.id].includes(filter.value);
-                                  }
+                      <div className="col-md-12">
+                        <ReactTable
+                            noDataText="No found !!"
+                            data={this.props.doctorAppoinementList}
+                            filterable
+                            defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
+                            filtered={this.state.filtered}
+                            columns={[
+                                
+                                {
+                                    Header: 'Patient Name',
+                                    accessor  : "name",
+                                    className : 'grid-header',
+                                    filterable  : false,
+                                    filterMethod: (filter, row) => {
+                                        return row[filter.id].includes(filter.value);
+                                    }
                                 },
                                 {
-                                    Header: 'Actions',
-                                    accessor  : "appointment_id",
-                                    filterable  : false,
-                                    
+                                    Header: 'Health Problem',
+                                    accessor  : "health_problem_title",
                                     className : 'grid-header',
-                                    Cell: row => 
-                                          <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
-                                              <Dropdown.Item onClick={() => this.cancelAll(row.original)}>Cancel</Dropdown.Item>
-                                              <Dropdown.Item onClick={() => this.addDigitalPrescriptionShowHandle(row.original)}>Prescription  Upload</Dropdown.Item>
-                                              <Dropdown.Item onClick={() => this.addReferToDoctorShowHandle(row.original)}>Refer to Doctor</Dropdown.Item>
-                                              <Dropdown.Item onClick={() => this.completedApi(row.original.appointment_id)}>Complete Appointment</Dropdown.Item>
-                                          </DropdownButton>
+                                    filterable  : false,
+                                    filterMethod: (filter, row) => {
+                                        return row[filter.id].includes(filter.value);
+                                    }
+                                },
+                                {
+                                    Header: 'Appointment Date',
+                                    accessor  : "appointment_date",
+                                    className : 'grid-header',
+                                    filterable  : false,
+                                    filterMethod: (filter, row) => {
+                                        return row[filter.id].includes(filter.value);
+                                    }
+                                },
+                                {
+                                    Header: 'Appointment Time',
+                                    accessor  : "appointment_time",
+                                    className : 'grid-header',
+                                    filterable  : false,
+                                    filterMethod: (filter, row) => {
+                                        return row[filter.id].includes(filter.value);
+                                    }
+                                },
+                                {
+                                    Header: 'Payment Mode',
+                                    accessor  : "appointment_type",
+                                    className : 'grid-header',
+                                    filterable  : false,
+                                    filterMethod: (filter, row) => {
+                                        return row[filter.id].includes(filter.value);
+                                    }
+                                },
+                                {
+                                    Header: 'Clinic Name',
+                                    accessor  : "clinic_name",
+                                    className : 'grid-header',
+                                    filterable  : false,
+                                    filterMethod: (filter, row) => {
+                                        return row[filter.id].includes(filter.value);
+                                    }
+                                },
+                                {
+                                    Header: 'Status',
+                                    accessor  : "status",
+                                    className : 'grid-header',
+                                    filterable  : false,
+                                    filterMethod: (filter, row) => {
+                                        return row[filter.id].includes(filter.value);
+                                    }
+                                  },
+                                  {
+                                      Header: 'Actions',
+                                      accessor  : "appointment_id",
+                                      filterable  : false,
+                                      
+                                      className : 'grid-header',
+                                      Cell: row => 
+                                            <div className="list-view-action-btn__container">
+                                                <i className="fa fa-times-circle" aria-hidden="true"></i>
+                                            </div>
+  
+                                  }
+                                
+                            ]}
+                            defaultSorted={[
+                                {
+                                    id: "appointment_id",
+                                    desc: false
                                 }
-                              
-                          ]}
-                          defaultSorted={[
-                              {
-                                  id: "appointment_id",
-                                  desc: false
-                              }
-                          ]}
-                          defaultPageSize={10}
-                          minRows= {this.props.doctorAppoinementList}
-                          className="table table-bordered responsive"
-                          loading={this.state.loading}
-                          filterable
-                          Sorted
-                          // pages={this.props.pages}
-                          showPagination={true}
-                          showPaginationTop={true}
-                          showPaginationBottom={false}
-                          pageSizeOptions={[10, 20, 50]}
-                          automatic // For server side pagination
-                          onFetchData={(state, instance) => {
-                              this.getUpcomingAppointmentsList(state.page, state.pageSize, state.sorted, state.filtered);
-                          }}
-                      />
+                            ]}
+                            defaultPageSize={10}
+                            minRows= {this.props.doctorAppoinementList}
+                            className="table table-bordered responsive"
+                            loading={this.state.loading}
+                            filterable
+                            Sorted
+                            // pages={this.props.pages}
+                            showPagination={true}
+                            showPaginationTop={true}
+                            showPaginationBottom={false}
+                            pageSizeOptions={[10, 20, 50]}
+                            automatic // For server side pagination
+                            onFetchData={(state, instance) => {
+                                this.getUpcomingAppointmentsList(state.page, state.pageSize, state.sorted, state.filtered);
+                            }}
+                        />
+                      </div>                    
                     </div>  
                    
                   
