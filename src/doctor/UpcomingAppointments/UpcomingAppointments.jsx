@@ -433,6 +433,19 @@ class UpcomingAppointments extends React.Component {
                       </div>                      
                     </div>                    
                     
+                    <div className="page-heading">
+                      <div className="page-heading__title-container">
+                          <h1 className="page-heading__title">Patient Details</h1>
+                      </div>
+                      
+                      <div className="page-heading__btn-container">
+                        
+                      </div>
+                      
+                      <div>
+                      </div>
+                    </div>
+   
                     <div className="row">
                       <div className="col-md-12">
                         <div className="patient-details">
@@ -474,8 +487,6 @@ class UpcomingAppointments extends React.Component {
                       </div>
                     </div>                    
 
-                        
-                    
                     <div className="row">
                       <div className="col-md-12">
                         <ReactTable
@@ -587,6 +598,167 @@ class UpcomingAppointments extends React.Component {
                         />
                       </div>                    
                     </div>  
+                   
+                    <div className="page-heading">
+                      <div className="page-heading__title-container">
+                          <h1 className="page-heading__title">Upload Digital Prescription</h1>
+                      </div>
+                      
+                      <div className="page-heading__btn-container">
+                        
+                      </div>
+                      
+                      <div>
+                      
+                      </div>
+                    </div>                   
+                   
+                    <div className="row">
+                      <div className="col-md-12">
+                      
+                        <div className="card">
+                          <div className="card-body">
+                          
+                            <div className="row">
+                              <div className="col-md-12">
+                                <textarea name="description" className="form-control" placeholder="Please enter description" rows="5"></textarea>
+                              </div>
+                            </div>
+                            <div className="row mt-3">
+                              <div className="col-md-5">
+                                <label for="AddMedicineName">Medicine Name</label>
+                                <input type="text" placeholder="Enter Medicine Name" class="form-control" id="AddMedicineName"/>
+                              </div>
+                              <div className="col-md-3">
+                                <div className="form-group">
+                                  <label for="MedicineNumberOfDays">Select Days</label>
+                                  <select className="form-control" id="MedicineNumberOfDays">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>10</option>
+                                    <option>15</option>
+                                    <option>20</option>
+                                    <option>30</option>
+                                  </select>
+                                </div>                                
+                              </div>
+                              <div className="col-md-3">
+                                <div className="form-group">
+                                  <label for="MedicineIntake">Medicine Intake</label>
+                                  <select className="form-control" id="MedicineIntake">
+                                    <option>0-</option>
+                                    <option>-0-</option>
+                                    <option>--0</option>
+                                    <option>00-</option>
+                                    <option>-00</option>
+                                    <option>0-0</option>
+                                    <option>000</option>
+                                  </select>
+                                </div>                                 
+                                
+                              </div>                              
+                              <div className="col-md-1">
+                              </div>
+                            </div>
+                            <div className="row">
+                              <div className="col-md-12">
+                                <div className="text-center">
+                                  <button className="btn btn-sm" type="button">Add</button>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="card mt-3">
+                            <div className="card-body">                            
+                              <div className="row">
+                                <div className="col-md-1">
+                                  Sr. No
+                                </div>                               
+                                <div className="col-md-6">
+                                  <div>Medicine</div>
+                                </div>
+                                <div className="col-md-2">
+                                  Days
+                                </div>
+                                <div className="col-md-2">
+                                  Medicine Taken
+                                </div>
+                                <div className="col-md-1">
+                                  
+                                </div>   
+                              </div>
+                              <div className="row">
+                                <div className="col-md-1">
+                                  1
+                                </div>                               
+                                <div className="col-md-6">
+                                  <div>Allopurinol</div>
+                                </div>
+                                <div className="col-md-2">
+                                  7
+                                </div>
+                                <div className="col-md-2">
+                                  0-0
+                                </div>
+                                <div className="col-md-1">
+                                  <i class="fa fa-trash" aria-hidden="true"></i>
+                                </div>   
+                              </div>
+                              <div className="row">
+                                <div className="col-md-1">
+                                  2
+                                </div>                               
+                                <div className="col-md-6">
+                                  <div>Alemtuzumab</div>
+                                </div>
+                                <div className="col-md-2">
+                                  10
+                                </div>
+                                <div className="col-md-2">
+                                  -0-
+                                </div>
+                                <div className="col-md-1">
+                                  <i class="fa fa-trash" aria-hidden="true"></i>
+                                </div>   
+                              </div>
+                              <div className="row">
+                                <div className="col-md-1">
+                                  3
+                                </div>                               
+                                <div className="col-md-6">
+                                  <div>Alemtuzumab</div>
+                                </div>
+                                <div className="col-md-2">
+                                  10
+                                </div>
+                                <div className="col-md-2">
+                                  -0-
+                                </div>
+                                <div className="col-md-1">
+                                  <i class="fa fa-trash" aria-hidden="true"></i>
+                                </div>   
+                              </div>
+                                                                                    
+                            </div>
+                          </div>
+                            <div className="row">
+                              <div className="col-md-12">
+                                <div className="text-center">
+                                  <button className="btn btn-sm btn-block" type="button">Submit</button>
+                                </div>
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </div>
+                        
+                        
+                      </div>
+                    </div>
                    
                   
                   </main>

@@ -16,6 +16,11 @@
         color: $fill-white;
       }
     }
+    &__action {
+      .fa-times-circle {
+        color: $fill-white;
+      }
+    }
     &__action-btn {
       .dropdown-toggle {
         cursor: pointer;
@@ -23,7 +28,7 @@
     }
   }
   .card-body {
-    display: flex;
+    // display: flex;
     align-items: center;
     justify-content: space-between;
 

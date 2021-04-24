@@ -8,6 +8,7 @@ import './CardComponent.scss';
       <div className="card">
       <div className="card-header bg-ark">
         <div className="card-header__name"><a href="">Chetan Wagh</a></div>
+        <div className="card-header__action"><a href=""><i className="fa fa-times-circle" aria-hidden="true"></i></a></div>
       </div>
       <div className="card-body">
         <div className="card-body__profile-with-user-details">
@@ -23,9 +24,9 @@ import './CardComponent.scss';
               <div>Clinic Name: Agastya Clinic</div>
           </div>
         </div>
-        <div className="card-body__action">
+        {/* <div className="card-body__action">
           <i className="fa fa-times-circle" aria-hidden="true"></i>
-        </div>
+        </div> */}
       </div>
       <div className="card-footer bg-transparent">
         <div className="card-footer__status-text">Status</div>
