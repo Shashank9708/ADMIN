@@ -15,7 +15,8 @@ import { configConstants } from '../../_constants';
 import {DropdownButton, Dropdown} from 'react-bootstrap'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import './ViewProfile.scss';
+import Accordion from 'react-bootstrap/Accordion';
 
 
 class ViewProfile extends React.Component {
@@ -622,29 +623,41 @@ class ViewProfile extends React.Component {
                    <div className="row">
                       <DoctorSideMenu/>
                       <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">          
+                      
                         <div className="row">
-                              <div className="col-md-3">
+                              <div className="col-md-6">
                                 <label>Profile Pic</label>
                                 <div>
-                                  <img src={configConstants.API_BASE_PATH+"/"+profile.detail.display_pic} className="upload-img"/>
+                                  <img src={configConstants.API_BASE_PATH+"/"+profile.detail.display_pic} className="user-profile-image"/>
                                 </div>
                                   <input name="display_pic" type="file" className="form-control" onChange = { this.handleFileChange }/>
                               </div>
-                              <div className="col-md-3">
+                              <div className="col-md-6">
                                 <label>Logo</label>
                                 <div>
-                                  <img src={configConstants.API_BASE_PATH+"/"+profile.detail.logo}  className="upload-img"/>
+                                  <img src={configConstants.API_BASE_PATH+"/"+profile.detail.logo}  className="user-logo-image"/>
                                 </div>
                                   <input name="logo" type="file" className="form-control" onChange = { this.handleFileChange }/>
                               </div>
-                              <div className="col-md-6">
+                        </div>
+                        
+                        <div className="row mt-3">
+                              
+                              <div className="col-md-4">
+                                <label>Name</label>
                                 <div className={ profile.validate.name.isValid ? 'form-group' : 'form-group has-error' }>
                                   <input name="name" type="text" className="form-control" onChange = { this.handleInputChange } placeholder="Name" value={profile.detail.name}/>
                                   <span className="help-block">{ profile.validate.name.message }</span>
                                 </div>
+                                
+                              </div>
+                              <div className="col-md-4">
+                                <label>Email</label>
                                 <div className={ 'form-group' }>
                                   <input name="email" type="email" className="form-control" onChange = { this.handleInputChange } placeholder="Name" value={profile.detail.email}/>
                                 </div>
+                              </div>
+                              <div className="col-md-4">
                                 <div className={ 'form-group' }>
                                   <label>DOB: {profile.detail.dob}</label>
                                   <DatePicker
@@ -657,11 +670,14 @@ class ViewProfile extends React.Component {
                                     dropdownMode="select"
                                   />
                                 </div>
-                                <div className="form-group">
-                                    <div className="checkbox-section">
-                                      <label><input type="checkbox" name="video" onChange={() =>this.handleCheckboxChange('video',profile.detail.video)} checked={(profile.detail.video === 1) ? true : false} className="option-input"/><span>Video</span></label>
-                                    </div>
+                              </div>
+                              <div className="col-md-4">
+                                {/* <div className="form-group">
+                                  <div className="checkbox-section">
+                                    <label><input type="checkbox" name="video" onChange={() =>this.handleCheckboxChange('video',profile.detail.video)} checked={(profile.detail.video === 1) ? true : false} className="option-input"/><span>Video</span></label>
                                   </div>
+                                </div> */}
+                                <label>Gender</label>  
                                 <div className={ 'form-group' }>
                                   <Select
                                       placeholder = "Select Gender"
@@ -675,9 +691,7 @@ class ViewProfile extends React.Component {
                                   />
                                 </div>
                               </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-6">
+                              <div className="col-md-4">
                               <label>Specialization</label>
                               <div className={ profile.validate.spec_id.isValid ? 'form-group' : 'form-group has-error' }>
                                 <Select
@@ -690,13 +704,14 @@ class ViewProfile extends React.Component {
                                 <span className="help-block">{ profile.validate.spec_id.message }</span>
                               </div>
                             </div>
-                            <div className="col-md-6">
+                            <div className="col-md-4">
                               <label>Experience</label>
                               <div className={ 'form-group' }>
                                 <input name="expirience" type="text" className="form-control" onChange = { this.handleInputChange } placeholder="Experience" value={profile.detail.expirience}/>
                               </div>
-                            </div>
+                            </div>      
                         </div>
+
                         <div className="row">
                             
                             <div className="col-md-12">
@@ -706,7 +721,7 @@ class ViewProfile extends React.Component {
                               </div>
                             </div>
                             <div className="col-md-12 text-right">
-                              <button className="blue btn text-btn" onClick={this.addEducation}>Add Education</button>
+                              <button className="btn-sm mb-3" onClick={this.addEducation}>Add Education</button>
                             </div>
                             <div className="col-md-12 table-wrap">
                               <table className="table table-bordered responsive">
@@ -795,7 +810,7 @@ class ViewProfile extends React.Component {
                         </div>
                         <div className="row">
                             <div className="col-md-12 text-right">
-                              <button className="blue btn text-btn" onClick={this.addClinic}>Add Clinic</button>
+                              <button className="btn-sm mb-3" onClick={this.addClinic}>Add Clinic</button>
                             </div>
                             <div className="col-md-12 table-wrap">
                               <table className="table table-bordered responsive">
@@ -838,7 +853,7 @@ class ViewProfile extends React.Component {
                         <div className="row">
                             <div className="col-md-12">
                               <div className="form-group">
-                                <button className="btn text-btn green" onClick={this.handleSave}>Update Information</button>
+                                <button className="btn-sm" onClick={this.handleSave}>Update Information</button>
                               </div>
                             </div>
                         </div>
