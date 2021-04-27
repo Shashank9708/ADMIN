@@ -66,8 +66,8 @@ export const AddHealthTips = (props) => {
                       </div>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button className="btn text-btn red" onClick={props.handleClose}>Close</Button>
-                    <Button className="btn text-btn green" onClick={props.handleSaveHealthTips}>Save</Button>
+                    <Button className="btn-sm" onClick={props.handleClose}>Close</Button>
+                    <Button className="btn-sm" onClick={props.handleSaveHealthTips}>Save</Button>
                   </Modal.Footer>
                 </Modal>
               </div>

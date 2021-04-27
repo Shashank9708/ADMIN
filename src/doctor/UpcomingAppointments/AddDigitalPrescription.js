@@ -108,8 +108,8 @@ export const AddDigitalPrescription = (props) => {
         </div>  
         </Modal.Body>
         <Modal.Footer>
-          <Button className="btn text-btn red" onClick={props.handleClose}>Close</Button>
-          <Button className="btn text-btn green" onClick={props.handleSaveDigitalPrescription}>Save</Button>
+          <Button className="btn-sm" onClick={props.handleClose}>Close</Button>
+          <Button className="btn-sm" onClick={props.handleSaveDigitalPrescription}>Save</Button>
         </Modal.Footer>
       </Modal>
     </div>

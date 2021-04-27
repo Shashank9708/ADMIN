@@ -54,8 +54,8 @@ render() {
         </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="btn text-btn red" onClick={this.handle_close}>Close</Button>
-          <Button className="btn text-btn green" onClick={this.props.onSave}>Save</Button>
+          <Button className="btn-sm" onClick={this.handle_close}>Close</Button>
+          <Button className="btn-sm" onClick={this.props.onSave}>Save</Button>
         </Modal.Footer>
       </Modal>
     </div>

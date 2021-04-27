@@ -32,10 +32,19 @@ button,
   &:hover {
     transform: scale(1.04);
   }
+  &:focus {
+    background: $fill-orange;
+    color: $fill-white;
+  }
 }
 .btn-sm {
   border-radius: 4px;
   padding: 0.5rem 1rem;
+}
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+  background: $fill-orange;
 }
 
 /*
@@ -101,5 +110,107 @@ button,
 }
 
 /*
- *  Modal Dialog
+ *  Form
  */
+
+.form-group {
+  margin-bottom: 20px;
+  .form-control {
+    height: 53px;
+    border: 0px;
+    background: rgba(26, 40, 44, 0.03);
+  }
+  .css-yk16xz-control {
+    height: 53px;
+    background: rgba(26, 40, 44, 0.03);
+    border: 0px;
+    .css-g1d714-ValueContainer {
+      height: 53px;
+    }
+  }
+  .css-1pahdxg-control {
+    height: 53px;
+    .css-g1d714-ValueContainer {
+      height: 53px;
+      .css-b8ldur-Input {
+        input[type="text"] {
+          background: unset;
+          border-radius: unset;
+          height: unset !important;
+          padding: unset;
+          border: unset;
+          margin-bottom: unset;
+          width: unset;
+        }
+      }
+    }
+    .css-1hb7zxy-IndicatorsContainer {
+      height: 53px;
+    }
+  }
+}
+
+span.timeslot {
+  background: $fill-white;
+  padding: 4px 4px;
+  font-size: 12px;
+  margin-bottom: 5px;
+  border-radius: 2px;
+  border: 1px solid $fill-beige;
+  cursor: pointer;
+  margin-bottom: 5px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    background: $fill-ark;
+    color: $fill-white;
+  }
+}
+span.timeslot-selected {
+  background: $fill-ark;
+  padding: 4px 4px;
+  font-size: 12px;
+  margin-bottom: 5px;
+  border-radius: 2px;
+  cursor: pointer;
+  color: $fill-white;
+  margin-bottom: 5px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+/*
+ *  Modal Popup
+ */
+
+.modal-header {
+  .close {
+    color: $fill-ark;
+    font-size: 35px;
+    &:hover {
+      color: $fill-orange;
+    }
+  }
+}
+.modal-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 21px;
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+
+/*
+ *  Accordion
+ */
+
+.accordion > .card > .card-header {
+  border-radius: 0;
+  margin-bottom: -1px;
+  background: #5cb3b6;
+  color: #fff;
+  cursor: pointer;
+}

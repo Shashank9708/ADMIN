@@ -104,7 +104,7 @@ class ViewProfile extends React.Component {
                                 </div>
                                 <div className="col-md-12">
                                   <div className="form-group">
-                                    <button className="btn text-btn green" onClick={this.handleSave}>Update</button>
+                                    <button className="btn-sm" onClick={this.handleSave}>Update</button>
                                   </div>
                                 </div>
                           </div>

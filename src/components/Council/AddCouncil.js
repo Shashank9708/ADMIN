@@ -31,8 +31,8 @@ export const AddCouncil = (props) => {
                       </div>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button className="btn text-btn red" onClick={props.handleClose}>Close</Button>
-                    <Button className="btn text-btn green" onClick={props.handleSaveCouncil}>Save</Button>
+                    <Button className="btn-sm" onClick={props.handleClose}>Close</Button>
+                    <Button className="btn-sm" onClick={props.handleSaveCouncil}>Save</Button>
                   </Modal.Footer>
                 </Modal>
               </div>
