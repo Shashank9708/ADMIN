@@ -61,8 +61,8 @@ export const AddNotification = (props) => {
                     </div>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button className="btn text-btn red" onClick={props.handleClose}>Close</Button>
-                    <Button className="btn text-btn green" onClick={props.sendNotification}>Save</Button>
+                    <Button className="btn-sm" onClick={props.handleClose}>Close</Button>
+                    <Button className="btn-sm" onClick={props.sendNotification}>Save</Button>
                   </Modal.Footer>
                 </Modal>
               </div>

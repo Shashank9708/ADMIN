@@ -75,7 +75,11 @@ export const AddUpcomingAppointments = (props) => {
                                 return <div className="col-md-3"><span className={select ? "timeslot-selected" : "timeslot"} onClick={() => props.slotDate(row.day)}>{row.day}</span></div>
                               })
                               :
-                              <div>No Date available</div>
+                              <div className="col-md-12">
+                                <div className="mb-3">
+                                  No date available
+                                </div>
+                              </div>
                             }
                           </div>
                         </div>
@@ -93,7 +97,12 @@ export const AddUpcomingAppointments = (props) => {
                                 return <div className="col-md-3"><span className={row.available === 1 ? select ? "timeslot-selected" : "timeslot" : "timeslot-not-selected"} onClick={() => props.slotTime(row.start)}>{row.start}</span></div>
                               })
                               :
-                              <div>No Time Slot available</div>
+                              
+                              <div className="col-md-12">
+                                <div className="mb-3">
+                                  No time slot available
+                                </div>
+                              </div>
                             }
                           </div>
                         </div>
@@ -101,8 +110,8 @@ export const AddUpcomingAppointments = (props) => {
                       </div>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button className="btn text-btn red" onClick={props.handleClose}>Close</Button>
-                    <Button className="btn text-btn green" onClick={props.handleSaveUpcomingAppointments}>Save</Button>
+                    <Button className="btn-sm" onClick={props.handleClose}>Close</Button>
+                    <Button className="btn-sm" onClick={props.handleSaveUpcomingAppointments}>Save</Button>
                   </Modal.Footer>
                 </Modal>
               </div>

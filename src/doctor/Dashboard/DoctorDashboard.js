@@ -170,7 +170,14 @@ class DoctorDashboard extends React.Component {
               <DoctorSideMenu />
               <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div className="row">
-                  <h1 className="page-title">Dashboard</h1>
+                    <div className="page-heading">
+                      <div className="page-heading__title-container">
+                          <h1 className="page-heading__title">Dashboard</h1>
+                      </div>
+                    </div>
+                    
+
+
                 </div>
               </main>
             </div>

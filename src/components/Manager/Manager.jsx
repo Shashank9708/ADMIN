@@ -125,7 +125,7 @@ class Manager extends React.Component {
                                 <br />
                                 <div className="col-md-6">
                                   <div className="form-group">
-                                    <button className="btn text-btn green"
+                                    <button className="btn-sm"
                                      onClick={this.handleSave}>Update</button>
                                   </div>
                                 </div>

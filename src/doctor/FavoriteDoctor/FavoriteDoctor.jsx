@@ -152,14 +152,22 @@ class FavoriteDoctor extends React.Component {
                    <div className="row">
                         <DoctorSideMenu/>
                         <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <h1 className="page-title">Favorite Doctor</h1>
-                                </div>
-                                <div className="col-md-6 text-right">
-                                    <button className="blue btn text-btn" onClick={this.addFavoriteDoctorShowHandle}>Add New</button>
-                                </div>
-                            </div>
+                        
+                        <div className="page-heading">
+                          <div className="page-heading__title-container">
+                              <h1 className="page-heading__title">Colleagues</h1>
+                          </div>
+                          
+                          <div className="page-heading__btn-container">
+                             
+                          </div>
+                          
+                          <div className="page-heading__btn-container">
+                            <button className="page-heading__btn btn-sm" onClick={this.addFavoriteDoctorShowHandle}>Add New</button>
+                          </div>
+                        </div>                        
+                        
+                        
                             <div className="row">
                                 <ReactTable
                                   noDataText="No found !!"
