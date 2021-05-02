@@ -12,6 +12,14 @@
       font-weight: bold;
     }
     &__name {
+      a {
+        color: $fill-white;
+      }
+    }
+    &__action {
+      .fa-times-circle {
+        color: $fill-white;
+      }
     }
     &__action-btn {
       .dropdown-toggle {
@@ -20,7 +28,7 @@
     }
   }
   .card-body {
-    display: flex;
+    // display: flex;
     align-items: center;
     justify-content: space-between;
 
@@ -40,6 +48,7 @@
     &__action {
       i {
         color: $fill-red;
+        cursor: pointer;
       }
     }
   }

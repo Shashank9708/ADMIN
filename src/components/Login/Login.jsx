@@ -48,9 +48,10 @@ export const Login = (props) => {
                                 placeholder="*******"
                                 onKeyDown={props.handle_enter_press_submit}
                                 className="form-control"  />
-                        </div>  
+                        </div>
                         
                     </div>
+                    
                     <div className="login-page__forgot-password">
                         <Link className="CTAWhite" to={'/forgotpassword'}>Forgot Password?</Link>
                     </div>

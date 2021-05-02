@@ -31,8 +31,8 @@ export const AddEducation = (props) => {
 
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button className="btn text-btn red" onClick={props.handleClose}>Close</Button>
-                    <Button className="btn text-btn green" onClick={props.handleEducationSave}>Save</Button>
+                    <Button className="btn-sm" onClick={props.handleClose}>Close</Button>
+                    <Button className="btn-sm" onClick={props.handleEducationSave}>Save</Button>
                   </Modal.Footer>
                 </Modal>
               </div>

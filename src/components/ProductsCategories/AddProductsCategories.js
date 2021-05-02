@@ -48,8 +48,8 @@ export const AddProductsCategories = (props) => {
                       </div>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button className="btn text-btn red" onClick={props.handleClose}>Close</Button>
-                    <Button className="btn text-btn green" onClick={props.handleSaveProductsCategories}>Save</Button>
+                    <Button className="btn-sm" onClick={props.handleClose}>Close</Button>
+                    <Button className="btn-sm" onClick={props.handleSaveProductsCategories}>Save</Button>
                   </Modal.Footer>
                 </Modal>
               </div>

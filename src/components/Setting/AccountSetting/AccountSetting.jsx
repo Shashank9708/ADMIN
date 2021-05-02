@@ -28,7 +28,7 @@ export const AccountSetting = (props) => {
             </div>
             <div className="col-md-12 text-right">
               <div className="form-group">
-                <button className="btn text-btn green">Update</button>
+                <button className="btn-sm">Update</button>
               </div>
             </div>
           </div>

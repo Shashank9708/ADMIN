@@ -76,9 +76,12 @@ class ReferralDoctor extends React.Component {
                         <DoctorSideMenu/>
                       
                         <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                            <div className="row">
-                                <h1 className="page-title">Referral</h1>
-                            </div>
+                            <div className="page-heading">
+                              <div className="page-heading__title-container">
+                                  <h1 className="page-heading__title">Referral Patients</h1>
+                              </div>
+                            </div>                            
+                            
                             <div className="row">
                               <ReactTable
                                   noDataText="No found !!"
