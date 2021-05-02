@@ -42,42 +42,42 @@ export class SideMenu extends React.Component {
     render() {
 
       return (
-        <section className="sidemenu-part">
-            <div className="container-fluid">
-            <div className="=row">      
-                <div className="sidebar">
-                <ul className="box">
-                    <li><Link className="button" to="/dashboard">DashBoard</Link></li>
-                    <li><Link className="button" to="/users">Users</Link></li>
-                    <li><Link className="button" to="/health-problem">Health Problems</Link></li>
-                    <li><Link className="button" to="/doctor-categories">Doctor Categories</Link></li>
-                    <li><Link className="button" to="/doctors">Doctor</Link></li>
-                    <li><Link className="button" to="/council">Council</Link></li>
-                    <li><Link className="button" to="/appointments">Appointments</Link></li>
-                    <li><Link className="button" to="/referred">Referred Details</Link></li>
-                    <li><Link className="button" to="/health-tips-categories">Health Tips Categories</Link></li>
-                    <li><Link className="button" to="/health-tips">Health Tips</Link></li>
-                    <li><Link className="button" to="/medical-store">Medical Stores</Link></li>
-                    <li><Link className="button" to="/pathology-center">Pathology Centers</Link></li>
-                    <li><Link className="button" to="/plan">Plan Management</Link></li>
-                    <li><Link className="button" to="/product-categories">Product Categories</Link></li>
-                    <li><Link className="button" to="/product">Products</Link></li>
-                    <li><Link className="button" to="/vendor-categories">Best Deals Vendor Categories</Link></li>
-                    <li><Link className="button" to="#">Vendor</Link></li>
-                    <li><Link className="button" to="#">Invitations Sends</Link></li>
-                    <li><Link className="button" to="#">Transactions</Link></li>
-                    <li><Link className="button" to="#">Orders</Link></li>
-                    <li><Link className="button" to="#">Notifications</Link></li>
-                    <li><Link className="button" to="#">Promotional Activity</Link></li>
-                    <li><Link className="button" to="#">Patient Notifications</Link></li>
-                    <li><Link className="button" to="#">Registration Request</Link></li>
-                </ul>
-                </div>       
-                
-            </div>
-            </div>
-        </section>
-        
+        <React.Fragment>
+            <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div className="sidebar-sticky pt-3">
+                    <ul className="nav flex-column">
+                        <li className="nav-item"><Link className="nav-link" to="/dashboard"> <i className="fa fa-home" aria-hidden="true"></i> Dashboard</Link></li>
+                        
+                        <li className="nav-item"><Link className="nav-link" to="/users"><i className="fa fa-home" aria-hidden="true"></i> Users</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/health-problem"><i className="fa fa-home" aria-hidden="true"></i> Health Problems</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/doctor-categories"><i className="fa fa-home" aria-hidden="true"></i> Doctor Categories</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/doctors"><i className="fa fa-home" aria-hidden="true"></i> Doctor</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/council"><i className="fa fa-home" aria-hidden="true"></i> Council</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/appointments"><i className="fa fa-home" aria-hidden="true"></i> Appointments</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/referred"><i className="fa fa-home" aria-hidden="true"></i> Referred Details</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/health-tips-categories"><i className="fa fa-home" aria-hidden="true"></i> Health Tips Categories</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/health-tips"><i className="fa fa-home" aria-hidden="true"></i> Health Tips</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/medical-store"><i className="fa fa-home" aria-hidden="true"></i> Medical Stores</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/medicine-order"><i className="fa fa-home" aria-hidden="true"></i> Medicine Order List</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/pathology-center"><i className="fa fa-home" aria-hidden="true"></i> Pathology Centers</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/plan"><i className="fa fa-home" aria-hidden="true"></i> Plan Management</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/product-categories"><i className="fa fa-home" aria-hidden="true"></i> Product Categories</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/product"><i className="fa fa-home" aria-hidden="true"></i> Products</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/vendor-categories"><i className="fa fa-home" aria-hidden="true"></i> Best Deals Vendor Categories</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="#"><i className="fa fa-home" aria-hidden="true"></i> Vendor</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="#"><i className="fa fa-home" aria-hidden="true"></i> Invitations Sends</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="#"><i className="fa fa-home" aria-hidden="true"></i> Transactions</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="#"><i className="fa fa-home" aria-hidden="true"></i> Orders</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="#"><i className="fa fa-home" aria-hidden="true"></i> Notifications</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="#"><i className="fa fa-home" aria-hidden="true"></i> Promotional Activity</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="#"><i className="fa fa-home" aria-hidden="true"></i> Patient Notifications</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="#"><i className="fa fa-home" aria-hidden="true"></i> Registration Request</Link></li>
+                       
+                        
+                    </ul>
+                </div>
+            </nav>    
+        </React.Fragment>        
       );
     }
 }

@@ -13,7 +13,9 @@ import { utilityHelper } from '../_helpers';
 export const medicalStoresService = {
     getMedicalStoresList,
     saveMedicalStores,
-    statusChange
+    statusChange,
+    getMedicineOrder,
+    changeMedicineOrderStatus
 };
 
 /**
@@ -68,6 +70,48 @@ function statusChange(data) {
     return axios({
         method  : 'get',
         url     : configConstants.API_BASE_PATH + '/admin/medicalStoresActive/'+data.storeid+'/'+data.status,
+    })
+    .then(response => {
+        return response;
+    })
+    .then(response => {
+        return response;
+    });
+}
+
+/**
+* @DateOfCreation        26 July 2018
+* @ShortDescription      This function is responsible to call Fetch route list api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function getMedicineOrder(page, pageSize, sorted, filtered) {
+    
+    return axios({
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH + '/admin/medicineorders',
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+
+
+/**
+* @DateOfCreation        10 May 2018
+* @ShortDescription      This function is responsible to call Save notification api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function changeMedicineOrderStatus(data) {
+    // var loginAccessToken = utilityHelper.getLoginAccessToken();
+    return axios({
+        method  : 'post',
+        url     : configConstants.API_BASE_PATH + '/admin/changeMedicineOrderStatus',
+        data    : data
     })
     .then(response => {
         return response;
