@@ -108,6 +108,16 @@ button,
     }
   }
 }
+table {
+  tbody {
+    td {
+      button,
+      [type="button"] {
+        padding: 0.5rem 1rem;
+      }
+    }
+  }
+}
 
 /*
  *  Form
@@ -148,6 +158,14 @@ button,
       height: 53px;
     }
   }
+}
+textarea.form-control {
+  height: 100px !important;
+}
+.help-block.remove-element {
+  text-align: center;
+  cursor: pointer;
+  color: $fill-red;
 }
 
 span.timeslot {

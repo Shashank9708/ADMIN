@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import { HeaderContainer } from '../../components/Header';
 import { DoctorSideMenu } from '../../components/SideMenu';
 import { profileActions, doctorActions, clinicActions, headerActions } from '../../_actions';
@@ -639,6 +639,62 @@ class ViewProfile extends React.Component {
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey="0">
                               <Card.Body>
+                              
+                              <div className="row mt-3">
+                                  <div className="col-md-6">
+                                    <label>Name</label>
+                                    <div className={ profile.validate.name.isValid ? 'form-group' : 'form-group has-error' }>
+                                      <input name="name" type="text" className="form-control" onChange = { this.handleInputChange } placeholder="Name" value={profile.detail.name}/>
+                                      <span className="help-block">{ profile.validate.name.message }</span>
+                                    </div>
+                                    
+                                  </div>
+                                  <div className="col-md-6">
+                                    <label>Email</label>
+                                    <div className={ 'form-group' }>
+                                      <input name="email" type="email" className="form-control" onChange = { this.handleInputChange } placeholder="Email" value={profile.detail.email}/>
+                                    </div>
+                                  </div>
+                                  <div className="col-md-6">
+                                    {/* <div className="form-group">
+                                      <div className="checkbox-section">
+                                        <label><input type="checkbox" name="video" onChange={() =>this.handleCheckboxChange('video',profile.detail.video)} checked={(profile.detail.video === 1) ? true : false} className="option-input"/><span>Video</span></label>
+                                      </div>
+                                    </div> */}
+                                    <label>Gender</label>  
+                                    <div className={ 'form-group' }>
+                                      <Select
+                                          placeholder = "Select Gender"
+                                          onChange={ (value, name) => this.handleSelectChange(value, 'gender') }
+                                          options={[
+                                              {label: 'Male', value: 'Male'},
+                                              {label: 'Female', value: 'Female'}
+                                            ]}
+                                          name='council_id'
+                                          value={profile.detail.gender}
+                                          className="selectOption"
+                                      />
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="col-md-6">
+                                    <div className={ 'form-group' }>
+                                      <label>DOB: {profile.detail.dob}</label>
+                                      <DatePicker
+                                        // selected={profile.detail.dob}
+                                        onChange={date => this.handleInputChange('dob',date)}
+                                        dateFormat="dd/MM/yyyy"
+                                        showMonthDropdown
+                                        peekNextMonth
+                                        showYearDropdown
+                                        dropdownMode="select"
+                                      />
+                                    </div>
+                                  </div>
+                                                              
+                              </div>
+                                                              
+                              
                                 <div className="row">
                                   <div className="col-md-6">
                                     <label>Profile Pic</label>
@@ -664,57 +720,8 @@ class ViewProfile extends React.Component {
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey="1">
                               <Card.Body>
-                                <div className="row mt-3">
-                                  <div className="col-md-4">
-                                    <label>Name</label>
-                                    <div className={ profile.validate.name.isValid ? 'form-group' : 'form-group has-error' }>
-                                      <input name="name" type="text" className="form-control" onChange = { this.handleInputChange } placeholder="Name" value={profile.detail.name}/>
-                                      <span className="help-block">{ profile.validate.name.message }</span>
-                                    </div>
-                                    
-                                  </div>
-                                  <div className="col-md-4">
-                                    <label>Email</label>
-                                    <div className={ 'form-group' }>
-                                      <input name="email" type="email" className="form-control" onChange = { this.handleInputChange } placeholder="Email" value={profile.detail.email}/>
-                                    </div>
-                                  </div>
-                                  <div className="col-md-4">
-                                    <div className={ 'form-group' }>
-                                      <label>DOB: {profile.detail.dob}</label>
-                                      <DatePicker
-                                        // selected={profile.detail.dob}
-                                        onChange={date => this.handleInputChange('dob',date)}
-                                        dateFormat="dd/MM/yyyy"
-                                        showMonthDropdown
-                                        peekNextMonth
-                                        showYearDropdown
-                                        dropdownMode="select"
-                                      />
-                                    </div>
-                                  </div>
-                                  <div className="col-md-4">
-                                    {/* <div className="form-group">
-                                      <div className="checkbox-section">
-                                        <label><input type="checkbox" name="video" onChange={() =>this.handleCheckboxChange('video',profile.detail.video)} checked={(profile.detail.video === 1) ? true : false} className="option-input"/><span>Video</span></label>
-                                      </div>
-                                    </div> */}
-                                    <label>Gender</label>  
-                                    <div className={ 'form-group' }>
-                                      <Select
-                                          placeholder = "Select Gender"
-                                          onChange={ (value, name) => this.handleSelectChange(value, 'gender') }
-                                          options={[
-                                              {label: 'Male', value: 'Male'},
-                                              {label: 'Female', value: 'Female'}
-                                            ]}
-                                          name='council_id'
-                                          value={profile.detail.gender}
-                                          className="selectOption"
-                                      />
-                                    </div>
-                                  </div>
-                                  <div className="col-md-4">
+                              <div className="row">
+                                <div className="col-md-6">
                                   <label>Specialization</label>
                                   <div className={ profile.validate.spec_id.isValid ? 'form-group' : 'form-group has-error' }>
                                     <Select
@@ -727,14 +734,15 @@ class ViewProfile extends React.Component {
                                     <span className="help-block">{ profile.validate.spec_id.message }</span>
                                   </div>
                                 </div>
-                                <div className="col-md-4">
+                                <div className="col-md-6">
                                   <label>Experience</label>
                                   <div className={ 'form-group' }>
                                     <input name="expirience" type="text" className="form-control" onChange = { this.handleInputChange } placeholder="Experience" value={profile.detail.expirience}/>
                                   </div>
                                 </div>      
                               </div>
-                                <div className="row">
+                              
+                              <div className="row">
                               
                               <div className="col-md-12">
                                 <label>About</label>
@@ -745,8 +753,9 @@ class ViewProfile extends React.Component {
                               <div className="col-md-12 text-right">
                                 <button className="btn-sm mb-3" onClick={this.addEducation}>Add Education</button>
                               </div>
-                              <div className="col-md-12 table-wrap">
-                                <table className="table table-bordered responsive">
+                              <div className="col-md-12">
+                                <div className="table-wrap">
+                                  <Table className="table table-bordered responsive" responsive>
                                   <thead>
                                     <tr>
                                       <th>Qualification</th>
@@ -759,15 +768,27 @@ class ViewProfile extends React.Component {
                                     return <tr key={i}>
                                         <td>{row.degree}</td>
                                         <td>{row.year}</td>
-                                        <td className="help-block" onClick={() => this.removeEducation(i)}>X</td>
+                                        <td className="help-block remove-element" onClick={() => this.removeEducation(i)}><i class="fa fa-times-circle" aria-hidden="true"></i></td>
                                     </tr>
                                   })}
                                   </tbody>
-                                </table>
+                                </Table>
+                                </div>
+                              
                               </div>
   
                           </div>
-                                <div className="row">
+                              
+                              </Card.Body>
+                            </Accordion.Collapse>
+                          </Card>
+                          <Card>
+                            <Accordion.Toggle as={Card.Header} eventKey="2">
+                              Verification Details
+                            </Accordion.Toggle>
+                            <Accordion.Collapse eventKey="2">
+                              <Card.Body>
+                              <div className="row">
                                   <div className="col-md-6">
                                     <label>Contact Number</label>
                                     <div className={ profile.validate.contact_no.isValid ? 'form-group' : 'form-group has-error' }>
@@ -830,12 +851,25 @@ class ViewProfile extends React.Component {
                                       </div>
                                   </div>
                                 </div>
-                                <div className="row">
+                                                            
+                              
+                              
+                              </Card.Body>
+                            </Accordion.Collapse>
+                          </Card>
+                          <Card>
+                            <Accordion.Toggle as={Card.Header} eventKey="3">
+                              Clinic/Hospital Details
+                            </Accordion.Toggle>
+                            <Accordion.Collapse eventKey="3">
+                              <Card.Body>
+                              <div className="row">
                                     <div className="col-md-12 text-right">
                                       <button className="btn-sm mb-3" onClick={this.addClinic}>Add Clinic</button>
                                     </div>
-                                    <div className="col-md-12 table-wrap">
-                                      <table className="table table-bordered responsive">
+                                    <div className="col-md-12">
+                                      <div className="table-wrap">
+                                        <Table className="table table-bordered responsive" responsive>
                                         <thead>
                                           <tr>
                                             <th>Name</th>
@@ -869,26 +903,12 @@ class ViewProfile extends React.Component {
                                           </tr>
                                         })}
                                         </tbody>
-                                      </table>
+                                      </Table>
+                                      </div>
+                                    
                                     </div>
                                   </div>
                               </Card.Body>
-                            </Accordion.Collapse>
-                          </Card>
-                          <Card>
-                            <Accordion.Toggle as={Card.Header} eventKey="2">
-                              Verification Details
-                            </Accordion.Toggle>
-                            <Accordion.Collapse eventKey="2">
-                              <Card.Body>Hello! I'm another body</Card.Body>
-                            </Accordion.Collapse>
-                          </Card>
-                          <Card>
-                            <Accordion.Toggle as={Card.Header} eventKey="3">
-                              Clinic/Hospital Details
-                            </Accordion.Toggle>
-                            <Accordion.Collapse eventKey="3">
-                              <Card.Body>Hello! I'm another body</Card.Body>
                             </Accordion.Collapse>
                           </Card>                        
                           <Card>
@@ -896,18 +916,88 @@ class ViewProfile extends React.Component {
                               Clinic Time Slot
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey="4">
-                              <Card.Body>Hello! I'm another body</Card.Body>
+                              <Card.Body>
+                                <div className="row">
+                                    <div className="col-md-6">
+                                      <label>Clinic</label>  
+                                      <div className={ 'form-group' }>
+                                        <Select
+                                            placeholder = "Select Clinic"
+                                            options={[
+                                                {label: 'Clinic 1', value: 'Clinic1'},
+                                                {label: 'Clinic 2', value: 'Clinic2'}
+                                              ]}
+                                            name='clinic_id'
+                                            className="selectOption"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                      <label>Slot</label>  
+                                      <div className={ 'form-group' }>
+                                        <Select
+                                            placeholder = "Select Slot"
+                                            options={[
+                                                {label: 'Monday', value: 'Monday'},
+                                                {label: 'Tuesday', value: 'Tuesday'},
+                                                {label: 'Wednesday', value: 'Wednesday'},
+                                                {label: 'Thursday', value: 'Thursday'},
+                                                {label: 'Friday', value: 'Friday'},
+                                                {label: 'Saturday', value: 'Saturday'},
+                                                {label: 'Sunday', value: 'Sunday'},
+                                              ]}
+                                            name='slot_id'
+                                            className="selectOption"
+                                        />
+                                      </div>
+                                    </div>                                
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-6">
+                                      <label>Start Time</label>  
+                                      <div className={ 'form-group' }>
+                                        <Select
+                                            placeholder = "Select Start Time"
+                                            options={[
+                                                {label: '00:00 AM', value: 'Clinic1'},
+                                                {label: '01:00 AM', value: 'Clinic2'},
+                                                {label: '02:00 AM', value: 'Clinic2'}
+                                              ]}
+                                            name='clinic_id'
+                                            className="selectOption"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                      <label>End Time</label>  
+                                      <div className={ 'form-group' }>
+                                        <Select
+                                            placeholder = "Select Slot"
+                                            options={[
+                                                {label: '00:00 AM', value: 'Clinic1'},
+                                                {label: '01:00 AM', value: 'Clinic2'},
+                                                {label: '02:00 AM', value: 'Clinic2'}
+                                              ]}
+                                            name='slot_id'
+                                            className="selectOption"
+                                        />
+                                      </div>
+                                    </div>                                
+                                </div>                              
+                                
+                              
+                              
+                              </Card.Body>
                             </Accordion.Collapse>
                           </Card>  
-                          <Card>
-                            <Accordion.Toggle as={Card.Header} eventKey="5">
-                              Video Appointment
-                            </Accordion.Toggle>
-                            <Accordion.Collapse eventKey="5">
-                              <Card.Body>Hello! I'm another body</Card.Body>
-                            </Accordion.Collapse>
-                          </Card>                          
                         </Accordion>
+
+                                    <div className="form-group">
+                                      <div className="checkbox-section">
+                                        <label><input type="checkbox" name="video" onChange={() =>this.handleCheckboxChange('video',profile.detail.video)} checked={(profile.detail.video === 1) ? true : false} className="option-input"/> <span>Video Appointment</span></label>
+                                      </div>
+                                    </div>
+
 
                         <div className="row">
                             <div className="col-md-12">

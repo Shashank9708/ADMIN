@@ -665,6 +665,25 @@ class UpcomingAppointments extends React.Component {
                               <div className="col-md-1">
                               </div>
                             </div>
+                            
+                            <div className="row mt-3">
+                              <div className="col-md-5">
+                                <div className="form-group">
+                                  <label for="MedicineIntake">Lab Test Instructions</label>
+                                  <select className="form-control" id="MedicineIntake">
+                                    <option>Complete Blood Count</option>
+                                    <option>Prothrombin Time</option>
+                                    <option>Basic Metabolic Panel</option>
+                                    <option>Comprehensive Metabolic Panel</option>
+                                    <option>Lipid Panel</option>
+                                  </select>
+                                </div>                                 
+                                
+                              </div>                              
+                              <div className="col-md-1">
+                              </div>
+                            </div>                            
+                            
                             <div className="row">
                               <div className="col-md-12">
                                 <div className="text-center">
