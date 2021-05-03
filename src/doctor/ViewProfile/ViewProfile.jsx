@@ -678,8 +678,8 @@ class ViewProfile extends React.Component {
                                   </div>
                                   
                                   <div className="col-md-6">
-                                    <div className={ 'form-group' }>
                                       <label>DOB: {profile.detail.dob}</label>
+                                      <div className={ 'form-group' }>
                                       <DatePicker
                                         // selected={profile.detail.dob}
                                         onChange={date => this.handleInputChange('dob',date)}
