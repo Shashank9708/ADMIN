@@ -822,12 +822,21 @@ class Doctor extends React.Component {
                                               
                                               className : 'grid-header',
                                               Cell: row => 
-                                                        <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
-                                                            <Dropdown.Item onClick={() => this.reNewShowHandle(row.original)}>Renew Plan</Dropdown.Item>
-                                                            <Dropdown.Item onClick={() => this.viewClinic(row.original)}>View Clinic</Dropdown.Item>
-                                                            <Dropdown.Item onClick={() => this.viewAppointments(row.original)}>Appointment</Dropdown.Item>
-                                                            <Dropdown.Item onClick={() => this.deleteDoctor(row.original)}>Delete</Dropdown.Item>
-                                                        </DropdownButton>
+                                                  <div className="">
+                                                    <button type="button" className="btn-sm dropdown-toggle" data-toggle="dropdown" id={"dropdown-"+row.value}>
+                                                      <span className="caret"></span>
+                                                      <span>Action</span>
+                                                    </button>
+                                                    <ul className="dropdown-menu" role="menu">
+                                                      <li><a href="#" onClick={() => this.reNewShowHandle(row.original)}>Renew Plan</a></li>
+                                                      <Dropdown.Divider />
+                                                      <li><a href="#" onClick={() => this.viewClinic(row.original)}>View Clinic</a></li>
+                                                      <Dropdown.Divider />
+                                                      <li><a href="#" onClick={() => this.viewAppointments(row.original)}>Appointment</a></li>
+                                                      <Dropdown.Divider />
+                                                      <li><a href="#" onClick={() => this.deleteDoctor(row.original)}>Delete</a></li>
+                                                    </ul>
+                                                  </div>
                                           }
                                       ]}
                                       defaultSorted={[

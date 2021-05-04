@@ -8,6 +8,7 @@ import { healthTipsCategoriesActions, headerActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
+import {DropdownButton, Dropdown} from 'react-bootstrap'
 
 
 class HealthTipsCategories extends React.Component {
@@ -22,6 +23,8 @@ class HealthTipsCategories extends React.Component {
         this.addHealthTipsCategoriesShowHandle = this.addHealthTipsCategoriesShowHandle.bind(this);
         this.addHealthTipsCategoriesHideHandle = this.addHealthTipsCategoriesHideHandle.bind(this);
 
+        this.editSpecializationShowHandle         = this.editSpecializationShowHandle.bind(this);
+
         this.getHealthTipsCategoriesList        = this.getHealthTipsCategoriesList.bind(this);
         this.statusShowHandle = this.statusShowHandle.bind(this);
         this.notificationSearch         = this.notificationSearch.bind(this);
@@ -32,7 +35,9 @@ class HealthTipsCategories extends React.Component {
         return {
             loading : false,
             pages  : 0,
-            addHealthTipsCategoriesShow: false
+            addHealthTipsCategoriesShow: false,
+            payload: '',
+            flag: false
         }
     }
 
@@ -51,7 +56,16 @@ class HealthTipsCategories extends React.Component {
      * @return                Nothing
      */
      addHealthTipsCategoriesHideHandle() {
-       this.setState({ addHealthTipsCategoriesShow: false });
+       this.setState({ addHealthTipsCategoriesShow: false, payload: '', flag: false });
+     }
+
+     /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle open import modal
+     * @return                Nothing
+     */
+     editSpecializationShowHandle(data) {
+       this.setState({ addHealthTipsCategoriesShow: true, payload: data, flag:true });
      }
 
     /**
@@ -120,14 +134,12 @@ class HealthTipsCategories extends React.Component {
     render() {
         // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
-            <div className="page-container">
+            <>
                 <HeaderContainer />
                 <div className="container-fluid">
                    <div className="row">
-                      <div className="col-md-2.5">
-                       <SideMenu/>
-                      </div>
-                      <div className="col-md-9">
+                      <SideMenu/>
+                      <div role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                         <div className="main-content">
                             <div className="wrap-inner-content">
                                 <div className="col-md-12">
@@ -140,7 +152,7 @@ class HealthTipsCategories extends React.Component {
                                                 <button className="blue btn text-btn" onClick={this.addHealthTipsCategoriesShowHandle}>Add New</button>
                                             </div>
                                         </div>
-                                        <div className="table-wrap">
+                                        <div className="row">
                                         {/*<div className="table-search">
                                                 <input
                                                     value={this.state.filterAll}
@@ -158,11 +170,17 @@ class HealthTipsCategories extends React.Component {
                                             columns={[
                                                 {
                                                     Header: 'Image',
-                                                    accessor  : "image",
+                                                    accessor  : "image_url",
                                                     className : 'grid-header',
                                                     filterable  : false,
                                                     Cell: row =>
-                                                      <div><img src={'data:image/png;base64,'+row.value} width="50px" height="50px"/></div>
+                                                      <div>
+                                                      {row.value ?
+                                                        <img src={configConstants.API_BASE_PATH+"/"+row.value} width="50px" height="50px"/>
+                                                      :
+                                                        <img src={'data:image/png;base64,'+row.original.image} width="50px" height="50px"/>
+                                                      }
+                                                      </div>
                                                     
                                                 },
                                                 {
@@ -210,6 +228,23 @@ class HealthTipsCategories extends React.Component {
                                                               }
                                                               </div>
                                                           )}
+                                                },
+                                                {
+                                                    Header: 'Actions',
+                                                    accessor  : "healthtips_category_id",
+                                                    filterable  : false,
+                                                    
+                                                    className : 'grid-header',
+                                                    Cell: row => 
+                                                          <div className="">
+                                                            <button type="button" className="btn-sm dropdown-toggle" data-toggle="dropdown" id={"dropdown-"+row.value}>
+                                                              <span className="caret"></span>
+                                                              <span>Action</span>
+                                                            </button>
+                                                            <ul className="dropdown-menu" role="menu">
+                                                              <li><a href="#" onClick={() => this.editSpecializationShowHandle(row.original)}>Edit</a></li>
+                                                            </ul>
+                                                          </div>
                                                 }
                                                 
                                             ]}
@@ -244,10 +279,12 @@ class HealthTipsCategories extends React.Component {
                       <AddHealthTipsCategoriesContainer
                         addHealthTipsCategoriesShow = {this.state.addHealthTipsCategoriesShow}
                         addHealthTipsCategoriesHideHandle = {this.addHealthTipsCategoriesHideHandle}
+                        payload = {this.state.payload}
+                        flag = {this.state.flag}
                       />
                     </div>
                 </div>    
-            </div>
+            </>
         );
     }
 }

@@ -117,7 +117,12 @@ class AddHealthTipsCategoriesContainer extends React.Component {
         bodyFormData.append('image',detail.image);
 
         const { dispatch } = this.props;
-        dispatch(healthTipsCategoriesActions.saveHealthTipsCategories(bodyFormData, this.props.healthTipsCategoriesList));
+          if(this.props.flag){
+            bodyFormData.append('id',this.state.id);
+            dispatch(healthTipsCategoriesActions.editHealthTipsCategories(bodyFormData, this.props.healthTipsCategoriesList));
+          }else{
+            dispatch(healthTipsCategoriesActions.saveHealthTipsCategories(bodyFormData, this.props.healthTipsCategoriesList));
+          }
     }
   }
 
@@ -127,6 +132,23 @@ class AddHealthTipsCategoriesContainer extends React.Component {
      * @return                Nothing
      */
     componentWillReceiveProps(newProps) {
+        if(newProps.payload){
+            this.setState({
+              healthTipsCategoriesForm : {
+                detail : {
+                    'title_en' : newProps.payload.title_en,
+                    'image' : newProps.payload.image,
+                },
+                validate : {
+                    title_en : { isValid : true, message : '' }
+                }
+              },
+              id: newProps.payload.id
+            });
+    
+        }else{
+            this.setState(this.initialState);
+        }
         if(newProps.closeForm == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
@@ -136,8 +158,6 @@ class AddHealthTipsCategoriesContainer extends React.Component {
                 this.props.addHealthTipsCategoriesHideHandle();
                 this.setState(this.initialState);
             }.bind(this), 1500);
-        }else{
-            this.setState(this.initialState);
         }
     }
   render() {

@@ -13,6 +13,7 @@ import { utilityHelper } from '../_helpers';
 export const healthTipsCategoriesService = {
     getHealthTipsCategoriesList,
     saveHealthTipsCategories,
+    editHealthTipsCategories,
     statusChange
 };
 
@@ -47,6 +48,26 @@ function saveHealthTipsCategories(notification) {
     return axios({
         method  : 'post',
         url     : configConstants.API_BASE_PATH + '/admin/healthtips_SaveCategory',
+        data    : notification
+    })
+    .then(response => {
+        return response;
+    })
+    .then(response => {
+        return response;
+    });
+}
+/**
+* @DateOfCreation        10 May 2018
+* @ShortDescription      This function is responsible to call Save notification api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function editHealthTipsCategories(notification) {
+    // var loginAccessToken = utilityHelper.getLoginAccessToken();editHealthTips
+    return axios({
+        method  : 'post',
+        url     : configConstants.API_BASE_PATH + '/admin/healthtips_EditCategory',
         data    : notification
     })
     .then(response => {
