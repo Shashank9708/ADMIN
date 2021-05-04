@@ -232,3 +232,13 @@ span.timeslot-selected {
   color: #fff;
   cursor: pointer;
 }
+
+.dropdown-menu {
+  &.show {
+    li {
+      a {
+        padding: 5px 10px;
+      }
+    }
+  }
+}

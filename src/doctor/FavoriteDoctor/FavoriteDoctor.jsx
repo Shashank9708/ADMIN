@@ -202,9 +202,24 @@ class FavoriteDoctor extends React.Component {
                                           
                                           className : 'grid-header',
                                           Cell: row => 
-                                                <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
-                                                    <Dropdown.Item onClick={() => this.removeFavorite(row.original)}>Remove</Dropdown.Item>
-                                                </DropdownButton>
+                                            <div className="">
+                                              <button type="button" className="btn-sm dropdown-toggle" data-toggle="dropdown" id={"dropdown-"+row.value}>
+                                                <span className="caret"></span>
+                                                <span>Action</span>
+                                              </button>
+                                              <ul className="dropdown-menu" role="menu">
+                                                <li><a href="#" onClick={() => this.removeFavorite(row.original)}>Remove</a></li>
+                                                    <Dropdown.Divider />
+                                                <li><a href="#">Cancel</a></li>
+                                              </ul>
+                                            </div>
+                                          
+                                                // <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
+                                                //     <Dropdown.Item onClick={() => this.removeFavorite(row.original)}>Remove</Dropdown.Item>
+                                                // </DropdownButton>
+                                          
+                                                // <span><i id={"dropdown-"+row.value} class="fa fa-times-circle" aria-hidden="true" onClick={() => this.removeFavorite(row.original)}></i></span>
+                                                
                                       }
                                       
                                   ]}
