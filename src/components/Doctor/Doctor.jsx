@@ -571,14 +571,12 @@ class Doctor extends React.Component {
     render() {
         // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
-            <div className="page-container">
+        <>
             <HeaderContainer />
             <div class="container-fluid"> 
                <div class="row">
-                  <div class="col-md-2.5">
                     <SideMenu/>
-                  </div>
-                  <div class="col-md-9">
+                  <div role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                     <Status
                         onClick = { this.state.statusShow }
                         onClose = { this.statusHideHandle }
@@ -622,7 +620,7 @@ class Doctor extends React.Component {
                                         <h1 className="page-title">Doctor</h1>
                                     </div>
                                 </div>
-                                <div className="table">
+                                <div className="row">
                                   
                                   <ReactTable
                                       noDataText="No found !!"
@@ -862,7 +860,7 @@ class Doctor extends React.Component {
                   </div>
                </div>
             </div>
-        </div>
+        </>
         );
     }
 }
