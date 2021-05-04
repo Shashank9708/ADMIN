@@ -15,13 +15,13 @@ export const AddClinic = (props) => {
                   <Modal.Body>
                       <div className="row">
 
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                           <div className='form-group'>
                             <input name="clinic_name" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Clinic Name" value={props.payload.clinic_name}/>
                           </div>
                         </div>
 
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                           <div className='form-group'>
                             <input name="clinic_number" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Clinic Number" value={props.payload.clinic_number}/>
                           </div>
@@ -57,7 +57,7 @@ export const AddClinic = (props) => {
                           </div>
                         </div>
 
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                           <div className='form-group'>
                             <Select
                                 placeholder = "Select State"
@@ -105,7 +105,7 @@ export const AddClinic = (props) => {
                           </div>
                         </div>
 
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                           <div className='form-group'>
                             <Select
                                 placeholder = "Select City"
@@ -117,12 +117,12 @@ export const AddClinic = (props) => {
                           </div>
                         </div>
 
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                           <div className='form-group'>
                             <input name="clinic_pincode" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Clinic Pincode" value={props.payload.clinic_pincode}/>
                           </div>
                         </div>
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                           <div className='form-group'>
                             <input name="clinic_fees" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Clinic Fees" value={props.payload.clinic_fees}/>
                           </div>
