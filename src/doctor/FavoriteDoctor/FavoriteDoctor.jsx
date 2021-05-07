@@ -159,7 +159,9 @@ class FavoriteDoctor extends React.Component {
                           </div>
                           
                           <div className="page-heading__btn-container">
-                             
+                            <div className="page-heading__searchbox">
+                                <input type="text" placeholder="Search"/>
+                            </div>   
                           </div>
                           
                           <div className="page-heading__btn-container">

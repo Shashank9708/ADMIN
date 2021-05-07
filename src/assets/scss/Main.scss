@@ -125,6 +125,11 @@ a:hover {
     font-weight: 600;
     margin-bottom: 0px;
   }
+  &__searchbox {
+    input[type="text"] {
+      margin-bottom: 0px;
+    }
+  }
 }
 
 /*
