@@ -21,6 +21,7 @@ class HealthTips extends React.Component {
         super(props);
         this.addHealthTipsShowHandle = this.addHealthTipsShowHandle.bind(this);
         this.addHealthTipsHideHandle = this.addHealthTipsHideHandle.bind(this);
+        this.editSpecializationShowHandle         = this.editSpecializationShowHandle.bind(this);
 
         this.getHealthTipsList        = this.getHealthTipsList.bind(this);
         this.statusShowHandle = this.statusShowHandle.bind(this);
@@ -33,7 +34,9 @@ class HealthTips extends React.Component {
         return {
             loading : false,
             pages  : 0,
-            addHealthTipsShow: false
+            addHealthTipsShow: false,
+            payload: '',
+            flag: false
         }
     }
 
@@ -54,7 +57,16 @@ class HealthTips extends React.Component {
      * @return                Nothing
      */
      addHealthTipsHideHandle() {
-       this.setState({ addHealthTipsShow: false });
+       this.setState({ addHealthTipsShow: false, payload: '', flag: false });
+     }
+
+     /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle open import modal
+     * @return                Nothing
+     */
+     editSpecializationShowHandle(data) {
+       this.setState({ addHealthTipsShow: true, payload: data, flag:true });
      }
 
     /**
@@ -135,166 +147,178 @@ class HealthTips extends React.Component {
     render() {
         // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
-            <div className="page-container">
+            <>
                 <HeaderContainer />
                 <div className="container-fluid">
                    <div className="row">
-                      <div className="col-md-2.5">
                         <SideMenu/>
-                      </div>
-                      <div className="col-md-9">
-                        <div className="main-content">
-                          <div className="wrap-inner-content">
-                            <div className="col-md-12">
-                              <div className="inner-content">
-                                      <div className="row page-header">
-                                          <div className="col-md-6">
-                                              <h1 className="page-title">HealthTips</h1>
-                                          </div>
-                                          <div className="col-md-6 text-right">
-                                             <button className="blue btn text-btn" onClick={this.addHealthTipsShowHandle}>Add New</button>
-                                          </div>
-                                      </div>
-                                      <div className="table-wrap">
-                                      {/*<div className="table-search">
-                                              <input
-                                                  value={this.state.filterAll}
-                                                  onChange={this.notificationSearch}
-                                                  className="table-search-input"
-                                                  placeholder="Search"
-                                              />
-                                      </div>*/}
-                                      <ReactTable
-                                          noDataText="No found !!"
-                                          data={this.props.healthTipsList}
-                                          filterable
-                                          defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
-                                          filtered={this.state.filtered}
-                                          columns={[
-                                              {
-                                                  Header: 'Image',
-                                                  accessor  : "image",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  Cell: row =>
-                                                    <div><img src={'data:image/png;base64,'+row.value} width="50px" height="50px"/></div>
-                                                    
-                                              },
-                                              {
-                                                  Header: 'Title',
-                                                  accessor  : "title",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header: 'Category',
-                                                  accessor  : "title_en",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header: 'Description',
-                                                  accessor  : "desc_en",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header: 'Author Name',
-                                                  accessor  : "author_name",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header: 'Status',
-                                                  accessor  : "status",
-                                                  filterable  : false,
-                                                  
-                                                  className : 'grid-header',
-                                                  Cell: row => {
-                                                          return  (
-                                                              <div>
-                                                              {
-                                                                row.value === 1 ?
-                                                                <a href="javascript:void(0)" 
-                                                                  className="btn"
-                                                                  onClick={ this.statusShowHandle.bind(null,row.original.health_tip_id,0) } 
-                                                                  disabled={ this.props.submitted ? true : false }>
-                                                                    <span className="btn btn-success">Active</span>
-                                                                </a>
-                                                                :
-                                                                <a href="javascript:void(0)" 
-                                                                  className="btn"
-                                                                  onClick={ this.statusShowHandle.bind(null,row.original.health_tip_id,1) } 
-                                                                  disabled={ this.props.submitted ? true : false }>
-                                                                    <span className="grey btn">Inactive</span>   
-                                                                </a>
-                                                              }
-                                                              </div>
-                                                          )}
+                        <div role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                          <div className="main-content">
+                            <div className="wrap-inner-content">
+                              <div className="col-md-12">
+                                <div className="inner-content">
+                                        <div className="row page-header">
+                                            <div className="col-md-6">
+                                                <h1 className="page-title">HealthTips</h1>
+                                            </div>
+                                            <div className="col-md-6 text-right">
+                                               <button className="blue btn text-btn" onClick={this.addHealthTipsShowHandle}>Add New</button>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                        {/*<div className="table-search">
+                                                <input
+                                                    value={this.state.filterAll}
+                                                    onChange={this.notificationSearch}
+                                                    className="table-search-input"
+                                                    placeholder="Search"
+                                                />
+                                        </div>*/}
+                                        <ReactTable
+                                            noDataText="No found !!"
+                                            data={this.props.healthTipsList}
+                                            filterable
+                                            defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
+                                            filtered={this.state.filtered}
+                                            columns={[
+                                                {
+                                                    Header: 'Image',
+                                                    accessor  : "image_url",
+                                                    className : 'grid-header',
+                                                    filterable  : false,
+                                                    Cell: row =>                                                    
+                                                    <div>
+                                                      {row.value ?
+                                                        <img src={configConstants.API_BASE_PATH+"/"+row.value} width="50px" height="50px"/>
+                                                      :
+                                                        <img src={'data:image/png;base64,'+row.original.image} width="50px" height="50px"/>
+                                                      }
+                                                    </div>  
                                                 },
                                                 {
-                                                    Header: 'Actions',
-                                                    accessor  : "health_tip_id",
+                                                    Header: 'Title',
+                                                    accessor  : "title",
+                                                    className : 'grid-header',
+                                                    filterable  : false,
+                                                    filterMethod: (filter, row) => {
+                                                        return row[filter.id].includes(filter.value);
+                                                    }
+                                                },
+                                                {
+                                                    Header: 'Category',
+                                                    accessor  : "title_en",
+                                                    className : 'grid-header',
+                                                    filterable  : false,
+                                                    filterMethod: (filter, row) => {
+                                                        return row[filter.id].includes(filter.value);
+                                                    }
+                                                },
+                                                {
+                                                    Header: 'Description',
+                                                    accessor  : "desc_en",
+                                                    className : 'grid-header',
+                                                    filterable  : false,
+                                                    filterMethod: (filter, row) => {
+                                                        return row[filter.id].includes(filter.value);
+                                                    }
+                                                },
+                                                {
+                                                    Header: 'Author Name',
+                                                    accessor  : "author_name",
+                                                    className : 'grid-header',
+                                                    filterable  : false,
+                                                    filterMethod: (filter, row) => {
+                                                        return row[filter.id].includes(filter.value);
+                                                    }
+                                                },
+                                                {
+                                                    Header: 'Status',
+                                                    accessor  : "status",
                                                     filterable  : false,
                                                     
                                                     className : 'grid-header',
-                                                    Cell: row => 
-                                                          <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
-                                                              <Dropdown.Item >View</Dropdown.Item>
-                                                              <Dropdown.Item >Edit</Dropdown.Item>
-                                                              <Dropdown.Item onClick={ this.deleteHealthTips.bind(null,row.original.health_tip_id) }>Delete</Dropdown.Item>
-                                                          </DropdownButton>
+                                                    Cell: row => {
+                                                            return  (
+                                                                <div>
+                                                                {
+                                                                  row.value === 1 ?
+                                                                  <a href="javascript:void(0)" 
+                                                                    className="btn"
+                                                                    onClick={ this.statusShowHandle.bind(null,row.original.health_tip_id,0) } 
+                                                                    disabled={ this.props.submitted ? true : false }>
+                                                                      <span className="btn btn-success">Active</span>
+                                                                  </a>
+                                                                  :
+                                                                  <a href="javascript:void(0)" 
+                                                                    className="btn"
+                                                                    onClick={ this.statusShowHandle.bind(null,row.original.health_tip_id,1) } 
+                                                                    disabled={ this.props.submitted ? true : false }>
+                                                                      <span className="grey btn">Inactive</span>   
+                                                                  </a>
+                                                                }
+                                                                </div>
+                                                            )}
+                                                  },
+                                                  {
+                                                      Header: 'Actions',
+                                                      accessor  : "health_tip_id",
+                                                      filterable  : false,
+                                                      
+                                                      className : 'grid-header',
+                                                      Cell: row => 
+                                                            <div className="">
+                                                              <button type="button" className="btn-sm dropdown-toggle" data-toggle="dropdown" id={"dropdown-"+row.value}>
+                                                                <span className="caret"></span>
+                                                                <span>Action</span>
+                                                              </button>
+                                                              <ul className="dropdown-menu" role="menu">
+                                                                <li><a href="#" onClick={() => this.editSpecializationShowHandle(row.original)}>Edit</a></li>
+                                                                <Dropdown.Divider />
+                                                                <li><a href="#" onClick={() => this.deleteHealthTips(row.original.health_tip_id)}>Delete</a></li>
+                                                              </ul>
+                                                            </div>
+                                                  }
+                                                
+                                            ]}
+                                            defaultSorted={[
+                                                {
+                                                    id: "health_tip_id",
+                                                    desc: false
                                                 }
-                                              
-                                          ]}
-                                          defaultSorted={[
-                                              {
-                                                  id: "health_tip_id",
-                                                  desc: false
-                                              }
-                                          ]}
-                                          defaultPageSize={10}
-                                          minRows= {this.props.healthTipsList}
-                                          className="table table-bordered responsive"
-                                          loading={this.state.loading}
-                                          filterable
-                                          Sorted
-                                          // pages={this.props.pages}
-                                          showPagination={true}
-                                          showPaginationTop={true}
-                                          showPaginationBottom={false}
-                                          pageSizeOptions={[10, 20, 50]}
-                                          automatic // For server side pagination
-                                          onFetchData={(state, instance) => {
-                                              this.getHealthTipsList(state.page, state.pageSize, state.sorted, state.filtered);
-                                          }}
-                                      />
-                                  </div>
+                                            ]}
+                                            defaultPageSize={10}
+                                            minRows= {this.props.healthTipsList}
+                                            className="table table-bordered responsive"
+                                            loading={this.state.loading}
+                                            filterable
+                                            Sorted
+                                            // pages={this.props.pages}
+                                            showPagination={true}
+                                            showPaginationTop={true}
+                                            showPaginationBottom={false}
+                                            pageSizeOptions={[10, 20, 50]}
+                                            automatic // For server side pagination
+                                            onFetchData={(state, instance) => {
+                                                this.getHealthTipsList(state.page, state.pageSize, state.sorted, state.filtered);
+                                            }}
+                                        />
+                                    </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
+                      
                       <AddHealthTipsContainer
                         addHealthTipsShow = {this.state.addHealthTipsShow}
                         healthTipsCategoriesList = {this.props.healthTipsCategoriesList}
                         addHealthTipsHideHandle = {this.addHealthTipsHideHandle}
+                        payload = {this.state.payload}
+                        flag = {this.state.flag}
                       />
                     </div>
                 </div>    
-            </div>
+            </>
         );
     }
 }

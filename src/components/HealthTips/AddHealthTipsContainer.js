@@ -23,6 +23,7 @@ class AddHealthTipsContainer extends React.Component {
                   'author_name' : '',
                   'title' : '',
                   'image' : '',
+                  'desc_en' : '',
                   'healthtips_category_id' : ''
               },
               validate : {
@@ -148,8 +149,13 @@ class AddHealthTipsContainer extends React.Component {
         //table structure with validation rules
         bodyFormData.append('image',detail.image);
 
-        const { dispatch } = this.props;
-        dispatch(healthTipsActions.saveHealthTips(bodyFormData, this.props.healthTipsList));
+          const { dispatch } = this.props;
+        if(this.props.flag){
+          bodyFormData.append('health_tip_id',this.state.health_tip_id);
+          dispatch(healthTipsActions.editHealthTips(bodyFormData, this.props.healthTipsList));
+        }else{
+          dispatch(healthTipsActions.saveHealthTips(bodyFormData, this.props.healthTipsList));
+        }  
     }
   }
 
@@ -159,6 +165,28 @@ class AddHealthTipsContainer extends React.Component {
      * @return                Nothing
      */
     componentWillReceiveProps(newProps) {
+        if(newProps.payload){
+            this.setState({
+              healthTipsForm : {
+                detail : {
+                    'author_name' : newProps.payload.author_name,
+                    'title' : newProps.payload.title,
+                    'image' : newProps.payload.image,
+                    'desc_en' : newProps.payload.desc_en,
+                    'healthtips_category_id' : newProps.payload.healthtips_category_id
+                },
+                validate : {
+                    title : { isValid : true, message : '' },
+                    desc_en : { isValid : true, message : '' },
+                    healthtips_category_id : { isValid : true, message : '' }
+                }
+              },
+              health_tip_id: newProps.payload.health_tip_id
+            });
+    
+        }else{
+            this.setState(this.initialState);
+        }
         if(newProps.closeForm == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
@@ -168,8 +196,6 @@ class AddHealthTipsContainer extends React.Component {
                 this.props.addHealthTipsHideHandle();
                 this.setState(this.initialState);
             }.bind(this), 1500);
-        }else{
-            this.setState(this.initialState);
         }
     }
   render() {

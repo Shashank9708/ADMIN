@@ -54,7 +54,7 @@ export class DoctorSideMenu extends React.Component {
                             <div className="dropdown-menu" aria-labelledby="doctorAppointments">
                               <Link className="dropdown-item" to="/upcoming-appointments"> <i className="fa fa-address-book" aria-hidden="true"></i> Today's Appointments</Link>
                               <div className="dropdown-divider"></div>
-                              <Link className="dropdown-item" to="/upcoming-appointments"> <i className="fa fa-address-book" aria-hidden="true"></i> All Appointments</Link>
+                              <Link className="dropdown-item" to="/all-appointments"> <i className="fa fa-address-book" aria-hidden="true"></i> All Appointments</Link>
                             </div>
                         </li>                         
                         

@@ -158,6 +158,10 @@ const UpcomingAppointments = Loadable({
     loader: () => import('../doctor/UpcomingAppointments').then(object => object.UpcomingAppointments),
     loading: Loading
 });
+const AllUpcomingAppointments = Loadable({
+    loader: () => import('../doctor/UpcomingAppointments').then(object => object.AllUpcomingAppointments),
+    loading: Loading
+});
 
 const MyPatient = Loadable({
     loader: () => import('../doctor/MyPatient').then(object => object.MyPatient),
@@ -245,6 +249,7 @@ class App extends React.Component {
 
                         <DoctorRoute exact path='/ddashboard' component={DoctorDashboard} authenticated={this.props.authenticated} allowuser={[1]} />
                         <DoctorRoute exact path='/upcoming-appointments' component={UpcomingAppointments} authenticated={this.props.authenticated} allowuser={[1]} />
+                        <DoctorRoute exact path='/all-appointments' component={AllUpcomingAppointments} authenticated={this.props.authenticated} allowuser={[1]} />
                         <DoctorRoute exact path='/my-patients' component={MyPatient} authenticated={this.props.authenticated} allowuser={[1]} />
                         <DoctorRoute exact path='/doctor-referred' component={ReferredDoctor} authenticated={this.props.authenticated} allowuser={[1]} />
                         <DoctorRoute exact path='/doctor-referral' component={ReferralDoctor} authenticated={this.props.authenticated} allowuser={[1]} />
@@ -253,21 +258,7 @@ class App extends React.Component {
 
 
 
-                        {/*<AdminRoute exact path='/dashboard' component={Dashboard} authenticated={this.props.authenticated} allowuser={[0]} />
-                        <AdminRoute exact path='/operator' component={StaffContainer} authenticated={this.props.authenticated} allowuser={['admin']} />
-                        
-                        <AdminRoute exact path='/driver' component={DriverContainer} authenticated={this.props.authenticated} allowuser={['admin', 'operator']} />
-                        <AdminRoute exact path='/live-map' component={LiveMapContainer} authenticated={this.props.authenticated} allowuser={['admin', 'operator']} />
-                        <AdminRoute exact path='/energy-map' component={EnergyMapContainer} authenticated={this.props.authenticated} allowuser={['admin', 'operator']} />
-                        <AdminRoute exact path='/trip' component={TripContainer} authenticated={this.props.authenticated} allowuser={['admin', 'operator']} />
-                        <AdminRoute exact path='/chat-user' component={ChatsContainer} authenticated={this.props.authenticated} allowuser={['admin', 'operator']} />
-                        <AdminRoute exact path='/chat-driver' component={ChatTruckContainer} authenticated={this.props.authenticated} allowuser={['admin', 'operator']} />
-                        <AdminRoute exact path='/setting' component={SettingContainer} authenticated={this.props.authenticated} allowuser={['admin', 'operator']} />
-                        <AdminRoute exact path='/activity' component={ActivityContainer} authenticated={this.props.authenticated} allowuser={['admin', 'operator']} />
-                        <AdminRoute exact path='/compliance' component={ComplaintsContainer} authenticated={this.props.authenticated} allowuser={['admin', 'operator']} />
-                        <AdminRoute exact path='/manager' component={Manager} authenticated={this.props.authenticated} allowuser={['admin', 'operator']} />
-                        <AdminRoute exact path='/profile' component={ViewProfile} authenticated={this.props.authenticated} allowuser={['admin', 'operator']} />
-                        */}
+                       
                     </Switch>
                 }
             </Router>
