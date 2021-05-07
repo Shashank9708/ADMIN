@@ -91,7 +91,7 @@ class ReferralDoctor extends React.Component {
                                   filtered={this.state.filtered}
                                   columns={[
                                       {
-                                          Header: 'Referred Doctor Name',
+                                          Header: 'Refer By Doctor',
                                           accessor  : "referred_doc_name",
                                           className : 'grid-header',
                                           filterable  : false,

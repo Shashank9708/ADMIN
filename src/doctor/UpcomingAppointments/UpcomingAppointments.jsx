@@ -418,22 +418,7 @@ class UpcomingAppointments extends React.Component {
                       </div>                    
                     </div>  
                     
-                    <div className="row">
-                      <div className="col-sm-6">
-                        <CardComponent />
-                      </div>
-                      <div className="col-sm-6">
-                        <CardComponent />
-                      </div>
-                      <div className="col-sm-6">
-                        <CardComponent />
-                      </div>
-                      <div className="col-sm-6">
-                        <CardComponent />
-                      </div>                      
-                    </div>                    
-                    
-                    <div className="page-heading">
+                    {/* <div className="page-heading">
                       <div className="page-heading__title-container">
                           <h1 className="page-heading__title">Patient Details</h1>
                       </div>
@@ -444,12 +429,16 @@ class UpcomingAppointments extends React.Component {
                       
                       <div>
                       </div>
-                    </div>
+                    </div> */}
    
                     <div className="row">
                       <div className="col-md-12">
                         <div className="patient-details">
                         <div className="card">
+                          <div className="card-header bg-ark">
+                            <div className="card-header__name"><a href="">Chetan Wagh</a></div>
+                            <div className="card-header__action"><a href=""><i className="fa fa-times-circle" aria-hidden="true"></i></a></div>
+                          </div>
                           <div className="card-body">
                             <div className="card-body__profile-details-combo">                            
                               <div className="card-body__profile-details-combo__profile-section">
@@ -461,7 +450,6 @@ class UpcomingAppointments extends React.Component {
                                 </div>
                               </div>
                               <div className="card-body__profile-details-combo__details-section">
-                                <div>Name: Chetan Wagh</div>
                                 <div>Age: 26</div>
                                 <div>Health Problem: Thyroid</div>
                                 <div>Appointment Date: 2021-04-13</div>
@@ -473,12 +461,18 @@ class UpcomingAppointments extends React.Component {
                             <div className="">
                               <div className="card-body__action-btn">
                                   <button className="btn btn-sm btn-block" type="button">Get Detail History</button>
-                                  <button className="btn btn-sm btn-block" type="button">Upload Manual Prescription</button>
-                                  <button className="btn btn-sm btn-block" type="button">Upload Digital Prescription</button>
+                                  <button className="btn btn-sm btn-block" type="button">Prescription</button>
                                   <button className="btn btn-sm btn-block" type="button">Mark As Complete</button>
                               </div>                          
                             </div>
                           </div>
+                          <div className="card-footer bg-transparent">
+                            <div className="card-footer__status-text">Status</div>
+                            <div className="card-footer__status-value">
+                              <a href=""><span className="card-footer__booked">Booked</span></a>
+                            </div>
+                          </div>
+                        
                         </div>
                       </div>
                       </div>
@@ -561,14 +555,14 @@ class UpcomingAppointments extends React.Component {
                                     }
                                   },
                                   {
-                                      Header: 'Actions',
+                                      Header: 'Prescription',
                                       accessor  : "appointment_id",
                                       filterable  : false,
                                       
                                       className : 'grid-header',
                                       Cell: row => 
                                             <div className="list-view-action-btn__container">
-                                                <i className="fa fa-times-circle" aria-hidden="true"></i>
+                                                <i className="fa fa-file" aria-hidden="true"></i>
                                             </div>
   
                                   }
@@ -601,7 +595,7 @@ class UpcomingAppointments extends React.Component {
                    
                     <div className="page-heading">
                       <div className="page-heading__title-container">
-                          <h1 className="page-heading__title">Upload Digital Prescription</h1>
+                          <h1 className="page-heading__title">Upload Prescription</h1>
                       </div>
                       
                       <div className="page-heading__btn-container">
@@ -691,7 +685,7 @@ class UpcomingAppointments extends React.Component {
                                 </div>
                               </div>
                             </div>
-                            <div className="card mt-3">
+                            <div className="card card-prescription-list mt-3">
                             <div className="card-body">                            
                               <div className="row">
                                 <div className="col-md-1">

@@ -103,6 +103,9 @@ button,
             color: $fill-red;
             cursor: pointer;
           }
+          .fa-file {
+            color: $fill-ark;
+          }
         }
       }
     }
@@ -240,5 +243,11 @@ span.timeslot-selected {
         padding: 5px 10px;
       }
     }
+  }
+}
+
+.card-prescription-list {
+  .fa-trash {
+    color: $fill-red;
   }
 }
