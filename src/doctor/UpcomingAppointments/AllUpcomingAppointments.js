@@ -489,7 +489,7 @@ class AllUpcomingAppointments extends React.Component {
                                       
                                       className : 'grid-header',
                                       Cell: row => 
-                                            <div className="list-view-action-btn__container">
+                                            <div className="list-view-action-btn__container" onClick={() => this.cancelAll(row.original)}>
                                               Cancel  <i className="fa fa-times-circle" aria-hidden="true"></i>
                                             </div>
   

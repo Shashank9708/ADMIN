@@ -434,12 +434,13 @@ class UpcomingAppointments extends React.Component {
    
                     <div className="row">
                       <div className="col-md-5">
-                        <CardComponent />
-                        <CardComponent />
-                        <CardComponent />
-                        <CardComponent />
-                        <CardComponent />
-                        <CardComponent />
+                        {this.props.doctorAppoinementList.length > 0 &&  
+                          this.props.doctorAppoinementList.map((row) => 
+                            <CardComponent 
+                              appointment = {row}
+                            />
+                          )
+                        }
                       </div>
                       <div className="col-md-7">
                       
