@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import { Button, Table } from 'react-bootstrap';
 import { HeaderContainer } from '../../components/Header';
 import { DoctorSideMenu } from '../../components/SideMenu';
-import { profileActions, doctorActions, clinicActions, headerActions } from '../../_actions';
+import { profileActions, doctorActions, clinicActions, clinicSlotActions, headerActions } from '../../_actions';
 import Select from 'react-select' 
 import { profileValidator } from '../../_validator';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {AddEducation} from './AddEducation';
 import {AddClinic} from './AddClinic';
+import {AddClinicSlot} from './AddClinicSlot';
 import { configConstants } from '../../_constants';
 import {DropdownButton, Dropdown} from 'react-bootstrap'
 import { ToastContainer, toast } from 'react-toastify';
@@ -57,6 +58,14 @@ class ViewProfile extends React.Component {
         this.submitOTP   = this.submitOTP.bind(this);
         this.handleChange   = this.handleChange.bind(this);
         this.apiCall   = this.apiCall.bind(this);
+
+        this.addClinicSlot = this.addClinicSlot.bind(this);
+        this.closeClinicSlot = this.closeClinicSlot.bind(this);
+        this.clinicSlotSave = this.clinicSlotSave.bind(this);
+        this.removeClinicSlot   = this.removeClinicSlot.bind(this);
+        this.handleSelectChangeCS   = this.handleSelectChangeCS.bind(this);
+        this.getClinicSlot   = this.getClinicSlot.bind(this);
+
     }
 
     get initialState() {
@@ -120,7 +129,21 @@ class ViewProfile extends React.Component {
           },
           addClinicShow: false,
           sendOTP: false,
-          code: ''
+          code: '',
+          addClinicSlotShow: false,
+          clinicSlot: {
+            doc_id: JSON.parse(localStorage.user).doc_id,
+            clinic_id: '',
+            day: 'Monday',
+            from_time: '09:00:00',
+            to_time: '12:00:00',
+            id: '',
+            clinicSlotData: [],
+            showAlert: false,
+            slot_id: '',
+            time: ['00:00:00', '01:00:00', '02:00:00', '03:00:00', '04:00:00', '05:00:00', '06:00:00', '07:00:00', '08:00:00', '09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00', '17:00:00', '18:00:00', '19:00:00', '20:00:00', '21:00:00', '22:00:00', '23:00:00']
+          }
+
         }
     }
 
@@ -506,6 +529,65 @@ class ViewProfile extends React.Component {
       }
     }
 
+    addClinicSlot(){
+      this.setState({addClinicSlotShow:true})
+      const { dispatch } = this.props;
+        dispatch(clinicActions.getClinicList(this.state.clinicSlot.doc_id));
+
+    }
+    closeClinicSlot(){
+      this.setState({addClinicSlotShow:false})
+      const { clinicSlot } = this.state;
+      this.setState({
+        clinic : {
+            doc_id: JSON.parse(localStorage.user).doc_id,
+            clinic_id: '',
+            day: 'Monday',
+            from_time: '09:00:00',
+            to_time: '12:00:00',
+            id: '',
+            clinicSlotData: [],
+            showAlert: false,
+            slot_id: '',
+            time: ['00:00:00', '01:00:00', '02:00:00', '03:00:00', '04:00:00', '05:00:00', '06:00:00', '07:00:00', '08:00:00', '09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00', '17:00:00', '18:00:00', '19:00:00', '20:00:00', '21:00:00', '22:00:00', '23:00:00']
+          }
+      })  
+    }
+    handleSelectChangeCS(selectedOption, name) {
+      const { clinicSlot } = this.state;  
+      this.setState({
+        clinicSlot: {
+          ...clinicSlot,
+          [name]: selectedOption
+        }
+      }) 
+    }
+    removeClinicSlot(slot_id){
+      let data = {id: slot_id}
+      // console.log('id',id)
+        const { dispatch } = this.props;
+        dispatch(clinicSlotActions.deleteClinicSlotProfile(data));
+    }
+    clinicSlotSave(){
+      const { clinicSlot }  = this.state;
+      const { dispatch } = this.props;
+      let data = [{
+                      clinic_id: clinicSlot.clinic_id,
+                      day: clinicSlot.day,
+                      from_time: clinicSlot.from_time,
+                      to_time: clinicSlot.to_time,
+                      id: ""
+                    }]
+          // console.log('param',data)
+      dispatch(clinicSlotActions.saveClinicSlotProfile(data));
+    }
+
+    getClinicSlot (clinic_id) {
+        this.setState({clinic_id: clinic_id});
+        const { dispatch } = this.props;
+        dispatch(clinicSlotActions.clinicSlot(clinic_id));
+    }
+
 
     apiCall(formData){
       const { dispatch } = this.props;
@@ -601,6 +683,35 @@ class ViewProfile extends React.Component {
               dispatch(profileActions.resetProfileState())
               dispatch(clinicActions.resetClinicState())
             }.bind(this),1500);
+        }
+
+        if(nextProps.addClinicSlot){
+              setTimeout(function(){
+                  const { dispatch } = this.props;
+                dispatch(clinicSlotActions.resetClinicSlotState())
+                
+                this.getClinicSlot(this.state.clinic_id);
+              }.bind(this),1500);
+        }
+        if(nextProps.deleteClinicSlot){
+              this.hideAlert();
+              setTimeout(function(){
+                const { dispatch } = this.props;
+                dispatch(clinicSlotActions.resetClinicSlotState())
+                this.getClinicSlot(this.state.clinic_id);
+              }.bind(this),1500);
+        }
+        if(nextProps.statusClinicSlot){
+              setTimeout(function(){
+                const { dispatch } = this.props;
+                dispatch(clinicSlotActions.resetClinicSlotState())
+                this.getClinicSlot(this.state.clinic_id);
+              }.bind(this),1500);
+        }  
+        if(nextProps.fetchSlot){  
+          this.setState({clinicSlotData: nextProps.clinicSlotData})
+          const { dispatch } = this.props;
+          dispatch(clinicSlotActions.resetClinicSlotState())
         }
      
     }
@@ -918,85 +1029,20 @@ class ViewProfile extends React.Component {
                             <Accordion.Collapse eventKey="4">
                               <Card.Body>
                                 <div className="row">
-                                    <div className="col-md-6">
-                                      <label>Clinic</label>  
-                                      <div className={ 'form-group' }>
-                                        <Select
-                                            placeholder = "Select Clinic"
-                                            options={[
-                                                {label: 'Clinic 1', value: 'Clinic1'},
-                                                {label: 'Clinic 2', value: 'Clinic2'}
-                                              ]}
-                                            name='clinic_id'
-                                            className="selectOption"
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                      <label>Slot</label>  
-                                      <div className={ 'form-group' }>
-                                        <Select
-                                            placeholder = "Select Slot"
-                                            options={[
-                                                {label: 'Monday', value: 'Monday'},
-                                                {label: 'Tuesday', value: 'Tuesday'},
-                                                {label: 'Wednesday', value: 'Wednesday'},
-                                                {label: 'Thursday', value: 'Thursday'},
-                                                {label: 'Friday', value: 'Friday'},
-                                                {label: 'Saturday', value: 'Saturday'},
-                                                {label: 'Sunday', value: 'Sunday'},
-                                              ]}
-                                            name='slot_id'
-                                            className="selectOption"
-                                        />
-                                      </div>
-                                    </div>                                
+                                    <div className="col-md-12 text-right">
+                                      <button className="btn-sm mb-3" onClick={this.addClinicSlot}>Add Clinic Slot</button>
+                                    </div>                             
                                 </div>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                      <label>Start Time</label>  
-                                      <div className={ 'form-group' }>
-                                        <Select
-                                            placeholder = "Select Start Time"
-                                            options={[
-                                                {label: '00:00 AM', value: 'Clinic1'},
-                                                {label: '01:00 AM', value: 'Clinic2'},
-                                                {label: '02:00 AM', value: 'Clinic2'}
-                                              ]}
-                                            name='clinic_id'
-                                            className="selectOption"
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                      <label>End Time</label>  
-                                      <div className={ 'form-group' }>
-                                        <Select
-                                            placeholder = "Select Slot"
-                                            options={[
-                                                {label: '00:00 AM', value: 'Clinic1'},
-                                                {label: '01:00 AM', value: 'Clinic2'},
-                                                {label: '02:00 AM', value: 'Clinic2'}
-                                              ]}
-                                            name='slot_id'
-                                            className="selectOption"
-                                        />
-                                      </div>
-                                    </div>                                
-                                </div>                              
-                                
-                              
-                              
                               </Card.Body>
                             </Accordion.Collapse>
                           </Card>  
                         </Accordion>
 
-                                    <div className="form-group">
-                                      <div className="checkbox-section">
-                                        <label><input type="checkbox" name="video" onChange={() =>this.handleCheckboxChange('video',profile.detail.video)} checked={(profile.detail.video === 1) ? true : false} className="option-input"/> <span>Video Appointment</span></label>
-                                      </div>
-                                    </div>
+                        <div className="form-group">
+                          <div className="checkbox-section">
+                            <label><input type="checkbox" name="video" onChange={() =>this.handleCheckboxChange('video',profile.detail.video)} checked={(profile.detail.video === 1) ? true : false} className="option-input"/> <span>Video Appointment</span></label>
+                          </div>
+                        </div>
 
 
                         <div className="row">
@@ -1025,6 +1071,15 @@ class ViewProfile extends React.Component {
                   payload={this.state.clinic}
                   cityList={this.props.cityList}
                 />
+
+                <AddClinicSlot
+                  addClinicSlotShow={this.state.addClinicSlotShow}
+                  handleClose={this.closeClinicSlot}
+                  handleClinicSlotSave={this.clinicSlotSave}
+                  handleSelectChange={this.handleSelectChangeCS}
+                  payload={this.state.clinicSlot}
+                  clinicList={this.props.clinicList}
+                />
                 <ToastContainer />
               </React.Fragment>
 
@@ -1041,7 +1096,9 @@ class ViewProfile extends React.Component {
 function mapStateToProps(state) {
     const { loader, spList, isUserNotValid } = state.doctorReducer;
     const { doctorProfileDetail, councilList, sendingRequest, otp,otpDone,profileUpdate, otpMsg, otpVMsg } = state.profileReducer;
-    const { deleteClinic, cityList, clinicUpdate } = state.clinicReducer;
+    const { deleteClinic, cityList, clinicUpdate, clinicList } = state.clinicReducer;
+    const { clinicSlotData, addClinicSlot, fetchSlot, deleteClinicSlot, statusClinicSlot } = state.clinicSlotReducer;
+
     return {
         spList,
         doctorProfileDetail,
@@ -1055,7 +1112,15 @@ function mapStateToProps(state) {
         deleteClinic,
         cityList,
         clinicUpdate,
-        isUserNotValid
+        clinicList,
+        isUserNotValid,
+        clinicSlotData,
+        addClinicSlot,
+        loader,
+        fetchSlot,
+        sendingRequest,
+        deleteClinicSlot,
+        statusClinicSlot
     };
 }
 const connectedManager = connect(mapStateToProps)(ViewProfile);
