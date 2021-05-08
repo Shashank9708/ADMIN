@@ -204,7 +204,7 @@ class ManageCalendar extends React.Component {
     }
 
     render() {
-      console.log("this.state.clinicSlotManage",this.state.clinicSlotManage)
+
         return (
           <React.Fragment>
             <HeaderContainer />

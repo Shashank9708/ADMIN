@@ -2,12 +2,12 @@ import React  from 'react';
 import './CardComponent.scss';
 
 
-  function CardComponent({appointment}) {
+function CardComponent({appointment, handleClick = () => {}, active = false}) {
     return (
     <>
-      <div className="card">
-      <div className="card-header bg-ark">
-        <div className="card-header__name"><a href="">{appointment.name}</a></div>
+      <div className="card" key={appointment.appointment_id}>
+      <div className={appointment.appointment_id === active ? "card-header active-card" : "card-header bg-ark" }>
+        <div className="card-header__name"><a href="#" onClick={() => handleClick(appointment)}>{appointment.name}</a></div>
         <div className="card-header__action"><a href=""><i className="fa fa-times-circle" aria-hidden="true"></i></a></div>
       </div>
       <div className="card-body">
@@ -39,3 +39,4 @@ import './CardComponent.scss';
   )}
 
 export default CardComponent;
+

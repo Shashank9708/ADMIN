@@ -15,8 +15,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import CardComponent from '../../components/CardComponent/CardComponent';
-
 
 
 class AllUpcomingAppointments extends React.Component {

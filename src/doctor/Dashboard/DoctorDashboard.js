@@ -1,10 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Button} from 'react-bootstrap';
 import { HeaderContainer } from '../../components/Header';
 import { DoctorSideMenu } from '../../components/SideMenu';
 import { headerActions, commonActions } from '../../_actions';
-import { Doughnut } from 'react-chartjs-2';
+
+import { format, subHours, startOfMonth } from 'date-fns';
+import {
+  MonthlyBody,
+  MonthlyCalendar,
+  MonthlyNav,
+  DefaultMonthlyEventItem,
+} from '@zach.codes/react-calendar';
+import '@zach.codes/react-calendar/dist/calendar-tailwind.css';
 
 
 
@@ -13,27 +20,13 @@ class DoctorDashboard extends React.Component {
     super(props);
     this.state = {
       name: 'React',
-      data: {
-        datasets: [{
-          data: [10, 20, 30],
-          backgroundColor: [
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56'
-            ],
-            hoverBackgroundColor: [
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56'
-            ]
-        }],
-        labels: [
-          'Red',
-          'Yellow',
-          'Blue'
-        ]
-      }
+      currentMonth: startOfMonth(new Date())
+
     }
+
+    this.handleChange = this.handleChange.bind(this);
+
+    
   }
 
   componentDidMount(){
@@ -55,112 +48,15 @@ class DoctorDashboard extends React.Component {
       }
   }
 
+  handleChange (date){
+    this.setState({currentMonth: startOfMonth(date)})
+  }
+
   render() {
     const {dashboardList} = this.props
-    var data = {}
-    var dataP = {}
-    var dataD = {}
-    var dataM = {}
-    var dataL = {}
-    if(dashboardList){
-      var total =  dashboardList.userCount + dashboardList.doctorCount + dashboardList.medicalCount + dashboardList.labCount
-      data = {
-          labels: [
-            'PATIENTS',
-            'DOCTORS',
-            'MEDICAL STORES',
-            'PATHOLOGY',
-          ],
-          datasets: [{
-            data: [dashboardList.userCount, dashboardList.doctorCount, dashboardList.medicalCount, dashboardList.labCount],
-            backgroundColor: [
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56',
-            '#d68274'
-            ],
-            hoverBackgroundColor: [
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56',
-            '#d68274'
-            ]
-          }],
-          text: '20%'
-        };
-      dataP = {
-          labels: [
-            'PATIENTS',
-            'ALL'
-          ],
-          datasets: [{
-            data: [dashboardList.userCount, 500000 - dashboardList.userCount],
-            backgroundColor: [
-            '#FF6384',
-            '#FFFFFF'
-            ],
-            hoverBackgroundColor: [
-            '#FF6384',
-            '#36A2EB'
-            ]
-          }],
-          text: '20%'
-        }; 
-      dataD = {
-          labels: [
-            'DOCTORS',
-            'ALL'
-          ],
-          datasets: [{
-            data: [dashboardList.doctorCount, 40000 - dashboardList.doctorCount],
-            backgroundColor: [
-            '#36A2EB',
-            '#FFFFFF'
-            ],
-            hoverBackgroundColor: [
-            '#36A2EB',
-            '#FFCE56'
-            ]
-          }],
-          text: '20%'
-        };
-      dataM = {
-          labels: [
-            'MEDICAL STORES',
-            'ALL',
-          ],
-          datasets: [{
-            data: [dashboardList.medicalCount, 40000 - dashboardList.medicalCount],
-            backgroundColor: [
-            '#FFCE56',
-            '#FFFFFF'
-            ],
-            hoverBackgroundColor: [
-            '#FFCE56',
-            '#d68274'
-            ]
-          }],
-          text: '20%'
-        };
-      dataL = {
-          labels: [
-            'PATHOLOGY',
-            'ALL'
-          ],
-          datasets: [{
-            data: [dashboardList.labCount, 40000 - dashboardList.labCount],
-            backgroundColor: [
-            '#d68274',
-            '#FFFFFF'
-            ],
-            hoverBackgroundColor: [
-            '#d68274',
-            '#FFCE56'
-            ]
-          }],
-          text: '20%'
-        };
-    }
+    
+
+    console.log("-----",this.state.currentMonth)
     
     return (
         <React.Fragment>
@@ -175,7 +71,60 @@ class DoctorDashboard extends React.Component {
                           <h1 className="page-heading__title">Dashboard</h1>
                       </div>
                     </div>
-                    
+                  
+                   <MonthlyCalendar
+                      currentMonth={this.state.currentMonth}
+                      onCurrentMonthChange={date => this.handleChange(date)}
+                    >
+                      <MonthlyNav />
+                      <MonthlyBody
+                        events={[
+                                  {
+                                    date: new Date('2021-05-08T05:19:40.325Z'),
+                                    title: 'Call John'
+                                  },
+                                  {
+                                    date: new Date('2021-05-08T06:19:40.325Z'),
+                                    title: 'Call John'
+                                  },
+                                  {
+                                    date: new Date('2021-05-08T07:19:40.325Z'),
+                                    title: 'Meeting with Bob'
+                                  },
+                                  {
+                                    date: new Date('2021-05-08T10:19:40.325Z'),
+                                    title: 'Bike Appt'
+                                  },
+                                  {
+                                    date: new Date('2021-05-11T07:19:40.325Z'),
+                                    title: 'John Hilmer'
+                                  },
+                                  {
+                                    date: new Date('2021-05-04T07:19:40.325Z'),
+                                    title: 'Jane Call'
+                                  },
+                                  {
+                                    date: new Date('2021-05-14T07:19:40.325Z'),
+                                    title: 'Sound alarm'
+                                  },
+                                  {
+                                    date: new Date('2021-05-05T07:19:40.325Z'),
+                                    title: 'Soccer Practice'
+                                  },
+                                  {
+                                    date: new Date('2021-05-04T11:19:40.325Z'),
+                                    title: 'Alert'
+                                  },
+                                  {
+                                    date: new Date('2021-05-14T07:19:40.325Z'),
+                                    title: 'Donation'
+                                  }
+                                ]}
+                            renderDay={function noRefCheck(){}}
+
+                      />
+                    </MonthlyCalendar> 
+
 
 
                 </div>
