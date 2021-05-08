@@ -226,8 +226,9 @@ class ManageCalendar extends React.Component {
                         name='clinic_id'
                     />
                     <div className="col-md-12">
-                      <label>Select Date</label>
-                      <div className="row">
+                      <label className="mt-3">Select Date</label>
+                      
+                      <div className="row manage-calendar-date-selection-row">
                         {this.state.days.length > 0 ?  
                           this.state.days.map((item)=>{
                             let select = false
@@ -239,7 +240,7 @@ class ManageCalendar extends React.Component {
                             var month = new Date(item.day).getMonth()+1
                             var day = new Date(item.day).getDate() +"-" +month;
 
-                            return <div className="col-md-3" ><span className={select ? "timeslot-selected" : "timeslot"} onClick={() => this.getClinicSlotbyDate(item)}>{dayName+" "+day}</span></div>
+                            return <div className="col-md-2" ><span className={select ? "timeslot-selected" : "timeslot"} onClick={() => this.getClinicSlotbyDate(item)}>{dayName+" "+day}</span></div>
                           })
                           :
                           <div className="col-md-12">
@@ -252,8 +253,8 @@ class ManageCalendar extends React.Component {
                     </div> 
 
                     <div className="col-md-12">
-                      <label>Select Slot</label>
-                      <div className="row">
+                      <label className="mt-3">Select Slot</label>
+                      <div className="row manage-calendar-date-selection-row">
                         {this.state.clinicSlotManage.length > 0 ?  
                           this.state.clinicSlotManage.map((item)=>{
                             let select = false
@@ -261,7 +262,7 @@ class ManageCalendar extends React.Component {
                                select = true
                             }
 
-                            return <div className="col-md-3" ><span className={item.available === 1 ? select ? "timeslot-selected" : "timeslot" : "timeslot-not-selected"} onClick={() => this.onSelectSlot(index, item.start, item.active)}>{this.format(item.start)}</span></div>
+                            return <div className="col-md-1" ><span className={item.available === 1 ? select ? "timeslot-selected" : "timeslot" : "timeslot-not-selected"} onClick={() => this.onSelectSlot(index, item.start, item.active)}>{this.format(item.start)}</span></div>
                           })
                           :
                           <div className="col-md-12">

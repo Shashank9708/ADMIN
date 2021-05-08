@@ -186,11 +186,33 @@ span.timeslot {
   width: 100%;
   align-items: center;
   justify-content: center;
+  text-align: center;
   &:hover {
     background: $fill-ark;
     color: $fill-white;
   }
 }
+
+.timeslot-not-selected {
+  background: $fill-white;
+  padding: 4px 4px;
+  font-size: 12px;
+  margin-bottom: 5px;
+  border-radius: 2px;
+  border: 1px solid $fill-beige;
+  cursor: pointer;
+  margin-bottom: 5px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  &:hover {
+    background: $fill-ark;
+    color: $fill-white;
+  }
+}
+
 span.timeslot-selected {
   background: $fill-ark;
   padding: 4px 4px;

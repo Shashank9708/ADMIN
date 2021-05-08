@@ -206,3 +206,9 @@ a:hover {
 .no-of-referral {
   text-align: center;
 }
+
+.manage-calendar-date-selection-row {
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
