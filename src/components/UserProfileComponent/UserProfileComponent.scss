@@ -1,0 +1,22 @@
+.user-profile-container {
+  display: flex;
+  align-items: flex-start;
+
+  &__profile-image {
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      margin: 5px 10px 0 0;
+    }
+  }
+
+  &__profile-details {
+    &__username {
+      font-weight: bold;
+    }
+    &__user-contact-number {
+      font-weight: normal;
+    }
+  }
+}
