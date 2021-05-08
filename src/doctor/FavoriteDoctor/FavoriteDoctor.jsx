@@ -11,6 +11,7 @@ import 'react-table-v6/react-table.css'
 import {DropdownButton, Dropdown} from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import UserProfileComponent from "../../components/UserProfileComponent/UserProfileComponent";
 
 
 class FavoriteDoctor extends React.Component {
@@ -179,15 +180,28 @@ class FavoriteDoctor extends React.Component {
                                   filtered={this.state.filtered}
                                   columns={[
                                       
-                                      {
+                                      
+                                    {
                                           Header: 'Doctor Name',
-                                          accessor  : "name",
-                                          className : 'grid-header',
+                                          accessor  : "favorite_id",
                                           filterable  : false,
-                                          filterMethod: (filter, row) => {
-                                              return row[filter.id].includes(filter.value);
-                                          }
-                                      },
+                                          className : 'grid-header',
+                                          Cell: row => 
+                                            <div className="">
+                                                <UserProfileComponent />
+                                            </div>
+                                        },
+                                      
+                                      
+                                    //   {
+                                    //       Header: 'Doctor Name',
+                                    //       accessor  : "name",
+                                    //       className : 'grid-header',
+                                    //       filterable  : false,
+                                    //       filterMethod: (filter, row) => {
+                                    //           return row[filter.id].includes(filter.value);
+                                    //       }
+                                    //   },
                                       {
                                           Header: 'Specialization',
                                           accessor  : "en_spec",
@@ -197,15 +211,39 @@ class FavoriteDoctor extends React.Component {
                                               return row[filter.id].includes(filter.value);
                                           }
                                       },
+                                      
+                                      {
+                                          Header: 'City',
+                                          accessor  : "city_id",
+                                          filterable  : false,
+                                          className : 'grid-header',
+                                          Cell: row => 
+                                            <div className="">
+                                                Indore
+                                            </div>
+                                        },
+                                        {
+                                          Header: 'No Of Referral',
+                                          accessor  : "city_id",
+                                          filterable  : false,
+                                          className : 'grid-header',
+                                          Cell: row => 
+                                            <div className="no-of-referral">
+                                                12
+                                            </div>
+                                        },                                                                            
+                                      
+                                      
                                       {
                                           Header: 'Actions',
                                           accessor  : "favorite_id",
                                           filterable  : false,
-                                          
                                           className : 'grid-header',
                                           Cell: row => 
-                                            <div className="">
-                                              <button type="button" className="btn-sm dropdown-toggle" data-toggle="dropdown" id={"dropdown-"+row.value}>
+                                            <div className="action-column-container">
+                                                <i class="fa fa-trash" aria-hidden="true"></i> <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                            
+                                              {/* <button type="button" className="btn-sm dropdown-toggle" data-toggle="dropdown" id={"dropdown-"+row.value}>
                                                 <span className="caret"></span>
                                                 <span>Action</span>
                                               </button>
@@ -213,7 +251,7 @@ class FavoriteDoctor extends React.Component {
                                                 <li><a href="#" onClick={() => this.removeFavorite(row.original)}>Remove</a></li>
                                                     <Dropdown.Divider />
                                                 <li><a href="#">Cancel</a></li>
-                                              </ul>
+                                              </ul> */}
                                             </div>
                                           
                                                 // <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
