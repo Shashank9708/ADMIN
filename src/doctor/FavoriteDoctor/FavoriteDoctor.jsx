@@ -183,12 +183,16 @@ class FavoriteDoctor extends React.Component {
                                       
                                     {
                                           Header: 'Doctor Name',
-                                          accessor  : "favorite_id",
+                                          accessor  : "name",
                                           filterable  : false,
                                           className : 'grid-header',
                                           Cell: row => 
                                             <div className="">
-                                                <UserProfileComponent />
+                                                <UserProfileComponent 
+                                                  name = {row.original.name}
+                                                  display_pic = {row.original.display_pic}
+                                                  contact_no = {row.original.contact_no}
+                                                />
                                             </div>
                                         },
                                       

@@ -56,7 +56,9 @@ class UpcomingAppointments extends React.Component {
 
         this.completedApi = this.completedApi.bind(this);
         this.patientDetailActive = this.patientDetailActive.bind(this);
+        
 
+        this.getUpcomingAppointmentsList = this.getUpcomingAppointmentsList.bind(this);
         this.state               = this.initialState;
     }
 
@@ -257,6 +259,14 @@ class UpcomingAppointments extends React.Component {
     * @return                Nothing
     */
     componentDidMount(){
+        this.getUpcomingAppointmentsList()
+    }
+    /**
+    * @DateOfCreation        26 July 2018
+    * @ShortDescription      This function is responsible to get the list of notification from API
+    * @return                Nothing
+    */
+    getUpcomingAppointmentsList(){
         let data = {
                       state_date: this.state.startDate.toISOString().substr(0, 10),
                       end_date: this.state.endDate.toISOString().substr(0, 10)
@@ -316,7 +326,7 @@ class UpcomingAppointments extends React.Component {
                 const { dispatch } = this.props;
                 dispatch(doctorActions.resetFirstState())
                 toast("Successfully")
-                this.getUpcomingAppointmentsList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
+                this.getUpcomingAppointmentsList();
             }.bind(this), 1500);
         }
         if(newProps.complete == true){
@@ -324,7 +334,7 @@ class UpcomingAppointments extends React.Component {
                 const { dispatch } = this.props;
                 dispatch(doctorActions.resetFirstState())
                 toast("Complete Successfully")
-                this.getUpcomingAppointmentsList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
+                this.getUpcomingAppointmentsList();
             }.bind(this), 1500);
         }
         if(newProps.referStatus == true){
@@ -333,7 +343,7 @@ class UpcomingAppointments extends React.Component {
                 dispatch(doctorActions.resetFirstState())
                 toast("Referred  Successfully")
                 this.addReferToDoctorHideHandle();
-                this.getUpcomingAppointmentsList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
+                this.getUpcomingAppointmentsList();
             }.bind(this), 1500);
         }
     }
@@ -344,7 +354,7 @@ class UpcomingAppointments extends React.Component {
         });
         if(name === 'endDate'){
           setTimeout(function() { 
-            this.getUpcomingAppointmentsList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
+            this.getUpcomingAppointmentsList();
           }.bind(this), 1000);
         }
     }
@@ -363,7 +373,7 @@ class UpcomingAppointments extends React.Component {
 
     render() {
       const {startDate, endDate} = this.state
-      console.log(this.state.endDate)
+      // console.log(this.state.endDate)
         // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
           <React.Fragment>
@@ -388,46 +398,7 @@ class UpcomingAppointments extends React.Component {
                           <button type="button" className="btn btn-sm"><i className="fa fa-list" aria-hidden="true"></i></button>
                         </div>
                       </div>
-                    </div>
-   
-                    <div className="page-filter">
-                      <div className="page-filter__from-date">
-                        <DatePicker
-                          selected={startDate}
-                          onChange={date => this.handleInputChange('startDate',date)}
-                          selectsStart
-                          startDate={startDate}
-                          endDate={endDate}
-                          dateFormat="dd/MM/yyyy"
-                        />
-                      </div>
-                      <div className="page-filter__to-date">
-                        <DatePicker
-                          selected={endDate}
-                          onChange={date => this.handleInputChange('endDate',date)}
-                          selectsEnd
-                          minDate={startDate}
-                          startDate={startDate}
-                          endDate={endDate}
-                          dateFormat="dd/MM/yyyy"
-                        />
-                      </div>
-                      <div className="page-filter__searchbox">
-                        <input type="text" placeholder="Search"/>
-                      </div>
-                      <div className="page-filter__others">
-                        <div className="dropdown">
-                          <button className="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Status
-                          </button>
-                          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a className="dropdown-item" href="#">Booked</a>
-                            <a className="dropdown-item" href="#">Cancelled</a>
-                            <a className="dropdown-item" href="#">Completed</a>
-                          </div>
-                        </div>
-                      </div>                    
-                    </div>    
+                    </div>  
    
                     <div className="row">
                       <div className="col-md-5">

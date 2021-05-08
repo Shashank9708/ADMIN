@@ -1,20 +1,20 @@
 import React  from 'react';
 import './UserProfileComponent.scss';
+import { configConstants } from '../../_constants';
 
-
-  function UserProfileComponent() {
+  function UserProfileComponent({name, display_pic, contact_no}) {
     return (
     <>
       <div className="user-profile-container">
         <div className="user-profile-container__profile-image">
-            <img src="https://www.michiganlutheran.org/wp-content/uploads/2019/09/placeholder-profile-sq.jpg" />
+            <img src={configConstants.API_BASE_PATH+"/"+display_pic} />
         </div>
         <div className="user-profile-container__profile-details">
             <div className="user-profile-container__profile-details__username">
-              Chetan Wagh
+              {name}
             </div>
             <div className="user-profile-container__profile-details__user-contact-number">
-              <i class="fa fa-phone" aria-hidden="true"></i> 012345689
+              <i className="fa fa-phone" aria-hidden="true"></i> {contact_no}
             </div>
         </div>
       </div>
