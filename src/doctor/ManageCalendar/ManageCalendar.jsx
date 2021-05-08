@@ -225,9 +225,9 @@ class ManageCalendar extends React.Component {
                         options={this.props.clinicList}
                         name='clinic_id'
                     />
-                    <div className="col-md-12">
+                    
+                    <div className="">
                       <label className="mt-3">Select Date</label>
-                      
                       <div className="row manage-calendar-date-selection-row">
                         {this.state.days.length > 0 ?  
                           this.state.days.map((item)=>{
@@ -252,9 +252,9 @@ class ManageCalendar extends React.Component {
                       </div>
                     </div> 
 
-                    <div className="col-md-12">
+                    <div className="">
                       <label className="mt-3">Select Slot</label>
-                      <div className="row manage-calendar-date-selection-row">
+                      <div className="row">
                         {this.state.clinicSlotManage.length > 0 ?  
                           this.state.clinicSlotManage.map((item)=>{
                             let select = false
@@ -262,7 +262,7 @@ class ManageCalendar extends React.Component {
                                select = true
                             }
 
-                            return <div className="col-md-1" ><span className={item.available === 1 ? select ? "timeslot-selected" : "timeslot" : "timeslot-not-selected"} onClick={() => this.onSelectSlot(index, item.start, item.active)}>{this.format(item.start)}</span></div>
+                            return <div className="col-md-2" ><span className={item.available === 1 ? select ? "timeslot-selected" : "timeslot" : "timeslot-not-selected"} onClick={() => this.onSelectSlot(index, item.start, item.active)}>{this.format(item.start)}</span></div>
                           })
                           :
                           <div className="col-md-12">
@@ -273,6 +273,16 @@ class ManageCalendar extends React.Component {
                         }
                       </div>
                     </div> 
+                            
+                    <div className="mt-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <button className="btn-sm">Active</button> <button className="btn-sm">Inactive</button>
+                        </div>
+                      </div>
+                    </div>        
+                            
+                            
                             
                   </main>
                   
