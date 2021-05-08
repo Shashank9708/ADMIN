@@ -13,10 +13,11 @@
 
   &__profile-details {
     &__username {
-      font-weight: bold;
+      font-weight: normal;
     }
     &__user-contact-number {
       font-weight: normal;
+      font-size: 0.8rem;
     }
   }
 }

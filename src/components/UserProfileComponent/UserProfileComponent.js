@@ -14,7 +14,7 @@ import './UserProfileComponent.scss';
               Chetan Wagh
             </div>
             <div className="user-profile-container__profile-details__user-contact-number">
-                012345689
+              <i class="fa fa-phone" aria-hidden="true"></i> 012345689
             </div>
         </div>
       </div>
