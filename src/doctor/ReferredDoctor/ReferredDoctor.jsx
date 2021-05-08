@@ -79,6 +79,9 @@ class ReferredDoctor extends React.Component {
                               <div className="page-heading__title-container">
                                   <h1 className="page-heading__title">Referred Patients</h1>
                               </div>
+                              <div className="page-heading__searchbox">
+                                    <input type="text" placeholder="Search"/>
+                              </div>                              
                             </div>                          
 
                             <div className="row">
