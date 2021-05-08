@@ -40,10 +40,8 @@ export const AddDigitalPrescription = (props) => {
                       </div>
                     </div>                   
                    
-                    <div className="row">
-                      <div className="col-md-12">
                       
-                        <div className="card">
+                        <div className="">
                           <div className="card-body">
                           
                             <div className="row">
@@ -60,7 +58,7 @@ export const AddDigitalPrescription = (props) => {
                                         <input
                                           className="form-control"
                                           name="medicine"
-                                          placeholder="Enter medicine name"
+                                          placeholder="Medicine name"
                                           value={x.medicine}
                                           onChange={e => props.handleTextChange(e, i)}
                                         />
@@ -110,10 +108,16 @@ export const AddDigitalPrescription = (props) => {
                                       </div>
                                       <div className="col-md-3">
                                         <div className="btn-box">
-                                          {props.inputList.length !== 1 && <button
-                                            className="mr10"
-                                            onClick={() => props.handleRemoveClick(i)}>X</button>}
-                                          {props.inputList.length - 1 === i && <button className="btn btn-sm" type="button" onClick={props.handleAddClick}>Add</button>}
+                                          {
+                                            props.inputList.length !== 1 && 
+                                            <button
+                                              className="btn-sm mr-1"
+                                              onClick={() => props.handleRemoveClick(i)}>
+                                              <i class="fa fa-trash" aria-hidden="true"></i>
+                                              
+                                            </button>
+                                          }
+                                          {props.inputList.length - 1 === i && <button className="btn-sm" type="button" onClick={props.handleAddClick}>Add</button>}
                                         </div>
                                       </div>
                                     </>
@@ -145,8 +149,7 @@ export const AddDigitalPrescription = (props) => {
                         </div>
                         
                         
-                      </div>
-                    </div> 
+
         </Modal.Body>
         <Modal.Footer>
           <Button className="btn-sm" onClick={props.handleClose}>Close</Button>

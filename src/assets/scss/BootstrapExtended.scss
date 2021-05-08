@@ -96,7 +96,6 @@ button,
         .list-view-status__container {
           text-transform: capitalize;
         }
-
         .list-view-action-btn__container {
           text-align: center;
           .fa-times-circle {
@@ -106,6 +105,9 @@ button,
           .fa-file {
             color: $fill-ark;
           }
+        }
+        .rt-tr {
+          align-items: center;
         }
       }
     }

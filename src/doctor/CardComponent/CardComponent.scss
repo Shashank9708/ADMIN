@@ -6,6 +6,11 @@
   .card-header {
     display: flex;
     justify-content: space-between;
+
+    &.active-card {
+      background: $fill-orange;
+    }
+
     &.bg-ark {
       background: $fill-ark;
       color: $fill-white;
