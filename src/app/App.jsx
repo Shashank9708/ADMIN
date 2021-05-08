@@ -189,6 +189,12 @@ const ViewProfile = Loadable({
 });
 
 
+const ManageCalendarContainer = Loadable({
+    loader: () => import('../doctor/ManageCalendar').then(object => object.ManageCalendarContainer),
+    loading: Loading
+});
+
+
 
 
 const SendNotificationContainer = Loadable({
@@ -255,6 +261,7 @@ class App extends React.Component {
                         <DoctorRoute exact path='/doctor-referral' component={ReferralDoctor} authenticated={this.props.authenticated} allowuser={[1]} />
                         <DoctorRoute exact path='/doctor-favorite' component={FavoriteDoctor} authenticated={this.props.authenticated} allowuser={[1]} />
                         <DoctorRoute exact path='/doctor-profile' component={ViewProfile} authenticated={this.props.authenticated} allowuser={[1]} />
+                        <DoctorRoute exact path='/manage-calendar' component={ManageCalendarContainer} authenticated={this.props.authenticated} allowuser={[1]} />
 
 
 

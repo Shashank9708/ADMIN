@@ -63,7 +63,7 @@ export class DoctorSideMenu extends React.Component {
                         <li className="nav-item"><Link className="nav-link" to="/doctor-referred"><i className="fa fa-handshake" aria-hidden="true"></i> Referred Patients</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/doctor-favorite"><i className="fa fa-user-md" aria-hidden="true"></i> Colleagues</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/doctor-profile"><i className="fa fa-user" aria-hidden="true"></i> Profile</Link></li>
-                        <li className="nav-item"><Link className="nav-link" to="/ddashboard"><i className="fa fa-calendar" aria-hidden="true"></i> Manage Calendar</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/manage-calendar"><i className="fa fa-calendar" aria-hidden="true"></i> Manage Calendar</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/ddashboard"><i className="fa fa-medkit" aria-hidden="true"></i> Health Tips</Link></li>
                         
                        
