@@ -1,10 +1,14 @@
 import React from "react";
 import {Alert, Button, Modal, Tabs, Tab, DropdownButton, title} from 'react-bootstrap';
 import Select from 'react-select'
+import { configConstants } from '../../_constants';
+
 
 export const AddDigitalPrescription = (props) => {  
 
- 
+  if(props.prescriptionURL){
+    window.open(configConstants.API_BASE_PATH+"/"+props.prescriptionURL, '_blank');
+  }
   return (
     <div>
       <Modal size="lg" show={props.addDigitalPrescriptionShow} onHide={props.handleClose}>
@@ -153,7 +157,7 @@ export const AddDigitalPrescription = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <Button className="btn-sm" onClick={props.handleClose}>Close</Button>
-          <Button className="btn-sm" onClick={props.handleSaveDigitalPrescription}>Save</Button>
+          <Button className="btn-sm" onClick={props.handleSaveDigitalPrescription}>Submit & Print</Button>
         </Modal.Footer>
       </Modal>
     </div>

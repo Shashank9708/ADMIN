@@ -5,13 +5,7 @@ import { DoctorSideMenu } from '../../components/SideMenu';
 import { headerActions, commonActions } from '../../_actions';
 
 import { format, subHours, startOfMonth } from 'date-fns';
-import {
-  MonthlyBody,
-  MonthlyCalendar,
-  MonthlyNav,
-  DefaultMonthlyEventItem,
-} from '@zach.codes/react-calendar';
-import '@zach.codes/react-calendar/dist/calendar-tailwind.css';
+
 
 
 
@@ -56,7 +50,6 @@ class DoctorDashboard extends React.Component {
     const {dashboardList} = this.props
     
 
-    console.log("-----",this.state.currentMonth)
     
     return (
         <React.Fragment>
@@ -72,59 +65,6 @@ class DoctorDashboard extends React.Component {
                       </div>
                     </div>
                   
-                   <MonthlyCalendar
-                      currentMonth={this.state.currentMonth}
-                      onCurrentMonthChange={date => this.handleChange(date)}
-                    >
-                      <MonthlyNav />
-                      <MonthlyBody
-                        events={[
-                                  {
-                                    date: new Date('2021-05-08T05:19:40.325Z'),
-                                    title: 'Call John'
-                                  },
-                                  {
-                                    date: new Date('2021-05-08T06:19:40.325Z'),
-                                    title: 'Call John'
-                                  },
-                                  {
-                                    date: new Date('2021-05-08T07:19:40.325Z'),
-                                    title: 'Meeting with Bob'
-                                  },
-                                  {
-                                    date: new Date('2021-05-08T10:19:40.325Z'),
-                                    title: 'Bike Appt'
-                                  },
-                                  {
-                                    date: new Date('2021-05-11T07:19:40.325Z'),
-                                    title: 'John Hilmer'
-                                  },
-                                  {
-                                    date: new Date('2021-05-04T07:19:40.325Z'),
-                                    title: 'Jane Call'
-                                  },
-                                  {
-                                    date: new Date('2021-05-14T07:19:40.325Z'),
-                                    title: 'Sound alarm'
-                                  },
-                                  {
-                                    date: new Date('2021-05-05T07:19:40.325Z'),
-                                    title: 'Soccer Practice'
-                                  },
-                                  {
-                                    date: new Date('2021-05-04T11:19:40.325Z'),
-                                    title: 'Alert'
-                                  },
-                                  {
-                                    date: new Date('2021-05-14T07:19:40.325Z'),
-                                    title: 'Donation'
-                                  }
-                                ]}
-                            renderDay={function noRefCheck(){}}
-
-                      />
-                    </MonthlyCalendar> 
-
 
 
                 </div>

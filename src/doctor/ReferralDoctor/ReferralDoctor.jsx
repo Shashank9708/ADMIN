@@ -7,6 +7,7 @@ import { doctorActions, headerActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
+import UserProfileComponent from "../../components/UserProfileComponent/UserProfileComponent";
 
 
 class ReferralDoctor extends React.Component {
@@ -98,9 +99,14 @@ class ReferralDoctor extends React.Component {
                                           accessor  : "referred_doc_name",
                                           className : 'grid-header',
                                           filterable  : false,
-                                          filterMethod: (filter, row) => {
-                                              return row[filter.id].includes(filter.value);
-                                          }
+                                          Cell: row => 
+                                            <div className="">
+                                                <UserProfileComponent 
+                                                  name = {row.original.referred_doc_name}
+                                                  display_pic = {row.original.display_pic}
+                                                  contact_no = {row.original.contact_no}
+                                                />
+                                            </div>
                                       },
                                       {
                                           Header: 'Spec',

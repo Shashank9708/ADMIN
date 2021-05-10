@@ -1,5 +1,5 @@
 import React  from 'react';
-
+import { configConstants } from '../../_constants';
 
 function PatientDetail(
     {
@@ -7,6 +7,7 @@ function PatientDetail(
       addReferToDoctorShowHandle = () => {},
       completedApi = () => {},
       addDigitalPrescriptionShowHandle = () => {},
+      actionButton = false,
     }) 
 {
   if(patientDetail)
@@ -20,10 +21,12 @@ function PatientDetail(
               <div className="card-body__profile-details-combo">                            
                 <div className="card-body__profile-details-combo__profile-section">
                   <div>
-                    <img className="profile-image" src="https://www.michiganlutheran.org/wp-content/uploads/2019/09/placeholder-profile-sq.jpg" />
+                    <img className="profile-image" src={configConstants.API_BASE_PATH+"/"+patientDetail.display_pic} />
                   </div>
                   <div>
+                  {!actionButton &&
                     <button className="btn btn-sm" onClick={() => addReferToDoctorShowHandle(patientDetail)} type="button">Refer To Doctor</button>
+                  }
                   </div>
                 </div>
                 <div className="card-body__profile-details-combo__details-section">
@@ -40,8 +43,12 @@ function PatientDetail(
               <div className="">
                 <div className="card-body__action-btn">
                     <button className="btn btn-sm btn-block" type="button">Medical History</button>
-                    <button className="btn btn-sm btn-block" type="button" onClick={() => addDigitalPrescriptionShowHandle(patientDetail)}>Prescription</button>
-                    <button className="btn btn-sm btn-block" type="button" onClick={() => completedApi(patientDetail.appointment_id)}>Complete</button>
+                    {!actionButton &&
+                      <>
+                      <button className="btn btn-sm btn-block" type="button" onClick={() => addDigitalPrescriptionShowHandle(patientDetail)}>Prescription</button>
+                      <button className="btn btn-sm btn-block" type="button" onClick={() => completedApi(patientDetail.appointment_id)}>Complete</button>
+                      </>
+                    }
                 </div>                          
               </div>
             </div>

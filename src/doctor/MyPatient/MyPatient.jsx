@@ -7,6 +7,9 @@ import { patientActions, headerActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
+import CardComponent from '../CardComponent/CardComponent';
+import PatientDetail from '../PatientDetail/PatientDetail';
+
 
 
 class MyPatient extends React.Component {
@@ -19,8 +22,9 @@ class MyPatient extends React.Component {
     constructor(props) {
         super(props);
         
-        this.getPatientList        = this.getPatientList.bind(this);
+        // this.getPatientList        = this.getPatientList.bind(this);
         this.notificationSearch         = this.notificationSearch.bind(this);
+        this.patientDetailActive = this.patientDetailActive.bind(this);
         this.state               = this.initialState;
     }
 
@@ -28,7 +32,9 @@ class MyPatient extends React.Component {
         return {
             loading : false,
             pages  : 0,
-            addAppointmentsShow: false
+            addAppointmentsShow: false,
+            active: false,
+            patientDetail: ''
         }
     }
 
@@ -49,9 +55,17 @@ class MyPatient extends React.Component {
     * @ShortDescription      This function is responsible to get the list of notification from API
     * @return                Nothing
     */
-    getPatientList(page, pageSize, sorted, filtered){
+    componentDidMount(){
         const { dispatch }   = this.props;
-        dispatch(patientActions.getMyPatientsList(page, pageSize, sorted, filtered));
+        dispatch(patientActions.getMyPatientsList());
+    }
+
+    patientDetailActive(data) {
+
+      this.setState({active: data.appointment_id, patientDetail:data})
+        // const { dispatch } = this.props;
+        // dispatch(doctorActions.completeAppointment(appointment_id));
+        
     }
 
     /**
@@ -85,6 +99,26 @@ class MyPatient extends React.Component {
                               
                             </div>
                             <div className="row">
+                              <div className="col-md-5">
+                                {this.props.patientsList.length > 0 &&  
+                                  this.props.patientsList.map((row) => 
+                                    <CardComponent 
+                                      appointment = {row}
+                                      handleClick = {this.patientDetailActive}
+                                      // cancelAll = {this.cancelAll}
+                                      active = {this.state.active}
+                                    />
+                                  )
+                                }
+                              </div>
+                              <div className="col-md-7">
+                                <PatientDetail 
+                                  patientDetail = {this.state.patientDetail}
+                                  actionButton={true}
+                                /> 
+                              </div>
+                            </div> 
+                            {/*<div className="row">
                               <ReactTable
                                   noDataText="No found !!"
                                   data={this.props.patientsList}
@@ -179,7 +213,7 @@ class MyPatient extends React.Component {
                                       this.getPatientList(state.page, state.pageSize, state.sorted, state.filtered);
                                   }}
                               />
-                            </div>
+                            </div>*/}
                         </main>
                     </div>
                 </div>    

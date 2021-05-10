@@ -454,11 +454,11 @@ function uploadPrescription(data, url) {
             .then(
                 response => {
                     if(response !== "Error: Network Error"){
-                        console.log("upload-->>",response)
+                        // console.log("upload-->>",response)
                         var data = response.data;
                         var errorMsg;
                         if(data.status === configConstants.SUCCESS_CODE){
-                            dispatch(success(data));
+                            dispatch(success(data.data));
                         }else if(data.status === configConstants.ERROR_CODE){
                             dispatch(failure(data.message));
                         }else if(response.status !== 200){

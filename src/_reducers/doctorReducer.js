@@ -32,6 +32,7 @@ const initialState = {
     status      : false,
 };
 export function doctorReducer(state = initialState, action) {
+  // console.log("action.result",action.result)
     switch (action.type) {
       
          // Fetch 
@@ -234,20 +235,23 @@ export function doctorReducer(state = initialState, action) {
           return {
             ...state,
             errorMsg         : false,
+            status         : false,
             loader           : true,
             submitted        : false 
           };
         case doctorConstants.UPLOAD_SAVE_SUCCESS:
           return  { 
               ...state,
-              uploaded     : action.result,
+              uploaded_url     : action.result.url,
               loader         : false,
-              errorMsg       : false
+              errorMsg       : false,
+              status       : true,
           };
         case doctorConstants.UPLOAD_SAVE_FAILURE:
           return {
             ...state, 
             submitted      : false,
+            status      : false,
             loader         : false,
             errorMsg       : action.error
            };
@@ -439,6 +443,7 @@ export function doctorReducer(state = initialState, action) {
               status          : false,
               referStatus          : false,
               complete        : false,
+              uploaded_url        : false,
 
            };
         case doctorConstants.FIRST_UNAUTHENTICATE:

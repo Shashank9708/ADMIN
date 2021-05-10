@@ -327,6 +327,7 @@ class UpcomingAppointments extends React.Component {
                 dispatch(doctorActions.resetFirstState())
                 toast("Successfully")
                 this.getUpcomingAppointmentsList();
+                this.addDigitalPrescriptionHideHandle();
             }.bind(this), 1500);
         }
         if(newProps.complete == true){
@@ -334,6 +335,7 @@ class UpcomingAppointments extends React.Component {
                 const { dispatch } = this.props;
                 dispatch(doctorActions.resetFirstState())
                 toast("Complete Successfully")
+                this.setState({active: false, patientDetail:''})
                 this.getUpcomingAppointmentsList();
             }.bind(this), 1500);
         }
@@ -407,6 +409,7 @@ class UpcomingAppointments extends React.Component {
                             <CardComponent 
                               appointment = {row}
                               handleClick = {this.patientDetailActive}
+                              cancelAll = {this.cancelAll}
                               active = {this.state.active}
                             />
                           )
@@ -443,6 +446,7 @@ class UpcomingAppointments extends React.Component {
                       handleRemoveClick = {this.handleRemoveClick}
                       handleAddClick = {this.handleAddClick}
                       handleFileChange = {this.handleFileChange}
+                      prescriptionURL = {this.props.uploaded_url}
                     />
 
                     <ReferToDoctor
@@ -468,7 +472,7 @@ class UpcomingAppointments extends React.Component {
  */
 
 function mapStateToProps(state) {
-    const { doctorAppoinementList, favoriteList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete } = state.doctorReducer;
+    const { doctorAppoinementList, favoriteList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete, uploaded_url } = state.doctorReducer;
     const { clinicList } = state.clinicReducer;
     const { healthProblem } = state.patientReducer;
     return {
@@ -484,7 +488,8 @@ function mapStateToProps(state) {
         pages,
         status,
         complete,
-        referStatus
+        referStatus,
+        uploaded_url
     };
 }
 const connectedUpcomingAppointments = connect(mapStateToProps)(UpcomingAppointments);

@@ -51,7 +51,7 @@ export const ReferToDoctor = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <Button className="btn-sm" onClick={props.handleClose}>Close</Button>
-          <Button className="btn-sm" onClick={props.handleReferToDoctor}>Save</Button>
+          <Button className="btn-sm" onClick={props.handleReferToDoctor}>REFER</Button>
         </Modal.Footer>
       </Modal>
     </div>

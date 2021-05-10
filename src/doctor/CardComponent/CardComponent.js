@@ -1,19 +1,19 @@
 import React  from 'react';
 import './CardComponent.scss';
+import { configConstants } from '../../_constants';
 
-
-function CardComponent({appointment, handleClick = () => {}, active = false}) {
+function CardComponent({appointment, handleClick = () => {}, active = false, cancelAll = () => {}}) {
     return (
     <>
       <div className="card" key={appointment.appointment_id}>
       <div className={appointment.appointment_id === active ? "card-header active-card" : "card-header bg-ark" }>
         <div className="card-header__name"><a href="#" onClick={() => handleClick(appointment)}>{appointment.name}</a></div>
-        <div className="card-header__action"><a href=""><i className="fa fa-times-circle" aria-hidden="true"></i></a></div>
+        <div className="card-header__action"><a href="" onClick={() => cancelAll(appointment)}><i className="fa fa-times-circle" aria-hidden="true"></i></a></div>
       </div>
       <div className="card-body">
         <div className="card-body__profile-with-user-details">
           <div className="card-body__profile-with-user-details__profile">
-            <a href=""><img className="card-profile-image" src="https://www.michiganlutheran.org/wp-content/uploads/2019/09/placeholder-profile-sq.jpg" /></a>
+            <a href=""><img className="card-profile-image" src={configConstants.API_BASE_PATH+"/"+appointment.display_pic} /></a>
           </div>    
           <div className="card-body__profile-with-user-details__user-details">
               <div>Health Problem: {appointment.health_problem_title}</div>
