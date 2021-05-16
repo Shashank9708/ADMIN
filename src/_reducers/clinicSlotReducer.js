@@ -46,7 +46,7 @@ export function clinicSlotReducer(state = initialState, action) {
               ...state,
               sendingRequest : true,
               fetchSlot        : true,
-              clinicSlotData    : action.result.data,
+              clinicSlotData    : action.result,
               loader         : false,
               errorMsg       : false
           };

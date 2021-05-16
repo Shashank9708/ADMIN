@@ -33,7 +33,7 @@ class UpcomingAppointments extends React.Component {
         this.addUpcomingAppointmentsHideHandle = this.addUpcomingAppointmentsHideHandle.bind(this);
 
         this.statusShowHandle = this.statusShowHandle.bind(this);
-        this.notificationSearch         = this.notificationSearch.bind(this);
+        this.SearchFilterFunction         = this.SearchFilterFunction.bind(this);
         this.handleInputChange         = this.handleInputChange.bind(this);
         this.cancelAll         = this.cancelAll.bind(this);
 
@@ -79,9 +79,29 @@ class UpcomingAppointments extends React.Component {
             referData: '',
             referTOdoctor: '',
             active: false,
-            patientDetail: ''
+            patientDetail: '',
+            doctorAppoinementList: [],
+            filterList: [],
 
         }
+    }
+
+    SearchFilterFunction(event){
+      let searchInput = event.target.value;
+
+      let { filterList } = this.state;
+      let filteredData = filterList.filter(value => {
+      return (
+          value.name.toLowerCase().includes(searchInput.toLowerCase()) 
+        );
+      });
+
+      this.setState({
+        //setting the filtered newData on datasource
+        //After setting the data it will automatically re-render the view
+        doctorAppoinementList: filteredData,
+        text: searchInput,
+      });
     }
 
     /**
@@ -278,18 +298,6 @@ class UpcomingAppointments extends React.Component {
 
     /**
      * @DateOfCreation        26 July 2018
-     * @ShortDescription      This function is responsible to handle load filtered notification list
-     * @return                Nothing
-    */
-    notificationSearch(event){
-        const { value } = event.target;
-        const filterAll = value;
-        const filtered = [{ id: 'all', value: filterAll }];
-        this.setState({ filterAll, filtered });
-    }
-
-    /**
-     * @DateOfCreation        26 July 2018
      * @ShortDescription      This function is responsible to handle open import modal
      * @return                Nothing
      */
@@ -309,8 +317,8 @@ class UpcomingAppointments extends React.Component {
     patientDetailActive(data) {
 
       this.setState({active: data.appointment_id, patientDetail:data})
-        // const { dispatch } = this.props;
-        // dispatch(doctorActions.completeAppointment(appointment_id));
+      const { dispatch } = this.props;
+      dispatch(patientActions.getPatientHistory(data.patient_id)); 
         
     }
 
@@ -321,6 +329,17 @@ class UpcomingAppointments extends React.Component {
   */
     UNSAFE_componentWillReceiveProps(newProps) {
         
+        if(newProps.doctorAppoinement == true){
+            setTimeout(function() { 
+              this.setState({
+                doctorAppoinementList: newProps.doctorAppoinementList,
+                filterList: newProps.doctorAppoinementList,
+              })
+                const { dispatch } = this.props;
+                dispatch(doctorActions.resetFirstState())
+            }.bind(this), 1500);
+        }
+
         if(newProps.status == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
@@ -375,8 +394,7 @@ class UpcomingAppointments extends React.Component {
 
     render() {
       const {startDate, endDate} = this.state
-      // console.log(this.state.endDate)
-        // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
+
         return (
           <React.Fragment>
             <HeaderContainer />
@@ -393,6 +411,12 @@ class UpcomingAppointments extends React.Component {
                       <div className="page-heading__btn-container">
                          <button className="page-heading__btn btn-sm" onClick={this.addUpcomingAppointmentsShowHandle}>Book New Appointment</button>
                       </div>
+
+                      <div className="page-heading__btn-container">
+                        <div className="page-heading__searchbox">
+                            <input type="text" placeholder="Search" onChange={this.SearchFilterFunction}/>
+                        </div>   
+                      </div>
                       
                       <div>
                         <div className="btn-group" role="group" aria-label="Basic example">
@@ -404,8 +428,8 @@ class UpcomingAppointments extends React.Component {
    
                     <div className="row">
                       <div className="col-md-5">
-                        {this.props.doctorAppoinementList.length > 0 &&  
-                          this.props.doctorAppoinementList.map((row) => 
+                        {this.state.doctorAppoinementList.length > 0 &&  
+                          this.state.doctorAppoinementList.map((row) => 
                             <CardComponent 
                               appointment = {row}
                               handleClick = {this.patientDetailActive}
@@ -421,6 +445,7 @@ class UpcomingAppointments extends React.Component {
                           addReferToDoctorShowHandle = {this.addReferToDoctorShowHandle}
                           completedApi = {this.completedApi}
                           addDigitalPrescriptionShowHandle = {this.addDigitalPrescriptionShowHandle}
+                          patientHistory = {this.props.patientHistory}
                         /> 
                       </div>
                     </div>  
@@ -472,11 +497,12 @@ class UpcomingAppointments extends React.Component {
  */
 
 function mapStateToProps(state) {
-    const { doctorAppoinementList, favoriteList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete, uploaded_url } = state.doctorReducer;
+    const { doctorAppoinementList, doctorAppoinement, favoriteList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete, uploaded_url } = state.doctorReducer;
     const { clinicList } = state.clinicReducer;
-    const { healthProblem } = state.patientReducer;
+    const { healthProblem, patientHistory } = state.patientReducer;
     return {
         doctorAppoinementList,
+        doctorAppoinement,
         favoriteList,
         isUserNotValid,
         loader,
@@ -489,7 +515,8 @@ function mapStateToProps(state) {
         status,
         complete,
         referStatus,
-        uploaded_url
+        uploaded_url,
+        patientHistory
     };
 }
 const connectedUpcomingAppointments = connect(mapStateToProps)(UpcomingAppointments);

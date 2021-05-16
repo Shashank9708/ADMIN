@@ -55,7 +55,6 @@ class DoctorDashboard extends React.Component {
         this.addUpcomingAppointmentsHideHandle = this.addUpcomingAppointmentsHideHandle.bind(this);
 
         this.statusShowHandle = this.statusShowHandle.bind(this);
-        this.notificationSearch         = this.notificationSearch.bind(this);
         this.handleInputChange         = this.handleInputChange.bind(this);
         this.cancelAll         = this.cancelAll.bind(this);
 
@@ -301,18 +300,6 @@ class DoctorDashboard extends React.Component {
 
     /**
      * @DateOfCreation        26 July 2018
-     * @ShortDescription      This function is responsible to handle load filtered notification list
-     * @return                Nothing
-    */
-    notificationSearch(event){
-        const { value } = event.target;
-        const filterAll = value;
-        const filtered = [{ id: 'all', value: filterAll }];
-        this.setState({ filterAll, filtered });
-    }
-
-    /**
-     * @DateOfCreation        26 July 2018
      * @ShortDescription      This function is responsible to handle open import modal
      * @return                Nothing
      */
@@ -332,9 +319,8 @@ class DoctorDashboard extends React.Component {
     patientDetailActive(data) {
 
       this.setState({active: data.appointment_id, patientDetail:data})
-        // const { dispatch } = this.props;
-        // dispatch(doctorActions.completeAppointment(appointment_id));
-        
+      const { dispatch } = this.props;
+      dispatch(patientActions.getPatientHistory(data.patient_id));         
     }
 
     /**
@@ -438,37 +424,52 @@ class DoctorDashboard extends React.Component {
                     </div>  
    
                     <div className="row" >
+                      <div className="col-md-7">
                       <Calendar
                         selectable
                         popup={false}
-                        onShowMore={(events, date) => {
-                            console.log("-----------",events, date)
-                            this.setState({ showModal: true, events })
-                          }
-                        }
-              
+                        // onShowMore={(events, date) => {
+                        //     console.log("-----------",events, date)
+                        //     this.setState({ showModal: true, events })
+                        //   }
+                        // }
+                        step={15}
+                        timeslots={2}
                         localizer={localizer}
                         events={this.props.doctorAppoinementList}
-                        defaultView="month"
-                        views={["month", "week", "day"]}
+                        defaultView="day"
+                        views={["day", "week", "month"]}
                         defaultDate={moment().toDate()}                        
                         startAccessor="start"
                         endAccessor="end"
                         resizable
-                        style={{ height: "100vh" }}
-                        onSelectEvent={event => console.log("======",event)}
-                        onSelectSlot={slotInfo => console.log("slotInfo======",slotInfo)}
+                        style={{ height: "120vh" }}
+                        onSelectEvent={event => this.patientDetailActive(event)}
+                        // onSelectSlot={slotInfo => console.log("slotInfo======",slotInfo)}
 
-                        components={{
-                            event: CustomEvent,
-                        }}
+                        // components={{
+                        //     event: CustomEvent,
+                        // }}
+                        // onNavigate={date => {
+                        //     this.setState({ selectedDate: date });
+                        //   }}
 
                       />  
+                    </div> 
+                    <div className="col-md-5"> 
+                      <PatientDetail 
+                        patientDetail = {this.state.patientDetail}
+                        addReferToDoctorShowHandle = {this.addReferToDoctorShowHandle}
+                        completedApi = {this.completedApi}
+                        addDigitalPrescriptionShowHandle = {this.addDigitalPrescriptionShowHandle}
+                        patientHistory = {this.props.patientHistory}
+                      /> 
                     </div>  
+                  </div>  
    
                   </main>
                   
-                          {this.state.showModal && <Modal events={this.state.events}/>}
+                    {this.state.showModal && <Modal events={this.state.events}/>}
 
                     <AddUpcomingAppointmentsContainer
                       addUpcomingAppointmentsShow = {this.state.addUpcomingAppointmentsShow}
@@ -517,7 +518,7 @@ class DoctorDashboard extends React.Component {
 function mapStateToProps(state) {
     const { doctorAppoinementList, favoriteList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete, uploaded_url } = state.doctorReducer;
     const { clinicList } = state.clinicReducer;
-    const { healthProblem } = state.patientReducer;
+    const { healthProblem, patientHistory } = state.patientReducer;
     return {
         doctorAppoinementList,
         favoriteList,
@@ -532,7 +533,8 @@ function mapStateToProps(state) {
         status,
         complete,
         referStatus,
-        uploaded_url
+        uploaded_url,
+        patientHistory
     };
 }
 const connectedDoctorDashboard = connect(mapStateToProps)(DoctorDashboard);

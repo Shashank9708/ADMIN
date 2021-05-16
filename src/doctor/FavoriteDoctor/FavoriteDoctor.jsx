@@ -27,7 +27,7 @@ class FavoriteDoctor extends React.Component {
         this.addFavoriteDoctorHideHandle = this.addFavoriteDoctorHideHandle.bind(this);
 
         this.getFavoriteDoctorList        = this.getFavoriteDoctorList.bind(this);
-        this.notificationSearch         = this.notificationSearch.bind(this);
+        this.SearchFilterFunction         = this.SearchFilterFunction.bind(this);
         this.deleteFavoriteDoctor         = this.deleteFavoriteDoctor.bind(this);
         this.getDoctor         = this.getDoctor.bind(this);
         this.state               = this.initialState;
@@ -37,10 +37,32 @@ class FavoriteDoctor extends React.Component {
         return {
             loading : false,
             pages  : 0,
-            addFavoriteDoctorShow: false
+            addFavoriteDoctorShow: false,
+            text: '',
+            favoriteList: [],
+            filterList: [],
+            getCat: false
         }
     }
 
+    SearchFilterFunction(event){
+      let searchInput = event.target.value;
+
+      let { filterList } = this.state;
+      let filteredData = filterList.filter(value => {
+      return (
+          value.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+          value.en_spec.toLowerCase().includes(searchInput.toLowerCase())
+        );
+      });
+
+      this.setState({
+        //setting the filtered newData on datasource
+        //After setting the data it will automatically re-render the view
+        favoriteList: filteredData,
+        text: searchInput,
+      });
+    }
     /**
      * @DateOfCreation        26 July 2018
      * @ShortDescription      This function is responsible to handle open import modal
@@ -85,18 +107,6 @@ class FavoriteDoctor extends React.Component {
 
     /**
      * @DateOfCreation        26 July 2018
-     * @ShortDescription      This function is responsible to handle load filtered notification list
-     * @return                Nothing
-    */
-    notificationSearch(event){
-        const { value } = event.target;
-        const filterAll = value;
-        const filtered = [{ id: 'all', value: filterAll }];
-        this.setState({ filterAll, filtered });
-    }
-
-    /**
-     * @DateOfCreation        26 July 2018
      * @ShortDescription      This function is responsible to handle open import modal
      * @return                Nothing
      */
@@ -114,6 +124,17 @@ class FavoriteDoctor extends React.Component {
   */
     UNSAFE_componentWillReceiveProps(newProps) {
         
+        if(newProps.favorite == true){
+            setTimeout(function() { 
+              this.setState({
+                favoriteList: newProps.favoriteList,
+                filterList: newProps.favoriteList,
+              })
+                const { dispatch } = this.props;
+                dispatch(doctorActions.resetFirstState())
+
+            }.bind(this), 1500);
+        }
         if(newProps.status == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
@@ -161,7 +182,7 @@ class FavoriteDoctor extends React.Component {
                           
                           <div className="page-heading__btn-container">
                             <div className="page-heading__searchbox">
-                                <input type="text" placeholder="Search"/>
+                                <input type="text" placeholder="Search" onChange={this.SearchFilterFunction}/>
                             </div>   
                           </div>
                           
@@ -174,38 +195,25 @@ class FavoriteDoctor extends React.Component {
                             <div className="row">
                                 <ReactTable
                                   noDataText="No found !!"
-                                  data={this.props.favoriteList}
+                                  data={this.state.favoriteList}
                                   filterable
                                   defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
                                   filtered={this.state.filtered}
                                   columns={[
-                                      
-                                      
-                                    {
-                                          Header: 'Doctor Name',
-                                          accessor  : "name",
-                                          filterable  : false,
-                                          className : 'grid-header',
-                                          Cell: row => 
-                                            <div className="">
-                                                <UserProfileComponent 
-                                                  name = {row.original.name}
-                                                  display_pic = {row.original.display_pic}
-                                                  contact_no = {row.original.contact_no}
-                                                />
-                                            </div>
-                                        },
-                                      
-                                      
-                                    //   {
-                                    //       Header: 'Doctor Name',
-                                    //       accessor  : "name",
-                                    //       className : 'grid-header',
-                                    //       filterable  : false,
-                                    //       filterMethod: (filter, row) => {
-                                    //           return row[filter.id].includes(filter.value);
-                                    //       }
-                                    //   },
+                                      {
+                                        Header: 'Doctor Name',
+                                        accessor  : "name",
+                                        filterable  : false,
+                                        className : 'grid-header',
+                                        Cell: row => 
+                                          <div className="">
+                                              <UserProfileComponent 
+                                                name = {row.original.name}
+                                                display_pic = {row.original.display_pic}
+                                                contact_no = {row.original.contact_no}
+                                              />
+                                          </div>
+                                      },
                                       {
                                           Header: 'Specialization',
                                           accessor  : "en_spec",
@@ -223,7 +231,7 @@ class FavoriteDoctor extends React.Component {
                                           className : 'grid-header',
                                           Cell: row => 
                                             <div className="">
-                                                Indore
+                                                
                                             </div>
                                         },
                                         {
@@ -233,7 +241,7 @@ class FavoriteDoctor extends React.Component {
                                           className : 'grid-header',
                                           Cell: row => 
                                             <div className="no-of-referral">
-                                                12
+                                                
                                             </div>
                                         },                                                                            
                                       
@@ -245,25 +253,9 @@ class FavoriteDoctor extends React.Component {
                                           className : 'grid-header',
                                           Cell: row => 
                                             <div className="action-column-container">
-                                                <i class="fa fa-trash" aria-hidden="true"></i> <i class="fa fa-share-alt" aria-hidden="true"></i>
-                                            
-                                              {/* <button type="button" className="btn-sm dropdown-toggle" data-toggle="dropdown" id={"dropdown-"+row.value}>
-                                                <span className="caret"></span>
-                                                <span>Action</span>
-                                              </button>
-                                              <ul className="dropdown-menu" role="menu">
-                                                <li><a href="#" onClick={() => this.removeFavorite(row.original)}>Remove</a></li>
-                                                    <Dropdown.Divider />
-                                                <li><a href="#">Cancel</a></li>
-                                              </ul> */}
+                                                <i className="fa fa-trash" aria-hidden="true" onClick={() => this.removeFavorite(row.original)}></i> 
+                                                <i className="fa fa-share-alt" aria-hidden="true"></i>
                                             </div>
-                                          
-                                                // <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
-                                                //     <Dropdown.Item onClick={() => this.removeFavorite(row.original)}>Remove</Dropdown.Item>
-                                                // </DropdownButton>
-                                          
-                                                // <span><i id={"dropdown-"+row.value} class="fa fa-times-circle" aria-hidden="true" onClick={() => this.removeFavorite(row.original)}></i></span>
-                                                
                                       }
                                       
                                   ]}
@@ -274,7 +266,7 @@ class FavoriteDoctor extends React.Component {
                                       }
                                   ]}
                                   defaultPageSize={10}
-                                  minRows= {this.props.favoriteList}
+                                  minRows= {this.state.favoriteList}
                                   className="table table-bordered responsive"
                                   loading={this.state.loading}
                                   filterable
@@ -312,10 +304,11 @@ class FavoriteDoctor extends React.Component {
  */
 
 function mapStateToProps(state) {
-   const { favoriteList,doctorList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, closeForm } = state.doctorReducer;
+   const { favoriteList,doctorList,pages,loader,successMessage,sendingRequest,errorMsg, favorite, isUserNotValid, status, closeForm } = state.doctorReducer;
    const { categoryList  } = state.notificationReducer;
     return {
         favoriteList,
+        favorite,
         doctorList,
         isUserNotValid,
         loader,

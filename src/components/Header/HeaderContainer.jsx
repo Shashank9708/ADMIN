@@ -51,7 +51,7 @@ class HeaderContainer extends React.Component {
                     handle_logout = {this.handle_logout}
                     handle_profile = {this.handle_profile}
                     logged_in_user_name = { this.props.user.name }
-                    user_image = { this.props.user.user_image }
+                    user_image = { this.props.user.display_pic }
                 />
             </React.Fragment>
         );

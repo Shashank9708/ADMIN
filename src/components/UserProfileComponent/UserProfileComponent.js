@@ -7,7 +7,7 @@ import { configConstants } from '../../_constants';
     <>
       <div className="user-profile-container">
         <div className="user-profile-container__profile-image">
-            <img src={configConstants.API_BASE_PATH+"/"+display_pic} />
+            <img src={display_pic ? configConstants.API_BASE_PATH+"/"+display_pic : "https://www.michiganlutheran.org/wp-content/uploads/2019/09/placeholder-profile-sq.jpg"} />
         </div>
         <div className="user-profile-container__profile-details">
             <div className="user-profile-container__profile-details__username">

@@ -39,7 +39,7 @@ function clinicSlot(data) {
                 response => {
                     if(response !== "Error: Network Error"){
                         var data = response.data;
-                        console.log("data",data)
+                        // console.log("data",data)
                         var errorMsg;
                         if(data.status === configConstants.SUCCESS_CODE){
                             dispatch(success(data.data));
@@ -85,7 +85,7 @@ function saveClinicSlotProfile(data) {
                 response => {
                     if(response !== "Error: Network Error"){
                         var data = response.data;
-                        console.log("data",data)
+                        // console.log("data",data)
                         var errorMsg;
                         if(data.status === configConstants.SUCCESS_CODE){
                             dispatch(success(data.data));
@@ -131,7 +131,7 @@ function getClinicSlotList(data) {
                 response => {
                     if(response !== "Error: Network Error"){
                         var data = response.data;
-                        console.log("getClinicSlotList",data)
+                        // console.log("getClinicSlotList",data)
                         var errorMsg;
                         if(data.status === configConstants.SUCCESS_CODE){
                             dispatch(success(data.data));
@@ -177,7 +177,7 @@ function getClinicSlotManage(data) {
                 response => {
                     if(response !== "Error: Network Error"){
                         var data = response.data;
-                        console.log("getClinicSlotManage",response)
+                        // console.log("getClinicSlotManage",response)
                         var errorMsg;
                         if(data.status === configConstants.SUCCESS_CODE){
                             dispatch(success(data.data));
@@ -223,7 +223,7 @@ function getClinicSlotForAppointment(data) {
                 response => {
                     if(response !== "Error: Network Error"){
                         var data = response.data;
-                        console.log("getClinicSlotForAppointment",response)
+                        // console.log("getClinicSlotForAppointment",response)
                         var errorMsg;
                         if(data.status === configConstants.SUCCESS_CODE){
                             dispatch(success(data.data));
@@ -269,7 +269,7 @@ function getClinicSlotDate(data) {
                 response => {
                     if(response !== "Error: Network Error"){
                         var data = response.data;
-                        console.log("getClinicSlotDate",data)
+                        // console.log("getClinicSlotDate",data)
                         var errorMsg;
                         if(data.status === configConstants.SUCCESS_CODE){
                             dispatch(success(data.data));

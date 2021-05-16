@@ -15,9 +15,11 @@ const initialState = {
     bookDApp        : false,
     myAppoinementList        : [],
     doctorAppoinementList    : [],
+    doctorAppoinement    : false,
     doctorReferred    : [],
     doctorReferral    : [],
     favoriteList    : [],
+    favorite    : false,
     cancelMessage          : false,
     referToDoctor          : false,
     newPatient          : false,
@@ -194,6 +196,7 @@ export function doctorReducer(state = initialState, action) {
               ...state,
               doctorAppoinementList     : action.result.data,
               loader         : false,
+              doctorAppoinement         : true,
               errorMsg       : false
           };
         case doctorConstants.DOCTOR_APPOINTMENT_LIST_FAILURE:
@@ -391,6 +394,7 @@ export function doctorReducer(state = initialState, action) {
               ...state,
               favoriteList     : action.result.data,
               loader         : false,
+              favorite         : true,
               errorMsg       : false
           };
         case doctorConstants.FAVORITE_LIST_FAILURE:
@@ -398,6 +402,7 @@ export function doctorReducer(state = initialState, action) {
             ...state, 
             submitted      : false,
             loader         : false,
+            favorite         : true,
             errorMsg       : action.error
            };
 
@@ -444,6 +449,8 @@ export function doctorReducer(state = initialState, action) {
               referStatus          : false,
               complete        : false,
               uploaded_url        : false,
+              favorite        : false,
+              doctorAppoinement        : false,
 
            };
         case doctorConstants.FIRST_UNAUTHENTICATE:

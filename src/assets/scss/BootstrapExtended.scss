@@ -174,7 +174,7 @@ textarea.form-control {
 }
 
 span.timeslot {
-  background: $fill-white;
+  background: $fill-ark;
   padding: 4px 4px;
   font-size: 12px;
   margin-bottom: 5px;
@@ -212,9 +212,28 @@ span.timeslot {
     color: $fill-white;
   }
 }
+.timeslot-not-select {
+  background: $fill-grey;
+  padding: 4px 4px;
+  font-size: 12px;
+  margin-bottom: 5px;
+  border-radius: 2px;
+  border: 1px solid $fill-beige;
+  cursor: pointer;
+  margin-bottom: 5px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  &:hover {
+    background: $fill-ark;
+    color: $fill-white;
+  }
+}
 
 span.timeslot-selected {
-  background: $fill-ark;
+  background: $fill-orange;
   padding: 4px 4px;
   font-size: 12px;
   margin-bottom: 5px;

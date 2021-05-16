@@ -15,7 +15,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { utilityHelper } from '../../_helpers';
 
 class AllUpcomingAppointments extends React.Component {
     /**
@@ -31,7 +31,7 @@ class AllUpcomingAppointments extends React.Component {
 
         this.getUpcomingAppointmentsList        = this.getUpcomingAppointmentsList.bind(this);
         this.statusShowHandle = this.statusShowHandle.bind(this);
-        this.notificationSearch         = this.notificationSearch.bind(this);
+        this.SearchFilterFunction         = this.SearchFilterFunction.bind(this);
         this.handleInputChange         = this.handleInputChange.bind(this);
         this.cancelAll         = this.cancelAll.bind(this);
 
@@ -72,9 +72,32 @@ class AllUpcomingAppointments extends React.Component {
             patient_id: '',
             doctor_id: JSON.parse(localStorage.user).doc_id,
             referData: '',
-            referTOdoctor: ''
+            referTOdoctor: '',
+            doctorAppoinementList: [],
+            filterList: [],
 
         }
+    }
+
+    SearchFilterFunction(event){
+      let searchInput = event.target.value;
+
+      let { filterList } = this.state;
+      let filteredData = filterList.filter(value => {
+      return (
+          value.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+          value.health_problem_title.toLowerCase().includes(searchInput.toLowerCase()) ||
+          value.appointment_type.toLowerCase().includes(searchInput.toLowerCase()) ||
+          value.clinic_name.toLowerCase().includes(searchInput.toLowerCase())
+        );
+      });
+
+      this.setState({
+        //setting the filtered newData on datasource
+        //After setting the data it will automatically re-render the view
+        doctorAppoinementList: filteredData,
+        text: searchInput,
+      });
     }
 
     /**
@@ -261,17 +284,6 @@ class AllUpcomingAppointments extends React.Component {
         dispatch(doctorActions.doctorAppointmentList(data));
     }
 
-    /**
-     * @DateOfCreation        26 July 2018
-     * @ShortDescription      This function is responsible to handle load filtered notification list
-     * @return                Nothing
-    */
-    notificationSearch(event){
-        const { value } = event.target;
-        const filterAll = value;
-        const filtered = [{ id: 'all', value: filterAll }];
-        this.setState({ filterAll, filtered });
-    }
 
     /**
      * @DateOfCreation        26 July 2018
@@ -297,7 +309,16 @@ class AllUpcomingAppointments extends React.Component {
    * @return                Nothing
   */
     UNSAFE_componentWillReceiveProps(newProps) {
-        
+        if(newProps.doctorAppoinement == true){
+            setTimeout(function() { 
+              this.setState({
+                doctorAppoinementList: newProps.doctorAppoinementList,
+                filterList: newProps.doctorAppoinementList,
+              })
+                const { dispatch } = this.props;
+                dispatch(doctorActions.resetFirstState())
+            }.bind(this), 1500);
+        }
         if(newProps.status == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
@@ -350,8 +371,7 @@ class AllUpcomingAppointments extends React.Component {
 
     render() {
       const {startDate, endDate} = this.state
-      console.log(this.state.endDate)
-        // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
+
         return (
           <div className="page-container">
             <HeaderContainer />
@@ -389,10 +409,10 @@ class AllUpcomingAppointments extends React.Component {
                         />
                       </div>
                       <div className="page-filter__searchbox">
-                        <input type="text" placeholder="Search"/>
+                        <input type="text" placeholder="Search" onChange={this.SearchFilterFunction}/>
                       </div>
                       <div className="page-filter__others">
-                        <div className="dropdown">
+                       {/* <div className="dropdown">
                           <button className="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Status
                           </button>
@@ -401,7 +421,7 @@ class AllUpcomingAppointments extends React.Component {
                             <a className="dropdown-item" href="#">Cancelled</a>
                             <a className="dropdown-item" href="#">Completed</a>
                           </div>
-                        </div>
+                        </div>*/}
                       </div>                    
                     </div>  
                     
@@ -411,7 +431,7 @@ class AllUpcomingAppointments extends React.Component {
                       <div className="col-md-12">
                         <ReactTable
                             noDataText="No found !!"
-                            data={this.props.doctorAppoinementList}
+                            data={this.state.doctorAppoinementList}
                             filterable
                             defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
                             filtered={this.state.filtered}
@@ -440,18 +460,16 @@ class AllUpcomingAppointments extends React.Component {
                                     accessor  : "appointment_date",
                                     className : 'grid-header',
                                     filterable  : false,
-                                    filterMethod: (filter, row) => {
-                                        return row[filter.id].includes(filter.value);
-                                    }
+                                    Cell: row => 
+                                        <span>  { utilityHelper.formatDate(row.value) }</span>
                                 },
                                 {
                                     Header: 'Appointment Time',
                                     accessor  : "appointment_time",
                                     className : 'grid-header',
                                     filterable  : false,
-                                    filterMethod: (filter, row) => {
-                                        return row[filter.id].includes(filter.value);
-                                    }
+                                    Cell: row => 
+                                        <span>  { utilityHelper.formatTime(row.value) }</span>
                                 },
                                 {
                                     Header: 'Payment Mode',
@@ -501,7 +519,7 @@ class AllUpcomingAppointments extends React.Component {
                                 }
                             ]}
                             defaultPageSize={10}
-                            minRows= {this.props.doctorAppoinementList}
+                            minRows= {this.state.doctorAppoinementList}
                             className="table table-bordered responsive"
                             loading={this.state.loading}
                             filterable
@@ -566,11 +584,12 @@ class AllUpcomingAppointments extends React.Component {
  */
 
 function mapStateToProps(state) {
-    const { doctorAppoinementList, favoriteList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete } = state.doctorReducer;
+    const { doctorAppoinementList, doctorAppoinement, favoriteList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete } = state.doctorReducer;
     const { clinicList } = state.clinicReducer;
     const { healthProblem } = state.patientReducer;
     return {
         doctorAppoinementList,
+        doctorAppoinement,
         favoriteList,
         isUserNotValid,
         loader,

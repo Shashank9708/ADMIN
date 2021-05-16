@@ -11,7 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Select from 'react-select'
-
+import { utilityHelper } from '../../_helpers';
 
 
 class ManageCalendar extends React.Component {
@@ -25,15 +25,11 @@ class ManageCalendar extends React.Component {
         super(props);
         
         this.getClinicList         = this.getClinicList.bind(this);
-
         this.getClinicSlot = this.getClinicSlot.bind(this);
-
-
         this.getClinicSlotbyDate         = this.getClinicSlotbyDate.bind(this);
         this.dateToggleStatus         = this.dateToggleStatus.bind(this);
         this.onSelectSlot         = this.onSelectSlot.bind(this);
         this.slotStatusChange         = this.slotStatusChange.bind(this);
-        this.format         = this.format.bind(this);
         this.state               = this.initialState;
     }
 
@@ -85,15 +81,18 @@ class ManageCalendar extends React.Component {
           });
             let data = {
                     clinic_id: selectedOption.value,
-                    date: new Date()
+                    date: new Date().toISOString().substr(0, 10)
                   }
 
             const { dispatch } = this.props;
             dispatch(clinicSlotActions.getClinicSlotDate(data));
-            dispatch(clinicSlotActions.getClinicSlotForAppointment(data));
+            dispatch(clinicSlotActions.getClinicSlotManage(data));
       }
 
     getClinicSlotbyDate (row) {
+      if(row.active === 0){
+        return false
+      }
         this.setState({date: row.day, selectDateData: row});
         let data = {
                   clinic_id: this.state.clinic_id,
@@ -101,14 +100,15 @@ class ManageCalendar extends React.Component {
                 }
         // console.log("data",data)
         const { dispatch } = this.props;
-        dispatch(clinicSlotActions.getClinicSlotManage(data));
         dispatch(clinicSlotActions.getClinicSlotDate(data));
+        dispatch(clinicSlotActions.getClinicSlotManage(data));
     }
 
     dateToggleStatus (value) {
+      
       let status = 'inactive'
       let statusValue = 0
-      if(value){
+      if(value === 1){
           status = 'active'
           statusValue = 1
       }
@@ -138,6 +138,7 @@ class ManageCalendar extends React.Component {
         clinicSlotManage[index].active = value; // update the clinicSlotManage object as needed
         this.setState({ clinicSlotManage });
         
+
         let {slots} = this.state
 
         if(slots.indexOf(slot) !== -1){
@@ -191,20 +192,9 @@ class ManageCalendar extends React.Component {
         }
     }
 
-    format (time) {
-        let hour = (time.split(':'))[0]
-        let min = (time.split(':'))[1]
-        let part = hour > 12 ? 'PM' : 'AM';
-        
-        min = (min+'').length == 1 ? `0${min}` : min;
-        hour = hour > 12 ? hour - 12 : hour;
-        hour = (hour+'').length == 1 ? `0${hour}` : hour;
-
-        return (`${hour}:${min} ${part}`)  
-    }
 
     render() {
-
+      // console.log("slot",this.state.selectDateData)
         return (
           <React.Fragment>
             <HeaderContainer />
@@ -227,7 +217,7 @@ class ManageCalendar extends React.Component {
                     />
                     
                     <div className="">
-                      <label className="mt-3">Select Date</label>
+                      <label className="mt-3">Select Date ({utilityHelper.formatDate(this.state.date)})</label>
                       <div className="row manage-calendar-date-selection-row">
                         {this.state.days.length > 0 ?  
                           this.state.days.map((item)=>{
@@ -236,11 +226,15 @@ class ManageCalendar extends React.Component {
                                select = true
                             }  
                             let dayName = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date(item.day).getDay()]
-                            // console.log(dayName)
-                            var month = new Date(item.day).getMonth()+1
-                            var day = new Date(item.day).getDate() +"-" +month;
+                            var day = utilityHelper.formatDate(item.day)
 
-                            return <div className="col-md-2" ><span className={select ? "timeslot-selected" : "timeslot"} onClick={() => this.getClinicSlotbyDate(item)}>{dayName+" "+day}</span></div>
+                            return <div className="col-md-2" >
+                                <span 
+                                  className={(item.active === 1) ? select ? "timeslot" : "timeslot-selected" :  "timeslot-not-selected"} 
+                                  onClick={() => this.getClinicSlotbyDate(item)}>
+                                  {dayName+" "+day}
+                                </span>
+                              </div>
                           })
                           :
                           <div className="col-md-12">
@@ -252,17 +246,34 @@ class ManageCalendar extends React.Component {
                       </div>
                     </div> 
 
+                    <div className='custom-control custom-switch'>
+                          <input
+                            type='checkbox'
+                            className='custom-control-input'
+                            id='customSwitches'
+                            readOnly
+                            checked={(this.state.selectDateData.active === 0) ? true : false}
+                            onChange={() => this.dateToggleStatus((this.state.selectDateData.active === 0) ? 1 : 0)}
+                          />
+                          <label className='custom-control-label' htmlFor='customSwitches'>
+                            {(this.state.selectDateData.active === 1) ? "Day ON" : "Day OFF"} 
+                          </label>
+                        </div>
+
                     <div className="">
                       <label className="mt-3">Select Slot</label>
                       <div className="row">
                         {this.state.clinicSlotManage.length > 0 ?  
-                          this.state.clinicSlotManage.map((item)=>{
+                          this.state.clinicSlotManage.map((item,index)=>{
                             let select = false
                             if(item.active === 1){  
                                select = true
                             }
-
-                            return <div className="col-md-2" ><span className={item.available === 1 ? select ? "timeslot-selected" : "timeslot" : "timeslot-not-selected"} onClick={() => this.onSelectSlot(index, item.start, item.active)}>{this.format(item.start)}</span></div>
+                            return <div className="col-md-2" >
+                              <span className={!select ? "timeslot" : "timeslot-not-selected"} 
+                                onClick={() => this.onSelectSlot(index, item.start, item.active)}>
+                                  {utilityHelper.formatTime(item.start)}</span>
+                              </div>
                           })
                           :
                           <div className="col-md-12">
@@ -277,7 +288,8 @@ class ManageCalendar extends React.Component {
                     <div className="mt-3">
                       <div className="row">
                         <div className="col-md-12">
-                          <button className="btn-sm">Active</button> <button className="btn-sm">Inactive</button>
+                          <button className="btn-sm" onClick={() => this.slotStatusChange('active')}>Active</button> 
+                          <button className="btn-sm" onClick={() => this.slotStatusChange('inactive')}>Inactive</button>
                         </div>
                       </div>
                     </div>        

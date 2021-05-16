@@ -18,7 +18,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './ViewProfile.scss';
 import { Accordion,Card } from "react-bootstrap";
-
+import {CreateOptions, CreateOptionTime} from '../../_helpers/helper'
+import { utilityHelper } from '../../_helpers';
 
 
 class ViewProfile extends React.Component {
@@ -59,12 +60,11 @@ class ViewProfile extends React.Component {
         this.handleChange   = this.handleChange.bind(this);
         this.apiCall   = this.apiCall.bind(this);
 
-        this.addClinicSlot = this.addClinicSlot.bind(this);
-        this.closeClinicSlot = this.closeClinicSlot.bind(this);
         this.clinicSlotSave = this.clinicSlotSave.bind(this);
         this.removeClinicSlot   = this.removeClinicSlot.bind(this);
         this.handleSelectChangeCS   = this.handleSelectChangeCS.bind(this);
         this.getClinicSlot   = this.getClinicSlot.bind(this);
+        this.toggleStatus   = this.toggleStatus.bind(this);
 
     }
 
@@ -96,7 +96,8 @@ class ViewProfile extends React.Component {
                   clinics : [],
                   isSwitchOn:false, 
                   video:0,
-                  is_mobile_varify: 0
+                  is_mobile_varify: 0,
+                  video_charge: ''
               },
               validate : {
                   name : { isValid : true, message : '' },
@@ -135,14 +136,15 @@ class ViewProfile extends React.Component {
             doc_id: JSON.parse(localStorage.user).doc_id,
             clinic_id: '',
             day: 'Monday',
-            from_time: '09:00:00',
-            to_time: '12:00:00',
+            from_time: {label :'09:00 AM', value: '09:00:00'},
+            to_time: {label :'12:00 PM', value: '12:00:00'},
             id: '',
-            clinicSlotData: [],
             showAlert: false,
             slot_id: '',
             time: ['00:00:00', '01:00:00', '02:00:00', '03:00:00', '04:00:00', '05:00:00', '06:00:00', '07:00:00', '08:00:00', '09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00', '17:00:00', '18:00:00', '19:00:00', '20:00:00', '21:00:00', '22:00:00', '23:00:00']
-          }
+          },
+          clinicSlotData: [],
+          clinic_id: ''
 
         }
     }
@@ -152,6 +154,7 @@ class ViewProfile extends React.Component {
         dispatch(doctorActions.getSpecialization("params"))
         dispatch(profileActions.getCouncil());
         this.getProfile()
+        dispatch(clinicActions.getClinicList(this.state.clinicSlot.doc_id));
 
     }
 
@@ -366,6 +369,7 @@ class ViewProfile extends React.Component {
                         'expirience': detail.expirience,
                         'about': detail.about,
                         'video': detail.video,
+                        'video_charge': detail.video_charge,
                         'gender': (detail.gender.value) ? detail.gender.value : detail.gender,
                         'spec_id': (detail.spec_id.value) ? detail.spec_id.value : detail.spec_id,
                         'council_id': (detail.council_id.value) ? detail.council_id.value : detail.council_id
@@ -467,14 +471,19 @@ class ViewProfile extends React.Component {
     }
     editClinic(data){
       const { clinic } = this.state;  
+
+      if(this.props.cityList.length < 0){
+        const { dispatch } = this.props;
+        dispatch(clinicActions.getCityList(data.clinic_state_id)); 
+      }
       this.setState({
         clinic: {
           clinic_id: data.id,
           clinic_name: data.clinic_name,
           clinic_number: data.clinic_number,
           clinic_address: data.clinic_address,
-          clinic_city_id: {label: data.clinic_city_id, value: data.clinic_city_id },
-          clinic_state_id: {label: data.clinic_state_id, value: data.clinic_state_id },
+          clinic_city_id: {label: data.clinic_city_name, value: data.clinic_city_id },
+          clinic_state_id: utilityHelper.stateName(data.clinic_state_id),
           patient_attend_time: {label: data.patient_attend_time, value: data.patient_attend_time},
           clinic_pincode: data.clinic_pincode,
           clinic_fees: data.clinic_fees,
@@ -482,6 +491,7 @@ class ViewProfile extends React.Component {
         }
       })
       this.setState({addClinicShow:true})
+      
     }
     removeClinic(clinic_id){
       // console.log('id',id)
@@ -529,30 +539,7 @@ class ViewProfile extends React.Component {
       }
     }
 
-    addClinicSlot(){
-      this.setState({addClinicSlotShow:true})
-      const { dispatch } = this.props;
-        dispatch(clinicActions.getClinicList(this.state.clinicSlot.doc_id));
-
-    }
-    closeClinicSlot(){
-      this.setState({addClinicSlotShow:false})
-      const { clinicSlot } = this.state;
-      this.setState({
-        clinic : {
-            doc_id: JSON.parse(localStorage.user).doc_id,
-            clinic_id: '',
-            day: 'Monday',
-            from_time: '09:00:00',
-            to_time: '12:00:00',
-            id: '',
-            clinicSlotData: [],
-            showAlert: false,
-            slot_id: '',
-            time: ['00:00:00', '01:00:00', '02:00:00', '03:00:00', '04:00:00', '05:00:00', '06:00:00', '07:00:00', '08:00:00', '09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00', '17:00:00', '18:00:00', '19:00:00', '20:00:00', '21:00:00', '22:00:00', '23:00:00']
-          }
-      })  
-    }
+    
     handleSelectChangeCS(selectedOption, name) {
       const { clinicSlot } = this.state;  
       this.setState({
@@ -561,6 +548,9 @@ class ViewProfile extends React.Component {
           [name]: selectedOption
         }
       }) 
+      if(name=== 'clinic_id'){
+        this.getClinicSlot(selectedOption.value);
+      }
     }
     removeClinicSlot(slot_id){
       let data = {id: slot_id}
@@ -572,13 +562,12 @@ class ViewProfile extends React.Component {
       const { clinicSlot }  = this.state;
       const { dispatch } = this.props;
       let data = [{
-                      clinic_id: clinicSlot.clinic_id,
-                      day: clinicSlot.day,
-                      from_time: clinicSlot.from_time,
-                      to_time: clinicSlot.to_time,
+                      clinic_id: clinicSlot.clinic_id.value,
+                      day: clinicSlot.day.value,
+                      from_time: clinicSlot.from_time.value,
+                      to_time: clinicSlot.to_time.value,
                       id: ""
                     }]
-          // console.log('param',data)
       dispatch(clinicSlotActions.saveClinicSlotProfile(data));
     }
 
@@ -586,6 +575,21 @@ class ViewProfile extends React.Component {
         this.setState({clinic_id: clinic_id});
         const { dispatch } = this.props;
         dispatch(clinicSlotActions.clinicSlot(clinic_id));
+    }
+
+    toggleStatus (value, row) {
+      let status = 0
+      if(value){
+        status = 1
+      }
+      let data = {
+                  id: row.id,
+                  status: status.toString()
+                }
+      // console.log(data)
+      const { dispatch } = this.props;
+      dispatch(clinicSlotActions.clinicSlotStatusChange(data))
+      
     }
 
 
@@ -627,7 +631,8 @@ class ViewProfile extends React.Component {
                         educational_qualification: (data.educational_qualification) ? JSON.parse(data.educational_qualification) : [],
                         clinics: data.clinics || [],
                         doctorProfileDetail: true,
-                        is_mobile_varify: data.is_mobile_varify
+                        is_mobile_varify: data.is_mobile_varify,
+                        video_charge: data.video_charge
                     },
                     validate : {
                         ...validate
@@ -687,6 +692,7 @@ class ViewProfile extends React.Component {
 
         if(nextProps.addClinicSlot){
               setTimeout(function(){
+                toast("Successfully Add")
                   const { dispatch } = this.props;
                 dispatch(clinicSlotActions.resetClinicSlotState())
                 
@@ -694,8 +700,8 @@ class ViewProfile extends React.Component {
               }.bind(this),1500);
         }
         if(nextProps.deleteClinicSlot){
-              this.hideAlert();
               setTimeout(function(){
+                toast("Successfully Removed")
                 const { dispatch } = this.props;
                 dispatch(clinicSlotActions.resetClinicSlotState())
                 this.getClinicSlot(this.state.clinic_id);
@@ -703,6 +709,7 @@ class ViewProfile extends React.Component {
         }
         if(nextProps.statusClinicSlot){
               setTimeout(function(){
+                toast("Successfully Change")
                 const { dispatch } = this.props;
                 dispatch(clinicSlotActions.resetClinicSlotState())
                 this.getClinicSlot(this.state.clinic_id);
@@ -725,6 +732,7 @@ class ViewProfile extends React.Component {
           })
       }
     }
+
     render() {
       const profile = this.state.profile
 
@@ -879,7 +887,7 @@ class ViewProfile extends React.Component {
                                     return <tr key={i}>
                                         <td>{row.degree}</td>
                                         <td>{row.year}</td>
-                                        <td className="help-block remove-element" onClick={() => this.removeEducation(i)}><i class="fa fa-times-circle" aria-hidden="true"></i></td>
+                                        <td className="help-block remove-element" onClick={() => this.removeEducation(i)}><i className="fa fa-times-circle" aria-hidden="true"></i></td>
                                     </tr>
                                   })}
                                   </tbody>
@@ -1001,8 +1009,8 @@ class ViewProfile extends React.Component {
                                               <td>{row.clinic_number}</td>
                                               <td>{row.clinic_address}</td>
                                               <td>{row.patient_attend_time}</td>
-                                              <td>{row.clinic_state_id}</td>
-                                              <td>{row.clinic_city_id}</td>
+                                              <td>{utilityHelper.stateName(row.clinic_state_id)[0].label}</td>
+                                              <td>{row.clinic_city_name}</td>
                                               <td>{row.clinic_pincode}</td>
                                               <td>{row.clinic_fees}</td>
                                               <td>
@@ -1029,9 +1037,110 @@ class ViewProfile extends React.Component {
                             <Accordion.Collapse eventKey="4">
                               <Card.Body>
                                 <div className="row">
-                                    <div className="col-md-12 text-right">
-                                      <button className="btn-sm mb-3" onClick={this.addClinicSlot}>Add Clinic Slot</button>
+                                    <div className="col-md-12">
+                                      <label>Select Clinic</label>
+                                      <div className={ 'form-group' }>
+                                        <Select
+                                            placeholder = "Select clinic"
+                                            onChange={ (value, name) => this.handleSelectChangeCS(value, 'clinic_id') }
+                                            options={this.props.clinicList}
+                                            name='clinic_id'
+                                        />
+                                      </div>
                                     </div>                             
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-4">
+                                      <div className='form-group'>
+                                        <Select
+                                          placeholder = "Select Slot"
+                                          options={[
+                                              {label: 'Monday', value: 'Monday'},
+                                              {label: 'Tuesday', value: 'Tuesday'},
+                                              {label: 'Wednesday', value: 'Wednesday'},
+                                              {label: 'Thursday', value: 'Thursday'},
+                                              {label: 'Friday', value: 'Friday'},
+                                              {label: 'Saturday', value: 'Saturday'},
+                                              {label: 'Sunday', value: 'Sunday'},
+                                            ]}
+                                          name='day'
+                                          className="selectOption"
+                                          onChange={ (value, name) => this.handleSelectChangeCS(value, 'day') }
+                                        />
+                                      </div>
+                                    </div>
+
+                                    <div className="col-md-4">
+                                      <div className='form-group'>
+                                        <Select
+                                          placeholder = "Start Time"
+                                          options={CreateOptionTime(this.state.clinicSlot.time)}
+                                          name='from_time'
+                                          value={this.state.clinicSlot.from_time}
+                                          className="selectOption"
+                                          onChange={ (value, name) => this.handleSelectChangeCS(value, 'from_time') }
+                                        />
+                                      </div>
+                                    </div>
+
+                                    <div className="col-md-4">
+                                      <div className='form-group'>
+                                        <Select
+                                          placeholder = "End Time"
+                                          options={CreateOptionTime(this.state.clinicSlot.time)}
+                                          name='to_time'
+                                          className="selectOption"
+                                          value={this.state.clinicSlot.to_time}
+                                          onChange={ (value, name) => this.handleSelectChangeCS(value, 'to_time') }
+                                        />
+                                      </div>
+                                    </div>   
+                                    <div className="col-md-12">
+                                      <div className='form-group'>
+                                        <Button className="btn-sm" onClick={this.clinicSlotSave}>Save</Button>
+                                      </div>
+                                    </div> 
+
+                                    <div className="col-md-12">
+                                      <div className="table-wrap">
+                                        <Table className="table table-bordered responsive" responsive>
+                                        <thead>
+                                          <tr>
+                                            <th>Day</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Action</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        {this.state.clinicSlotData && this.state.clinicSlotData.length > 0 && this.state.clinicSlotData.map((row, i) => {
+                                          return <tr key={i}>
+                                              <td>{row.day}</td>
+                                              <td>{utilityHelper.formatTime(row.from_time)}</td>
+                                              <td>{utilityHelper.formatTime(row.to_time)}</td>
+                                              <td>
+                                                <div className='custom-control custom-switch'>
+                                                  <input
+                                                    type='checkbox'
+                                                    className='custom-control-input'
+                                                    id='customSwitches'
+                                                    readOnly
+                                                    checked={(row.schedulestatus === 1) ? true : false}
+                                                    onChange={() => this.toggleStatus((row.schedulestatus === 1) ? 0 : 1, row)}
+                                                  />
+                                                  <label className='custom-control-label' htmlFor='customSwitches'>
+                                                    {(row.schedulestatus === 1) ? "ON" : "OFF"} 
+                                                  </label>
+                                                </div>
+                                                <i className="fa fa-trash" aria-hidden="true" onClick={() => this.removeClinicSlot(row.id)}></i> 
+                                              </td>
+                                          </tr>
+                                        })}
+                                        </tbody>
+                                      </Table>
+                                      </div>
+                                    
+                                    </div>                           
                                 </div>
                               </Card.Body>
                             </Accordion.Collapse>
@@ -1042,7 +1151,16 @@ class ViewProfile extends React.Component {
                           <div className="checkbox-section">
                             <label><input type="checkbox" name="video" onChange={() =>this.handleCheckboxChange('video',profile.detail.video)} checked={(profile.detail.video === 1) ? true : false} className="option-input"/> <span>Video Appointment</span></label>
                           </div>
+                          
                         </div>
+                        {profile.detail.video === 1 && 
+                          <div className="col-md-6">
+                            <label>Video consultation </label>
+                            <div className='form-group'>
+                              <input name="video_charge" type="number" className="form-control" onChange = { this.handleInputChange } placeholder="Video fees" value={profile.detail.video_charge}/>
+                            </div>
+                          </div>
+                        }
 
 
                         <div className="row">
@@ -1070,15 +1188,6 @@ class ViewProfile extends React.Component {
                   handleSelectChange={this.handleSelectChangeCL}
                   payload={this.state.clinic}
                   cityList={this.props.cityList}
-                />
-
-                <AddClinicSlot
-                  addClinicSlotShow={this.state.addClinicSlotShow}
-                  handleClose={this.closeClinicSlot}
-                  handleClinicSlotSave={this.clinicSlotSave}
-                  handleSelectChange={this.handleSelectChangeCS}
-                  payload={this.state.clinicSlot}
-                  clinicList={this.props.clinicList}
                 />
                 <ToastContainer />
               </React.Fragment>

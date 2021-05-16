@@ -21,7 +21,7 @@ class ReferredDoctor extends React.Component {
         super(props);
         
         this.getReferredList        = this.getReferredList.bind(this);
-        this.notificationSearch         = this.notificationSearch.bind(this);
+        this.SearchFilterFunction         = this.SearchFilterFunction.bind(this);
         this.state               = this.initialState;
     }
 
@@ -29,8 +29,34 @@ class ReferredDoctor extends React.Component {
         return {
             loading : false,
             pages  : 0,
-            addAppointmentsShow: false
+            addAppointmentsShow: false,
+            text: '',
+            doctorReferred: [],
+            filterList: [],
+            getCat: false
         }
+    }
+
+    SearchFilterFunction(event){
+      let searchInput = event.target.value;
+
+      let { filterList } = this.state;
+      let filteredData = filterList.filter(value => {
+      return (
+          value.refer_doc_name.toLowerCase().includes(searchInput.toLowerCase()) ||
+          value.en_spec.toLowerCase().includes(searchInput.toLowerCase()) ||
+          value.patient_name.toLowerCase().includes(searchInput.toLowerCase()) ||
+          value.health_problem_title.toLowerCase().includes(searchInput.toLowerCase()) ||
+          (value.status === null ? 'pending' : value.status).includes(searchInput.toLowerCase())
+        );
+      });
+
+      this.setState({
+        //setting the filtered newData on datasource
+        //After setting the data it will automatically re-render the view
+        doctorReferred: filteredData,
+        text: searchInput,
+      });
     }
 
     /**
@@ -55,16 +81,18 @@ class ReferredDoctor extends React.Component {
         dispatch(doctorActions.getDoctorReferred(page, pageSize, sorted, filtered));
     }
 
-    /**
-     * @DateOfCreation        26 July 2018
-     * @ShortDescription      This function is responsible to handle load filtered notification list
-     * @return                Nothing
-    */
-    notificationSearch(event){
-        const { value } = event.target;
-        const filterAll = value;
-        const filtered = [{ id: 'all', value: filterAll }];
-        this.setState({ filterAll, filtered });
+    static getDerivedStateFromProps(nextProps, prevState) {
+      // console.log(nextProps.categroyList.data) 
+      if (nextProps.doctorReferred !== prevState.doctorReferred && !prevState.getCat) {
+        if(nextProps.doctorReferred.length > 0){
+          return ({ 
+            doctorReferred: nextProps.doctorReferred,
+            filterList: nextProps.doctorReferred,
+            getCat: true
+          })
+        } 
+      }
+      return null
     }
 
     render() {
@@ -81,14 +109,14 @@ class ReferredDoctor extends React.Component {
                                   <h1 className="page-heading__title">Referred Patients</h1>
                               </div>
                               <div className="page-heading__searchbox">
-                                    <input type="text" placeholder="Search"/>
+                                    <input type="text" placeholder="Search" onChange={this.SearchFilterFunction}/>
                               </div>                              
                             </div>                          
 
                             <div className="row">
                               <ReactTable
                                   noDataText="No found !!"
-                                  data={this.props.doctorReferred}
+                                  data={this.state.doctorReferred}
                                   filterable
                                   defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
                                   filtered={this.state.filtered}
@@ -102,8 +130,8 @@ class ReferredDoctor extends React.Component {
                                             <div className="">
                                                 <UserProfileComponent 
                                                   name = {row.original.refer_doc_name}
-                                                  display_pic = {row.original.display_pic}
-                                                  contact_no = {row.original.contact_no}
+                                                  display_pic = {row.original.refer_display_pic}
+                                                  contact_no = {row.original.referred_contact_no}
                                                 />
                                             </div>
                                       },
@@ -139,9 +167,10 @@ class ReferredDoctor extends React.Component {
                                           accessor  : "status",
                                           className : "grid-header",
                                           filterable  : false,
-                                          filterMethod: (filter, row) => {
-                                              return row[filter.id].includes(filter.value);
-                                          }
+                                          Cell : row => 
+                                            <span>
+                                            {row.value === null ? 'pending' : row.value}
+                                            </span>
                                       }
                                       
                                   ]}
@@ -152,7 +181,7 @@ class ReferredDoctor extends React.Component {
                                       }
                                   ]}
                                   defaultPageSize={10}
-                                  minRows= {this.props.doctorReferred}
+                                  minRows= {this.state.doctorReferred}
                                   className="table table-bordered responsive"
                                   loading={this.state.loading}
                                   filterable

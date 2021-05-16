@@ -1,6 +1,7 @@
 import React from 'react';
 import {Alert, Button, Modal, Tabs, Tab, DropdownButton, title} from 'react-bootstrap';
 import Select from 'react-select'
+import { utilityHelper } from '../../_helpers';
 
 
 export const AddClinic = (props) => { 

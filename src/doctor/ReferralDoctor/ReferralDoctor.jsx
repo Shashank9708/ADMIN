@@ -21,7 +21,7 @@ class ReferralDoctor extends React.Component {
         super(props);
         
         this.getReferralList        = this.getReferralList.bind(this);
-        this.notificationSearch         = this.notificationSearch.bind(this);
+        this.SearchFilterFunction         = this.SearchFilterFunction.bind(this);
         this.state               = this.initialState;
     }
 
@@ -29,8 +29,38 @@ class ReferralDoctor extends React.Component {
         return {
             loading : false,
             pages  : 0,
-            addAppointmentsShow: false
+            addAppointmentsShow: false,
+            text: '',
+            doctorReferral: [],
+            filterList: [],
+            getCat: false
         }
+    }
+
+    SearchFilterFunction(event){
+      let searchInput = event.target.value;
+
+      let { filterList } = this.state;
+      let filteredData = filterList.filter(value => {
+      return (
+          value.referred_doc_name.toLowerCase().includes(searchInput.toLowerCase()) ||
+          value.en_spec.toLowerCase().includes(searchInput.toLowerCase()) ||
+          value.patient_name.toLowerCase().includes(searchInput.toLowerCase()) ||
+          value.health_problem_title.toLowerCase().includes(searchInput.toLowerCase()) ||
+          value.status.toLowerCase().includes(searchInput.toLowerCase())
+          // value.status
+          //   .toString()
+          //   .toLowerCase()
+          //   .includes(searchInput.toLowerCase())
+        );
+      });
+
+      this.setState({
+        //setting the filtered newData on datasource
+        //After setting the data it will automatically re-render the view
+        doctorReferral: filteredData,
+        text: searchInput,
+      });
     }
 
     /**
@@ -55,16 +85,18 @@ class ReferralDoctor extends React.Component {
         dispatch(doctorActions.getDoctorReferrals(page, pageSize, sorted, filtered));
     }
 
-    /**
-     * @DateOfCreation        26 July 2018
-     * @ShortDescription      This function is responsible to handle load filtered notification list
-     * @return                Nothing
-    */
-    notificationSearch(event){
-        const { value } = event.target;
-        const filterAll = value;
-        const filtered = [{ id: 'all', value: filterAll }];
-        this.setState({ filterAll, filtered });
+    static getDerivedStateFromProps(nextProps, prevState) {
+      // console.log(nextProps.categroyList.data) 
+      if (nextProps.doctorReferral !== prevState.doctorReferral && !prevState.getCat) {
+        if(nextProps.doctorReferral.length > 0){
+          return ({ 
+            doctorReferral: nextProps.doctorReferral,
+            filterList: nextProps.doctorReferral,
+            getCat: true
+          })
+        } 
+      }
+      return null
     }
 
     render() {
@@ -82,14 +114,14 @@ class ReferralDoctor extends React.Component {
                                   <h1 className="page-heading__title">Referral Patients</h1>
                               </div>
                               <div className="page-heading__searchbox">
-                                    <input type="text" placeholder="Search"/>
+                                    <input type="text" placeholder="Search" onChange={this.SearchFilterFunction}/>
                               </div>                              
                             </div>                            
                             
                             <div className="row">
                               <ReactTable
                                   noDataText="No found !!"
-                                  data={this.props.doctorReferral}
+                                  data={this.state.doctorReferral}
                                   filterable
                                   defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
                                   filtered={this.state.filtered}
@@ -103,8 +135,8 @@ class ReferralDoctor extends React.Component {
                                             <div className="">
                                                 <UserProfileComponent 
                                                   name = {row.original.referred_doc_name}
-                                                  display_pic = {row.original.display_pic}
-                                                  contact_no = {row.original.contact_no}
+                                                  display_pic = {row.original.refer_display_pic}
+                                                  contact_no = {row.original.refer_contact_no}
                                                 />
                                             </div>
                                       },
@@ -153,7 +185,7 @@ class ReferralDoctor extends React.Component {
                                       }
                                   ]}
                                   defaultPageSize={10}
-                                  minRows= {this.props.doctorReferral}
+                                  minRows= {this.state.doctorReferral}
                                   className="table table-bordered responsive"
                                   loading={this.state.loading}
                                   filterable

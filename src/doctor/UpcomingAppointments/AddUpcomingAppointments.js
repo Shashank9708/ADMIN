@@ -25,17 +25,19 @@ export const AddUpcomingAppointments = (props) => {
                   <Modal.Body>
                       <div className="row">
                         <div className="col-md-12">
-                          <div className={ props.payload.validate.name.isValid ? 'form-group' : 'form-group has-error' }>
-                            <input name="name" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Patient Name"/>
-                            <span className="help-block">{ props.payload.validate.name.message }</span>
-                          </div>
-                        </div>
-                        <div className="col-md-12">
                           <div className={ props.payload.validate.contact_no.isValid ? 'form-group' : 'form-group has-error' }>
                             <input name="contact_no" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Mobile Number"/>
                             <span className="help-block">{ props.payload.validate.contact_no.message }</span>
                           </div>
                         </div>
+
+                        <div className="col-md-12">
+                          <div className={ props.payload.validate.name.isValid ? 'form-group' : 'form-group has-error' }>
+                            <input name="name" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Patient Name"/>
+                            <span className="help-block">{ props.payload.validate.name.message }</span>
+                          </div>
+                        </div>
+                        
 
                         <div className="col-md-12">
                           
@@ -72,7 +74,7 @@ export const AddUpcomingAppointments = (props) => {
                                 if(row.day == props.payload.detail.appointment_date){  
                                    select = true
                                 }  
-                                return <div className="col-md-3"><span className={select ? "timeslot-selected" : "timeslot"} onClick={() => props.slotDate(row.day)}>{row.day}</span></div>
+                                return <div className="col-md-3"><span className={select ? "timeslot" : "timeslot-not-selected"} onClick={() => props.slotDate(row.day)}>{row.day}</span></div>
                               })
                               :
                               <div className="col-md-12">
@@ -94,7 +96,9 @@ export const AddUpcomingAppointments = (props) => {
                                 if(row.start == props.payload.detail.appointment_time){  
                                    select = true
                                 }  
-                                return <div className="col-md-3"><span className={row.available === 1 ? select ? "timeslot-selected" : "timeslot" : "timeslot-not-selected"} onClick={() => props.slotTime(row.start)}>{row.start}</span></div>
+                                return <div className="col-md-3">
+                                  <span className={row.available === 1 ? select ? "timeslot" : "timeslot-not-selected" : "timeslot-not-select"} 
+                                  onClick={() => (row.available === 1) ? props.slotTime(row.start) : ''}>{row.start}</span></div>
                               })
                               :
                               

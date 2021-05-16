@@ -23,7 +23,7 @@ class MyPatient extends React.Component {
         super(props);
         
         // this.getPatientList        = this.getPatientList.bind(this);
-        this.notificationSearch         = this.notificationSearch.bind(this);
+        this.SearchFilterFunction         = this.SearchFilterFunction.bind(this);
         this.patientDetailActive = this.patientDetailActive.bind(this);
         this.state               = this.initialState;
     }
@@ -34,8 +34,43 @@ class MyPatient extends React.Component {
             pages  : 0,
             addAppointmentsShow: false,
             active: false,
-            patientDetail: ''
+            patientDetail: '',
+            patientsList: [],
+            filterList: [],
+            getCat: false
         }
+    }
+
+    SearchFilterFunction(event){
+      let searchInput = event.target.value;
+
+      let { filterList } = this.state;
+      let filteredData = filterList.filter(value => {
+      return (
+          value.name.toLowerCase().includes(searchInput.toLowerCase()) 
+        );
+      });
+
+      this.setState({
+        //setting the filtered newData on datasource
+        //After setting the data it will automatically re-render the view
+        patientsList: filteredData,
+        // text: searchInput,
+      });
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+      // console.log(nextProps.categroyList.data) 
+      if (nextProps.patientsList !== prevState.patientsList && !prevState.getCat) {
+        if(nextProps.patientsList.length > 0){
+          return ({ 
+            patientsList: nextProps.patientsList,
+            filterList: nextProps.patientsList,
+            getCat: true
+          })
+        } 
+      }
+      return null
     }
 
     /**
@@ -63,24 +98,13 @@ class MyPatient extends React.Component {
     patientDetailActive(data) {
 
       this.setState({active: data.appointment_id, patientDetail:data})
-        // const { dispatch } = this.props;
-        // dispatch(doctorActions.completeAppointment(appointment_id));
-        
-    }
 
-    /**
-     * @DateOfCreation        26 July 2018
-     * @ShortDescription      This function is responsible to handle load filtered notification list
-     * @return                Nothing
-    */
-    notificationSearch(event){
-        const { value } = event.target;
-        const filterAll = value;
-        const filtered = [{ id: 'all', value: filterAll }];
-        this.setState({ filterAll, filtered });
+      const { dispatch } = this.props;
+      dispatch(patientActions.getPatientHistory(data.patient_id));   
     }
 
     render() {
+
         return (
             <React.Fragment>
                 <HeaderContainer />
@@ -94,19 +118,20 @@ class MyPatient extends React.Component {
                                   <h1 className="page-heading__title">My Patients</h1>
                               </div>
                               <div className="page-heading__searchbox">
-                                    <input type="text" placeholder="Search"/>
+                                    <input type="text" placeholder="Search" onChange={this.SearchFilterFunction}/>
                               </div>
                               
                             </div>
                             <div className="row">
                               <div className="col-md-5">
-                                {this.props.patientsList.length > 0 &&  
-                                  this.props.patientsList.map((row) => 
+                                {this.state.patientsList.length > 0 &&  
+                                  this.state.patientsList.map((row) => 
                                     <CardComponent 
                                       appointment = {row}
                                       handleClick = {this.patientDetailActive}
                                       // cancelAll = {this.cancelAll}
                                       active = {this.state.active}
+                                      actionButton={false}
                                     />
                                   )
                                 }
@@ -115,105 +140,10 @@ class MyPatient extends React.Component {
                                 <PatientDetail 
                                   patientDetail = {this.state.patientDetail}
                                   actionButton={true}
+                                  patientHistory = {this.props.patientHistory}
                                 /> 
                               </div>
                             </div> 
-                            {/*<div className="row">
-                              <ReactTable
-                                  noDataText="No found !!"
-                                  data={this.props.patientsList}
-                                  filterable
-                                  defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
-                                  filtered={this.state.filtered}
-                                  columns={[
-                                      {
-                                          Header: 'Patient Name',
-                                          accessor  : "name",
-                                          className : 'grid-header',
-                                          filterable  : false,
-                                          filterMethod: (filter, row) => {
-                                              return row[filter.id].includes(filter.value);
-                                          }
-                                      },
-                                      {
-                                          Header: 'Health Problem',
-                                          accessor  : "health_problem_title",
-                                          className : 'grid-header',
-                                          filterable  : false,
-                                          filterMethod: (filter, row) => {
-                                              return row[filter.id].includes(filter.value);
-                                          }
-                                      },
-                                      {
-                                          Header      : "Appointment Date",
-                                          accessor    : "appointment_date",
-                                          className   : "grid-header",
-                                          filterable  : false,
-                                          filterMethod: (filter, row) => {
-                                              return row[filter.id].includes(filter.value);
-                                          }
-                                      },
-                                      {
-                                          Header: 'Appointment Time',
-                                          accessor  : "appointment_time",
-                                          className : 'grid-header',
-                                          filterable  : false,
-                                          filterMethod: (filter, row) => {
-                                              return row[filter.id].includes(filter.value);
-                                          }
-                                      },
-                                      {
-                                          Header: 'Payment Mode',
-                                          accessor  : "appointment_type",
-                                          className : 'grid-header',
-                                          filterable  : false,
-                                          filterMethod: (filter, row) => {
-                                              return row[filter.id].includes(filter.value);
-                                          }
-                                      },
-                                      {
-                                          Header    : "Clinic Name",
-                                          accessor  : "clinic_name",
-                                          className : "grid-header",
-                                          filterable  : false,
-                                          filterMethod: (filter, row) => {
-                                              return row[filter.id].includes(filter.value);
-                                          }
-                                      },
-                                      {
-                                          Header    : "Status",
-                                          accessor  : "status",
-                                          className : "grid-header",
-                                          filterable  : false,
-                                          filterMethod: (filter, row) => {
-                                              return row[filter.id].includes(filter.value);
-                                          }
-                                      }
-                                      
-                                  ]}
-                                  defaultSorted={[
-                                      {
-                                          id: "id",
-                                          desc: false
-                                      }
-                                  ]}
-                                  defaultPageSize={10}
-                                  minRows= {this.props.patientsList}
-                                  className="table table-bordered responsive"
-                                  loading={this.state.loading}
-                                  filterable
-                                  Sorted
-                                  // pages={this.props.pages}
-                                  showPagination={true}
-                                  showPaginationTop={true}
-                                  showPaginationBottom={false}
-                                  pageSizeOptions={[10, 20, 50]}
-                                  automatic // For server side pagination
-                                  onFetchData={(state, instance) => {
-                                      this.getPatientList(state.page, state.pageSize, state.sorted, state.filtered);
-                                  }}
-                              />
-                            </div>*/}
                         </main>
                     </div>
                 </div>    
@@ -231,6 +161,7 @@ class MyPatient extends React.Component {
 function mapStateToProps(state) {
    const { patientsList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid } = state.patientReducer;
    // console.log('patientsList',patientsList)
+   const { patientHistory } = state.patientReducer;
     return {
         patientsList,
         isUserNotValid,
@@ -238,7 +169,8 @@ function mapStateToProps(state) {
         successMessage,
         sendingRequest,
         errorMsg,
-        pages
+        pages,
+        patientHistory
     };
 }
 const connectedMyPatient = connect(mapStateToProps)(MyPatient);

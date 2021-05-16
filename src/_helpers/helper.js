@@ -1,3 +1,5 @@
+import { utilityHelper } from './utilityHelper';
+
 /**
  * Sets the value of a dropdown based on the target value.
  * @param list
@@ -53,4 +55,22 @@ export const formatLabelANDValue = (data) => {
 		return {label: data, value: data}
 	}
 	return {}
+}
+
+
+/**
+ * TODO  	
+ * Create array of object for Dropdown list.
+ * its contain label and value, passing Array
+ */
+export const CreateOptionTime = (arg) => {
+	let options = [];
+	for (let i = 0; i < arg.length; i++) {
+		let label = utilityHelper.formatTime(arg[i])
+		options.push({
+			label: label, value: arg[i]
+		});
+	}
+
+	return options
 }

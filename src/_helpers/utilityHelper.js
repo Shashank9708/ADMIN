@@ -1,6 +1,7 @@
 import { Cookies } from 'react-cookie';
 import { configConstants } from '../_constants';
 import { sessionService } from '../_packages/redux-react-session';
+import format from 'date-fns/format'
 
 /**
  * utilityHelper
@@ -24,7 +25,10 @@ export const utilityHelper = {
     getYears,
     getMultipleErrorMessage,
     inArray,
-    getAddress
+    getAddress,
+    formatTime,
+    formatDate,
+    stateName
 };
 
 /**
@@ -194,3 +198,62 @@ function getAddress (latitude, longitude) {
         request.send();
     });
 };
+
+
+function formatTime (time) {
+    let hour = (time.split(':'))[0]
+    let min = (time.split(':'))[1]
+    let part = hour > 12 ? 'PM' : 'AM';
+    
+    min = (min+'').length == 1 ? `0${min}` : min;
+    hour = hour > 12 ? hour - 12 : hour;
+    hour = (hour+'').length == 1 ? `0${hour}` : hour;
+
+    return (`${hour}:${min} ${part}`)  
+}
+
+function formatDate (date) {
+    return format(new Date(date), 'dd/MM/yyyy')
+}
+
+
+function stateName (id) {
+    let arg = [
+                  {value: 1, label: 'ANDHRA PRADESH' },
+                  {value: 2, label: 'ASSAM' },
+                  {value: 3, label: 'ARUNACHAL PRADESH' },
+                  {value: 4, label: 'BIHAR' },
+                  {value: 5, label: 'GUJRAT' },
+                  {value: 6, label: 'HARYANA' },
+                  {value: 7, label: 'HIMACHAL PRADESH' },
+                  {value: 8, label: 'JAMMU & KASHMIR' },
+                  {value: 9, label: 'KARNATAKA' },
+                  {value: 10, label: 'KERALA' },
+                  {value: 11, label: 'MADHYA PRADESH' },
+                  {value: 12, label: 'MAHARASHTRA' },
+                  {value: 13, label: 'MANIPUR' },
+                  {value: 14, label: 'MEGHALAYA' },
+                  {value: 15, label: 'MIZORAM' },
+                  {value: 16, label: 'NAGALAND' },
+                  {value: 17, label: 'ORISSA' },
+                  {value: 18, label: 'PUNJAB' },
+                  {value: 19, label: 'RAJASTHAN' },
+                  {value: 20, label: 'SIKKIM' },
+                  {value: 21, label: 'TAMIL NADU' },
+                  {value: 22, label: 'TRIPURA' },
+                  {value: 23, label: 'UTTAR PRADESH' },
+                  {value: 24, label: 'WEST BENGAL' },
+                  {value: 25, label: 'DELHI' },
+                  {value: 26, label: 'GOA' },
+                  {value: 27, label: 'PONDICHERY' },
+                  {value: 28, label: 'LAKSHDWEEP' },
+                  {value: 29, label: 'DAMAN & DIU' },
+                  {value: 30, label: 'DADRA & NAGAR' },
+                  {value: 31, label: 'CHANDIGARH' },
+                  {value: 32, label: 'ANDAMAN & NICOBAR' },
+                  {value: 33, label: 'UTTARANCHAL' },
+                  {value: 34, label: 'JHARKHAND' },
+                  {value: 35, label: 'CHATTISGARH' }
+              ]
+    return arg.filter(r=> r.value === id)
+}

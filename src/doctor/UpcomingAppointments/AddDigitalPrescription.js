@@ -117,7 +117,7 @@ export const AddDigitalPrescription = (props) => {
                                             <button
                                               className="btn-sm mr-1"
                                               onClick={() => props.handleRemoveClick(i)}>
-                                              <i class="fa fa-trash" aria-hidden="true"></i>
+                                              <i className="fa fa-trash" aria-hidden="true"></i>
                                               
                                             </button>
                                           }
