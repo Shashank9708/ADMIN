@@ -46,7 +46,7 @@ export class DoctorSideMenu extends React.Component {
             <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div className="sidebar-sticky pt-3">
                     <ul className="nav flex-column">
-                        <li className="nav-item"><Link className="nav-link" to="/ddashboard"> <i className="fa fa-home" aria-hidden="true"></i> Dashboard</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/dashboard"> <i className="fa fa-home" aria-hidden="true"></i> Dashboard</Link></li>
                         <li className="nav-item dropdown">
                             <Link className="nav-link dropdown-toggle" to="#" id="doctorAppointments" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i className="fa fa-address-book" aria-hidden="true"></i> Appointments

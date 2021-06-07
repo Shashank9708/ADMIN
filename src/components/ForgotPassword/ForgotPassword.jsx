@@ -29,7 +29,7 @@ export const ForgotPassword = (props) => {
                     {/* Show server side Error message */}
                     {
                         props.success_message &&
-                        <Alert bsStyle="success">
+                        <Alert variant="success">
                             {props.success_message}
                         </Alert>
                     }
@@ -37,7 +37,7 @@ export const ForgotPassword = (props) => {
                     {/* Show server side Error message */}
                     {
                         props.error_message &&
-                        <Alert bsStyle="danger">
+                        <Alert variant="danger">
                             {props.error_message}
                         </Alert>
                     }

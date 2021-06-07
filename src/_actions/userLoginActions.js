@@ -32,7 +32,8 @@ function loginSubmit(user) {
             .then(
                 response => { 
                     var data = response.data;
-                    var error_message;   
+                    var error_message;
+
                     if(data.status == configConstants.SUCCESS_CODE){
                         // Set access token and user in cookies 
                         sessionService.saveSession(data.token);
@@ -52,7 +53,8 @@ function loginSubmit(user) {
                         dispatch(failure(error_message));
                         return {status:  401, user: error_message}
                     }else{
-                        dispatch(failure(response));
+                        error_message  = "Enter valid contact number or password.";
+                        dispatch(failure(error_message));
                         return {status:  401, user: error_message}
                     }
                 }

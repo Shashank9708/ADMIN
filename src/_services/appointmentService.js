@@ -12,6 +12,7 @@ import { utilityHelper } from '../_helpers';
  */
 export const appointmentService = {
     getAppointmentList,
+    getVideoAppointmentList,
     saveAppointment
 };
 
@@ -26,6 +27,26 @@ function getAppointmentList(page, pageSize, sorted, filtered) {
     return axios({
         method  : 'get',
         url     : configConstants.API_BASE_PATH + '/admin/appointmentList',
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+
+/**
+* @DateOfCreation        26 July 2018
+* @ShortDescription      This function is responsible to call Fetch route list api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function getVideoAppointmentList(page, pageSize, sorted, filtered) {
+    
+    return axios({
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH + '/admin/videoAppointmentList',
     })
     .then(response => {
         return response;

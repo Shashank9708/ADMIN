@@ -14,7 +14,9 @@ export const productService = {
     getProductList,
     saveProduct,
     statusChange,
-    deleteProduct
+    deleteProduct,
+    getProductOrder,
+    orderStatusChange
 };
 
 /**
@@ -93,6 +95,47 @@ function deleteProduct(data) {
     return axios({
         method  : 'post',
         url     : configConstants.API_BASE_PATH + '/admin/deleteProduct',
+        data    : data
+    })
+    .then(response => {
+        return response;
+    })
+    .then(response => {
+        return response;
+    });
+}
+
+/**
+* @DateOfCreation        26 July 2018
+* @ShortDescription      This function is responsible to call Fetch route list api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function getProductOrder(page, pageSize, sorted, filtered) {
+    
+    return axios({
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH + '/admin/allOrders',
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+
+/**
+* @DateOfCreation        10 May 2018
+* @ShortDescription      This function is responsible to call Save product api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function orderStatusChange(data) {
+    // var loginAccessToken = utilityHelper.getLoginAccessToken();
+    return axios({
+        method  : 'post',
+        url     : configConstants.API_BASE_PATH + '/admin/changeOrderStatus',
         data    : data
     })
     .then(response => {

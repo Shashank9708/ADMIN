@@ -46,7 +46,7 @@ export class SideMenu extends React.Component {
             <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div className="sidebar-sticky pt-3">
                     <ul className="nav flex-column">
-                        <li className="nav-item"><Link className="nav-link" to="/dashboard"> <i className="fa fa-home" aria-hidden="true"></i> Dashboard</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/home"> <i className="fa fa-home" aria-hidden="true"></i> Dashboard</Link></li>
                         
                         <li className="nav-item"><Link className="nav-link" to="/users"><i className="fa fa-home" aria-hidden="true"></i> Users</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/health-problem"><i className="fa fa-home" aria-hidden="true"></i> Health Problems</Link></li>
@@ -54,6 +54,7 @@ export class SideMenu extends React.Component {
                         <li className="nav-item"><Link className="nav-link" to="/doctors"><i className="fa fa-home" aria-hidden="true"></i> Doctor</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/council"><i className="fa fa-home" aria-hidden="true"></i> Council</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/appointments"><i className="fa fa-home" aria-hidden="true"></i> Appointments</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/video-appointments"><i className="fa fa-home" aria-hidden="true"></i> Video Appointments</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/referred"><i className="fa fa-home" aria-hidden="true"></i> Referred Details</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/health-tips-categories"><i className="fa fa-home" aria-hidden="true"></i> Health Tips Categories</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/health-tips"><i className="fa fa-home" aria-hidden="true"></i> Health Tips</Link></li>
@@ -63,11 +64,11 @@ export class SideMenu extends React.Component {
                         <li className="nav-item"><Link className="nav-link" to="/plan"><i className="fa fa-home" aria-hidden="true"></i> Plan Management</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/product-categories"><i className="fa fa-home" aria-hidden="true"></i> Product Categories</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/product"><i className="fa fa-home" aria-hidden="true"></i> Products</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/product-order"><i className="fa fa-home" aria-hidden="true"></i> Product Order List</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/vendor-categories"><i className="fa fa-home" aria-hidden="true"></i> Best Deals Vendor Categories</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="#"><i className="fa fa-home" aria-hidden="true"></i> Vendor</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="#"><i className="fa fa-home" aria-hidden="true"></i> Invitations Sends</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="#"><i className="fa fa-home" aria-hidden="true"></i> Transactions</Link></li>
-                        <li className="nav-item"><Link className="nav-link" to="#"><i className="fa fa-home" aria-hidden="true"></i> Orders</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="#"><i className="fa fa-home" aria-hidden="true"></i> Notifications</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="#"><i className="fa fa-home" aria-hidden="true"></i> Promotional Activity</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="#"><i className="fa fa-home" aria-hidden="true"></i> Patient Notifications</Link></li>

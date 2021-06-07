@@ -11,12 +11,12 @@ export const AddNotification = (props) => {
                   <Modal.Header closeButton>
                     <Modal.Title>Add Notification</Modal.Title>
                     { props.messages &&
-                      <Alert bsStyle="success">
+                      <Alert variant="success">
                       { props.messages }
                       </Alert>
                     }
                     { props.errorMsg &&
-                      <Alert bsStyle="danger">
+                      <Alert variant="danger">
                       { props.errorMsg }
                       </Alert>
                     }

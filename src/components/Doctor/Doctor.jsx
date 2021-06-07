@@ -576,7 +576,6 @@ class Doctor extends React.Component {
             <div class="container-fluid"> 
                <div class="row">
                     <SideMenu/>
-                  <div role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                     <Status
                         onClick = { this.state.statusShow }
                         onClose = { this.statusHideHandle }
@@ -611,262 +610,255 @@ class Doctor extends React.Component {
                         onClose = { this.appointmentsHideHandle }
                         appointments = { this.state.appointments }
                     />
-                  <div className="main-content">
-                    <div className="wrap-inner-content">
-                        <div className="col-md-12">
-                          <div className="inner-content">
-                                <div className="row page-header">
-                                    <div className="col-md-12">
-                                        <h1 className="page-title">Doctor</h1>
-                                    </div>
-                                </div>
-                                <div className="row">
+                  <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                    <div className="page-heading">
+                      <div className="page-heading__title-container">
+                          <h1 className="page-heading__title">Doctor</h1>
+                      </div>
+                    </div> 
+                    <div className="row">
+                      
+                      <ReactTable
+                          noDataText="No found !!"
+                          data={this.props.doctorList}
+                          filterable
+                          defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
+                          filtered={this.state.filtered}
+                          columns={[
+                              
+                              {
+                                  Header    : 'Name',
+                                  accessor  : 'name',
+                                  className : 'grid-header',
+                                  filterable  : false,
+                                  filterMethod: (filter, row) => {
+                                      return row[filter.id].includes(filter.value);
+                                  }
+                              },
+                              {
+                                Header    : 'UIN',
+                                accessor  : 'user_id',
+                                className : 'grid-header',
+                                filterable  : false,
+                                filterMethod: (filter, row) => {
+                                    return row[filter.id].includes(filter.value);
+                                }
+                              },
+                              {
+                                  Header    : 'Mobile',
+                                  accessor  : 'contact_no',
+                                  className : 'grid-header',
+                                  filterable  : false,
+                                  filterMethod: (filter, row) => {
+                                      return row[filter.id].includes(filter.value);
+                                  }
+                              },
+                              {
+                                Header    : 'Email ID',
+                                accessor  : 'email',
+                                className : 'grid-header',
+                                filterable  : false,
+                                filterMethod: (filter, row) => {
+                                    return row[filter.id].includes(filter.value);
+                                }
+                              },
+                              {
+                                Header    : 'Specialization',
+                                accessor  : 'en_spec',
+                                className : 'grid-header',
+                                filterable  : false,
+                                filterMethod: (filter, row) => {
+                                    return row[filter.id].includes(filter.value);
+                                }
+                              },
+                              {
+                                Header    : 'Reg. Number',
+                                accessor  : 'registratration_number',
+                                className : 'grid-header',
+                                filterable  : false,
+                                filterMethod: (filter, row) => {
+                                    return row[filter.id].includes(filter.value);
+                                }
+                              },
+                              {
+                                Header    : 'Reg. Year',
+                                accessor  : 'registration_year',
+                                className : 'grid-header',
+                                filterable  : false,
+                                filterMethod: (filter, row) => {
+                                    return row[filter.id].includes(filter.value);
+                                }
+                              },
+                              {
+                                Header    : 'Reg. Proof',
+                                accessor  : 'registraion_proof',
+                                className : 'grid-header',
+                                filterable  : false,
+                                Cell: row => 
+                                            <div>
+                                              {row.value &&
+                                                <a href={process.env.STATIC_IMAGE_BASE_PATH+row.value} 
+                                                  className="btn"
+                                                  target="_blank"
+                                                  >
+                                                  <img src={process.env.STATIC_IMAGE_BASE_PATH+row.value} width={80}/>
+                                                </a>
+                                              }
+                                            </div>
+                              },
+                              {
+                                Header    : 'ID Proof',
+                                accessor  : 'id_proof',
+                                className : 'grid-header',
+                                filterable  : false,
+                                Cell: row => 
+                                            <div>
+                                            {row.value &&
+                                              <a href={process.env.STATIC_IMAGE_BASE_PATH+row.value} 
+                                                className="btn"
+                                                target="_blank"
+                                                >
+                                                <img src={process.env.STATIC_IMAGE_BASE_PATH+row.value} width={80}/>
+                                              </a>
+                                            }
+                                            </div>
+                              },
+                              {
+                                Header    : 'Subscription',
+                                accessor  : 'plan_name',
+                                className : 'grid-header',
+                                filterable  : false,
+                                filterMethod: (filter, row) => {
+                                    return row[filter.id].includes(filter.value);
+                                }
+                              },
+                              {
+                                Header    : 'Subscription start date',
+                                accessor  : 'start_date',
+                                className : 'grid-header',
+                                filterable  : false,
+                                Cell: row => 
+                                            <div>
+                                                {
+                                                  new Date(row.value).toLocaleDateString("en-US")
+                                                }
+                                            </div>  
+                              },
+                              {
+                                Header    : 'Subscription end date',
+                                accessor  : 'plan_expiry_date',
+                                className : 'grid-header',
+                                filterable  : false,
+                                Cell: row => 
+                                            <div>
+                                                {
+                                                  new Date(row.value).toLocaleDateString("en-US")
+                                                }
+                                            </div>    
+                              },
+                              {
+                                Header    : 'Subscription amount',
+                                accessor  : 'amount',
+                                className : 'grid-header',
+                                filterable  : false,
+                                filterMethod: (filter, row) => {
+                                    return row[filter.id].includes(filter.value);
+                                }
+                              },
+                              {
+                                Header: 'Status',
+                                accessor  : "is_approved",
+                                filterable  : false,
+                                
+                                className : 'grid-header',
+                                Cell: row => 
+                                            <div>
+                                              <a href="javascript:void(0)" 
+                                                className="btn"
+                                                onClick={ this.statusShowHandle.bind(null,row.original.doc_id,row.original.is_approved) } 
+                                                disabled={ this.props.submitted ? true : false }>
+                                                {
+                                                  row.value === 1 ?
+                                                  <span className="btn btn-success">Approved</span> :
+                                                  <span className="grey btn">Unapproved</span>
+                                                }
+                                              </a>
+                                            </div>
+                              },
+                              {
+                                Header: 'Practitioner',
+                                accessor  : "practioner",
+                                filterable  : false,
+                                
+                                className : 'grid-header',
+                                Cell: row => 
+                                            <div>
+                                            {
+                                              row.value === 0 ?
+                                              <a href="javascript:void(0)" 
+                                                className="btn"
+                                                onClick={()  => this.makePractioner(row.original.doc_id, row.value) } 
+                                                disabled={ this.props.submitted ? true : false }>
+                                                  <span className="btn btn-success">Make</span>
+                                              </a>
+                                              : 
+                                                <a href="javascript:void(0)" 
+                                                  className="btn"
+                                                  onClick={()  => this.makePractioner(row.original.doc_id, row.value) } 
+                                                  disabled={ this.props.submitted ? true : false }>
+                                                    <span className="btn btn-success">Remove</span>
+                                                </a>
+                                            }
+                                            </div>
+                              },
+                              {
+                                  Header: 'Actions',
+                                  accessor  : "doc_id",
+                                  filterable  : false,
                                   
-                                  <ReactTable
-                                      noDataText="No found !!"
-                                      data={this.props.doctorList}
-                                      filterable
-                                      defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
-                                      filtered={this.state.filtered}
-                                      columns={[
-                                          
-                                          {
-                                              Header    : 'Name',
-                                              accessor  : 'name',
-                                              className : 'grid-header',
-                                              filterable  : false,
-                                              filterMethod: (filter, row) => {
-                                                  return row[filter.id].includes(filter.value);
-                                              }
-                                          },
-                                          {
-                                            Header    : 'UIN',
-                                            accessor  : 'user_id',
-                                            className : 'grid-header',
-                                            filterable  : false,
-                                            filterMethod: (filter, row) => {
-                                                return row[filter.id].includes(filter.value);
-                                            }
-                                          },
-                                          {
-                                              Header    : 'Mobile',
-                                              accessor  : 'contact_no',
-                                              className : 'grid-header',
-                                              filterable  : false,
-                                              filterMethod: (filter, row) => {
-                                                  return row[filter.id].includes(filter.value);
-                                              }
-                                          },
-                                          {
-                                            Header    : 'Email ID',
-                                            accessor  : 'email',
-                                            className : 'grid-header',
-                                            filterable  : false,
-                                            filterMethod: (filter, row) => {
-                                                return row[filter.id].includes(filter.value);
-                                            }
-                                          },
-                                          {
-                                            Header    : 'Specialization',
-                                            accessor  : 'en_spec',
-                                            className : 'grid-header',
-                                            filterable  : false,
-                                            filterMethod: (filter, row) => {
-                                                return row[filter.id].includes(filter.value);
-                                            }
-                                          },
-                                          {
-                                            Header    : 'Reg. Number',
-                                            accessor  : 'registratration_number',
-                                            className : 'grid-header',
-                                            filterable  : false,
-                                            filterMethod: (filter, row) => {
-                                                return row[filter.id].includes(filter.value);
-                                            }
-                                          },
-                                          {
-                                            Header    : 'Reg. Year',
-                                            accessor  : 'registration_year',
-                                            className : 'grid-header',
-                                            filterable  : false,
-                                            filterMethod: (filter, row) => {
-                                                return row[filter.id].includes(filter.value);
-                                            }
-                                          },
-                                          {
-                                            Header    : 'Reg. Proof',
-                                            accessor  : 'registraion_proof',
-                                            className : 'grid-header',
-                                            filterable  : false,
-                                            Cell: row => 
-                                                        <div>
-                                                          {row.value &&
-                                                            <a href={process.env.STATIC_IMAGE_BASE_PATH+row.value} 
-                                                              className="btn"
-                                                              target="_blank"
-                                                              >
-                                                              <img src={process.env.STATIC_IMAGE_BASE_PATH+row.value} width={80}/>
-                                                            </a>
-                                                          }
-                                                        </div>
-                                          },
-                                          {
-                                            Header    : 'ID Proof',
-                                            accessor  : 'id_proof',
-                                            className : 'grid-header',
-                                            filterable  : false,
-                                            Cell: row => 
-                                                        <div>
-                                                        {row.value &&
-                                                          <a href={process.env.STATIC_IMAGE_BASE_PATH+row.value} 
-                                                            className="btn"
-                                                            target="_blank"
-                                                            >
-                                                            <img src={process.env.STATIC_IMAGE_BASE_PATH+row.value} width={80}/>
-                                                          </a>
-                                                        }
-                                                        </div>
-                                          },
-                                          {
-                                            Header    : 'Subscription',
-                                            accessor  : 'plan_name',
-                                            className : 'grid-header',
-                                            filterable  : false,
-                                            filterMethod: (filter, row) => {
-                                                return row[filter.id].includes(filter.value);
-                                            }
-                                          },
-                                          {
-                                            Header    : 'Subscription start date',
-                                            accessor  : 'start_date',
-                                            className : 'grid-header',
-                                            filterable  : false,
-                                            Cell: row => 
-                                                        <div>
-                                                            {
-                                                              new Date(row.value).toLocaleDateString("en-US")
-                                                            }
-                                                        </div>  
-                                          },
-                                          {
-                                            Header    : 'Subscription end date',
-                                            accessor  : 'plan_expiry_date',
-                                            className : 'grid-header',
-                                            filterable  : false,
-                                            Cell: row => 
-                                                        <div>
-                                                            {
-                                                              new Date(row.value).toLocaleDateString("en-US")
-                                                            }
-                                                        </div>    
-                                          },
-                                          {
-                                            Header    : 'Subscription amount',
-                                            accessor  : 'amount',
-                                            className : 'grid-header',
-                                            filterable  : false,
-                                            filterMethod: (filter, row) => {
-                                                return row[filter.id].includes(filter.value);
-                                            }
-                                          },
-                                          {
-                                            Header: 'Status',
-                                            accessor  : "is_approved",
-                                            filterable  : false,
-                                            
-                                            className : 'grid-header',
-                                            Cell: row => 
-                                                        <div>
-                                                          <a href="javascript:void(0)" 
-                                                            className="btn"
-                                                            onClick={ this.statusShowHandle.bind(null,row.original.doc_id,row.original.is_approved) } 
-                                                            disabled={ this.props.submitted ? true : false }>
-                                                            {
-                                                              row.value === 1 ?
-                                                              <span className="btn btn-success">Approved</span> :
-                                                              <span className="grey btn">Unapproved</span>
-                                                            }
-                                                          </a>
-                                                        </div>
-                                          },
-                                          {
-                                            Header: 'Practitioner',
-                                            accessor  : "practioner",
-                                            filterable  : false,
-                                            
-                                            className : 'grid-header',
-                                            Cell: row => 
-                                                        <div>
-                                                        {
-                                                          row.value === 0 ?
-                                                          <a href="javascript:void(0)" 
-                                                            className="btn"
-                                                            onClick={()  => this.makePractioner(row.original.doc_id, row.value) } 
-                                                            disabled={ this.props.submitted ? true : false }>
-                                                              <span className="btn btn-success">Make</span>
-                                                          </a>
-                                                          : 
-                                                            <a href="javascript:void(0)" 
-                                                              className="btn"
-                                                              onClick={()  => this.makePractioner(row.original.doc_id, row.value) } 
-                                                              disabled={ this.props.submitted ? true : false }>
-                                                                <span className="btn btn-success">Remove</span>
-                                                            </a>
-                                                        }
-                                                        </div>
-                                          },
-                                          {
-                                              Header: 'Actions',
-                                              accessor  : "doc_id",
-                                              filterable  : false,
-                                              
-                                              className : 'grid-header',
-                                              Cell: row => 
-                                                  <div className="">
-                                                    <button type="button" className="btn-sm dropdown-toggle" data-toggle="dropdown" id={"dropdown-"+row.value}>
-                                                      <span className="caret"></span>
-                                                      <span>Action</span>
-                                                    </button>
-                                                    <ul className="dropdown-menu" role="menu">
-                                                      <li><a href="#" onClick={() => this.reNewShowHandle(row.original)}>Renew Plan</a></li>
-                                                      <Dropdown.Divider />
-                                                      <li><a href="#" onClick={() => this.viewClinic(row.original)}>View Clinic</a></li>
-                                                      <Dropdown.Divider />
-                                                      <li><a href="#" onClick={() => this.viewAppointments(row.original)}>Appointment</a></li>
-                                                      <Dropdown.Divider />
-                                                      <li><a href="#" onClick={() => this.deleteDoctor(row.original)}>Delete</a></li>
-                                                    </ul>
-                                                  </div>
-                                          }
-                                      ]}
-                                      defaultSorted={[
-                                          {
-                                              id: 'name',
-                                              desc: false
-                                          }
-                                      ]}
-                                      defaultPageSize={10}
-                                      minRows= {this.props.doctorList}
-                                      className="react-table-cell -striped -highlight"
-                                      loading={this.state.loading}
-                                      filterable
-                                      Sorted
-                                      pages={this.props.pages}
-                                      showPagination={true}
-                                      showPaginationTop={false}
-                                      showPaginationBottom={true}
-                                      pageSizeOptions={[10, 20, 50]}
-                                      automatic // For server side pagination
-                                      onFetchData={(state, instance) => {
-                                          this.getDoctorList(state.page, state.pageSize, state.sorted, state.filtered);
-                                      }}
-                                  />
-                              </div>
-                          </div>
-                        </div>
-                  </div>
-                </div>
-                  </div>
+                                  className : 'grid-header',
+                                  Cell: row => 
+                                      <div className="">
+                                        <button type="button" className="btn-sm dropdown-toggle" data-toggle="dropdown" id={"dropdown-"+row.value}>
+                                          <span className="caret"></span>
+                                          <span>Action</span>
+                                        </button>
+                                        <ul className="dropdown-menu" role="menu">
+                                          <li><a href="#" onClick={() => this.reNewShowHandle(row.original)}>Renew Plan</a></li>
+                                          <Dropdown.Divider />
+                                          <li><a href="#" onClick={() => this.viewClinic(row.original)}>View Clinic</a></li>
+                                          <Dropdown.Divider />
+                                          <li><a href="#" onClick={() => this.viewAppointments(row.original)}>Appointment</a></li>
+                                          <Dropdown.Divider />
+                                          <li><a href="#" onClick={() => this.deleteDoctor(row.original)}>Delete</a></li>
+                                        </ul>
+                                      </div>
+                              }
+                          ]}
+                          defaultSorted={[
+                              {
+                                  id: 'name',
+                                  desc: false
+                              }
+                          ]}
+                          defaultPageSize={10}
+                          minRows= {this.props.doctorList}
+                          className="react-table-cell -striped -highlight"
+                          loading={this.state.loading}
+                          filterable
+                          Sorted
+                          pages={this.props.pages}
+                          showPagination={true}
+                          showPaginationTop={true}
+                          showPaginationBottom={false}
+                          pageSizeOptions={[10, 20, 50]}
+                          automatic // For server side pagination
+                          onFetchData={(state, instance) => {
+                              this.getDoctorList(state.page, state.pageSize, state.sorted, state.filtered);
+                          }}
+                      />
+                    </div>
+                  </main>
                </div>
             </div>
         </>

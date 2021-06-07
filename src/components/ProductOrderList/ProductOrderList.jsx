@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { HeaderContainer } from '../../components/Header';
 import { SideMenu } from '../../components/SideMenu';
 // import {AddFavoriteDoctorContainer} from './AddFavoriteDoctorContainer';
-import { medicalStoresActions, headerActions } from '../../_actions';
+import { productActions, headerActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
@@ -12,9 +12,10 @@ import {DropdownButton, Dropdown} from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from 'react-select'
+import UserProfileComponent from "../UserProfileComponent/UserProfileComponent";
 
 
-class MedicineOrderList extends React.Component {
+class ProductOrderList extends React.Component {
     /**
      * @DateOfCreation        26 July 2018
      * @ShortDescription      Contructor is responsible to function declaration and define intial state
@@ -24,7 +25,7 @@ class MedicineOrderList extends React.Component {
     constructor(props) {
         super(props);
 
-        this.getMedicineOrderList        = this.getMedicineOrderList.bind(this);
+        this.getProductOrderList        = this.getProductOrderList.bind(this);
         this.notificationSearch           = this.notificationSearch.bind(this);
         this.handleSelectChange         = this.handleSelectChange.bind(this);
         this.state               = this.initialState;
@@ -55,9 +56,9 @@ class MedicineOrderList extends React.Component {
     * @ShortDescription      This function is responsible to get the list of notification from API
     * @return                Nothing
     */
-    getMedicineOrderList(page, pageSize, sorted, filtered){
+    getProductOrderList(page, pageSize, sorted, filtered){
         const { dispatch }   = this.props;
-        dispatch(medicalStoresActions.getMedicineOrder());
+        dispatch(productActions.getProductOrder());
     }
 
     /**
@@ -83,9 +84,9 @@ class MedicineOrderList extends React.Component {
         if(newProps.status == true){
             setTimeout(function() { 
                 const { dispatch } = this.props;
-                dispatch(medicalStoresActions.resetMedicalStoresState())
+                dispatch(productActions.resetProductState())
 
-                this.getMedicineOrderList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
+                this.getProductOrderList(this.state.page, this.state.pageSize, this.state.sorted, this.state.filtered);
             }.bind(this), 1500);
         }
     }
@@ -98,11 +99,10 @@ class MedicineOrderList extends React.Component {
     * @return                Nothing
     */
     handleSelectChange(e,id) {
-      let data = {id: id, status: e.target.value}
-      // changeMedicineOrderStatus
+      let data = {order_id: id, status: e.target.value}
         // console.log(id,'selectedOption',e.target.value)
         const { dispatch } = this.props;
-        dispatch(medicalStoresActions.changeMedicineOrderStatus(data));
+        dispatch(productActions.orderStatusChange(data));
     }
 
 
@@ -118,30 +118,35 @@ class MedicineOrderList extends React.Component {
                         <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                             <div className="page-heading">
                             <div className="page-heading__title-container">
-                                <h1 className="page-heading__title">Medicine Order List</h1>
+                                <h1 className="page-heading__title">Product Order List</h1>
                             </div>
                           </div>
                           <div className="row">
                               <ReactTable
                                 noDataText="No found !!"
-                                data={this.props.medicalStoresList}
+                                data={this.props.productList}
                                 filterable
                                 defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
                                 filtered={this.state.filtered}
                                 columns={[
                                     
                                     {
-                                        Header: 'Patient Name',
+                                        Header: 'Name',
                                         accessor  : "name",
                                         className : 'grid-header',
                                         filterable  : false,
-                                        filterMethod: (filter, row) => {
-                                            return row[filter.id].includes(filter.value);
-                                        }
+                                        Cell: row => 
+                                            <div className="">
+                                                <UserProfileComponent 
+                                                  name = {row.original.name}
+                                                  display_pic = {''}
+                                                  contact_no = {row.original.contact_no}
+                                                />
+                                            </div>
                                     },
                                     {
-                                        Header: 'Mobile No',
-                                        accessor  : "contact_no",
+                                        Header: 'Email',
+                                        accessor  : "email",
                                         className : 'grid-header',
                                         filterable  : false,
                                         filterMethod: (filter, row) => {
@@ -150,7 +155,7 @@ class MedicineOrderList extends React.Component {
                                     },
                                     {
                                         Header: 'Address',
-                                        accessor  : "address",
+                                        accessor  : "address_details",
                                         className : 'grid-header',
                                         filterable  : false,
                                         filterMethod: (filter, row) => {
@@ -176,16 +181,49 @@ class MedicineOrderList extends React.Component {
                                         }
                                     },
                                     {
-                                        Header    : "Prescription",
-                                        accessor  : "prescription_url",
+                                        Header: 'City',
+                                        accessor  : "city",
+                                        className : 'grid-header',
+                                        filterable  : false,
+                                        filterMethod: (filter, row) => {
+                                            return row[filter.id].includes(filter.value);
+                                        }
+                                    },
+                                    {
+                                        Header: 'State',
+                                        accessor  : "state",
+                                        className : 'grid-header',
+                                        filterable  : false,
+                                        filterMethod: (filter, row) => {
+                                            return row[filter.id].includes(filter.value);
+                                        }
+                                    },
+                                    {
+                                        Header    : "Product",
+                                        accessor  : "product_name",
                                         className : "grid-header",
                                         filterable  : false,
-                                        Cell: row => {
-                                              return  (
-                                                  <div>
-                                                  <a href={configConstants.API_BASE_PATH+"/"+row.value} target="_blank">View</a>
-                                                  </div>
-                                              )}
+                                        filterMethod: (filter, row) => {
+                                            return row[filter.id].includes(filter.value);
+                                        }
+                                    },
+                                    {
+                                        Header    : "Quantity",
+                                        accessor  : "quantity",
+                                        className : "grid-header",
+                                        filterable  : false,
+                                        filterMethod: (filter, row) => {
+                                            return row[filter.id].includes(filter.value);
+                                        }
+                                    },
+                                    {
+                                        Header    : "Price",
+                                        accessor  : "price",
+                                        className : "grid-header",
+                                        filterable  : false,
+                                        filterMethod: (filter, row) => {
+                                            return row[filter.id].includes(filter.value);
+                                        }
                                     },
                                     {
                                         Header: 'Change Order Status',
@@ -202,9 +240,11 @@ class MedicineOrderList extends React.Component {
                                                       name='status'
                                                       value={row.original.status}
                                                   >
-                                                  <option value="0">Pending</option>
-                                                  <option value="1">Complete</option>
-                                                  <option value="2">Cancel</option>
+                                                      <option value="Pending">Pending</option>
+                                                      <option value="Accepted">Accepted</option>
+                                                      <option value="Dispatched">Dispatched</option>
+                                                      <option value="Complete">Complete</option>
+                                                      <option value="Cancel">Cancel</option>
                                                   </select>
                                                 </> 
                                               )}
@@ -218,7 +258,7 @@ class MedicineOrderList extends React.Component {
                                     }
                                 ]}
                                 defaultPageSize={10}
-                                minRows= {this.props.medicalStoresList}
+                                minRows= {this.props.productList}
                                 className="table table-bordered responsive"
                                 loading={this.state.loading}
                                 filterable
@@ -230,7 +270,7 @@ class MedicineOrderList extends React.Component {
                                 pageSizeOptions={[10, 20, 50]}
                                 automatic // For server side pagination
                                 onFetchData={(state, instance) => {
-                                    this.getMedicineOrderList(state.page, state.pageSize, state.sorted, state.filtered);
+                                    this.getProductOrderList(state.page, state.pageSize, state.sorted, state.filtered);
                                 }}
                               />
                           </div>
@@ -249,9 +289,9 @@ class MedicineOrderList extends React.Component {
  */
 
 function mapStateToProps(state) {
-   const { medicalStoresList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status } = state.medicalStoresReducer;
+    const { productList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status } = state.productReducer;
     return {
-        medicalStoresList,
+        productList,
         isUserNotValid,
         loader,
         successMessage,
@@ -261,5 +301,5 @@ function mapStateToProps(state) {
         status,
     };
 }
-const connectedMedicineOrderList = connect(mapStateToProps)(MedicineOrderList);
-export { connectedMedicineOrderList as MedicineOrderList };
+const connectedProductOrderList = connect(mapStateToProps)(ProductOrderList);
+export { connectedProductOrderList as ProductOrderList };

@@ -11,7 +11,7 @@ export const ReferToDoctor = (props) => {
   {
     return(
       <div style={{ display: "flex" }}>
-        <div><img src={configConstants.API_BASE_PATH+"/"+props.display_pic} width={'25px'}/> {props.name}</div>
+        <div><img src={props.display_pic ? configConstants.API_BASE_PATH+"/"+props.display_pic : "https://www.michiganlutheran.org/wp-content/uploads/2019/09/placeholder-profile-sq.jpg"} width={'25px'}/> {props.name}</div>
         <div style={{ marginLeft: "10px", color: "#ccc" }}>
           
         </div>
@@ -25,12 +25,12 @@ export const ReferToDoctor = (props) => {
         <Modal.Header closeButton>
           <Modal.Title>Refer To Doctor</Modal.Title>
           { props.messages &&
-            <Alert bsStyle="success">
+            <Alert variant="success">
             { props.messages }
             </Alert>
           }
           { props.errorMsg &&
-            <Alert bsStyle="danger">
+            <Alert variant="danger">
             { props.errorMsg }
             </Alert>
           }

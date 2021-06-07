@@ -73,6 +73,11 @@ const AppointmentsContainer = Loadable({
     loading: Loading
 });
 
+const VideoAppointmentsContainer = Loadable({
+    loader: () => import('../components/VideoAppointments').then(object => object.VideoAppointmentsContainer),
+    loading: Loading
+});
+
 const ReferredContainer = Loadable({
     loader: () => import('../components/Referred').then(object => object.ReferredContainer),
     loading: Loading
@@ -135,6 +140,11 @@ const SettingContainer = Loadable({
 
 const MedicineOrderList = Loadable({
     loader: () => import('../components/MedicineOrderList').then(object => object.MedicineOrderList),
+    loading: Loading
+});
+
+const ProductOrderList = Loadable({
+    loader: () => import('../components/ProductOrderList').then(object => object.ProductOrderList),
     loading: Loading
 });
 
@@ -239,11 +249,12 @@ class App extends React.Component {
                         <Route exact path='/forgotpassword' component={ForgotPasswordContainer} />
                         <Route exact path='/privacy-policy' component={PrivacyPolicy} />
 
-                        <AdminRoute exact path='/dashboard' component={Dashboard} authenticated={this.props.authenticated} allowuser={[0]}/>
+                        <AdminRoute exact path='/home' component={Dashboard} authenticated={this.props.authenticated} allowuser={[0]}/>
                         <AdminRoute exact path='/users' component={UserContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/doctors' component={DoctorContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/doctor-categories' component={SpecializationContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/appointments' component={AppointmentsContainer} authenticated={this.props.authenticated} allowuser={[0]} />
+                        <AdminRoute exact path='/video-appointments' component={VideoAppointmentsContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/referred' component={ReferredContainer} authenticated={this.props.authenticated} allowuser={[0]} />
                         <AdminRoute exact path='/health-tips' component={HealthTipsContainer} authenticated={this.props.authenticated} allowuser={[0, 1]} />
                         <AdminRoute exact path='/health-tips-categories' component={HealthTipsCategoriesContainer} authenticated={this.props.authenticated} allowuser={[0, 1]} />
@@ -257,8 +268,9 @@ class App extends React.Component {
                         <AdminRoute exact path='/product' component={ProductsContainer} authenticated={this.props.authenticated} allowuser={[0, 1]} />
                         <AdminRoute exact path='/vendor-categories' component={VendorCategoriesContainer} authenticated={this.props.authenticated} allowuser={[0, 1]} />
                         <AdminRoute exact path='/plan' component={PlanContainer} authenticated={this.props.authenticated} allowuser={[0, 1]} />
+                        <AdminRoute exact path='/product-order' component={ProductOrderList} authenticated={this.props.authenticated} allowuser={[0]} />
 
-                        <DoctorRoute exact path='/ddashboard' component={DoctorDashboard} authenticated={this.props.authenticated} allowuser={[1]} />
+                        <DoctorRoute exact path='/dashboard' component={DoctorDashboard} authenticated={this.props.authenticated} allowuser={[1]} />
                         <DoctorRoute exact path='/upcoming-appointments' component={UpcomingAppointments} authenticated={this.props.authenticated} allowuser={[1]} />
                         <DoctorRoute exact path='/all-appointments' component={AllUpcomingAppointments} authenticated={this.props.authenticated} allowuser={[1]} />
                         <DoctorRoute exact path='/my-patients' component={MyPatient} authenticated={this.props.authenticated} allowuser={[1]} />

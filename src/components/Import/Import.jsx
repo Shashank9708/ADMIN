@@ -14,14 +14,14 @@ export const Import = (props) => {
         </Modal.Header>
         <div className="alert-box">
             { props.message &&
-                <Alert bsStyle="success">
+                <Alert variant="success">
                         { props.message }
                 </Alert>
             }           
 
             { props.errorMsg &&
                 props.errorlist 
-                    ? props.errorlist.split(',').map(place => <Alert bsStyle="danger"> {place} </Alert>) 
+                    ? props.errorlist.split(',').map(place => <Alert variant="danger"> {place} </Alert>) 
                     : ''
             }
                 
@@ -30,9 +30,9 @@ export const Import = (props) => {
                     result => {
                         return (
                             <div>
-                                <Alert bsStyle="success">Total { result.insert_count } records will be added</Alert>
-                                <Alert bsStyle="success">Total { result.update_count } records will be updated</Alert>
-                                <Alert bsStyle="success">Total { result.delete_count } records will be deleted</Alert>
+                                <Alert variant="success">Total { result.insert_count } records will be added</Alert>
+                                <Alert variant="success">Total { result.update_count } records will be updated</Alert>
+                                <Alert variant="success">Total { result.delete_count } records will be deleted</Alert>
                             </div>
                         )
                     }) : ''

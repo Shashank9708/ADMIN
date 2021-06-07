@@ -15,7 +15,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CardComponent from '../CardComponent/CardComponent';
 import PatientDetail from '../PatientDetail/PatientDetail';
-
+import { utilityHelper } from '../../_helpers';
 
 // import { format, subHours, startOfMonth } from 'date-fns';
 
@@ -80,6 +80,7 @@ class DoctorDashboard extends React.Component {
         
 
         this.getUpcomingAppointmentsList = this.getUpcomingAppointmentsList.bind(this);
+        this.getUpcomingAppointments = this.getUpcomingAppointments.bind(this);
         this.state               = this.initialState;
     }
 
@@ -235,7 +236,8 @@ class DoctorDashboard extends React.Component {
      */
      addReferToDoctorShowHandle(data) {
        this.setState({ addReferToDoctorShow: true, referData:  data });
-       const { addDigitalPrescriptionShowHandletch }   = this.props;
+       
+       const { dispatch } = this.props;
        dispatch(doctorActions.getfavorite());
      }
 
@@ -290,8 +292,20 @@ class DoctorDashboard extends React.Component {
     */
     getUpcomingAppointmentsList(){
         let data = {
-                      state_date: this.state.startDate.toISOString().substr(0, 10),
+                      start_date: this.state.startDate.toISOString().substr(0, 10),
                       end_date: this.state.endDate.toISOString().substr(0, 10)
+                  }
+
+        const { dispatch }   = this.props;
+        dispatch(doctorActions.doctorAppointmentList(data));
+    }
+
+    getUpcomingAppointments(start_date, end_date){
+      
+
+      let data = {
+                      start_date: format(new Date(start_date), 'yyyy-MM-dd'),
+                      end_date: format(new Date(end_date), 'yyyy-MM-dd')
                   }
 
         const { dispatch }   = this.props;
@@ -446,13 +460,25 @@ class DoctorDashboard extends React.Component {
                         style={{ height: "120vh" }}
                         onSelectEvent={event => this.patientDetailActive(event)}
                         // onSelectSlot={slotInfo => console.log("slotInfo======",slotInfo)}
+                        onRangeChange={(slotInfo) => {
+                            console.log("slotInfo",slotInfo)
+                          if(slotInfo.length === 1){
+                            this.getUpcomingAppointments(slotInfo[0], slotInfo[0])
+                          }else if(slotInfo.length === 7){
+                            this.getUpcomingAppointments(slotInfo[0], slotInfo[6])
+                          }else if(slotInfo.start){
+                            this.getUpcomingAppointments(slotInfo.start, slotInfo.end)
+                          }
+                          }
+                        }
 
                         // components={{
                         //     event: CustomEvent,
                         // }}
                         // onNavigate={date => {
-                        //     this.setState({ selectedDate: date });
-                        //   }}
+                        //   // console.log("slotInfo======",date)
+                        //   this.getUpcomingAppointments(date, date)
+                        // }}
 
                       />  
                     </div> 

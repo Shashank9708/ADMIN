@@ -90,142 +90,131 @@ class Appointments extends React.Component {
     render() {
         // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
-            <div className="page-container">
+            <>
                 <HeaderContainer />
                 <div className="container-fluid">
                    <div className="row">
-                      <div className="col-md-2.5">
-                        <SideMenu/>
-                      </div>
-                      <div className="col-md-9">
-                        <div className="main-content">
-                          <div className="wrap-inner-content">
-                            <div className="col-md-12">
-                              <div className="inner-content">
-                                      <div className="row page-header">
-                                          <div className="col-md-6">
-                                              <h1 className="page-title">Appointments</h1>
-                                          </div>
-                                          <div className="col-md-6 text-right">
-                                             {/* <button className="blue btn text-btn" onClick={this.addAppointmentsShowHandle}>Add New</button>*/}
-                                          </div>
-                                      </div>
-                                      <div className="table-wrap">
-                                      {/*<div className="table-search">
-                                              <input
-                                                  value={this.state.filterAll}
-                                                  onChange={this.notificationSearch}
-                                                  className="table-search-input"
-                                                  placeholder="Search"
-                                              />
-                                      </div>*/}
-                                      <ReactTable
-                                          noDataText="No found !!"
-                                          data={this.props.appointmentList}
-                                          filterable
-                                          defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
-                                          filtered={this.state.filtered}
-                                          columns={[
-                                              {
-                                                  Header: 'Patient Name',
-                                                  accessor  : "name",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header: 'Doctor Name',
-                                                  accessor  : "doctorName",
-                                                  className : 'grid-header',
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header      : "Health Problems",
-                                                  accessor    : "health_problems",
-                                                  className   : "grid-header",
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header    : "Appointment Date",
-                                                  accessor  : "appointment_date",
-                                                  className : "grid-header",
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header    : "Appointment Time",
-                                                  accessor  : "appointment_time",
-                                                  className : "grid-header",
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header    : "Appointment Type",
-                                                  accessor  : "appointment_type",
-                                                  className : "grid-header",
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              },
-                                              {
-                                                  Header    : "Status",
-                                                  accessor  : "status",
-                                                  className : "grid-header",
-                                                  filterable  : false,
-                                                  filterMethod: (filter, row) => {
-                                                      return row[filter.id].includes(filter.value);
-                                                  }
-                                              }
-                                              
-                                          ]}
-                                          defaultSorted={[
-                                              {
-                                                  id: "id",
-                                                  desc: false
-                                              }
-                                          ]}
-                                          defaultPageSize={10}
-                                          minRows= {this.props.appointmentList}
-                                          className="table table-bordered responsive"
-                                          loading={this.state.loading}
-                                          filterable
-                                          Sorted
-                                          // pages={this.props.pages}
-                                          showPagination={true}
-                                          showPaginationTop={true}
-                                          showPaginationBottom={false}
-                                          pageSizeOptions={[10, 20, 50]}
-                                          automatic // For server side pagination
-                                          onFetchData={(state, instance) => {
-                                              this.getAppointmentsList(state.page, state.pageSize, state.sorted, state.filtered);
-                                          }}
-                                      />
-                                  </div>
-                              </div>
+                      <SideMenu/>
+                      <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                          <div className="page-heading">
+                            <div className="page-heading__title-container">
+                                <h1 className="page-heading__title">Appointments</h1>
                             </div>
                           </div>
-                        </div>
-                      </div>
+                          <div className="row">
+                              <ReactTable
+                                  noDataText="No found !!"
+                                  data={this.props.appointmentList}
+                                  filterable
+                                  defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
+                                  filtered={this.state.filtered}
+                                  columns={[
+                                      {
+                                          Header: 'Patient Name',
+                                          accessor  : "name",
+                                          className : 'grid-header',
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header: 'Doctor Name',
+                                          accessor  : "doctorName",
+                                          className : 'grid-header',
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header      : "Health Problems",
+                                          accessor    : "health_problems",
+                                          className   : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header    : "Date",
+                                          accessor  : "appointment_date",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header    : "Time",
+                                          accessor  : "appointment_time",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header    : "Type",
+                                          accessor  : "appointment_method",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          Cell: row => 
+                                                    <div className="">
+                                                      {row.value == 0 ? "In Clinic" : "Video"}
+                                                    </div>
+                                      },
+                                      {
+                                          Header    : "Mode",
+                                          accessor  : "appointment_type",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header    : "Status",
+                                          accessor  : "status",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      }
+                                      
+                                  ]}
+                                  defaultSorted={[
+                                      {
+                                          id: "id",
+                                          desc: false
+                                      }
+                                  ]}
+                                  defaultPageSize={10}
+                                  minRows= {this.props.appointmentList}
+                                  className="table table-bordered responsive"
+                                  loading={this.state.loading}
+                                  filterable
+                                  Sorted
+                                  // pages={this.props.pages}
+                                  showPagination={true}
+                                  showPaginationTop={true}
+                                  showPaginationBottom={false}
+                                  pageSizeOptions={[10, 20, 50]}
+                                  automatic // For server side pagination
+                                  onFetchData={(state, instance) => {
+                                      this.getAppointmentsList(state.page, state.pageSize, state.sorted, state.filtered);
+                                  }}
+                              />
+                          </div>
+                      </main>
                       {/*<AddAppointmentsContainer
                         addAppointmentsShow = {this.state.addAppointmentsShow}
                         addAppointmentsHideHandle = {this.addAppointmentsHideHandle}
                       />*/}
                     </div>
                 </div>    
-            </div>
+            </>
         );
     }
 }

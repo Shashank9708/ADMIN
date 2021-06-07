@@ -25,7 +25,7 @@ export const Login = (props) => {
                     {/* Show server side Error message */}
                     { 
                         props.error_message &&
-                        <Alert bsStyle="danger">
+                        <Alert variant="danger">
                             { props.error_message }
                         </Alert>
                     } 

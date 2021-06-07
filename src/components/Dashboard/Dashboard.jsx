@@ -5,7 +5,7 @@ import {HeaderContainer} from '../Header';
 import {SideMenu} from '../SideMenu';
 import { headerActions, commonActions } from '../../_actions';
 import { Doughnut } from 'react-chartjs-2';
-
+import {image} from '../../assets/images/circle.svg'
 
 
 class Dashboard extends React.Component {
@@ -97,7 +97,7 @@ class Dashboard extends React.Component {
             data: [dashboardList.userCount, 500000 - dashboardList.userCount],
             backgroundColor: [
             '#FF6384',
-            '#FFFFFF'
+            '#F0F0F0'
             ],
             hoverBackgroundColor: [
             '#FF6384',
@@ -115,7 +115,7 @@ class Dashboard extends React.Component {
             data: [dashboardList.doctorCount, 40000 - dashboardList.doctorCount],
             backgroundColor: [
             '#36A2EB',
-            '#FFFFFF'
+            '#F0F0F0'
             ],
             hoverBackgroundColor: [
             '#36A2EB',
@@ -133,7 +133,7 @@ class Dashboard extends React.Component {
             data: [dashboardList.medicalCount, 40000 - dashboardList.medicalCount],
             backgroundColor: [
             '#FFCE56',
-            '#FFFFFF'
+            '#F0F0F0'
             ],
             hoverBackgroundColor: [
             '#FFCE56',
@@ -151,7 +151,7 @@ class Dashboard extends React.Component {
             data: [dashboardList.labCount, 40000 - dashboardList.labCount],
             backgroundColor: [
             '#d68274',
-            '#FFFFFF'
+            '#F0F0F0'
             ],
             hoverBackgroundColor: [
             '#d68274',
@@ -163,176 +163,181 @@ class Dashboard extends React.Component {
     }
     
     return (
-        <div className="page-container main-panel">
+        <React.Fragment>
             
             <HeaderContainer />
-            <div className="container-fluid content-wrapper">
+            <div className="container-fluid">
                 <div className="row">
-                    <div className="col-md-2.5">
-                      <SideMenu />
-                    </div>
-                    
-                    <div className="col-md-9">
-                      <section className="adminpanel">
-                        <div class="group row">
-                          <div class="col-md-4 stretch-card grid-margin">
-                            <div class="card bg-gradient-danger card-img-holder text-white">
-                              <div class="card-body">
-                                <img src="src/assets/images/circle.svg" class="card-img-absolute" alt="circle-image" />
-                                <h4 class="font-weight-normal mb-3">USERS <i class="mdi mdi-chart-line mdi-24px float-right"></i>
-                                </h4>
-                                <h2 class="mb-5">{dashboardList.userCount || '-'}</h2>
-                                
+                  <SideMenu />
+                  <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                    <div className="page-heading">
+                      <div className="page-heading__title-container">
+                          <h1 className="page-heading__title">Dashboard</h1>
+                      </div>
+                    </div>  
+                    <div className="row" >
+                      <div className="col-md-9">
+                          <div class="group row">
+                            <div class="col-md-4 stretch-card grid-margin">
+                              <div class="card bg-gradient-danger card-img-holder ">
+                                <div class="card-body">
+                                  
+                                  <h4 class="font-weight-normal mb-3">USERS <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                                  </h4>
+                                  <h2 class="mb-5">{dashboardList.userCount || '-'}</h2>
+                                  
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          <div class="col-md-4 stretch-card grid-margin">
-                            <div class="card bg-gradient-info card-img-holder text-white">
-                              <div class="card-body">
-                                <img src="src/assets/images/circle.svg" class="card-img-absolute" alt="circle-image" />
-                                <h4 class="font-weight-normal mb-3">DOCTORS <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
-                                </h4>
-                                <h2 class="mb-5">{dashboardList.doctorCount || '-'}</h2>
-                                
+                            <div class="col-md-4 stretch-card grid-margin">
+                              <div class="card bg-gradient-info card-img-holder ">
+                                <div class="card-body">
+                                  
+                                  <h4 class="font-weight-normal mb-3">DOCTORS <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                                  </h4>
+                                  <h2 class="mb-5">{dashboardList.doctorCount || '-'}</h2>
+                                  
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          <div class="col-md-4 stretch-card grid-margin">
-                            <div class="card bg-gradient-success card-img-holder text-white">
-                              <div class="card-body">
-                                <img src="src/assets/images/circle.svg" class="card-img-absolute" alt="circle-image" />
-                                <h4 class="font-weight-normal mb-3">REGISTRATION REQUEST <i class="mdi mdi-diamond mdi-24px float-right"></i>
-                                </h4>
-                                <h2 class="mb-5">{dashboardList.appointmentCount || '-'}</h2>
+                            <div class="col-md-4 stretch-card grid-margin">
+                              <div class="card bg-gradient-success card-img-holder ">
+                                <div class="card-body">
+                                  
+                                  <h4 class="font-weight-normal mb-3">REGISTRATION REQUEST <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                                  </h4>
+                                  <h2 class="mb-5">{dashboardList.appointmentCount || '-'}</h2>
 
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="group row">
-                          
-                          <div class="col-md-4 stretch-card grid-margin">
-                            <div class="card bg-gradient-success card-img-holder text-white">
-                              <div class="card-body">
-                                <img src="src/assets/images/circle.svg" class="card-img-absolute" alt="circle-image" />
-                                <h4 class="font-weight-normal mb-3">REGISTRATION REQUEST <i class="mdi mdi-diamond mdi-24px float-right"></i>
-                                </h4>
-                                <h2 class="mb-5">{dashboardList.appointmentCount || '-'}</h2>
+                          <div class="group row">
+                            
+                            <div class="col-md-4 stretch-card grid-margin">
+                              <div class="card bg-gradient-success card-img-holder ">
+                                <div class="card-body">
+                                  
+                                  <h4 class="font-weight-normal mb-3">REGISTRATION REQUEST <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                                  </h4>
+                                  <h2 class="mb-5">{dashboardList.appointmentCount || '-'}</h2>
 
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-4 stretch-card grid-margin">
+                              <div class="card bg-gradient-danger card-img-holder ">
+                                <div class="card-body">
+                                  
+                                  <h4 class="font-weight-normal mb-3">PATHOLOGY CENTERS <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                                  </h4>
+                                  <h2 class="mb-5">{dashboardList.labCount || '-'}</h2>
+                                  
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-4 stretch-card grid-margin">
+                              <div class="card bg-gradient-info card-img-holder ">
+                                <div class="card-body">
+                                  
+                                  <h4 class="font-weight-normal mb-3">REGISTRATION REQUEST <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                                  </h4>
+                                  <h2 class="mb-5">{dashboardList.regRequestCount || '-'}</h2>
+                                  
+                                </div>
                               </div>
                             </div>
                           </div>
-                          <div class="col-md-4 stretch-card grid-margin">
-                            <div class="card bg-gradient-danger card-img-holder text-white">
-                              <div class="card-body">
-                                <img src="src/assets/images/circle.svg" class="card-img-absolute" alt="circle-image" />
-                                <h4 class="font-weight-normal mb-3">PATHOLOGY CENTERS <i class="mdi mdi-chart-line mdi-24px float-right"></i>
-                                </h4>
-                                <h2 class="mb-5">{dashboardList.labCount || '-'}</h2>
-                                
-                              </div>
+                          <div className="row">
+                            <div className="col-md-12">
+                              <label className="dashboard-text">ALL USERS</label>
+                              <Doughnut 
+                                data={data}
+                                  options={{
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    legend: {
+                                      position: "right",
+                                      fullWidth: true,
+                                      labels: {
+                                          fontColor: '#b66dff'
+                                      }
+                                    }
+                                  }}
+                              />
                             </div>
-                          </div>
-                          <div class="col-md-4 stretch-card grid-margin">
-                            <div class="card bg-gradient-info card-img-holder text-white">
-                              <div class="card-body">
-                                <img src="src/assets/images/circle.svg" class="card-img-absolute" alt="circle-image" />
-                                <h4 class="font-weight-normal mb-3">REGISTRATION REQUEST <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
-                                </h4>
-                                <h2 class="mb-5">{dashboardList.regRequestCount || '-'}</h2>
-                                
-                              </div>
+                            <div className="col-md-6">
+                              <label className="dashboard-text">PATIENTS</label>
+                              <Doughnut 
+                                data={dataP}
+                                  options={{
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    legend: {
+                                      position: "right",
+                                      labels: {
+                                          fontColor: '#b66dff'
+                                      }
+                                    }
+                                  }}
+                              />
                             </div>
+                            <div className="col-md-6">
+                              <label className="dashboard-text">DOCTORS</label>
+                              <Doughnut 
+                                data={dataD}
+                                  options={{
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    legend: {
+                                      position: "right",
+                                      labels: {
+                                          fontColor: '#b66dff'
+                                      }
+                                    }
+                                  }}
+                              />
+                            </div>  
+                            <div className="col-md-6">
+                              <label className="dashboard-text">MEDICAL</label>
+                              <Doughnut 
+                                data={dataM}
+                                  options={{
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    legend: {
+                                      position: "right",
+                                      labels: {
+                                          fontColor: '#b66dff'
+                                      }
+                                    }
+                                  }}
+                              />
+                            </div>  
+                            <div className="col-md-6">
+                              <label className="dashboard-text">PATHOLOGY</label>
+                              <Doughnut 
+                                data={dataL}
+                                  options={{
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    legend: {
+                                      position: "right",
+                                      labels: {
+                                          fontColor: '#b66dff'
+                                      }
+                                    }
+                                  }}
+                              />
+                            </div>  
                           </div>
-                        </div>
-                        <div className="row">
-                          <div className="col-md-12">
-                            <label className="dashboard-text">ALL USERS</label>
-                            <Doughnut 
-                              data={data}
-                                options={{
-                                  responsive: true,
-                                  maintainAspectRatio: true,
-                                  legend: {
-                                    position: "right",
-                                    fullWidth: true,
-                                    labels: {
-                                        fontColor: '#b66dff'
-                                    }
-                                  }
-                                }}
-                            />
-                          </div>
-                          <div className="col-md-6">
-                            <label className="dashboard-text">PATIENTS</label>
-                            <Doughnut 
-                              data={dataP}
-                                options={{
-                                  responsive: true,
-                                  maintainAspectRatio: true,
-                                  legend: {
-                                    position: "right",
-                                    labels: {
-                                        fontColor: '#b66dff'
-                                    }
-                                  }
-                                }}
-                            />
-                          </div>
-                          <div className="col-md-6">
-                            <label className="dashboard-text">DOCTORS</label>
-                            <Doughnut 
-                              data={dataD}
-                                options={{
-                                  responsive: true,
-                                  maintainAspectRatio: true,
-                                  legend: {
-                                    position: "right",
-                                    labels: {
-                                        fontColor: '#b66dff'
-                                    }
-                                  }
-                                }}
-                            />
-                          </div>  
-                          <div className="col-md-6">
-                            <label className="dashboard-text">MEDICAL</label>
-                            <Doughnut 
-                              data={dataM}
-                                options={{
-                                  responsive: true,
-                                  maintainAspectRatio: true,
-                                  legend: {
-                                    position: "right",
-                                    labels: {
-                                        fontColor: '#b66dff'
-                                    }
-                                  }
-                                }}
-                            />
-                          </div>  
-                          <div className="col-md-6">
-                            <label className="dashboard-text">PATHOLOGY</label>
-                            <Doughnut 
-                              data={dataL}
-                                options={{
-                                  responsive: true,
-                                  maintainAspectRatio: true,
-                                  legend: {
-                                    position: "right",
-                                    labels: {
-                                        fontColor: '#b66dff'
-                                    }
-                                  }
-                                }}
-                            />
-                          </div>  
-                        </div>
-                      </section> 
+                         
+                      </div>
                     </div>
+                  </main>
                 </div>
             </div>
-        </div>
+        </React.Fragment>
       );
     }
   }

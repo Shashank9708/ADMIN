@@ -6,7 +6,7 @@ import { DoctorSideMenu } from '../../components/SideMenu';
 import {AddUpcomingAppointmentsContainer} from './AddUpcomingAppointmentsContainer';
 import {AddDigitalPrescription} from './AddDigitalPrescription';
 import {ReferToDoctor} from './ReferToDoctor';
-import { doctorActions, clinicActions, patientActions, headerActions } from '../../_actions';
+import { doctorActions, clinicActions, patientActions, headerActions, videoActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
@@ -17,7 +17,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CardComponent from '../CardComponent/CardComponent';
 import PatientDetail from '../PatientDetail/PatientDetail';
-
+import axios from 'axios';
 
 
 class UpcomingAppointments extends React.Component {
@@ -57,6 +57,12 @@ class UpcomingAppointments extends React.Component {
         this.completedApi = this.completedApi.bind(this);
         this.patientDetailActive = this.patientDetailActive.bind(this);
         
+        this._onCreate_Room = this._onCreate_Room.bind(this);
+        this.getRoomIDWebCall = this.getRoomIDWebCall.bind(this);
+        this.getRoomTokenWebCall = this.getRoomTokenWebCall.bind(this);
+        this.navigateToVideo = this.navigateToVideo.bind(this);
+
+
 
         this.getUpcomingAppointmentsList = this.getUpcomingAppointmentsList.bind(this);
         this.state               = this.initialState;
@@ -73,6 +79,7 @@ class UpcomingAppointments extends React.Component {
             endDate: new Date(),
             inputList: [{ medicine: "", days: "", whentotake: "" }],
             typing_area: '',
+            purpose: '',
             appointment_id:  '',
             patient_id: '',
             doctor_id: JSON.parse(localStorage.user).doc_id,
@@ -199,7 +206,8 @@ class UpcomingAppointments extends React.Component {
           formData.append('doctor_id', this.state.doctor_id)
           formData.append('details', JSON.stringify(this.state.inputList))
           formData.append('prescription', '');
-          formData.append('typing_area', this.state.typing_area);
+          formData.append('typeing_area', this.state.typing_area);
+          formData.append('purpose', this.state.purpose);
           
           const { dispatch } = this.props;
           dispatch(doctorActions.uploadPrescription(formData, url));
@@ -218,6 +226,7 @@ class UpcomingAppointments extends React.Component {
             formData.append('doctor_id', this.state.doctor_id)
             formData.append('details', "")
             formData.append('typing_area', "")
+            formData.append('purpose', "")
             formData.append('prescription', file);
 
             let url = '/admin/uploadprescription'
@@ -288,7 +297,7 @@ class UpcomingAppointments extends React.Component {
     */
     getUpcomingAppointmentsList(){
         let data = {
-                      state_date: this.state.startDate.toISOString().substr(0, 10),
+                      start_date: this.state.startDate.toISOString().substr(0, 10),
                       end_date: this.state.endDate.toISOString().substr(0, 10)
                   }
 
@@ -389,7 +398,87 @@ class UpcomingAppointments extends React.Component {
         // this.hideAlert();
     }
 
-    
+    _onCreate_Room (row) {
+      // return false;
+     
+        this.getRoomIDWebCall(row);
+    };
+    getRoomIDWebCall (row)  {
+
+        const { dispatch } = this.props;
+        dispatch(videoActions.createRoom()).then(data=>{
+          console.log("data",data)
+          this.setState({room_id:data.room.room_id});
+          
+          let parama = {
+                      "room_id" : data.room.room_id,
+                      "receiver_id" : row.patient_id,
+                      "appointment_id" : row.appointment_id,
+                      "user_id": row.doc_id,
+                      "name": this.state.doc_name,
+                      "profile_url": utilityHelper.ProfilePic(this.state.display_pic)
+                    }
+
+          this.setState({
+            videoCall: {
+                      "roomId" : data.room.room_id,
+                      "user_ref" : row.patient_id,
+                      "appointment_id" : row.appointment_id,
+                      "name": row.name,
+                      // "role": "participant"
+                      "role": "moderator"
+                    }
+          })
+          // const { dispatch } = this.props;
+          // dispatch(videoActions.sendVideoCallByServer(parama));
+          // Chetan following line is printing room id you have to pass this to server using API developed by Vikas ji
+          // console.log("Room Id", data.room.room_id);
+          // this.getRoomTokenWebCall();
+        })
+
+          
+      }
+      getRoomTokenWebCall() {
+      //  console.log("DoctorRoomId",this.state.videoCall.roomId);
+        var header = (kTry) ? { "x-app-id" : kAppId , "x-app-key" : kAppkey} : {};
+        const options = {
+          headers: header
+        };
+        let token = axios
+          .post(kBaseURL+"createToken/", {
+            name: this.state.videoCall.name,
+            role: this.state.videoCall.role,
+            user_ref: this.state.videoCall.user_ref,
+            roomId: this.state.videoCall.roomId
+          },options)
+          .then(function(response) {
+            return  response.data;         
+          })
+          .catch(function(error) {
+            // console.log("axiosCreateTokenCatch", error);
+          });
+          // console.log("token Jai RAM",token)
+          this.setState({res_token:token.token});
+
+          // await this.navigateToVideo();
+      }
+      navigateToVideo() {
+         // const { navigate } = this.props.navigation;
+          // // console.log("this.state.res_token",this.state.res_token)
+          // try {
+          //   if (this.state.res_token) {
+          //     this.props.navigation.navigate('EnxConferenceScreen', {
+          //       username: this.state.videoCall.name,
+          //       token: this.state.res_token
+               
+          //      });
+          //   } else {
+          //     // console.log(res_token.error);
+          //   }
+          // } catch (error) {
+          //   // console.log("navigationError", error);
+          // }
+      }
 
 
     render() {
@@ -433,7 +522,8 @@ class UpcomingAppointments extends React.Component {
                             <CardComponent 
                               appointment = {row}
                               handleClick = {this.patientDetailActive}
-                              cancelAll = {this.cancelAll}
+                              cancelAll = {this._onCreate_Room}
+                              // cancelAll = {this.cancelAll}
                               active = {this.state.active}
                             />
                           )
@@ -521,3 +611,5 @@ function mapStateToProps(state) {
 }
 const connectedUpcomingAppointments = connect(mapStateToProps)(UpcomingAppointments);
 export { connectedUpcomingAppointments as UpcomingAppointments };
+
+

@@ -28,12 +28,12 @@ export const AddDigitalPrescription = (props) => {
                       
                       <div className="page-heading__btn-container">
                         { props.messages &&
-                          <Alert bsStyle="success">
+                          <Alert variant="success">
                           { props.messages }
                           </Alert>
                         }
                         { props.errorMsg &&
-                          <Alert bsStyle="danger">
+                          <Alert variant="danger">
                           { props.errorMsg }
                           </Alert>
                         }
@@ -49,6 +49,11 @@ export const AddDigitalPrescription = (props) => {
                           <div className="card-body">
                           
                             <div className="row">
+                              <div className="col-md-12">
+                                <textarea name="purpose" onChange = { props.handleInputChange } className="form-control" placeholder="Please enter purpose" rows="5"></textarea>
+                              </div>
+                            </div>
+                            <div className="row mt-2">
                               <div className="col-md-12">
                                 <textarea name="typing_area" onChange = { props.handleInputChange } className="form-control" placeholder="Please enter description" rows="5"></textarea>
                               </div>

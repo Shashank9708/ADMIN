@@ -1,23 +1,23 @@
 import React from 'react';
 import {Alert, Button, Modal, Card, title} from 'react-bootstrap';
 import Select from 'react-select'
-
+import { utilityHelper } from '../../_helpers';
 
 
 export const AddUpcomingAppointments = (props) => { 
     
     return (
               <div>
-                <Modal show={props.addUpcomingAppointmentsShow} onHide={props.handleClose}>
+                <Modal size="lg" show={props.addUpcomingAppointmentsShow} onHide={props.handleClose}>
                   <Modal.Header closeButton>
                     <Modal.Title>Add New Upcoming Appointments</Modal.Title>
                     { props.messages &&
-                      <Alert bsStyle="success">
+                      <Alert variant="success">
                       { props.messages }
                       </Alert>
                     }
                     { props.errorMsg &&
-                      <Alert bsStyle="danger">
+                      <Alert variant="danger">
                       { props.errorMsg }
                       </Alert>
                     }
@@ -69,12 +69,12 @@ export const AddUpcomingAppointments = (props) => {
                           <label>Select Appointment Date</label>
                           <div className="row">
                             {props.clinicSlotDate.length > 0 ?  
-                              props.clinicSlotDate.map((row)=>{
+                              props.clinicSlotDate.filter(r => r.active === 1).map((row)=>{
                                 let select = false
                                 if(row.day == props.payload.detail.appointment_date){  
                                    select = true
                                 }  
-                                return <div className="col-md-3"><span className={select ? "timeslot" : "timeslot-not-selected"} onClick={() => props.slotDate(row.day)}>{row.day}</span></div>
+                                return <div className="col-md-2"><span className={select ? "timeslot" : "timeslot-not-selected"} onClick={() => props.slotDate(row.day)}>{utilityHelper.formatDate(row.day)}</span></div>
                               })
                               :
                               <div className="col-md-12">
@@ -96,9 +96,9 @@ export const AddUpcomingAppointments = (props) => {
                                 if(row.start == props.payload.detail.appointment_time){  
                                    select = true
                                 }  
-                                return <div className="col-md-3">
+                                return <div className="col-md-2">
                                   <span className={row.available === 1 ? select ? "timeslot" : "timeslot-not-selected" : "timeslot-not-select"} 
-                                  onClick={() => (row.available === 1) ? props.slotTime(row.start) : ''}>{row.start}</span></div>
+                                  onClick={() => (row.available === 1) ? props.slotTime(row.start) : ''}>{utilityHelper.formatTime(row.start)}</span></div>
                               })
                               :
                               
@@ -115,7 +115,7 @@ export const AddUpcomingAppointments = (props) => {
                   </Modal.Body>
                   <Modal.Footer>
                     <Button className="btn-sm" onClick={props.handleClose}>Close</Button>
-                    <Button className="btn-sm" onClick={props.handleSaveUpcomingAppointments}>Save</Button>
+                    <Button className="btn-sm" onClick={props.handleSaveUpcomingAppointments}>Book</Button>
                   </Modal.Footer>
                 </Modal>
               </div>

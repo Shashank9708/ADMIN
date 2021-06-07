@@ -276,7 +276,7 @@ class AllUpcomingAppointments extends React.Component {
     */
     getUpcomingAppointmentsList(page, pageSize, sorted, filtered){
         let data = {
-                      state_date: this.state.startDate.toISOString().substr(0, 10),
+                      start_date: this.state.startDate.toISOString().substr(0, 10),
                       end_date: this.state.endDate.toISOString().substr(0, 10)
                   }
 

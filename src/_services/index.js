@@ -24,6 +24,7 @@ export * from './vendorCategoriesService';
 export * from './planService';
 export * from './patientService';
 export * from './profileService';
+export * from './videoService';
 
 export * from './forgotPasswordService';
 export * from './notificationService';

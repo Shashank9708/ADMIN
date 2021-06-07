@@ -25,6 +25,7 @@ export * from './vendorCategoriesConstants';
 export * from './planConstants';
 export * from './patientConstants';
 export * from './profileConstants';
+export * from './videoConstants';
 
 
 export * from './vehicleConstants';

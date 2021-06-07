@@ -16,6 +16,8 @@ export const productActions = {
     saveProduct,
     statusChange,
     deleteProduct,
+    getProductOrder,
+    orderStatusChange,
     resetProductState
 };
 
@@ -198,6 +200,90 @@ function deleteProduct(data) {
     function unauthorize(error) { return { type: configConstants.UNAUTHENTICATE, error } }
 }
 
+
+/**
+* @DateOfCreation        26 July 2018
+* @ShortDescription      This function is responsible for Get product List
+* @param                 JSON user, This contains full product input data
+* @return                JSON Object
+*/
+function getProductOrder(page, pageSize, sorted, filtered) {
+    return dispatch => {
+        dispatch(request());
+        productService.getProductOrder(page, pageSize, sorted, filtered)
+            .then(
+                response => {
+                    var data = response.data;
+                    var errorMsg;
+                    if(data.status == configConstants.SUCCESS_CODE){
+                        dispatch(success(data.data));
+                    }else if(data.status == configConstants.ERROR_CODE){
+                        errorMsg = utilityHelper.getFirstErrorMessage(data.error);
+                        dispatch(failure(errorMsg));
+                    }else if(data.status == configConstants.EXCEPTION_CODE){
+                        errorMsg = data.message;
+                        dispatch(failure(errorMsg));
+                    }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                        errorMsg = data.message;
+                        dispatch(unauthorize(errorMsg));
+                    }else{
+                        dispatch(failure(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+    // Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: productConstants.PRODUCT_FETCH_REQUEST } }
+    function success(result) { return { type: productConstants.PRODUCT_FETCH_SUCCESS, result } }
+    function failure(error) { return { type: productConstants.PRODUCT_FETCH_FAILURE, error } }
+    function unauthorize(error) { return { type: configConstants.UNAUTHENTICATE, error } }
+}
+
+
+
+/**
+* @DateOfCreation        26 July 2018
+* @ShortDescription      This function is responsible for Get product List
+* @param                 JSON user, This contains full product input data
+* @return                JSON Object
+*/
+function orderStatusChange(data) {
+    return dispatch => {
+        dispatch(request());
+        productService.orderStatusChange(data)
+            .then(
+                response => {
+                    var data = response.data;
+                    var errorMsg;
+                    if(data.status == configConstants.SUCCESS_CODE){
+                        dispatch(success(data.data));
+                    }else if(data.status == configConstants.ERROR_CODE){
+                        errorMsg = utilityHelper.getFirstErrorMessage(data.error);
+                        dispatch(failure(errorMsg));
+                    }else if(data.status == configConstants.EXCEPTION_CODE){
+                        errorMsg = data.message;
+                        dispatch(failure(errorMsg));
+                    }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                        errorMsg = data.message;
+                        dispatch(unauthorize(errorMsg));
+                    }else{
+                        dispatch(failure(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+    // Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: productConstants.STATUS_CHANGE_REQUEST } }
+    function success(result) { return { type: productConstants.STATUS_CHANGE_SUCCESS, result } }
+    function failure(error) { return { type: productConstants.STATUS_CHANGE_FAILURE, error } }
+    function unauthorize(error) { return { type: configConstants.UNAUTHENTICATE, error } }
+}
 function resetProductState(){
     return dispatch => { dispatch(request()); }
     function request() { return {type : productConstants.PRODUCT_RESET_STATE }}

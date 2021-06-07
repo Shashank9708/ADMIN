@@ -120,125 +120,107 @@ class HealthProblem extends React.Component {
     render() {
         // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
-            <div className="page-container">
+            <>
                 <HeaderContainer />
                 <div className="container-fluid">
                    <div className="row">
-                      <div className="col-md-2.5">
-                       <SideMenu/>
-                      </div>
-                      <div className="col-md-9">
-                        <div className="main-content">
-                            <div className="wrap-inner-content">
-                                <div className="col-md-12">
-                                <div className="inner-content">
-                                        <div className="row page-header">
-                                            <div className="col-md-6">
-                                                <h1 className="page-title">Health Problems</h1>
-                                            </div>
-                                            <div className="col-md-6 text-right">
-                                                <button className="blue btn text-btn" onClick={this.addHealthProblemShowHandle}>Add New</button>
-                                            </div>
-                                        </div>
-                                        <div className="table-wrap">
-                                        {/*<div className="table-search">
-                                                <input
-                                                    value={this.state.filterAll}
-                                                    onChange={this.notificationSearch}
-                                                    className="table-search-input"
-                                                    placeholder="Search"
-                                                />
-                                        </div>*/}
-                                        <ReactTable
-                                            noDataText="No found !!"
-                                            data={this.props.healthProblemList}
-                                            filterable
-                                            defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
-                                            filtered={this.state.filtered}
-                                            columns={[
-                                                {
-                                                    Header      : "HealthProblem ID",
-                                                    accessor    : "health_problem_id",
-                                                    className   : "grid-header",
-                                                    filterable  : false,
-                                                    filterMethod: (filter, row) => {
-                                                        return row[filter.id].includes(filter.value);
+                      <SideMenu/>
+                      <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                          <div className="page-heading">
+                            <div className="page-heading__title-container">
+                                <h1 className="page-heading__title">Health Problems</h1>
+                            </div>
+                            <div className="page-heading__btn-container">
+                              <button className="page-heading__btn btn-sm" onClick={this.addHealthProblemShowHandle}>Add New</button>
+                            </div>
+                          </div>
+                          <div className="row">                
+                              <ReactTable
+                                  noDataText="No found !!"
+                                  data={this.props.healthProblemList}
+                                  filterable
+                                  defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
+                                  filtered={this.state.filtered}
+                                  columns={[
+                                      {
+                                          Header      : "HealthProblem ID",
+                                          accessor    : "health_problem_id",
+                                          className   : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header    : "Title",
+                                          accessor  : "health_problem_title",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                        Header: 'Status',
+                                        accessor  : "status",
+                                        filterable  : false,
+                                        
+                                        className : 'grid-header',
+                                        Cell: row => {
+                                                return  (
+                                                    <div>
+                                                    {
+                                                      row.value === 1 ?
+                                                      <a href="javascript:void(0)" 
+                                                        className="btn"
+                                                        onClick={ this.statusShowHandle.bind(null,row.original.health_problem_id,0) } 
+                                                        disabled={ this.props.submitted ? true : false }>
+                                                          <span className="btn btn-success">Active</span>
+                                                      </a>
+                                                      :
+                                                      <a href="javascript:void(0)" 
+                                                        className="btn"
+                                                        onClick={ this.statusShowHandle.bind(null,row.original.health_problem_id,1) } 
+                                                        disabled={ this.props.submitted ? true : false }>
+                                                          <span className="grey btn">Inactive</span>   
+                                                      </a>
                                                     }
-                                                },
-                                                {
-                                                    Header    : "Title",
-                                                    accessor  : "health_problem_title",
-                                                    className : "grid-header",
-                                                    filterable  : false,
-                                                    filterMethod: (filter, row) => {
-                                                        return row[filter.id].includes(filter.value);
-                                                    }
-                                                },
-                                                {
-                                                  Header: 'Status',
-                                                  accessor  : "status",
-                                                  filterable  : false,
-                                                  
-                                                  className : 'grid-header',
-                                                  Cell: row => {
-                                                          return  (
-                                                              <div>
-                                                              {
-                                                                row.value === 1 ?
-                                                                <a href="javascript:void(0)" 
-                                                                  className="btn"
-                                                                  onClick={ this.statusShowHandle.bind(null,row.original.health_problem_id,0) } 
-                                                                  disabled={ this.props.submitted ? true : false }>
-                                                                    <span className="btn btn-success">Active</span>
-                                                                </a>
-                                                                :
-                                                                <a href="javascript:void(0)" 
-                                                                  className="btn"
-                                                                  onClick={ this.statusShowHandle.bind(null,row.original.health_problem_id,1) } 
-                                                                  disabled={ this.props.submitted ? true : false }>
-                                                                    <span className="grey btn">Inactive</span>   
-                                                                </a>
-                                                              }
-                                                              </div>
-                                                          )}
-                                                }
-                                                
-                                            ]}
-                                            defaultSorted={[
-                                                {
-                                                    id: "health_problem_id",
-                                                    desc: false
-                                                }
-                                            ]}
-                                            defaultPageSize={10}
-                                            minRows= {this.props.healthProblemList}
-                                            className="table table-bordered responsive"
-                                            loading={this.state.loading}
-                                            filterable
-                                            Sorted
-                                            // pages={this.props.pages}
-                                            showPagination={true}
-                                            showPaginationTop={true}
-                                            showPaginationBottom={false}
-                                            pageSizeOptions={[10, 20, 50]}
-                                            automatic // For server side pagination
-                                            onFetchData={(state, instance) => {
-                                                this.getHealthProblemList(state.page, state.pageSize, state.sorted, state.filtered);
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                                </div>
-                        </div>
-                        </div>
-                      </div>
+                                                    </div>
+                                                )}
+                                      }
+                                      
+                                  ]}
+                                  defaultSorted={[
+                                      {
+                                          id: "health_problem_id",
+                                          desc: false
+                                      }
+                                  ]}
+                                  defaultPageSize={10}
+                                  minRows= {this.props.healthProblemList}
+                                  className="table table-bordered responsive"
+                                  loading={this.state.loading}
+                                  filterable
+                                  Sorted
+                                  // pages={this.props.pages}
+                                  showPagination={true}
+                                  showPaginationTop={true}
+                                  showPaginationBottom={false}
+                                  pageSizeOptions={[10, 20, 50]}
+                                  automatic // For server side pagination
+                                  onFetchData={(state, instance) => {
+                                      this.getHealthProblemList(state.page, state.pageSize, state.sorted, state.filtered);
+                                  }}
+                              />
+                          </div>
+                      </main>
                       <AddHealthProblemContainer
                         addHealthProblemShow = {this.state.addHealthProblemShow}
                         addHealthProblemHideHandle = {this.addHealthProblemHideHandle}
                       />
                     </div>
                 </div>    
-            </div>
+            </>
         );
     }
 }

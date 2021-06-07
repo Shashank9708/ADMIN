@@ -13,7 +13,7 @@ export const configConstants = {
     SUCCESS_CODE        : 200,
     ERROR_CODE          : 500,
     EXCEPTION_CODE      : '300',
-    UNAUTHENTICATE_CODE : '700',
+    UNAUTHENTICATE_CODE : 401,
     RESOURCE_TYPE       : 1,
     LOGIN_TOKEN         : '_lgbds',
     USER_INFO           : '_ugdhs',

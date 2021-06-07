@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
 import { Button, Table } from 'react-bootstrap';
 import { HeaderContainer } from '../../components/Header';

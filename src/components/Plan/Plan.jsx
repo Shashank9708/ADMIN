@@ -134,192 +134,180 @@ class Plan extends React.Component {
     render() {
         // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
-            <div className="page-container">
+            <>
                 <HeaderContainer />
                 <div className="container-fluid">
                    <div className="row">
-                      <div className="col-md-2.5">
-                       <SideMenu/>
-                      </div>
-                      <div className="col-md-9">
-                        <div className="main-content">
-                            <div className="wrap-inner-content">
-                                <div className="col-md-12">
-                                <div className="inner-content">
-                                        <div className="row page-header">
-                                            <div className="col-md-6">
-                                                <h1 className="page-title">Plan Management</h1>
-                                            </div>
-                                            <div className="col-md-6 text-right">
-                                                <button className="blue btn text-btn" onClick={this.addPlanShowHandle}>Add New</button>
-                                            </div>
-                                        </div>
-                                        <div className="table-wrap">
-                                        {/*<div className="table-search">
-                                                <input
-                                                    value={this.state.filterAll}
-                                                    onChange={this.notificationSearch}
-                                                    className="table-search-input"
-                                                    placeholder="Search"
-                                                />
-                                        </div>*/}
-                                        <ReactTable
-                                            noDataText="No found !!"
-                                            data={this.props.planList}
-                                            filterable
-                                            defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
-                                            filtered={this.state.filtered}
-                                            columns={[
-                                                {
-                                                    Header      : "Plan ID",
-                                                    accessor    : "id",
-                                                    className   : "grid-header",
-                                                    filterable  : false,
-                                                    filterMethod: (filter, row) => {
-                                                        return row[filter.id].includes(filter.value);
+                      <SideMenu/>
+                      <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                          <div className="page-heading">
+                            <div className="page-heading__title-container">
+                                <h1 className="page-heading__title">Plan Management</h1>
+                            </div>
+                            <div className="page-heading__btn-container">
+                              <button className="page-heading__btn btn-sm" onClick={this.addPlanShowHandle}>Add New</button>
+                            </div>
+                          </div>
+                          <div className="row">
+                              <ReactTable
+                                  noDataText="No found !!"
+                                  data={this.props.planList}
+                                  filterable
+                                  defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
+                                  filtered={this.state.filtered}
+                                  columns={[
+                                      {
+                                          Header      : "Plan ID",
+                                          accessor    : "id",
+                                          className   : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header    : "Plan Name",
+                                          accessor  : "plan_name",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header    : "Description",
+                                          accessor  : "details",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header    : "User Type",
+                                          accessor  : "type",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          Cell: row => {
+                                                return  (
+                                                    <div>
+                                                    {
+                                                      row.value === 1 ?
+                                                      <>Doctor</>
+                                                      :
+                                                      row.value === 3 ?
+                                                      <>Medical</>
+                                                      :
+                                                      <>Pathology</>
                                                     }
-                                                },
-                                                {
-                                                    Header    : "Plan Name",
-                                                    accessor  : "plan_name",
-                                                    className : "grid-header",
-                                                    filterable  : false,
-                                                    filterMethod: (filter, row) => {
-                                                        return row[filter.id].includes(filter.value);
+                                                    </div>
+                                                )}
+                                      },
+                                      {
+                                          Header    : "Days",
+                                          accessor  : "days",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header    : "Price",
+                                          accessor  : "price",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header    : "Sale Price",
+                                          accessor  : "sale_price",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                        Header: 'Status',
+                                        accessor  : "status",
+                                        filterable  : false,
+                                        
+                                        className : 'grid-header',
+                                        Cell: row => {
+                                                return  (
+                                                    <div>
+                                                    {
+                                                      row.value === 1 ?
+                                                      <a href="javascript:void(0)" 
+                                                        className="btn"
+                                                        onClick={ this.statusShowHandle.bind(null,row.original.id,0) } 
+                                                        disabled={ this.props.submitted ? true : false }>
+                                                          <span className="btn btn-success">Active</span>
+                                                      </a>
+                                                      :
+                                                      <a href="javascript:void(0)" 
+                                                        className="btn"
+                                                        onClick={ this.statusShowHandle.bind(null,row.original.id,1) } 
+                                                        disabled={ this.props.submitted ? true : false }>
+                                                          <span className="grey btn">Inactive</span>   
+                                                      </a>
                                                     }
-                                                },
-                                                {
-                                                    Header    : "Description",
-                                                    accessor  : "details",
-                                                    className : "grid-header",
-                                                    filterable  : false,
-                                                    filterMethod: (filter, row) => {
-                                                        return row[filter.id].includes(filter.value);
-                                                    }
-                                                },
-                                                {
-                                                    Header    : "User Type",
-                                                    accessor  : "type",
-                                                    className : "grid-header",
-                                                    filterable  : false,
-                                                    Cell: row => {
-                                                          return  (
-                                                              <div>
-                                                              {
-                                                                row.value === 1 ?
-                                                                <>Doctor</>
-                                                                :
-                                                                row.value === 3 ?
-                                                                <>Medical</>
-                                                                :
-                                                                <>Pathology</>
-                                                              }
-                                                              </div>
-                                                          )}
-                                                },
-                                                {
-                                                    Header    : "Days",
-                                                    accessor  : "days",
-                                                    className : "grid-header",
-                                                    filterable  : false,
-                                                    filterMethod: (filter, row) => {
-                                                        return row[filter.id].includes(filter.value);
-                                                    }
-                                                },
-                                                {
-                                                    Header    : "Price",
-                                                    accessor  : "price",
-                                                    className : "grid-header",
-                                                    filterable  : false,
-                                                    filterMethod: (filter, row) => {
-                                                        return row[filter.id].includes(filter.value);
-                                                    }
-                                                },
-                                                {
-                                                    Header    : "Sale Price",
-                                                    accessor  : "sale_price",
-                                                    className : "grid-header",
-                                                    filterable  : false,
-                                                    filterMethod: (filter, row) => {
-                                                        return row[filter.id].includes(filter.value);
-                                                    }
-                                                },
-                                                {
-                                                  Header: 'Status',
-                                                  accessor  : "status",
-                                                  filterable  : false,
-                                                  
-                                                  className : 'grid-header',
-                                                  Cell: row => {
-                                                          return  (
-                                                              <div>
-                                                              {
-                                                                row.value === 1 ?
-                                                                <a href="javascript:void(0)" 
-                                                                  className="btn"
-                                                                  onClick={ this.statusShowHandle.bind(null,row.original.id,0) } 
-                                                                  disabled={ this.props.submitted ? true : false }>
-                                                                    <span className="btn btn-success">Active</span>
-                                                                </a>
-                                                                :
-                                                                <a href="javascript:void(0)" 
-                                                                  className="btn"
-                                                                  onClick={ this.statusShowHandle.bind(null,row.original.id,1) } 
-                                                                  disabled={ this.props.submitted ? true : false }>
-                                                                    <span className="grey btn">Inactive</span>   
-                                                                </a>
-                                                              }
-                                                              </div>
-                                                          )}
-                                                },
-                                                {
-                                                    Header: 'Actions',
-                                                    accessor  : "id",
-                                                    filterable  : false,
-                                                    
-                                                    className : 'grid-header',
-                                                    Cell: row => 
-                                                          <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
-                                                              <Dropdown.Item onClick={ this.deletePlan.bind(null,row.original.id) }>Delete</Dropdown.Item>
-                                                          </DropdownButton>
-                                                }
-                                                
-                                            ]}
-                                            defaultSorted={[
-                                                {
-                                                    id: "id",
-                                                    desc: false
-                                                }
-                                            ]}
-                                            defaultPageSize={10}
-                                            minRows= {this.props.planList}
-                                            className="table table-bordered responsive"
-                                            loading={this.state.loading}
-                                            filterable
-                                            Sorted
-                                            // pages={this.props.pages}
-                                            showPagination={true}
-                                            showPaginationTop={true}
-                                            showPaginationBottom={false}
-                                            pageSizeOptions={[10, 20, 50]}
-                                            automatic // For server side pagination
-                                            onFetchData={(state, instance) => {
-                                                this.getPlansList(state.page, state.pageSize, state.sorted, state.filtered);
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                                </div>
-                        </div>
-                        </div>
-                      </div>
+                                                    </div>
+                                                )}
+                                      },
+                                      {
+                                          Header: 'Actions',
+                                          accessor  : "id",
+                                          filterable  : false,
+                                          
+                                          className : 'grid-header',
+                                          Cell: row => 
+                                                <div className="">
+                                                  <button type="button" className="btn-sm dropdown-toggle" data-toggle="dropdown" id={"dropdown-"+row.value}>
+                                                    <span className="caret"></span>
+                                                    <span>Action</span>
+                                                  </button>
+                                                  <ul className="dropdown-menu" role="menu">
+                                                    <li><a href="#" onClick={ this.deletePlan.bind(null,row.original.id) }>Delete</a></li>
+                                                  </ul>
+                                                </div>
+                                      }
+                                      
+                                  ]}
+                                  defaultSorted={[
+                                      {
+                                          id: "id",
+                                          desc: false
+                                      }
+                                  ]}
+                                  defaultPageSize={10}
+                                  minRows= {this.props.planList}
+                                  className="table table-bordered responsive"
+                                  loading={this.state.loading}
+                                  filterable
+                                  Sorted
+                                  // pages={this.props.pages}
+                                  showPagination={true}
+                                  showPaginationTop={true}
+                                  showPaginationBottom={false}
+                                  pageSizeOptions={[10, 20, 50]}
+                                  automatic // For server side pagination
+                                  onFetchData={(state, instance) => {
+                                      this.getPlansList(state.page, state.pageSize, state.sorted, state.filtered);
+                                  }}
+                              />
+                          </div>
+                      </main>
                       <AddPlanContainer
                         addPlanShow = {this.state.addPlanShow}
                         addPlanHideHandle = {this.addPlanHideHandle}
                       />
                     </div>
                 </div>    
-            </div>
+            </>
         );
     }
 }

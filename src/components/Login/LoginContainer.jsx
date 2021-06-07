@@ -130,9 +130,9 @@ class LoginContainer extends React.Component {
             //     this.props.history.push('/ddashboard');
             // }
             if(userinfo.role === 0){
-                this.props.history.push('/dashboard');
+                this.props.history.push('/home');
             }else if(userinfo.role === 1){
-                this.props.history.push('/upcoming-appointments');
+                this.props.history.push('/dashboard');
             }else{
                 this.props.history.push('/login');
             }

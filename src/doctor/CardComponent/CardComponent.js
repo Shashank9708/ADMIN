@@ -24,6 +24,7 @@ function CardComponent({appointment, handleClick = () => {}, active = false, act
                 <>
                 <div>Appointment Date: { utilityHelper.formatDate(appointment.appointment_date) }</div>
                 <div>Appointment Time: { utilityHelper.formatTime(appointment.appointment_time) }</div>
+                <div>Appointment Type: {appointment.appointment_method == 0 ? "In Clinic" : "Video"}</div>
                 <div>Payment Mode: {appointment.appointment_type}</div>
                 <div>Clinic Name: {appointment.clinic_name}</div>
                 </>

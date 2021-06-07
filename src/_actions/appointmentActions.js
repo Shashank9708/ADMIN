@@ -13,6 +13,7 @@ import { utilityHelper} from '../_helpers';
  */
 export const appointmentActions = {
     getAppointmentList,
+    getVideoAppointmentList,
     saveAppointment,
     resetAppointmentState
 };
@@ -27,6 +28,47 @@ function getAppointmentList(page, pageSize, sorted, filtered) {
     return dispatch => {
         dispatch(request());
         appointmentService.getAppointmentList(page, pageSize, sorted, filtered)
+            .then(
+                response => {
+                    var data = response.data;
+                    var errorMsg;
+                    if(data.status == configConstants.SUCCESS_CODE){
+                        dispatch(success(data.data));
+                    }else if(data.status == configConstants.ERROR_CODE){
+                        errorMsg = utilityHelper.getFirstErrorMessage(data.error);
+                        dispatch(failure(errorMsg));
+                    }else if(data.status == configConstants.EXCEPTION_CODE){
+                        errorMsg = data.message;
+                        dispatch(failure(errorMsg));
+                    }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                        errorMsg = data.message;
+                        dispatch(unauthorize(errorMsg));
+                    }else{
+                        dispatch(failure(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+    // Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: appointmentConstants.APPOINTMENT_FETCH_REQUEST } }
+    function success(result) { return { type: appointmentConstants.APPOINTMENT_FETCH_SUCCESS, result } }
+    function failure(error) { return { type: appointmentConstants.APPOINTMENT_FETCH_FAILURE, error } }
+    function unauthorize(error) { return { type: configConstants.UNAUTHENTICATE, error } }
+}
+
+/**
+* @DateOfCreation        26 July 2018
+* @ShortDescription      This function is responsible for Get notification List
+* @param                 JSON user, This contains full notification input data
+* @return                JSON Object
+*/
+function getVideoAppointmentList(page, pageSize, sorted, filtered) {
+    return dispatch => {
+        dispatch(request());
+        appointmentService.getVideoAppointmentList(page, pageSize, sorted, filtered)
             .then(
                 response => {
                     var data = response.data;

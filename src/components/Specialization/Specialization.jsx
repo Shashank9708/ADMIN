@@ -150,139 +150,130 @@ class Specialization extends React.Component {
     render() {
         // var fileSize = parseInt(configConstants.MAX_FILE_SIZE);
         return (
-            <div className="page-container">
+            <>
                 <HeaderContainer />
                 <div className="container-fluid">
                    <div className="row">
-                      <div className="col-md-2.5">
                        <SideMenu/>
-                      </div>
-                      <div className="col-md-9">
-                        <div className="main-content">
-                            <div className="wrap-inner-content">
-                                <div className="col-md-12">
-                                <div className="inner-content">
-                                        <div className="row page-header">
-                                            <div className="col-md-6">
-                                                <h1 className="page-title">Specializations</h1>
-                                            </div>
-                                            <div className="col-md-6 text-right">
-                                                <button className="blue btn text-btn" onClick={this.addSpecializationShowHandle}>Add New</button>
-                                            </div>
-                                        </div>
-                                        <div className="table-wrap">
-                                        {/*<div className="table-search">
-                                                <input
-                                                    value={this.state.filterAll}
-                                                    onChange={this.notificationSearch}
-                                                    className="table-search-input"
-                                                    placeholder="Search"
-                                                />
-                                        </div>*/}
-                                        <ReactTable
-                                            noDataText="No found !!"
-                                            data={this.props.categoryList}
-                                            filterable
-                                            defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
-                                            filtered={this.state.filtered}
-                                            columns={[
-                                                {
-                                                    Header: 'Image',
-                                                    accessor  : "image_url",
-                                                    className : 'grid-header',
-                                                    filterable  : false,
-                                                    Cell: row =>
-                                                      <div><img src={configConstants.API_BASE_PATH+"/"+row.value} width="50px" height="50px"/></div>
-                                                    
-                                                },
-                                                {
-                                                    Header      : "Specialization ID",
-                                                    accessor    : "id",
-                                                    className   : "grid-header",
-                                                    filterable  : false,
-                                                    filterMethod: (filter, row) => {
-                                                        return row[filter.id].includes(filter.value);
+                      <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                          <div className="page-heading">
+                            <div className="page-heading__title-container">
+                                <h1 className="page-heading__title">Specializations</h1>
+                            </div>
+                            <div className="page-heading__btn-container">
+                              <button className="page-heading__btn btn-sm" onClick={this.addSpecializationShowHandle}>Add New</button>
+                            </div>
+                          </div>
+
+                          <div className="row">
+                             
+                              <ReactTable
+                                  noDataText="No found !!"
+                                  data={this.props.categoryList}
+                                  filterable
+                                  defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
+                                  filtered={this.state.filtered}
+                                  columns={[
+                                      {
+                                          Header: 'Image',
+                                          accessor  : "image_url",
+                                          className : 'grid-header',
+                                          filterable  : false,
+                                          Cell: row =>
+                                            <div><img src={configConstants.API_BASE_PATH+"/"+row.value} width="50px" height="50px"/></div>
+                                          
+                                      },
+                                      {
+                                          Header      : "Specialization ID",
+                                          accessor    : "id",
+                                          className   : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                          Header    : "Title",
+                                          accessor  : "en_spec",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
+                                      },
+                                      {
+                                        Header: 'Status',
+                                        accessor  : "status",
+                                        filterable  : false,
+                                        
+                                        className : 'grid-header',
+                                        Cell: row => {
+                                                return  (
+                                                    <div>
+                                                    {
+                                                      row.value === 1 ?
+                                                      <a href="javascript:void(0)" 
+                                                        className="btn"
+                                                        onClick={ this.statusShowHandle.bind(null,row.original.id,0) } 
+                                                        disabled={ this.props.submitted ? true : false }>
+                                                          <span className="btn btn-success">Active</span>
+                                                      </a>
+                                                      :
+                                                      <a href="javascript:void(0)" 
+                                                        className="btn"
+                                                        onClick={ this.statusShowHandle.bind(null,row.original.id,1) } 
+                                                        disabled={ this.props.submitted ? true : false }>
+                                                          <span className="grey btn">Inactive</span>   
+                                                      </a>
                                                     }
-                                                },
-                                                {
-                                                    Header    : "Title",
-                                                    accessor  : "en_spec",
-                                                    className : "grid-header",
-                                                    filterable  : false,
-                                                    filterMethod: (filter, row) => {
-                                                        return row[filter.id].includes(filter.value);
-                                                    }
-                                                },
-                                                {
-                                                  Header: 'Status',
-                                                  accessor  : "status",
-                                                  filterable  : false,
-                                                  
-                                                  className : 'grid-header',
-                                                  Cell: row => {
-                                                          return  (
-                                                              <div>
-                                                              {
-                                                                row.value === 1 ?
-                                                                <a href="javascript:void(0)" 
-                                                                  className="btn"
-                                                                  onClick={ this.statusShowHandle.bind(null,row.original.id,0) } 
-                                                                  disabled={ this.props.submitted ? true : false }>
-                                                                    <span className="btn btn-success">Active</span>
-                                                                </a>
-                                                                :
-                                                                <a href="javascript:void(0)" 
-                                                                  className="btn"
-                                                                  onClick={ this.statusShowHandle.bind(null,row.original.id,1) } 
-                                                                  disabled={ this.props.submitted ? true : false }>
-                                                                    <span className="grey btn">Inactive</span>   
-                                                                </a>
-                                                              }
-                                                              </div>
-                                                          )}
-                                                },
-                                                {
-                                                    Header: 'Actions',
-                                                    accessor  : "id",
-                                                    filterable  : false,
-                                                    
-                                                    className : 'grid-header',
-                                                    Cell: row => 
-                                                              <DropdownButton id={"dropdown-"+row.value} title="Action" menuAlign="right">
-                                                                  <Dropdown.Item onClick={() => this.editSpecializationShowHandle(row.original)}>Edit</Dropdown.Item>
-                                                                  <Dropdown.Item onClick={() => this.deleteSpecialization(row.original)}>Delete</Dropdown.Item>
-                                                              </DropdownButton>
-                                                }
-                                                
-                                            ]}
-                                            defaultSorted={[
-                                                {
-                                                    id: "id",
-                                                    desc: false
-                                                }
-                                            ]}
-                                            defaultPageSize={10}
-                                            minRows= {this.props.categoryList}
-                                            className="table table-bordered responsive"
-                                            loading={this.state.loading}
-                                            filterable
-                                            Sorted
-                                            // pages={this.props.pages}
-                                            showPagination={true}
-                                            showPaginationTop={true}
-                                            showPaginationBottom={false}
-                                            pageSizeOptions={[10, 20, 50]}
-                                            automatic // For server side pagination
-                                            onFetchData={(state, instance) => {
-                                                this.getSpecializationList(state.page, state.pageSize, state.sorted, state.filtered);
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                                </div>
-                        </div>
-                        </div>
-                      </div>
+                                                    </div>
+                                                )}
+                                      },
+                                      {
+                                          Header: 'Actions',
+                                          accessor  : "id",
+                                          filterable  : false,
+                                          
+                                          className : 'grid-header',
+                                          Cell: row => 
+                                                  <div className="">
+                                                    <button type="button" className="btn-sm dropdown-toggle" data-toggle="dropdown" id={"dropdown-"+row.value}>
+                                                      <span className="caret"></span>
+                                                      <span>Action</span>
+                                                    </button>
+                                                    <ul className="dropdown-menu" role="menu">
+                                                      <li><a href="#" onClick={() => this.editSpecializationShowHandle(row.original)}>Edit</a></li>
+                                                      <Dropdown.Divider />
+                                                      <li><a href="#" onClick={() => this.deleteSpecialization(row.original)}>Delete</a></li>
+                                                    </ul>
+                                                  </div>
+                                      }
+                                      
+                                  ]}
+                                  defaultSorted={[
+                                      {
+                                          id: "id",
+                                          desc: false
+                                      }
+                                  ]}
+                                  defaultPageSize={10}
+                                  minRows= {this.props.categoryList}
+                                  className="table table-bordered responsive"
+                                  loading={this.state.loading}
+                                  filterable
+                                  Sorted
+                                  // pages={this.props.pages}
+                                  showPagination={true}
+                                  showPaginationTop={true}
+                                  showPaginationBottom={false}
+                                  pageSizeOptions={[10, 20, 50]}
+                                  automatic // For server side pagination
+                                  onFetchData={(state, instance) => {
+                                      this.getSpecializationList(state.page, state.pageSize, state.sorted, state.filtered);
+                                  }}
+                              />
+                          </div>
+                      </main>
                       <AddSpecializationContainer
                         addSpecializationShow = {this.state.addSpecializationShow}
                         addSpecializationHideHandle = {this.addSpecializationHideHandle}
@@ -291,7 +282,7 @@ class Specialization extends React.Component {
                       />
                     </div>
                 </div>    
-            </div>
+            </>
         );
     }
 }

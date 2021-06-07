@@ -61,6 +61,7 @@ function PatientDetail(
                     <>
                     <div>Appointment Date: {utilityHelper.formatDate(patientDetail.appointment_date)}</div>
                     <div>Appointment Time: {utilityHelper.formatTime(patientDetail.appointment_time)}</div>
+                    <div>Appointment Type: {patientDetail.appointment_method == 0 ? "In Clinic" : "Video"}</div>
                     <div>Payment Mode: {patientDetail.appointment_type}</div>
                     <div>Clinic Name: {patientDetail.clinic_name}</div>
                     </>
