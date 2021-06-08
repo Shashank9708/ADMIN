@@ -24,36 +24,74 @@ export const AddUpcomingAppointments = (props) => {
                   </Modal.Header>
                   <Modal.Body>
                       <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                           <div className={ props.payload.validate.contact_no.isValid ? 'form-group' : 'form-group has-error' }>
                             <input name="contact_no" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Mobile Number"/>
                             <span className="help-block">{ props.payload.validate.contact_no.message }</span>
+                          </div>                        
+                        </div>
+                        <div className="col-md-6">
+                          <div className={ props.payload.validate.health_problem_id.isValid ? 'form-group' : 'form-group has-error' }>
+                              <Select
+                                  placeholder = "Purpose of Visit"
+                                  onChange={ (value, name) => props.handleSelectChange(value, 'health_problem_id') }
+                                  options={props.healthProblem}
+                                  name='health_problem_id'
+                              />
+                              <span className="help-block">{ props.payload.validate.health_problem_id.message }</span>
                           </div>
                         </div>
-
-                        <div className="col-md-12">
+                      
+                        <div className="col-md-6">
                           <div className={ props.payload.validate.name.isValid ? 'form-group' : 'form-group has-error' }>
-                            <input name="name" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Patient Name"/>
+                            <input name="name" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="First Name"/>
                             <span className="help-block">{ props.payload.validate.name.message }</span>
                           </div>
                         </div>
                         
-
-                        <div className="col-md-12">
-                          
-                          <div className={ props.payload.validate.health_problem_id.isValid ? 'form-group' : 'form-group has-error' }>
-                            <Select
-                                placeholder = "Select health problem"
-                                onChange={ (value, name) => props.handleSelectChange(value, 'health_problem_id') }
-                                options={props.healthProblem}
-                                name='health_problem_id'
-                            />
-                            <span className="help-block">{ props.payload.validate.health_problem_id.message }</span>
+                        <div className="col-md-6">
+                          <div className={ props.payload.validate.name.isValid ? 'form-group' : 'form-group has-error' }>
+                            <input name="name" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Last Name"/>
+                            <span className="help-block">{ props.payload.validate.name.message }</span>
+                          </div>
+                        </div>                        
+                        
+                        <div className="col-md-6">
+                          <div className={ props.payload.validate.name.isValid ? 'form-group' : 'form-group has-error' }>
+                            <input name="name" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Email ID"/>
+                            <span className="help-block">{ props.payload.validate.name.message }</span>
                           </div>
                         </div>
-
-                        <div className="col-md-12">
-                          
+                        
+                        <div className="col-md-2">
+                          <div className={ props.payload.validate.health_problem_id.isValid ? 'form-group' : 'form-group has-error' }>
+                              <Select
+                                  placeholder = "Age"
+                                  onChange={ (value, name) => props.handleSelectChange(value, 'health_problem_id') }
+                                  options={props.healthProblem}
+                                  name='health_problem_id'
+                              />
+                              <span className="help-block">{ props.payload.validate.health_problem_id.message }</span>
+                          </div>                        
+                        </div>
+                        
+                        <div className="col-md-4">
+                          {/* <label>Gender</label>   */}
+                            <div className={ 'form-group' }>
+                              <Select
+                                  placeholder = "Select Gender"
+                                  onChange={ (value, name) => this.handleSelectChange(value, 'gender') }
+                                  options={[
+                                      {label: 'Male', value: 'Male'},
+                                      {label: 'Female', value: 'Female'}
+                                    ]}
+                                  name='council_id'
+                                  className="selectOption"
+                              />
+                            </div>                        
+                        </div>
+                        
+                        <div className="col-md-6">
                           <div className={ props.payload.validate.clinic_id.isValid ? 'form-group' : 'form-group has-error' }>
                             <Select
                                 placeholder = "Select clinic"
@@ -64,8 +102,20 @@ export const AddUpcomingAppointments = (props) => {
                             <span className="help-block">{ props.payload.validate.clinic_id.message }</span>
                           </div>
                         </div>
+                        <div className="col-md-3">
+                          <label className="control-label">First Time Visit</label>
+                          <div className="form-group">
+                            <input type="radio" name="status" value="1" checked /> Yes <input type="radio" name="status" value="2" /> No
+                          </div>                        
+                        </div>
+                        <div className="col-md-3">
+                          <label className="control-label">Followup Appointment</label>
+                          <div className="form-group">
+                            <input type="radio" name="Followup" value="1" checked /> Yes <input type="radio" name="Followup" value="2" /> No
+                          </div>                        
+                        </div>                        
 
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                           <label>Select Appointment Date</label>
                           <div className="row">
                             {props.clinicSlotDate.length > 0 ?  
@@ -74,7 +124,7 @@ export const AddUpcomingAppointments = (props) => {
                                 if(row.day == props.payload.detail.appointment_date){  
                                    select = true
                                 }  
-                                return <div className="col-md-2"><span className={select ? "timeslot" : "timeslot-not-selected"} onClick={() => props.slotDate(row.day)}>{utilityHelper.formatDate(row.day)}</span></div>
+                                return <div className="col-md-4"><span className={select ? "timeslot" : "timeslot-not-selected"} onClick={() => props.slotDate(row.day)}>{utilityHelper.formatDate(row.day)}</span></div>
                               })
                               :
                               <div className="col-md-12">
@@ -87,7 +137,7 @@ export const AddUpcomingAppointments = (props) => {
                         </div>
 
 
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                           <label>Select Appointment Slot</label>
                           <div className="row">
                             {props.clinicSlotManage.length > 0 ? 
@@ -96,7 +146,7 @@ export const AddUpcomingAppointments = (props) => {
                                 if(row.start == props.payload.detail.appointment_time){  
                                    select = true
                                 }  
-                                return <div className="col-md-2">
+                                return <div className="col-md-3">
                                   <span className={row.available === 1 ? select ? "timeslot" : "timeslot-not-selected" : "timeslot-not-select"} 
                                   onClick={() => (row.available === 1) ? props.slotTime(row.start) : ''}>{utilityHelper.formatTime(row.start)}</span></div>
                               })
