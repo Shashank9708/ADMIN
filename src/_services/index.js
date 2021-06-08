@@ -25,6 +25,8 @@ export * from './planService';
 export * from './patientService';
 export * from './profileService';
 export * from './videoService';
+export * from './rxService';
+
 
 export * from './forgotPasswordService';
 export * from './notificationService';
