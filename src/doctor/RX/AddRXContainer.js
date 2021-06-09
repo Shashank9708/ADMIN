@@ -12,6 +12,7 @@ class AddRXContainer extends React.Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleSaveRX = this.handleSaveRX.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
   get initialState() {
@@ -60,7 +61,31 @@ class AddRXContainer extends React.Component {
         });
     }
 
-
+    /**
+    * @DateOfCreation        11 June 2018
+    * @ShortDescription      This function is responsible to handle changes in Select state
+    * @param                 Event Object
+    * @return                Nothing
+    */
+    handleSelectChange(selectedOption, name) {
+        // console.log('selectedOption',selectedOption, name)
+          const { detail, validate } = this.state.rxForm;
+          this.setState({
+              rxForm : {
+                  detail : {
+                      ...detail,
+                      [name] : selectedOption
+                  },
+                  validate : {
+                      ...validate,
+                      [name] : {
+                          isValid : true,
+                          message : ''
+                      }
+                  },
+              }
+          });
+      }
   /**
      * @DateOfCreation        11 June 2018
      * @ShortDescription      This function is responsible to handle close add/edit employee modal
@@ -75,17 +100,15 @@ class AddRXContainer extends React.Component {
   handleSaveRX() {
     if(rxValidator.is_rxValid(this)) {
         const { detail } = this.state.rxForm;
-        let newarg = []
+        let arg = []
         if(this.props.rxList.length > 0){
-          newarg = this.props.rxList[0].medsdata
+          arg = this.props.rxList[0].medsdata
         }
-        console.log(newarg)
-        let medsdata = { medsdata: newarg.push(detail) }
-
+        let medsdata = { medsdata: [...arg, detail] }
         const { dispatch } = this.props;
           if(this.props.flag){
             // bodyFormData.append('id',this.state.id);
-            dispatch(rxActions.editRX(medsdata, this.props.rxList));
+            // dispatch(rxActions.saveRX(medsdata, this.props.rxList));
           }else{
             dispatch(rxActions.saveRX(medsdata, this.props.rxList));
           }
@@ -112,7 +135,7 @@ class AddRXContainer extends React.Component {
                     name : { isValid : true, message : '' }
                 }
               },
-              id: newProps.payload.id
+              id: newProps.payload.index
             });
     
         }else{
@@ -139,6 +162,7 @@ class AddRXContainer extends React.Component {
               handleClose = {this.handleClose}
               handleSaveRX = {this.handleSaveRX}
               handleInputChange = {this.handleInputChange}
+              handleSelectChange = {this.handleSelectChange}
               payload = {this.state.rxForm}
             />
       );

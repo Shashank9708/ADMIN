@@ -1,5 +1,7 @@
 import React from 'react';
 import {Alert, Button, Modal, Tabs, Tab, DropdownButton, title} from 'react-bootstrap';
+import Select from 'react-select'
+
 
 export const AddRX = (props) => { 
     // console.log('props===>>>',props)
@@ -38,8 +40,22 @@ export const AddRX = (props) => {
                           </div>
                         </div>
                         <div className="col-md-12">
-                          <div className={ 'form-group' }>
-                            <input name="dosage_from" type="text" className="form-control" value={props.payload.detail.dosage_from} onChange = { props.handleInputChange } placeholder="Dose form"/>
+                          <div className='form-group'>
+                            <Select
+                                placeholder = "Dosage From"
+                                onChange={ (value, name) => props.handleSelectChange(value, 'dosage_from') }
+                                options={[
+                                    {label: 'tablet', value: 'tablet'},
+                                    {label: 'syrup', value: 'syrup'},
+                                    {label: 'injection', value: 'injection'},
+                                    {label: 'powder', value: 'powder'},
+                                    {label: 'capsules', value: 'capsules'},
+                                    {label: 'drop', value: 'drop'},
+                                    {label: 'inhaler', value: 'inhaler'}
+                                  ]}
+                                name='dosage_from'
+                                value={props.payload.dosage_from}
+                            />
                           </div>
                         </div>
                         <div className="col-md-12">

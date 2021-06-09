@@ -24,6 +24,7 @@ class RX extends React.Component {
         this.addRXHideHandle = this.addRXHideHandle.bind(this);
 
         this.editSpecializationShowHandle         = this.editSpecializationShowHandle.bind(this);
+        this.removeSpecializationShowHandle         = this.removeSpecializationShowHandle.bind(this);
 
         this.getRXList        = this.getRXList.bind(this);
         this.statusShowHandle = this.statusShowHandle.bind(this);
@@ -37,7 +38,8 @@ class RX extends React.Component {
             pages  : 0,
             addRXShow: false,
             payload: '',
-            flag: false
+            flag: false,
+            index: ''
         }
     }
 
@@ -56,7 +58,7 @@ class RX extends React.Component {
      * @return                Nothing
      */
      addRXHideHandle() {
-       this.setState({ addRXShow: false, payload: '', flag: false });
+       this.setState({ addRXShow: false, payload: '', flag: false, index: '' });
      }
 
      /**
@@ -64,8 +66,24 @@ class RX extends React.Component {
      * @ShortDescription      This function is responsible to handle open import modal
      * @return                Nothing
      */
-     editSpecializationShowHandle(data) {
-       this.setState({ addRXShow: true, payload: data, flag:true });
+     editSpecializationShowHandle(data, index) {
+       this.setState({ addRXShow: true, payload: data, flag:true, index: index });
+     }
+
+     /**
+     * @DateOfCreation        26 July 2018
+     * @ShortDescription      This function is responsible to handle open import modal
+     * @return                Nothing
+     */
+     removeSpecializationShowHandle(data, index) {
+        let arg = []
+        if(this.props.rxList.length > 0){
+          arg = this.props.rxList[0].medsdata
+        }
+        arg.splice(index, 1)
+        let medsdata = { medsdata: arg }
+        const { dispatch } = this.props;
+        dispatch(rxActions.saveRX(medsdata, this.props.rxList));
      }
 
     /**
@@ -151,25 +169,23 @@ class RX extends React.Component {
                           <div className="row">
                               <ReactTable
                                   noDataText="No found !!"
-                                  data={this.props.rxList}
+                                  data={this.props.rxList.length > 0 ? this.props.rxList[0].medsdata : []}
                                   filterable
                                   defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}
                                   filtered={this.state.filtered}
                                   columns={[
                                       {
-                                          Header: 'Image',
-                                          accessor  : "image_url",
+                                          Header: 'Name',
+                                          accessor  : "name",
                                           className : 'grid-header',
                                           filterable  : false,
-                                          Cell: row =>
-                                            <div>
-                                              <img src={configConstants.API_BASE_PATH+"/"+row.value} width="50px" height="50px"/>
-                                            </div>
-                                          
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
                                       },
                                       {
-                                          Header      : "RX ID",
-                                          accessor    : "healthtips_category_id",
+                                          Header      : "Brand",
+                                          accessor    : "brand",
                                           className   : "grid-header",
                                           filterable  : false,
                                           filterMethod: (filter, row) => {
@@ -177,8 +193,8 @@ class RX extends React.Component {
                                           }
                                       },
                                       {
-                                          Header    : "Title",
-                                          accessor  : "title_en",
+                                          Header    : "Dosage",
+                                          accessor  : "dosage",
                                           className : "grid-header",
                                           filterable  : false,
                                           filterMethod: (filter, row) => {
@@ -186,32 +202,21 @@ class RX extends React.Component {
                                           }
                                       },
                                       {
-                                        Header: 'Status',
-                                        accessor  : "status",
-                                        filterable  : false,
-                                        
-                                        className : 'grid-header',
-                                        Cell: row => {
-                                                return  (
-                                                    <div>
-                                                    {
-                                                      row.value === 1 ?
-                                                      <a href="javascript:void(0)" 
-                                                        className="btn"
-                                                        onClick={ this.statusShowHandle.bind(null,row.original.healthtips_category_id,0) } 
-                                                        disabled={ this.props.submitted ? true : false }>
-                                                          <span className="btn btn-success">Active</span>
-                                                      </a>
-                                                      :
-                                                      <a href="javascript:void(0)" 
-                                                        className="btn"
-                                                        onClick={ this.statusShowHandle.bind(null,row.original.healthtips_category_id,1) } 
-                                                        disabled={ this.props.submitted ? true : false }>
-                                                          <span className="grey btn">Inactive</span>   
-                                                      </a>
-                                                    }
-                                                    </div>
-                                                )}
+                                          Header    : "Dosage From",
+                                          accessor  : "dosage_from",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          Cell: row =>
+                                            <span>{row.value.value}</span>
+                                      },
+                                      {
+                                          Header    : "Instructions",
+                                          accessor  : "instructions",
+                                          className : "grid-header",
+                                          filterable  : false,
+                                          filterMethod: (filter, row) => {
+                                              return row[filter.id].includes(filter.value);
+                                          }
                                       },
                                       {
                                           Header: 'Actions',
@@ -226,7 +231,7 @@ class RX extends React.Component {
                                                     <span>Action</span>
                                                   </button>
                                                   <ul className="dropdown-menu" role="menu">
-                                                    <li><a href="#" onClick={() => this.editSpecializationShowHandle(row.original)}>Edit</a></li>
+                                                    <li><a href="#" onClick={() => this.removeSpecializationShowHandle(row.original, index)}>Remove</a></li>
                                                   </ul>
                                                 </div>
                                       }
@@ -261,6 +266,7 @@ class RX extends React.Component {
                         addRXHideHandle = {this.addRXHideHandle}
                         payload = {this.state.payload}
                         flag = {this.state.flag}
+                        index = {this.state.index}
                       />
                     </div>
                 </div>    

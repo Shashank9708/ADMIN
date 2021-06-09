@@ -29,6 +29,12 @@ class AddUpcomingAppointmentsContainer extends React.Component {
                   'clinic_id' : '',
                   'appointment_date' : new Date().toJSON().slice(0,10),
                   'appointment_time' : '',
+                  'name' : '',
+                  'email' : '',
+                  'age' : '',
+                  'gender' : '',
+                  'is_first_time' : '',
+                  'is_followup' : '',
               },
               validate : {
                   name : { isValid : true, message : '' },
@@ -178,11 +184,17 @@ class AddUpcomingAppointmentsContainer extends React.Component {
         let data = {
                       "name": detail.name,
                       "contact_no": detail.contact_no,
-                      "health_problem_id": detail.health_problem_id.value,
+                      "health_problem_id": detail.health_problem_id.value || '',
                       "clinic_id": detail.clinic_id.value,
                       "doc_id": JSON.parse(localStorage.user).doc_id,
                       "appointment_date": detail.appointment_date,
-                      "appointment_time": detail.appointment_time
+                      "appointment_time": detail.appointment_time,
+                      'name' : detail.name,
+                      'email' : detail.email,
+                      'age' : detail.age,
+                      'gender' : detail.gender.value || '',
+                      'is_first_time' : detail.is_first_time,
+                      'is_followup' : detail.is_followup
                     }
 
             // console.log("----------",data)
