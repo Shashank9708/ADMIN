@@ -209,6 +209,11 @@ const ReportContainer = Loadable({
     loading: Loading
 });
 
+const RXContainer = Loadable({
+    loader: () => import('../doctor/RX').then(object => object.RXContainer),
+    loading: Loading
+});
+
 
 
 
@@ -280,6 +285,7 @@ class App extends React.Component {
                         <DoctorRoute exact path='/doctor-profile' component={ViewProfile} authenticated={this.props.authenticated} allowuser={[1]} />
                         <DoctorRoute exact path='/manage-calendar' component={ManageCalendarContainer} authenticated={this.props.authenticated} allowuser={[1]} />
                         <DoctorRoute exact path='/report' component={ReportContainer} authenticated={this.props.authenticated} allowuser={[1]} />
+                        <DoctorRoute exact path='/rx' component={RXContainer} authenticated={this.props.authenticated} allowuser={[1]} />
 
 
 

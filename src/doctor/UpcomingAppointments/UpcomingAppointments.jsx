@@ -522,8 +522,8 @@ class UpcomingAppointments extends React.Component {
                             <CardComponent 
                               appointment = {row}
                               handleClick = {this.patientDetailActive}
-                              cancelAll = {this._onCreate_Room}
-                              // cancelAll = {this.cancelAll}
+                              // cancelAll = {this._onCreate_Room}
+                              cancelAll = {this.cancelAll}
                               active = {this.state.active}
                             />
                           )

@@ -14,3 +14,4 @@ export * from './vendorCategoriesValidator';
 export * from './planValidator';
 export * from './favoritValidator';
 export * from './profileValidator';
+export * from './rxValidator';

@@ -24,6 +24,7 @@ export * from './planActions';
 export * from './patientActions';
 export * from './profileActions';
 export * from './videoActions';
+export * from './rxActions';
 
 
 export * from './forgotPasswordActions';

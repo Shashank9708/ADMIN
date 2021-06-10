@@ -32,6 +32,7 @@ import { planReducer } from './planReducer';
 import { patientReducer } from './patientReducer';
 import { profileReducer } from './profileReducer';
 import { videoReducer } from './videoReducer';
+import { rxReducer } from './rxReducer';
 
 const appReducer = combineReducers({
 	session: sessionReducer,
@@ -63,7 +64,7 @@ const appReducer = combineReducers({
 	patientReducer,
 	profileReducer,
 	videoReducer,
-
+	rxReducer,
 	
 	vehicleReducer,
 	LiveMapReducer,
