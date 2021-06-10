@@ -1,7 +1,7 @@
 @import "./Variable.scss";
 @import "./Typography.scss";
 body {
-  font-family: inter;
+  font-family: SF-Pro-Display-Regular;
 }
 
 a {
@@ -50,6 +50,7 @@ a:hover {
     display: flex;
     align-items: center;
     @extend .CTAGrey;
+    color: $fill-black;
 
     &.active {
       color: $fill-ark;
@@ -120,7 +121,7 @@ a:hover {
   &__title-container {
   }
   &__title {
-    font-family: "Montserrat", sans-serif;
+    font-family: SF-Pro-Display-Regular;
     font-size: 21px;
     font-weight: 600;
     margin-bottom: 0px;

@@ -6,12 +6,13 @@ input[type="password"],
 select {
   background: rgba(26, 40, 44, 0.03);
   border-radius: 4px;
-  height: 53px !important;
-  padding: 0 20px;
+  height: 40px !important;
+  padding: 0 15px;
   border: 0;
   margin-bottom: 20px;
   width: 100%;
   @extend .H6DesktopBlack;
+  font-size: 14px;
 }
 
 button,
@@ -19,7 +20,7 @@ button,
 [type="reset"],
 [type="submit"] {
   position: unset;
-  padding: 20px 24px;
+  padding: 15px;
   height: auto;
   line-height: 1;
   text-align: center;
@@ -130,23 +131,31 @@ table {
 
 .form-group {
   margin-bottom: 20px;
+  @extend .H6DesktopBlack;
+  font-size: 14px;
+
   .form-control {
-    height: 53px;
+    height: 40px;
     border: 0px;
     background: rgba(26, 40, 44, 0.03);
+    @extend .H6DesktopBlack;
+    font-size: 14px;
   }
   .css-yk16xz-control {
-    height: 53px;
+    height: 40px;
     background: rgba(26, 40, 44, 0.03);
     border: 0px;
+    @extend .H6DesktopBlack;
+    font-size: 14px;
+
     .css-g1d714-ValueContainer {
-      height: 53px;
+      height: 40px;
     }
   }
   .css-1pahdxg-control {
-    height: 53px;
+    height: 40px;
     .css-g1d714-ValueContainer {
-      height: 53px;
+      height: 40px;
       .css-b8ldur-Input {
         input[type="text"] {
           background: unset;
@@ -160,7 +169,7 @@ table {
       }
     }
     .css-1hb7zxy-IndicatorsContainer {
-      height: 53px;
+      height: 40px;
     }
   }
 }
@@ -261,7 +270,7 @@ span.timeslot-selected {
   }
 }
 .modal-title {
-  font-family: "Montserrat", sans-serif;
+  font-family: SF-Pro-Display-Regular;
   font-size: 21px;
   font-weight: 600;
   margin-bottom: 0px;
