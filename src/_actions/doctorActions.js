@@ -32,6 +32,7 @@ export const doctorActions = {
     removefavorite,
     appointmentReport,
     referredReport,
+    getAllMedicine,
     resetFirstState
 };
 
@@ -801,6 +802,51 @@ function getfavorite() {
     function request() { return { type: doctorConstants.FAVORITE_LIST_REQUEST } }
     function success(result) { return { type: doctorConstants.FAVORITE_LIST_SUCCESS, result } }
     function failure(error) { return { type: doctorConstants.FAVORITE_LIST_FAILURE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+/**
+* @DateOfCreation        09 June 2019
+* @ShortDescription      This function is responsible for Login
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function getAllMedicine() {
+    return dispatch => {
+        dispatch(request());
+        return doctorService.getAllMedicine()
+            .then(
+                response => {
+                    if(response != "Error: Network Error"){
+                        var data = response.data;
+                        var errorMsg;
+                        if(data.status == configConstants.SUCCESS_CODE){
+                            dispatch(success(data));
+                            return data
+                        }else if(data.status == configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                            return data
+                        }else if(data.status == configConstants.EXCEPTION_CODE){
+                            errorMsg = data.message;
+                            dispatch(failure(errorMsg));
+                        }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: doctorConstants.MEDICINE_LIST_REQUEST } }
+    function success(result) { return { type: doctorConstants.MEDICINE_LIST_SUCCESS, result } }
+    function failure(error) { return { type: doctorConstants.MEDICINE_LIST_FAILURE, error } }
     function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
 }
 

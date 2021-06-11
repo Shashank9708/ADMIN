@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { doctorActions, clinicSlotActions } from '../../_actions';
+import { doctorActions, clinicSlotActions, userActions } from '../../_actions';
 import { AddUpcomingAppointments } from './AddUpcomingAppointments';
 import { upcomingAppointmentValidator } from '../../_validator';
 import { ToastContainer, toast } from 'react-toastify';
@@ -29,7 +29,6 @@ class AddUpcomingAppointmentsContainer extends React.Component {
                   'clinic_id' : '',
                   'appointment_date' : new Date().toJSON().slice(0,10),
                   'appointment_time' : '',
-                  'name' : '',
                   'email' : '',
                   'age' : '',
                   'gender' : '',
@@ -75,6 +74,29 @@ class AddUpcomingAppointmentsContainer extends React.Component {
         }, function(){
           
         });
+        if(name === 'contact_no' && value.length === 10){
+            const { dispatch } = this.props;
+            dispatch(userActions.getUserdetail(value)).then((res)=>{
+              if(res.status === 200 && res.data){
+                this.setState({
+                    Form : {
+                        validate:{
+                            ...validate
+                        },
+                        detail : {
+                            ...detail,
+                            'name' : res.data.name,
+                            'email' : res.data.email,
+                            'age' : res.data.age,
+                            'gender' : res.data.gender,
+                            'is_first_time' : res.data.is_first_time,
+                            'is_followup' : res.data.is_followup
+                        }
+                    }  
+                });
+              }
+            })
+        }
     }
 
     

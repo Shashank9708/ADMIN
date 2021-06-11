@@ -539,7 +539,7 @@ class AllUpcomingAppointments extends React.Component {
                    
                   
                   </main>
-                  
+                    {/*
                     <AddUpcomingAppointmentsContainer
                       addUpcomingAppointmentsShow = {this.state.addUpcomingAppointmentsShow}
                       clinicList = {this.props.clinicList}
@@ -567,7 +567,7 @@ class AllUpcomingAppointments extends React.Component {
                       handleClose = {this.addReferToDoctorHideHandle}
                       handleSelectDoctor = {this.handleSelectDoctor}
                       handleReferToDoctor = {this.handleReferToDoctor}
-                    />
+                    />*/}
                 </div>
                 <ToastContainer />
             </div>    

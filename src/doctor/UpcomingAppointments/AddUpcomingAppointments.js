@@ -26,14 +26,14 @@ export const AddUpcomingAppointments = (props) => {
                       <div className="row">
                         <div className="col-md-6">
                           <div className={ props.payload.validate.contact_no.isValid ? 'form-group' : 'form-group has-error' }>
-                            <input name="contact_no" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Mobile Number"/>
+                            <input name="contact_no" type="text" className="form-control" onChange = { props.handleInputChange } onBlur={ props.handleInputChange } placeholder="Mobile Number"/>
                             <span className="help-block">{ props.payload.validate.contact_no.message }</span>
                           </div>                        
                         </div>
                         <div className="col-md-6">
                           <div className={ props.payload.validate.health_problem_id.isValid ? 'form-group' : 'form-group has-error' }>
                               <Select
-                                  placeholder = "Purpose of Visit"
+                                  placeholder = "Health Problem"
                                   onChange={ (value, name) => props.handleSelectChange(value, 'health_problem_id') }
                                   options={props.healthProblem}
                                   name='health_problem_id'
@@ -44,7 +44,7 @@ export const AddUpcomingAppointments = (props) => {
                       
                         <div className="col-md-6">
                           <div className={ props.payload.validate.name.isValid ? 'form-group' : 'form-group has-error' }>
-                            <input name="name" type="text" className="form-control" onChange = { props.handleInputChange } placeholder="Name"/>
+                            <input name="name" type="text" value={props.payload.detail.name}  className="form-control" onChange = { props.handleInputChange } placeholder="Name"/>
                             <span className="help-block">{ props.payload.validate.name.message }</span>
                           </div>
                         </div>
@@ -52,13 +52,13 @@ export const AddUpcomingAppointments = (props) => {
                         
                         <div className="col-md-6">
                           <div className={ 'form-group'}>
-                            <input name="email" type="email" className="form-control" onChange = { props.handleInputChange } placeholder="Email ID"/>
+                            <input name="email" type="email" value={props.payload.detail.email}  className="form-control" onChange = { props.handleInputChange } placeholder="Email ID"/>
                           </div>
                         </div>
                         
                         <div className="col-md-2">
                           <div className={ 'form-group' }>
-                              <input name="age" type="number" className="form-control" onChange = { props.handleInputChange } placeholder="Age"/>
+                              <input name="age" type="number" value={props.payload.detail.age}  className="form-control" onChange = { props.handleInputChange } placeholder="Age"/>
                           </div>                        
                         </div>
                         

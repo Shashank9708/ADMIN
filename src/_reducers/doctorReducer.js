@@ -19,6 +19,7 @@ const initialState = {
     doctorReferred    : [],
     doctorReferral    : [],
     favoriteList    : [],
+    medicineList    : [],
     favorite    : false,
     cancelMessage          : false,
     referToDoctor          : false,
@@ -398,6 +399,32 @@ export function doctorReducer(state = initialState, action) {
               errorMsg       : false
           };
         case doctorConstants.FAVORITE_LIST_FAILURE:
+          return {
+            ...state, 
+            submitted      : false,
+            loader         : false,
+            favorite         : true,
+            errorMsg       : action.error
+           };
+        
+        // Fetch 
+        case doctorConstants.MEDICINE_LIST_REQUEST:
+          return {
+            ...state,
+            errorMsg         : false,
+            medicineList     : [],
+            loader           : true,
+            submitted        : false 
+          };
+        case doctorConstants.MEDICINE_LIST_SUCCESS:
+          return  { 
+              ...state,
+              medicineList     : action.result.data,
+              loader         : false,
+              favorite         : true,
+              errorMsg       : false
+          };
+        case doctorConstants.MEDICINE_LIST_FAILURE:
           return {
             ...state, 
             submitted      : false,

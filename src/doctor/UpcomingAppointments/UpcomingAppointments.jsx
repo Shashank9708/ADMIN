@@ -138,6 +138,9 @@ class UpcomingAppointments extends React.Component {
      * @return                Nothing
      */
      addDigitalPrescriptionShowHandle(row) {
+      
+       const { dispatch }   = this.props;
+       dispatch(doctorActions.getAllMedicine());
        this.setState({ addDigitalPrescriptionShow: true, patient_id: row.patient_id, appointment_id: row.appointment_id });
      }
 
@@ -562,6 +565,7 @@ class UpcomingAppointments extends React.Component {
                       handleAddClick = {this.handleAddClick}
                       handleFileChange = {this.handleFileChange}
                       prescriptionURL = {this.props.uploaded_url}
+                      medicineList = {this.props.medicineList}
                     />
 
                     <ReferToDoctor
@@ -587,13 +591,14 @@ class UpcomingAppointments extends React.Component {
  */
 
 function mapStateToProps(state) {
-    const { doctorAppoinementList, doctorAppoinement, favoriteList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete, uploaded_url } = state.doctorReducer;
+    const { doctorAppoinementList, doctorAppoinement, medicineList, favoriteList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete, uploaded_url } = state.doctorReducer;
     const { clinicList } = state.clinicReducer;
     const { healthProblem, patientHistory } = state.patientReducer;
     return {
         doctorAppoinementList,
         doctorAppoinement,
         favoriteList,
+        medicineList,
         isUserNotValid,
         loader,
         clinicList,

@@ -2,6 +2,8 @@ import React from "react";
 import {Alert, Button, Modal, Tabs, Tab, DropdownButton, title} from 'react-bootstrap';
 import Select from 'react-select'
 import { configConstants } from '../../_constants';
+import {CreateOptions} from '../../_helpers/helper'
+
 
 
 export const AddDigitalPrescription = (props) => {  
@@ -64,13 +66,21 @@ export const AddDigitalPrescription = (props) => {
                                     <>
                                       <div className="col-md-3">
                                         <div className={ 'form-group'}>
-                                        <input
+                                        {/*<input
                                           className="form-control"
                                           name="medicine"
                                           placeholder="Medicine name"
                                           value={x.medicine}
                                           onChange={e => props.handleTextChange(e, i)}
-                                        />
+                                        />*/}
+                                        <Select
+                                              placeholder = "Medicine name"
+                                              onChange={ (value, name) => props.handleSelectChange(value, 'medicine', i) }
+                                              options={CreateOptions(props.medicineList)}
+                                              name='medicine'
+                                              value={x.medicine}
+                                          />
+                                        
                                         </div>
                                       </div>
                                       <div className="col-md-3">

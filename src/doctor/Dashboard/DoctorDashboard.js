@@ -134,6 +134,8 @@ class DoctorDashboard extends React.Component {
      * @return                Nothing
      */
      addDigitalPrescriptionShowHandle(row) {
+        const { dispatch }   = this.props;
+       dispatch(doctorActions.getAllMedicine());
        this.setState({ addDigitalPrescriptionShow: true, patient_id: row.patient_id, appointment_id: row.appointment_id });
      }
 
@@ -517,6 +519,7 @@ class DoctorDashboard extends React.Component {
                       handleAddClick = {this.handleAddClick}
                       handleFileChange = {this.handleFileChange}
                       prescriptionURL = {this.props.uploaded_url}
+                      medicineList = {this.props.medicineList}
                     />
 
                     <ReferToDoctor
@@ -542,7 +545,7 @@ class DoctorDashboard extends React.Component {
  */
 
 function mapStateToProps(state) {
-    const { doctorAppoinementList, favoriteList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete, uploaded_url } = state.doctorReducer;
+    const { doctorAppoinementList, favoriteList,medicineList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete, uploaded_url } = state.doctorReducer;
     const { clinicList } = state.clinicReducer;
     const { healthProblem, patientHistory } = state.patientReducer;
     return {
@@ -550,6 +553,7 @@ function mapStateToProps(state) {
         favoriteList,
         isUserNotValid,
         loader,
+        medicineList,
         clinicList,
         healthProblem,
         successMessage,

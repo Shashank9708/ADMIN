@@ -14,6 +14,7 @@ export const userService = {
     getUserList,
     getDoctorList,
     sendMail,
+    getUserdetail,
     makePractitinor
 };
 
@@ -52,6 +53,26 @@ function getDoctorList(type) {
     return axios({
         method  : 'get',
         url     : configConstants.API_BASE_PATH + '/admin/doctorlist',
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+
+/**
+* @DateOfCreation        26 July 2018
+* @ShortDescription      This function is responsible to call Fetch route list api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function getUserdetail(number) {
+    
+    return axios({
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH + '/profile/getUserProfile/'+number,
     })
     .then(response => {
         return response;

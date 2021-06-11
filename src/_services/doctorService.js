@@ -32,6 +32,7 @@ export const doctorService = {
     addfavorite,
     removefavorite,
     appointmentReport,
+    getAllMedicine,
     referredReport
 };
 
@@ -481,6 +482,25 @@ function referredReport() {
     return axios({
         method  : 'get',
         url     : configConstants.API_BASE_PATH +  '/doctor/referred-graph/'+doc_id
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+/**
+* @DateOfCreation        06 March 2020
+* @ShortDescription      This function is responsible to call Save import api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function getAllMedicine() {
+    // console.log(configConstants.API_BASE_PATH +  '/doctor/referred-graph/'+doc_id)
+    return axios({
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH +  '/doctor/getallmedicine'
     })
     .then(response => {
         return response;
