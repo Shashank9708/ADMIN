@@ -93,7 +93,7 @@ class DoctorDashboard extends React.Component {
             addReferToDoctorShow: false,
             startDate: new Date(), 
             endDate: new Date(),
-            inputList: [{ medicine: "", days: "", whentotake: "" }],
+            inputList: [{ medicine: "", days: "", whentotake: "", instructions: "" }],
             typing_area: '',
             appointment_id:  '',
             patient_id: '',
@@ -181,7 +181,7 @@ class DoctorDashboard extends React.Component {
     // handle click event of the Add button
     handleAddClick () {
       const { inputList } = this.state;
-      inputList.push({ medicine: "", days: "", whentotake: "" })
+      inputList.push({ medicine: "", days: "", whentotake: "", instructions: "" })
       this.setState({inputList: inputList});
     };
 

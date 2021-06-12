@@ -175,6 +175,8 @@ table {
 }
 textarea.form-control {
   height: 100px !important;
+  background: rgba(26, 40, 44, 0.03);
+  border: 0px;
 }
 .help-block.remove-element {
   text-align: center;
@@ -302,4 +304,16 @@ span.timeslot-selected {
   .fa-trash {
     color: $fill-red;
   }
+}
+
+button.btn-sm.btn-white.btn.btn-primary {
+  background: #fff;
+  border: 1px solid #333;
+  color: #333;
+}
+
+.add-digital-prescription-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

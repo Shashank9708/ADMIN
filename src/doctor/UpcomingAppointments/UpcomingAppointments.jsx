@@ -77,7 +77,7 @@ class UpcomingAppointments extends React.Component {
             addReferToDoctorShow: false,
             startDate: new Date(), 
             endDate: new Date(),
-            inputList: [{ medicine: "", days: "", whentotake: "" }],
+            inputList: [{ medicine: "", days: "", whentotake: "", instructions: "" }],
             typing_area: '',
             purpose: '',
             appointment_id:  '',
@@ -186,7 +186,7 @@ class UpcomingAppointments extends React.Component {
     // handle click event of the Add button
     handleAddClick () {
       const { inputList } = this.state;
-      inputList.push({ medicine: "", days: "", whentotake: "" })
+      inputList.push({ medicine: "", days: "", whentotake: "", instructions: "" })
       this.setState({inputList: inputList});
     };
 
