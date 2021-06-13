@@ -52,7 +52,7 @@ export const AddRX = (props) => {
                         <div className="col-md-12">
                           <div className='form-group'>
                             <Select
-                                placeholder = "Dosage From"
+                                placeholder = "Dosage Form"
                                 onChange={ (value, name) => props.handleSelectChange(value, 'dosage_from') }
                                 options={[
                                     {label: 'tablet', value: 'tablet'},

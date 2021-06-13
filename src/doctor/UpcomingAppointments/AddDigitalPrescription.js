@@ -219,9 +219,9 @@ export const AddDigitalPrescription = (props) => {
                       </div>
                       <div className="col-md-2">
                         <div className={ 'form-group'}>
-                        <label for="MedicineIntake">Dosage From</label>
+                        <label for="MedicineIntake">Dosage Form</label>
                           <Select
-                              placeholder = "Dosage From"
+                              placeholder = "Dosage Form"
                               onChange={ (value, name) => props.handleSelectChange(value, 'dosage_from', i) }
                               options={[
                                   {label: 'tablet', value: 'tablet'},

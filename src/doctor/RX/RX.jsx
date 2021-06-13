@@ -204,7 +204,7 @@ class RX extends React.Component {
                                           }
                                       },
                                       {
-                                          Header    : "Dosage From",
+                                          Header    : "Dosage Form",
                                           accessor  : "dosage_from",
                                           className : "grid-header",
                                           filterable  : false,
