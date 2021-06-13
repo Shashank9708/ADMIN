@@ -19,6 +19,9 @@ import './ViewProfile.scss';
 import { Accordion,Card } from "react-bootstrap";
 import {CreateOptions, CreateOptionTime} from '../../_helpers/helper'
 import { utilityHelper } from '../../_helpers';
+import SignaturePad from 'react-signature-canvas'
+
+
 
 
 class ViewProfile extends React.Component {
@@ -64,7 +67,11 @@ class ViewProfile extends React.Component {
         this.handleSelectChangeCS   = this.handleSelectChangeCS.bind(this);
         this.getClinicSlot   = this.getClinicSlot.bind(this);
         this.toggleStatus   = this.toggleStatus.bind(this);
+        
+        this.clear   = this.clear.bind(this);
+        this.saveSign   = this.saveSign.bind(this);
 
+        this.sigPad = {}
     }
 
     get initialState() {
@@ -96,7 +103,8 @@ class ViewProfile extends React.Component {
                   isSwitchOn:false, 
                   video:0,
                   is_mobile_varify: 0,
-                  video_charge: ''
+                  video_charge: '',
+                  trimmedDataURL: ''
               },
               validate : {
                   name : { isValid : true, message : '' },
@@ -147,7 +155,32 @@ class ViewProfile extends React.Component {
 
         }
     }
-
+    
+    clear () {
+      this.sigPad.clear()
+    }
+    saveSign () {
+      const { detail, validate }  = this.state.profile;
+        this.setState({
+            profile : {
+                validate:{
+                    ...validate
+                },
+                detail : {
+                    ...detail,
+                    trimmedDataURL: this.sigPad.getTrimmedCanvas().toDataURL('image/png')
+                }
+            }
+        }, function(){
+          
+        });
+        let formData = {
+                          'doc_id': JSON.parse(localStorage.user).doc_id,
+                          'user_id': JSON.parse(localStorage.user).user_id,
+                          'signature': this.sigPad.getTrimmedCanvas().toDataURL('image/png')
+                      }
+        this.apiCall(formData) 
+    }
     componentDidMount() {
         const { dispatch } = this.props;
         dispatch(doctorActions.getSpecialization("params"))
@@ -734,7 +767,7 @@ class ViewProfile extends React.Component {
 
     render() {
       const profile = this.state.profile
-
+      console.log(profile.detail.trimmedDataURL)
         return (
               <React.Fragment>
                 <HeaderContainer />
@@ -1161,6 +1194,38 @@ class ViewProfile extends React.Component {
                           </div>
                         }
 
+                        <div className="row">
+                          <div className="col-md-6">
+                            <label>Signature </label>
+                            <div className="form-group">
+                              <SignaturePad 
+                                  canvasProps={{width: 500, height: 200, className: 'sigCanvas'}}
+                                  ref={(ref) => { this.sigPad = ref }} 
+                              />
+
+                              <button  onClick={this.clear}>
+                                Clear
+                              </button>
+                              <button  onClick={this.saveSign}>
+                                Save
+                              </button>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <label>Signature Saved </label>
+                            <div className="form-group">
+                              {this.state.profile.detail.trimmedDataURL
+                                ? <img className={{
+                                    backgroundSize: "200px 50px",
+                                    width: "200px",
+                                    height: "50px",
+                                    backgroundColor: "#fff"
+                                  }}
+                                  src={this.state.profile.detail.trimmedDataURL} />
+                                : null}
+                            </div>
+                          </div>
+                        </div>
 
                         <div className="row">
                             <div className="col-md-12">

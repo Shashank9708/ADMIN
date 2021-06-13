@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { HeaderContainer } from '../../components/Header';
 import { DoctorSideMenu } from '../../components/SideMenu';
 import {AddRXContainer} from './AddRXContainer';
-import { rxActions, headerActions } from '../../_actions';
+import { rxActions, headerActions, doctorActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
@@ -49,6 +49,8 @@ class RX extends React.Component {
      * @return                Nothing
      */
      addRXShowHandle() {
+            const { dispatch }   = this.props;
+       dispatch(doctorActions.getAllMedicine());
        this.setState({ addRXShow: true });
      }
 
@@ -58,6 +60,7 @@ class RX extends React.Component {
      * @return                Nothing
      */
      addRXHideHandle() {
+
        this.setState({ addRXShow: false, payload: '', flag: false, index: '' });
      }
 
@@ -105,7 +108,7 @@ class RX extends React.Component {
     */
     getRXList(page, pageSize, sorted, filtered){
         const { dispatch }   = this.props;
-        dispatch(rxActions.getRXList(page, pageSize, sorted, filtered));
+        dispatch(rxActions.getRXList());
     }
 
     /**
@@ -179,9 +182,8 @@ class RX extends React.Component {
                                           accessor  : "name",
                                           className : 'grid-header',
                                           filterable  : false,
-                                          filterMethod: (filter, row) => {
-                                              return row[filter.id].includes(filter.value);
-                                          }
+                                          Cell: row =>
+                                            <span>{row.value ? row.value.value ? row.value.value : row.value : row.value}</span>
                                       },
                                       {
                                           Header      : "Brand",
@@ -207,7 +209,7 @@ class RX extends React.Component {
                                           className : "grid-header",
                                           filterable  : false,
                                           Cell: row =>
-                                            <span>{row.value.value}</span>
+                                            <span>{row.value ? row.value.value ? row.value.value : row.value : row.value}</span>
                                       },
                                       {
                                           Header    : "Instructions",
@@ -265,6 +267,7 @@ class RX extends React.Component {
                         addRXShow = {this.state.addRXShow}
                         addRXHideHandle = {this.addRXHideHandle}
                         payload = {this.state.payload}
+                        medicineList = {this.props.medicineList}
                         flag = {this.state.flag}
                         index = {this.state.index}
                       />
@@ -284,12 +287,15 @@ class RX extends React.Component {
 function mapStateToProps(state) {
    const { rxList,pages,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status } = state.rxReducer;
    // console.log('rxList',rxList)
+    const { medicineList} = state.doctorReducer;
+
     return {
         rxList,
         isUserNotValid,
         loader,
         successMessage,
         sendingRequest,
+        medicineList,
         errorMsg,
         pages,
         status

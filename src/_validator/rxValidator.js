@@ -27,10 +27,10 @@ function is_rxValid(that) {
     const { validate } = that.state.rxForm;
     const validationState = {};
 
-    if (validator.isEmpty(validator.trim(detail.name))) {
+    if (!detail.name) {
         validationState.name = {
             isValid : false,
-            message : 'Name is required.'
+            message : 'Medicine Name is required.'
         }
     }
 

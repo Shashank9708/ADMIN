@@ -24,6 +24,7 @@ class AddUpcomingAppointmentsContainer extends React.Component {
           Form : {
               detail : {
                   'name' : '',
+                  'purpose' : '',
                   'contact_no' : '',
                   'health_problem_id' : '',
                   'clinic_id' : '',
@@ -211,7 +212,7 @@ class AddUpcomingAppointmentsContainer extends React.Component {
                       "doc_id": JSON.parse(localStorage.user).doc_id,
                       "appointment_date": detail.appointment_date,
                       "appointment_time": detail.appointment_time,
-                      'name' : detail.name,
+                      'purpose' : detail.purpose,
                       'email' : detail.email,
                       'age' : detail.age,
                       'gender' : detail.gender.value || '',

@@ -104,7 +104,14 @@ class AddRXContainer extends React.Component {
         if(this.props.rxList.length > 0){
           arg = this.props.rxList[0].medsdata
         }
-        let medsdata = { medsdata: [...arg, detail] }
+        let newDetail = {
+                    'name' : detail.name.value,
+                    'brand' : detail.brand,
+                    'dosage' : detail.dosage,
+                    'dosage_from' : detail.dosage_from.value,
+                    'instructions' : detail.instructions,
+                }
+        let medsdata = { medsdata: [...arg, newDetail] }
         const { dispatch } = this.props;
           if(this.props.flag){
             // bodyFormData.append('id',this.state.id);
@@ -159,6 +166,7 @@ class AddRXContainer extends React.Component {
               addRXShow = {this.props.addRXShow}
               messages = { this.props.successMessage }
               errorMsg = { this.props.errorMsg }
+              medicineList = { this.props.medicineList }
               handleClose = {this.handleClose}
               handleSaveRX = {this.handleSaveRX}
               handleInputChange = {this.handleInputChange}

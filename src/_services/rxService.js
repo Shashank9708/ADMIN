@@ -23,7 +23,7 @@ export const rxService = {
 * @param                 JSON jsonObj
 * @return                Response JSON jsonObj
 */
-function getRXList(page, pageSize, sorted, filtered) {
+function getRXList() {
     let doc_id = JSON.parse(localStorage.user).doc_id
     return axios({
         method  : 'get',

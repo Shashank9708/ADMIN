@@ -1,6 +1,8 @@
 import React from 'react';
 import {Alert, Button, Modal, Tabs, Tab, DropdownButton, title} from 'react-bootstrap';
 import Select from 'react-select'
+import {CreateOptions} from '../../_helpers/helper';
+import CreatableSelect from 'react-select/creatable';
 
 
 export const AddRX = (props) => { 
@@ -25,9 +27,17 @@ export const AddRX = (props) => {
                       <div className="row">
                         <div className="col-md-12">
                           <div className={ props.payload.validate.name.isValid ? 'form-group' : 'form-group has-error' }>
-                            <input name="name" type="text" className="form-control" value={props.payload.detail.name} onChange = { props.handleInputChange } placeholder="Name"/>
+                            <CreatableSelect
+                              isClearable
+                              placeholder = "Medicine name"
+                              onChange={ (value, name) => props.handleSelectChange(value, 'name') }
+                              options={CreateOptions(props.medicineList)}
+                              name='name'
+                              value={props.payload.detail.name}
+                            />
                             <span className="help-block">{ props.payload.validate.name.message }</span>
                           </div>
+
                         </div>
                         <div className="col-md-12">
                           <div className={ 'form-group' }>

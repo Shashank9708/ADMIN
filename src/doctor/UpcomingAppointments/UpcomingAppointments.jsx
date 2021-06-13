@@ -6,7 +6,7 @@ import { DoctorSideMenu } from '../../components/SideMenu';
 import {AddUpcomingAppointmentsContainer} from './AddUpcomingAppointmentsContainer';
 import {AddDigitalPrescription} from './AddDigitalPrescription';
 import {ReferToDoctor} from './ReferToDoctor';
-import { doctorActions, clinicActions, patientActions, headerActions, videoActions } from '../../_actions';
+import { doctorActions, clinicActions, patientActions, headerActions, videoActions, rxActions } from '../../_actions';
 import { configConstants } from '../../_constants';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
@@ -78,7 +78,7 @@ class UpcomingAppointments extends React.Component {
             addReferToDoctorShow: false,
             startDate: new Date(), 
             endDate: new Date(),
-            inputList: [{ medicine: "", days: "", whentotake: "", instructions: "" }],
+            inputList: [{ medicine: "", days: "", whentotake: "", dosage: "", instructions: "" }],
             typing_area: '',
             symptoms: '',
             purpose: '',
@@ -86,12 +86,15 @@ class UpcomingAppointments extends React.Component {
             test_category:  '',
             test:  '',
             patient_id: '',
+            followup_date: '',
+            signature: 0,
             doctor_id: JSON.parse(localStorage.user).doc_id,
             referData: '',
             referTOdoctor: '',
             active: false,
             patientDetail: '',
             doctorAppoinementList: [],
+            followup_date: '',
             filterList: [],
 
         }
@@ -144,7 +147,7 @@ class UpcomingAppointments extends React.Component {
      addDigitalPrescriptionShowHandle(row) {
       
        const { dispatch }   = this.props;
-       dispatch(doctorActions.getAllMedicine());
+       dispatch(rxActions.getRXList());
        dispatch(doctorActions.getAllSymtoms());
        dispatch(doctorActions.getAllTestCat());
        this.setState({ addDigitalPrescriptionShow: true, patient_id: row.patient_id, appointment_id: row.appointment_id });
@@ -179,6 +182,10 @@ class UpcomingAppointments extends React.Component {
       const { inputList } = this.state;
       const list = [...inputList];
       list[index][name] = selectedOption;
+      if(name === "medicine"){
+        list[index].dosage = selectedOption.value.dosage || '';
+        list[index].instructions = selectedOption.value.instructions || '';
+      }
       this.setState({inputList: list})
     };
     
@@ -201,7 +208,7 @@ class UpcomingAppointments extends React.Component {
     // handle click event of the Add button
     handleAddClick () {
       const { inputList } = this.state;
-      inputList.push({ medicine: "", days: "", whentotake: "", instructions: "" })
+      inputList.push({ medicine: "", days: "", whentotake: "", dosage: "", instructions: "" })
       this.setState({inputList: inputList});
     };
 
@@ -222,17 +229,33 @@ class UpcomingAppointments extends React.Component {
           formData.append('appointment_id', this.state.appointment_id)
           formData.append('patient_id', this.state.patient_id)
           formData.append('doctor_id', this.state.doctor_id)
-          formData.append('details', JSON.stringify(this.state.inputList))
           formData.append('prescription', '');
-          formData.append('typeing_area', this.state.typing_area);
+
+          formData.append('details', JSON.stringify(this.state.inputList))
           formData.append('purpose', this.state.purpose);
-          formData.append('symptoms', this.state.symptoms.value);
+          let symptoms = []
+          if(this.state.symptoms.length > 0){
+            this.state.symptoms.map(row=> {
+              symptoms.push(row.value)
+             }
+            )
+          }
+          formData.append('symptoms', symptoms);
           formData.append('blood_pressure', this.state.blood_pressure);
           formData.append('heart_rate', this.state.heart_rate);
           formData.append('oxygen_level', this.state.oxygen_level);
-
-          formData.append('test_category', this.state.test_category.value);
-          formData.append('test', this.state.test.value);
+          formData.append('typing_area', this.state.typing_area);
+          formData.append('followup_date', format(new Date(this.state.followup_date), 'yyyy-MM-dd'));
+          formData.append('signature', this.state.signature);
+          formData.append('test_category', this.state.test_category.label);
+          let test = []
+          if(this.state.test.length > 0){
+            this.state.test.map(row=> {
+              test.push(row.value)
+             }
+            )
+          }
+          formData.append('test', test);
           
           const { dispatch } = this.props;
           dispatch(doctorActions.uploadPrescription(formData, url));
@@ -589,10 +612,11 @@ class UpcomingAppointments extends React.Component {
                       handleFileChange = {this.handleFileChange}
                       handleSelectDP = {this.handleSelectDP}
                       prescriptionURL = {this.props.uploaded_url}
-                      medicineList = {this.props.medicineList}
+                      medicineList = {this.props.rxList.length > 0 ? this.props.rxList[0] : [] }
                       symtomsList = {this.props.symtomsList}
                       testCatList = {this.props.testCatList}
                       testByCatList = {this.props.testByCatList}
+                      payload = {this.state}
                     />
 
                     <ReferToDoctor
@@ -618,14 +642,15 @@ class UpcomingAppointments extends React.Component {
  */
 
 function mapStateToProps(state) {
-    const { doctorAppoinementList, doctorAppoinement, medicineList, symtomsList, testCatList, testByCatList, favoriteList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete, uploaded_url } = state.doctorReducer;
+    const { doctorAppoinementList, doctorAppoinement, symtomsList, testCatList, testByCatList, favoriteList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete, uploaded_url } = state.doctorReducer;
     const { clinicList } = state.clinicReducer;
+    const { rxList } = state.rxReducer;
     const { healthProblem, patientHistory } = state.patientReducer;
     return {
         doctorAppoinementList,
         doctorAppoinement,
         favoriteList,
-        medicineList,
+        rxList,
         symtomsList,
         testCatList,
         testByCatList,

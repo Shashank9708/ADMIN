@@ -25,10 +25,10 @@ export const rxActions = {
 * @param                 JSON user, This contains full rx input data
 * @return                JSON Object
 */
-function getRXList(page, pageSize, sorted, filtered) {
+function getRXList() {
     return dispatch => {
         dispatch(request());
-        rxService.getRXList(page, pageSize, sorted, filtered)
+        rxService.getRXList()
             .then(
                 response => {
                     var data = response.data;

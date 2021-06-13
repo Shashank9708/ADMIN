@@ -43,6 +43,12 @@ export const AddUpcomingAppointments = (props) => {
                         </div>
                       
                         <div className="col-md-6">
+                          <div className={ 'form-group' }>
+                            <input name="purpose" type="text"  className="form-control" onChange = { props.handleInputChange } placeholder="Purpose to Visit"/>
+                          </div>
+                        </div>
+
+                        <div className="col-md-6">
                           <div className={ props.payload.validate.name.isValid ? 'form-group' : 'form-group has-error' }>
                             <input name="name" type="text" value={props.payload.detail.name}  className="form-control" onChange = { props.handleInputChange } placeholder="Name"/>
                             <span className="help-block">{ props.payload.validate.name.message }</span>
