@@ -20,6 +20,9 @@ const initialState = {
     doctorReferral    : [],
     favoriteList    : [],
     medicineList    : [],
+    symtomsList    : [],
+    testCatList    : [],
+    testByCatList    : [],
     favorite    : false,
     cancelMessage          : false,
     referToDoctor          : false,
@@ -425,6 +428,84 @@ export function doctorReducer(state = initialState, action) {
               errorMsg       : false
           };
         case doctorConstants.MEDICINE_LIST_FAILURE:
+          return {
+            ...state, 
+            submitted      : false,
+            loader         : false,
+            favorite         : true,
+            errorMsg       : action.error
+           };
+
+        // Fetch 
+        case doctorConstants.SYMTOMS_LIST_REQUEST:
+          return {
+            ...state,
+            errorMsg         : false,
+            symtomsList     : [],
+            loader           : true,
+            submitted        : false 
+          };
+        case doctorConstants.SYMTOMS_LIST_SUCCESS:
+          return  { 
+              ...state,
+              symtomsList     : action.result.data,
+              loader         : false,
+              favorite         : true,
+              errorMsg       : false
+          };
+        case doctorConstants.SYMTOMS_LIST_FAILURE:
+          return {
+            ...state, 
+            submitted      : false,
+            loader         : false,
+            favorite         : true,
+            errorMsg       : action.error
+           };
+
+        // Fetch 
+        case doctorConstants.TEST_CAT_LIST_REQUEST:
+          return {
+            ...state,
+            errorMsg         : false,
+            testCatList     : [],
+            loader           : true,
+            submitted        : false 
+          };
+        case doctorConstants.TEST_CAT_LIST_SUCCESS:
+          return  { 
+              ...state,
+              testCatList     : action.result.data,
+              loader         : false,
+              favorite         : true,
+              errorMsg       : false
+          };
+        case doctorConstants.TEST_CAT_LIST_FAILURE:
+          return {
+            ...state, 
+            submitted      : false,
+            loader         : false,
+            favorite         : true,
+            errorMsg       : action.error
+           };
+
+        // Fetch 
+        case doctorConstants.TEST_BY_CAT_LIST_REQUEST:
+          return {
+            ...state,
+            errorMsg         : false,
+            testByCatList     : [],
+            loader           : true,
+            submitted        : false 
+          };
+        case doctorConstants.TEST_BY_CAT_LIST_SUCCESS:
+          return  { 
+              ...state,
+              testByCatList     : action.result.data,
+              loader         : false,
+              favorite         : true,
+              errorMsg       : false
+          };
+        case doctorConstants.TEST_BY_CAT_LIST_FAILURE:
           return {
             ...state, 
             submitted      : false,

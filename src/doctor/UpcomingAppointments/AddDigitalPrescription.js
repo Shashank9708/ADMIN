@@ -54,12 +54,10 @@ export const AddDigitalPrescription = (props) => {
                             <div className={ 'form-group'}>
                             <label for="MedicineIntake">Symptoms</label>
                               <Select
-                                  placeholder = "Texting, Multi Select"
-                                  options={[
-                                          {label:"1", value:"1"},
-                                          {label:"2", value:"2"},
-                                        ]}
-                                  name='days'
+                                  placeholder = "Symptoms"
+                                  onChange={ (value, name) => props.handleSelectDP(value, 'symptoms') }
+                                  options={CreateOptions(props.symtomsList)}
+                                  name='symptoms'
                               />
                             </div>                                
                             {/*  */}                          
@@ -73,8 +71,9 @@ export const AddDigitalPrescription = (props) => {
                             <div className={ 'form-group'}>
                               <input
                                 className="form-control"
-                                name="medicine"
+                                name="blood_pressure"
                                 placeholder="BP"
+                                onChange = { props.handleInputChange } 
                               />
                             </div>                              
                             {/*  */}  
@@ -82,8 +81,9 @@ export const AddDigitalPrescription = (props) => {
                             <div className={ 'form-group'}>
                               <input
                                 className="form-control"
-                                name="medicine"
+                                name="heart_rate"
                                 placeholder="Heart Rate"
+                                onChange = { props.handleInputChange } 
                               />
                             </div>                              
                             {/*  */}                                
@@ -91,8 +91,9 @@ export const AddDigitalPrescription = (props) => {
                             <div className={ 'form-group'}>
                               <input
                                 className="form-control"
-                                name="medicine"
+                                name="oxygen_level"
                                 placeholder="SPo2"
+                                onChange = { props.handleInputChange } 
                               />
                             </div>                              
                             {/*  */}                                
@@ -218,27 +219,24 @@ export const AddDigitalPrescription = (props) => {
                           <div className="col-md-5">
                             <div className="form-group">
                               <label for="MedicineIntake">Lab Test Recommendation</label>
-                              <select className="form-control" id="MedicineIntake">
-                                <option>Category</option>
-                                <option>Complete Blood Count</option>
-                                <option>Prothrombin Time</option>
-                                <option>Basic Metabolic Panel</option>
-                                <option>Comprehensive Metabolic Panel</option>
-                                <option>Lipid Panel</option>
-                              </select>
+                              <Select
+                                  placeholder = ""
+                                  onChange={ (value, name) => props.handleSelectDP(value, 'test_category') }
+                                  options={props.testCatList}
+                                  name='test_category'
+                              />
                             </div>                                 
                           </div>                              
                           <div className="col-md-5">
                             <div className="form-group">
                               <label for="MedicineIntake">&nbsp;</label>
-                              <select className="form-control" id="MedicineIntake">
-                                <option>Multi Select with Auto Suggest</option>
-                                <option>Complete Blood Count</option>
-                                <option>Prothrombin Time</option>
-                                <option>Basic Metabolic Panel</option>
-                                <option>Comprehensive Metabolic Panel</option>
-                                <option>Lipid Panel</option>
-                              </select>
+                              <Select
+                                  placeholder = ""
+                                  onChange={ (value, name) => props.handleSelectDP(value, 'test') }
+                                  options={CreateOptions(props.testByCatList)}
+                                  name='test'
+                                  isMulti
+                              />
                             </div>                          
                           </div>
                         </div>

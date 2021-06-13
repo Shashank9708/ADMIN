@@ -33,6 +33,9 @@ export const doctorService = {
     removefavorite,
     appointmentReport,
     getAllMedicine,
+    getAllSymtoms,
+    getAllTestCat,
+    getAllTestByCat,
     referredReport
 };
 
@@ -490,6 +493,7 @@ function referredReport() {
         return response;
     });
 }
+
 /**
 * @DateOfCreation        06 March 2020
 * @ShortDescription      This function is responsible to call Save import api
@@ -501,6 +505,64 @@ function getAllMedicine() {
     return axios({
         method  : 'get',
         url     : configConstants.API_BASE_PATH +  '/doctor/getallmedicine'
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+
+/**
+* @DateOfCreation        06 March 2020
+* @ShortDescription      This function is responsible to call Save import api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function getAllSymtoms() {
+    // console.log(configConstants.API_BASE_PATH +  '/doctor/referred-graph/'+doc_id)
+    return axios({
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH +  '/doctor/getallsymptoms'
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+/**
+* @DateOfCreation        06 March 2020
+* @ShortDescription      This function is responsible to call Save import api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function getAllTestCat() {
+    // console.log(configConstants.API_BASE_PATH +  '/doctor/referred-graph/'+doc_id)
+    return axios({
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH +  '/doctor/getTestCategory'
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+/**
+* @DateOfCreation        06 March 2020
+* @ShortDescription      This function is responsible to call Save import api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function getAllTestByCat(id) {
+    // console.log(configConstants.API_BASE_PATH +  '/doctor/referred-graph/'+doc_id)
+    return axios({
+        method  : 'get',
+        url     : configConstants.API_BASE_PATH +  '/doctor/getTestById/'+id
     })
     .then(response => {
         return response;
