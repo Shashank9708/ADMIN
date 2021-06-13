@@ -317,3 +317,6 @@ button.btn-sm.btn-white.btn.btn-primary {
   align-items: center;
   justify-content: space-between;
 }
+div[class$="-control"] > div {
+  height: 40px;
+}
