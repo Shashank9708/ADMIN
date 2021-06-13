@@ -78,7 +78,7 @@ class UpcomingAppointments extends React.Component {
             addReferToDoctorShow: false,
             startDate: new Date(), 
             endDate: new Date(),
-            inputList: [{ medicine: "", days: "", whentotake: "", dosage: "", instructions: "" }],
+            inputList: [{ medicine: "", days: "", whentotake: "", dosage: "", dosage_from: "", instructions: "" }],
             typing_area: '',
             symptoms: '',
             purpose: '',
@@ -185,6 +185,7 @@ class UpcomingAppointments extends React.Component {
       if(name === "medicine"){
         list[index].dosage = selectedOption.value.dosage || '';
         list[index].instructions = selectedOption.value.instructions || '';
+        list[index].dosage_from = {label: selectedOption.value.dosage_from, value: selectedOption.value.dosage_from} || '';
       }
       this.setState({inputList: list})
     };
@@ -208,7 +209,7 @@ class UpcomingAppointments extends React.Component {
     // handle click event of the Add button
     handleAddClick () {
       const { inputList } = this.state;
-      inputList.push({ medicine: "", days: "", whentotake: "", dosage: "", instructions: "" })
+      inputList.push({ medicine: "", days: "", whentotake: "", dosage: "", dosage_from: "", instructions: "" })
       this.setState({inputList: inputList});
     };
 

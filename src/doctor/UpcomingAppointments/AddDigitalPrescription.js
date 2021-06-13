@@ -147,7 +147,7 @@ export const AddDigitalPrescription = (props) => {
               {props.inputList.map((x, i) => {
                   return (
                     <>
-                      <div className="col-md-3">
+                      <div className="col-md-2">
                         <div className={ 'form-group'}>
                         <label for="MedicineIntake">Medicine Name</label>
                         <Select
@@ -159,7 +159,7 @@ export const AddDigitalPrescription = (props) => {
                           />
                         </div>
                       </div>
-                      <div className="col-md-2">
+                      <div className="col-md-1">
                         <div className={ 'form-group'}>
                         <label for="MedicineIntake">Days</label>
                           <Select
@@ -188,7 +188,7 @@ export const AddDigitalPrescription = (props) => {
                         <div className={ 'form-group'  }>
                         <label for="MedicineIntake">Dose frequency</label>
                           <Select
-                              placeholder = "Dose frequency"
+                              placeholder = "frequency"
                               onChange={ (value, name) => props.handleSelectChange(value, 'whentotake', i) }
                               options={[
                                       {label:"0--", value:"0--"},
@@ -211,9 +211,29 @@ export const AddDigitalPrescription = (props) => {
                           <input
                             className="form-control"
                             name="dosage"
-                            placeholder="Dose Strength"
+                            placeholder="Strength"
                             value={x.dosage}
                             onChange={e => props.handleTextChange(e, i)}
+                          />
+                        </div>                                  
+                      </div>
+                      <div className="col-md-2">
+                        <div className={ 'form-group'}>
+                        <label for="MedicineIntake">Dosage From</label>
+                          <Select
+                              placeholder = "Dosage From"
+                              onChange={ (value, name) => props.handleSelectChange(value, 'dosage_from', i) }
+                              options={[
+                                  {label: 'tablet', value: 'tablet'},
+                                  {label: 'syrup', value: 'syrup'},
+                                  {label: 'injection', value: 'injection'},
+                                  {label: 'powder', value: 'powder'},
+                                  {label: 'capsules', value: 'capsules'},
+                                  {label: 'drop', value: 'drop'},
+                                  {label: 'inhaler', value: 'inhaler'}
+                                ]}
+                              name='dosage_from'
+                              value={x.dosage_from}
                           />
                         </div>                                  
                       </div>

@@ -37,6 +37,7 @@ export const AddUpcomingAppointments = (props) => {
                                   onChange={ (value, name) => props.handleSelectChange(value, 'health_problem_id') }
                                   options={props.healthProblem}
                                   name='health_problem_id'
+                                  className="common-select"
                               />
                               <span className="help-block">{ props.payload.validate.health_problem_id.message }</span>
                           </div>
@@ -81,7 +82,7 @@ export const AddUpcomingAppointments = (props) => {
                                     ]}
                                   value={props.payload.detail.gender} 
                                   name='council_id'
-                                  className="selectOption"
+                                  className="common-select"
                               />
                             </div>                        
                         </div>
@@ -93,6 +94,7 @@ export const AddUpcomingAppointments = (props) => {
                                 onChange={ (value, name) => props.handleSelectChange(value, 'clinic_id') }
                                 options={props.clinicList}
                                 name='clinic_id'
+                                className="common-select"
                             />
                             <span className="help-block">{ props.payload.validate.clinic_id.message }</span>
                           </div>
