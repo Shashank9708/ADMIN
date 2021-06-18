@@ -1,0 +1,31 @@
+@import "../../assets/scss/Variable";
+
+.report-card {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  &.report-card-type-orange {
+    background: $fill-orange;
+  }
+  &.report-card-type-dark-green {
+    background: $fill-dark-green;
+  }
+  &.report-card-type-red {
+    background: $fill-red;
+  }
+  &.report-card-type-green {
+    background: $fill-green;
+  }
+  &__heading {
+    color: $fill-white;
+    font-weight: bold;
+  }
+  &__value {
+    color: $fill-white;
+    font-weight: bold;
+    font-size: 20px;
+  }
+}
