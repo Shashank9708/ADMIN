@@ -224,6 +224,11 @@ const ClinicReportContainer = Loadable({
     loading: Loading
 });
 
+const SettingsDoctorContainer = Loadable({
+    loader: () => import('../doctor/SettingsDoctor').then(object => object.SettingsDoctorContainer),
+    loading: Loading
+});
+
 
 
 
@@ -298,6 +303,7 @@ class App extends React.Component {
                         <DoctorRoute exact path='/clinic-report' component={ClinicReportContainer} authenticated={this.props.authenticated} allowuser={[1]} />
                         <DoctorRoute exact path='/rx' component={RXContainer} authenticated={this.props.authenticated} allowuser={[1]} />
                         <DoctorRoute exact path='/completed' component={CompletedContainer} authenticated={this.props.authenticated} allowuser={[1]} />
+                        <DoctorRoute exact path='/settings' component={SettingsDoctorContainer} authenticated={this.props.authenticated} allowuser={[1]} />
 
 
 

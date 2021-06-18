@@ -98,6 +98,9 @@ export const AddUpcomingAppointments = (props) => {
                             <span className="help-block">{ props.payload.validate.clinic_id.message }</span>
                           </div>
                         </div>
+                        <div className="col-md-6">
+                          <label className="control-label">Fees: {props.payload.detail.fees}</label>                        
+                        </div>
                         <div className="col-md-3">
                           <label className="control-label">First Time Visit</label>
                           <div className="form-group">
@@ -111,6 +114,18 @@ export const AddUpcomingAppointments = (props) => {
                           </div>                        
                         </div>                        
 
+                        <div className="col-md-3">
+                          <label className="control-label">Appointment type</label>
+                          <div className="form-group">
+                            <input type="radio" name="appointment_type" value="cash" onChange = { props.handleInputChange } checked={props.payload.detail.appointment_type=="cash"} /> Cash <input type="radio" name="appointment_type" onChange = { props.handleInputChange } value="online" checked={props.payload.detail.appointment_type=="online"}/> Online
+                          </div>                        
+                        </div>
+                        <div className="col-md-3">
+                          <label className="control-label">Visit Charge</label>
+                          <div className="form-group">
+                            <input type="radio" name="appointment_method" value="1" onChange = { props.handleInputChange } checked={props.payload.detail.appointment_method==1} /> Paid <input type="radio" name="appointment_method" onChange = { props.handleInputChange } value="0" checked={props.payload.detail.appointment_method==0}/> Unpaid
+                          </div>                        
+                        </div>
                         <div className="col-md-6">
                           <label>Select Appointment Date</label>
                           <div className="row">
