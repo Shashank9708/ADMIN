@@ -5,6 +5,9 @@ import { HeaderContainer } from '../../components/Header';
 import { DoctorSideMenu } from '../../components/SideMenu';
 import { doctorActions, headerActions } from '../../_actions';
 import { Doughnut } from 'react-chartjs-2';
+import Select from 'react-select';
+import DatePicker from "react-datepicker";
+import './ClinicReport.scss';
 
 
 class ClinicReport extends React.Component {
@@ -22,10 +25,12 @@ class ClinicReport extends React.Component {
 
     get initialState() {
         return {
-            Clinic: ''
+            Clinic: '',
+          
+            
         }
     }
-
+    
 
     /**
      * @DateOfCreation        26 July 2018
@@ -55,9 +60,81 @@ class ClinicReport extends React.Component {
                                   <h1 className="page-heading__title">Clinic Report</h1>
                               </div>
                             </div>
+                            {/* 1st Row Start */}
                             <div className="row">
-                              
+                                <div className="col-md-4">
+                                    <div className={ 'form-group' }>
+                                      <Select
+                                          placeholder = "Select Clinic"
+                                          options={[
+                                              {label: 'CHL', value: 'CHL'},
+                                              {label: 'Greater Kailash', value: 'Greater kailash'},
+                                              {label: 'City Life', value: 'City Life'}
+                                            ]}
+                                          name='council_id'
+                                          className="common-select"
+                                      />
+                                    </div>                                
+                                </div>
+                                <div className="col-md-4">
+                                    <div className="">
+                                        <input name="clinic-fee" type="text" className="form-control" placeholder="Clinic fee"/>
+                                    </div>
+                                </div>
+                                <div className="col-md-4">
+                                
+                                </div>
+                                <div className="col-md-4">
+                                </div>
                             </div> 
+                            {/* 1st Row End  */}
+                            
+                            {/* 2nd Row Start */}
+                            <div className="row">
+                                <div className="col-md-3">
+                                    <div className="card">
+                                        <div className="">
+                                            <div className="report-card report-card-type-orange">
+                                                <div className="report-card__heading">Collection</div>
+                                                <div className="report-card__value">Rs. 5000</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="card">
+                                        <div className="">
+                                            <div className="report-card report-card-type-dark-green">
+                                                <div className="report-card__heading">Completed Appoinment</div>
+                                                <div className="report-card__value">20</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="card">
+                                        <div className="">
+                                            <div className="report-card report-card-type-red">
+                                                <div className="report-card__heading">Cancel Appoinment</div>
+                                                <div className="report-card__value">5</div>
+                                            </div>
+                                        </div>
+                                    </div>                                
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="card">
+                                        <div className="">
+                                            <div className="report-card report-card-type-green">
+                                                <div className="report-card__heading">New Patient</div>
+                                                <div className="report-card__value">5</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                            {/* 2nd Row End  */}                            
+                            
+                            
                         </main>
                     </div>
                 </div>    
