@@ -35,25 +35,18 @@ function is_upcomingAppointmentValid(that) {
     }
 
     if (detail.contact_no.length !== 10) {
-       validationState.contact_no = {
+        validationState.contact_no = {
             isValid: false,
             message: 'Please enter valid mobile number.'
         } 
     }
 
-    if (!detail.health_problem_id) {
-        validationState.health_problem_id = {
-            isValid : false,
-            message : 'Select health problem'
-        }
-    }
     if (!detail.clinic_id) {
         validationState.clinic_id = {
             isValid : false,
             message : 'Select clinic'
         }
     }
-   
     
     if(!utilityHelper.isObjectEmpty(validationState)){
         that.setState({

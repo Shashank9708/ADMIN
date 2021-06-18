@@ -15,3 +15,4 @@ export * from './planValidator';
 export * from './favoritValidator';
 export * from './profileValidator';
 export * from './rxValidator';
+export * from './upcomingAppointmentValidator';

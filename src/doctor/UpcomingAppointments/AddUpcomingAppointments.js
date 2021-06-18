@@ -31,7 +31,7 @@ export const AddUpcomingAppointments = (props) => {
                           </div>                        
                         </div>
                         <div className="col-md-6">
-                          <div className={ props.payload.validate.health_problem_id.isValid ? 'form-group' : 'form-group has-error' }>
+                          <div className={ 'form-group' }>
                               <Select
                                   placeholder = "Health Problem"
                                   onChange={ (value, name) => props.handleSelectChange(value, 'health_problem_id') }
@@ -39,7 +39,6 @@ export const AddUpcomingAppointments = (props) => {
                                   name='health_problem_id'
                                   className="common-select"
                               />
-                              <span className="help-block">{ props.payload.validate.health_problem_id.message }</span>
                           </div>
                         </div>
                       

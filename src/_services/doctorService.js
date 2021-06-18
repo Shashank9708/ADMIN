@@ -543,7 +543,7 @@ function getAllTestCat() {
     // console.log(configConstants.API_BASE_PATH +  '/doctor/referred-graph/'+doc_id)
     return axios({
         method  : 'get',
-        url     : configConstants.API_BASE_PATH +  '/doctor/getTestCategory'
+        url     : configConstants.API_BASE_PATH +  '/doctor/getTestList'
     })
     .then(response => {
         return response;

@@ -15,7 +15,8 @@ export const patientService = {
     getPrescription,
     getMyPatientsList,
     getReferralsDoctorList,
-    getHealthProblem
+    getHealthProblem,
+    getCompletedsList
 };
 
 
@@ -117,6 +118,27 @@ function getHealthProblem() {
     return axios({
         method  : 'get',
         url     : configConstants.API_BASE_PATH +  '/auth/healthproblem',
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(response => {
+        return response;
+    });
+}
+
+/**
+* @DateOfCreation        06 March 2020
+* @ShortDescription      This function is responsible to call Save import api
+* @param                 JSON jsonObj
+* @return                Response JSON jsonObj
+*/
+function getCompletedsList(data) {
+    // console.log(configConstants.API_BASE_PATH + '/doctor/mycompletedappointments')
+    return axios({
+        method  : 'post',
+        url     : configConstants.API_BASE_PATH +  '/doctor/mycompletedappointments',
+        data    : data
     })
     .then(response => {
         return response;

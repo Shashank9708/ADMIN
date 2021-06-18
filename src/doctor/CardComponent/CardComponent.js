@@ -10,7 +10,7 @@ function CardComponent({appointment, handleClick = () => {}, active = false, act
       <div className="card" key={appointment.appointment_id}>
       <div className={appointment.appointment_id === active ? "card-header active-card" : "card-header bg-ark" }>
         <div className="card-header__name"><a href="#" onClick={() => handleClick(appointment)}>{appointment.name}</a></div>
-        <div className="card-header__action"><a href="#" onClick={() => cancelAll(appointment)}><i className="fa fa-times-circle" aria-hidden="true"></i></a></div>
+        <div className="card-header__action"><a href="#" onClick={() => appointment.status !== "completed" && cancelAll(appointment)}><i className="fa fa-times-circle" aria-hidden="true"></i></a></div>
       </div>
       <div className="card-body">
         <div className="card-body__profile-with-user-details">
@@ -18,7 +18,7 @@ function CardComponent({appointment, handleClick = () => {}, active = false, act
             <a href=""><img className="card-profile-image" src={appointment.display_pic ? configConstants.API_BASE_PATH+"/"+appointment.display_pic : "https://www.michiganlutheran.org/wp-content/uploads/2019/09/placeholder-profile-sq.jpg"} /></a>
           </div>    
           <div className="card-body__profile-with-user-details__user-details">
-              <div>Health Problem: {appointment.health_problem_title}</div>
+              <div>Purpose: {appointment.purpose}</div>
               <div>Age: {appointment.age ||  appointment.dob}</div>
               {actionButton &&
                 <>
@@ -37,9 +37,13 @@ function CardComponent({appointment, handleClick = () => {}, active = false, act
       </div>
       {actionButton &&
         <div className="card-footer bg-transparent">
-          <div className="card-footer__status-text">Status</div>
+          <div className="card-footer__status-text">{appointment.status === "completed" ? "Prescrption" : "Status" }</div>
           <div className="card-footer__status-value">
+          {appointment.status === "completed" ?
+            <a href={configConstants.API_BASE_PATH+"/"+appointment.prescription_url} target="_blank"><span className="card-footer__booked">View</span></a>
+            :
             <a href=""><span className="card-footer__booked">{appointment.status}</span></a>
+          }
           </div>
         </div>
       }

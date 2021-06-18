@@ -16,14 +16,13 @@ export const AddDigitalPrescription = (props) => {
     window.open(configConstants.API_BASE_PATH+"/"+props.prescriptionURL, '_blank');
   }
 
-  // console.log("Symptoms",props.symptoms)
   let medicineList = []
   if(props.medicineList && props.medicineList.medsdata && props.medicineList.medsdata.length > 0){
     props.medicineList.medsdata.map(row => {
       medicineList.push({label: row.name.label ? row.name.label : row.name, value:row })
     })
   }
-
+  // console.log("props.testByCatList",props.testByCatList)
   return (
     <div className="">
       <Modal size="xl" show={props.addDigitalPrescriptionShow} onHide={props.handleClose}>
@@ -64,6 +63,7 @@ export const AddDigitalPrescription = (props) => {
                     name="purpose"
                     placeholder="Purpose to Visit"
                     onChange = { props.handleInputChange }
+                    value={props.payload.purpose}
                   />
                 </div>                              
                 {/*  */}
@@ -71,7 +71,7 @@ export const AddDigitalPrescription = (props) => {
                 {/*  */}
                 <div className={ 'form-group'}>
                 <label for="MedicineIntake">Symptoms</label>
-                  <Select
+                  <CreatableSelect
                       isClearable
                       placeholder = "Symptoms"
                       onChange={ (value, name) => props.handleSelectDP(value, 'symptoms') }
@@ -79,10 +79,23 @@ export const AddDigitalPrescription = (props) => {
                       name='symptoms'
                       isMulti
                   />
-                </div>                                
+                </div>
+                {/*  */}
+                
+                {/*  */}   
+                <div className="form-group"> 
+                  <label for="MedicineIntake">Followup Date</label>
+                  <DatePicker
+                    selected={props.payload.followup_date}
+                    onChange={date => props.handleSelectDP(date,'followup_date')}
+                    dateFormat="dd/MM/yyyy"
+                    dropdownMode="select"
+                    placeholder="Followup Date"
+                  />
+                </div>                              
                 {/*  */}                          
               </div>
-              <div className="col-md-3">
+              <div className="col-md-5">
                 <label for="MedicineIntake">Findings</label>
                 <textarea name="typing_area" onChange = { props.handleInputChange } className="form-control findings-textarea" placeholder="Findings" rows="5"></textarea>
               </div>
@@ -121,16 +134,7 @@ export const AddDigitalPrescription = (props) => {
                 </div>                              
                 {/*  */}                                
               </div>
-              <div className="col-md-2"> 
-                <label>Followup Date</label>
-                <DatePicker
-                  selected={props.payload.followup_date}
-                  onChange={date => props.handleSelectDP(date,'followup_date')}
-                  dateFormat="dd/MM/yyyy"
-                  dropdownMode="select"
-                  placeholder="Followup Date"
-                />
-              </div>                              
+                                           
             </div>
             {/* End Row */}
             
@@ -150,7 +154,8 @@ export const AddDigitalPrescription = (props) => {
                       <div className="col-md-2">
                         <div className={ 'form-group'}>
                         <label for="MedicineIntake">Medicine Name</label>
-                        <Select
+                        <CreatableSelect
+                              isClearable
                               placeholder = "Medicine name"
                               onChange={ (value, name) => props.handleSelectChange(value, 'medicine', i) }
                               options={medicineList}
@@ -191,13 +196,12 @@ export const AddDigitalPrescription = (props) => {
                               placeholder = "frequency"
                               onChange={ (value, name) => props.handleSelectChange(value, 'whentotake', i) }
                               options={[
-                                      {label:"0--", value:"0--"},
-                                      {label:"-0-", value:"-0-"},
-                                      {label:"--0", value:"--0"},
-                                      {label:"00-", value:"00-"},
-                                      {label:"-00", value:"-00"},
-                                      {label:"0-0", value:"0-0"},
-                                      {label:"000", value:"000"}
+                                      {label:"1-0-0-1", value:"1-0-0-1"},
+                                      {label:"1-1-1-1", value:"1-1-1-1"},
+                                      {label:"0-1-1-0", value:"0-1-1-0"},
+                                      {label:"1-0-1-0", value:"1-0-1-0"},
+                                      {label:"1-1-0-0", value:"1-1-0-0"},
+                                      {label:"0-0-1-1", value:"0-0-1-1"}
                                     ]}
                               name='whentotake'
                               value={x.whentotake}
@@ -222,7 +226,7 @@ export const AddDigitalPrescription = (props) => {
                         <label for="MedicineIntake">Dosage Form</label>
                           <Select
                               placeholder = "Dosage Form"
-                              onChange={ (value, name) => props.handleSelectChange(value, 'dosage_from', i) }
+                              onChange={ (value, name) => props.handleSelectChange(value, 'dosage_form', i) }
                               options={[
                                   {label: 'tablet', value: 'tablet'},
                                   {label: 'syrup', value: 'syrup'},
@@ -232,8 +236,8 @@ export const AddDigitalPrescription = (props) => {
                                   {label: 'drop', value: 'drop'},
                                   {label: 'inhaler', value: 'inhaler'}
                                 ]}
-                              name='dosage_from'
-                              value={x.dosage_from}
+                              name='dosage_form'
+                              value={x.dosage_form}
                           />
                         </div>                                  
                       </div>
@@ -269,21 +273,10 @@ export const AddDigitalPrescription = (props) => {
             {/* End Row */}
             
             {/* Start Row */}
-            <div className="row mt-3">
-              <div className="col-md-5">
+            <div className="row mt-3">               
+              <div className="col-md-12">
                 <div className="form-group">
                   <label for="MedicineIntake">Lab Test Recommendation</label>
-                  <Select
-                      placeholder = ""
-                      onChange={ (value, name) => props.handleSelectDP(value, 'test_category') }
-                      options={props.testCatList}
-                      name='test_category'
-                  />
-                </div>                                 
-              </div>                              
-              <div className="col-md-5">
-                <div className="form-group">
-                  <label for="MedicineIntake">&nbsp;</label>
                   <Select
                       isClearable
                       placeholder = ""

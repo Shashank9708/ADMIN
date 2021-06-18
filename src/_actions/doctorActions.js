@@ -960,11 +960,11 @@ function getAllTestByCat(id) {
                         var data = response.data;
                         var errorMsg;
                         if(data.status == configConstants.SUCCESS_CODE){
-                            dispatch(success(data));
-                            return data
+                            dispatch(success(data.data));
+                            // return data
                         }else if(data.status == configConstants.ERROR_CODE){
                             dispatch(failure(data.message));
-                            return data
+                            // return data
                         }else if(data.status == configConstants.EXCEPTION_CODE){
                             errorMsg = data.message;
                             dispatch(failure(errorMsg));

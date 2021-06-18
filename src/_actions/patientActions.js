@@ -16,6 +16,7 @@ export const patientActions = {
     getMyPatientsList,
     getReferralsDoctorList,
     getHealthProblem,
+    getCompletedsList,
     resetFirstState
 };
 
@@ -166,6 +167,51 @@ function getMyPatientsList(page, pageSize, sorted, filtered) {
     return dispatch => {
         dispatch(request());
         patientService.getMyPatientsList()
+            .then(
+                response => {
+                    if(response != "Error: Network Error"){
+                        var data = response.data;
+                        // console.log("getMyPatientsList",data)
+                        var errorMsg;
+                        if(data.status == configConstants.SUCCESS_CODE){
+                            dispatch(success(data));
+                        }else if(data.status == configConstants.ERROR_CODE){
+                            dispatch(failure(data.message));
+                        }else if(data.status == configConstants.EXCEPTION_CODE){
+                            errorMsg = data.message;
+                            dispatch(failure(errorMsg));
+                        }else if(data.status == configConstants.UNAUTHENTICATE_CODE){
+                            errorMsg = data.message;
+                            dispatch(unauthorize(errorMsg));
+                        }else{
+                            dispatch(failure(response));
+                        }
+                    }else{
+                        dispatch(serverDown(response));
+                    }
+                }
+            ).catch(function (response) {
+                dispatch(failure(response));
+            });
+    };
+
+// Actions defination that will perform according dispatch call and send data to reducer
+    function request() { return { type: patientConstants.GET_MY_PATIENT_LIST_FETCH_REQUEST } }
+    function success(result) { return { type: patientConstants.GET_MY_PATIENT_LIST_FETCH_SUCCESS, result } }
+    function failure(error) { return { type: patientConstants.GET_MY_PATIENT_LIST_FETCH_FAILURE, error } }
+    function unauthorize(error) { return { type: patientConstants.UNAUTHENTICATE, error } }
+    function serverDown(error) { return { type: configConstants.SERVER_DOWN, error } }
+}
+/**
+* @DateOfCreation        06 Mar 2020
+* @ShortDescription      This function is responsible for Get Patients List
+* @param                 JSON user, This contains full route input data
+* @return                JSON Object
+*/
+function getCompletedsList(data) {
+    return dispatch => {
+        dispatch(request());
+        patientService.getCompletedsList(data)
             .then(
                 response => {
                     if(response != "Error: Network Error"){

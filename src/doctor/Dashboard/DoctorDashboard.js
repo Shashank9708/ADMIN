@@ -95,7 +95,7 @@ class DoctorDashboard extends React.Component {
             addReferToDoctorShow: false,
             startDate: new Date(), 
             endDate: new Date(),
-            inputList: [{ medicine: "", days: "", whentotake: "", dosage: "", dosage_from: "", instructions: "" }],
+            inputList: [{ medicine: "", days: "", whentotake: "", dosage: "", dosage_form: "", instructions: "" }],
             typing_area: '',
             symptoms:  '',
             purpose:  '',
@@ -103,7 +103,6 @@ class DoctorDashboard extends React.Component {
             heart_rate:  '',
             oxygen_level:  '',
             appointment_id:  '',
-            test_category:  '',
             test:  '',
             followup_date: '',
             signature: 0,
@@ -150,7 +149,7 @@ class DoctorDashboard extends React.Component {
        dispatch(rxActions.getRXList());
        dispatch(doctorActions.getAllSymtoms());
        dispatch(doctorActions.getAllTestCat());
-       this.setState({ addDigitalPrescriptionShow: true, patient_id: row.patient_id, appointment_id: row.appointment_id });
+       this.setState({ addDigitalPrescriptionShow: true, patient_id: row.patient_id, appointment_id: row.appointment_id, purpose: row.purpose });
      }
 
     /**
@@ -185,7 +184,7 @@ class DoctorDashboard extends React.Component {
       if(name === "medicine"){
         list[index].dosage = selectedOption.value.dosage || '';
         list[index].instructions = selectedOption.value.instructions || '';
-        list[index].dosage_from = {label: selectedOption.value.dosage_from, value: selectedOption.value.dosage_from} || '';
+        list[index].dosage_form = {label: selectedOption.value.dosage_form, value: selectedOption.value.dosage_form} || '';
       }
       this.setState({inputList: list})
     };
@@ -200,17 +199,17 @@ class DoctorDashboard extends React.Component {
     // handle click event of the Add button
     handleAddClick () {
       const { inputList } = this.state;
-      inputList.push({ medicine: "", days: "", whentotake: "", dosage: "", dosage_from: "", instructions: "" })
+      inputList.push({ medicine: "", days: "", whentotake: "", dosage: "", dosage_form: "", instructions: "" })
       this.setState({inputList: inputList});
     };
 
     // handle input change
     handleSelectDP (selectedOption, name){
       this.setState({[name]: selectedOption})
-      if(name === 'test_category'){
-        const { dispatch }   = this.props;
-        dispatch(doctorActions.getAllTestByCat(selectedOption.value));
-      }
+      // if(name === 'test_category'){
+      //   const { dispatch }   = this.props;
+      //   dispatch(doctorActions.getAllTestByCat(selectedOption.value));
+      // }
     };
     handleSaveDigitalPrescription(){
         // if(this.state.inputList.length > 0){
@@ -219,10 +218,13 @@ class DoctorDashboard extends React.Component {
             row.days= row.days.value
           }
           if(row.medicine.label){
-            row.medicine= row.medicine.value
+            row.medicine= row.medicine.value.name ? row.medicine.value.name: row.medicine.value
           }
           if(row.whentotake.label){
             row.whentotake= row.whentotake.value
+          }
+          if(row.dosage_form.label){
+            row.dosage_form= row.dosage_form.value
           }
         })
 
@@ -247,9 +249,8 @@ class DoctorDashboard extends React.Component {
           formData.append('heart_rate', this.state.heart_rate);
           formData.append('oxygen_level', this.state.oxygen_level);
           formData.append('typing_area', this.state.typing_area);
-          formData.append('followup_date', format(new Date(this.state.followup_date), 'yyyy-MM-dd'));
+          formData.append('followup_date', this.state.followup_date ? format(new Date(this.state.followup_date), 'yyyy-MM-dd') : '');
           formData.append('signature', this.state.signature);
-          formData.append('test_category', this.state.test_category.label);
           let test = []
           if(this.state.test.length > 0){
             this.state.test.map(row=> {
@@ -460,7 +461,8 @@ class DoctorDashboard extends React.Component {
         this.props.doctorAppoinementList.length > 0 && this.props.doctorAppoinementList.filter((row) => {
             row.start = new Date(row.appointment_date + " " + row.appointment_time)
             row.end = new Date(row.start.getTime() + minutesToAdd*60000)
-            row.title = row.name +" problem"+ row.health_problem_title
+            row.purpose = row.purpose ? row.purpose : ''
+            row.title = row.name +" purpose: "+ row.purpose
         })
 
         return (
@@ -481,10 +483,10 @@ class DoctorDashboard extends React.Component {
                       </div>
                       
                       <div>
-                        <div className="btn-group" role="group" aria-label="Basic example">
+                        {/*<div className="btn-group" role="group" aria-label="Basic example">
                           <button type="button" className="btn btn-sm"><i className="fa fa-th" aria-hidden="true"></i></button>
                           <button type="button" className="btn btn-sm"><i className="fa fa-list" aria-hidden="true"></i></button>
-                        </div>
+                        </div>*/}
                       </div>
                     </div>  
    
@@ -512,7 +514,7 @@ class DoctorDashboard extends React.Component {
                         onSelectEvent={event => this.patientDetailActive(event)}
                         // onSelectSlot={slotInfo => console.log("slotInfo======",slotInfo)}
                         onRangeChange={(slotInfo) => {
-                            console.log("slotInfo",slotInfo)
+                            // console.log("slotInfo",slotInfo)
                           if(slotInfo.length === 1){
                             this.getUpcomingAppointments(slotInfo[0], slotInfo[0])
                           }else if(slotInfo.length === 7){
@@ -571,8 +573,7 @@ class DoctorDashboard extends React.Component {
                       prescriptionURL = {this.props.uploaded_url}
                       medicineList = {this.props.rxList.length > 0 ? this.props.rxList[0] : [] }
                       symtomsList = {this.props.symtomsList}
-                      testCatList = {this.props.testCatList}
-                      testByCatList = {this.props.testByCatList}
+                      testByCatList = {this.props.testCatList}
                       payload = {this.state}
 
                     />
@@ -600,10 +601,11 @@ class DoctorDashboard extends React.Component {
  */
 
 function mapStateToProps(state) {
-    const { doctorAppoinementList, favoriteList,symtomsList,testCatList,testByCatList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete, uploaded_url } = state.doctorReducer;
+    const { doctorAppoinementList, favoriteList, symtomsList, testCatList, pages, referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete, uploaded_url } = state.doctorReducer;
     const { clinicList } = state.clinicReducer;
     const { rxList } = state.rxReducer;
     const { healthProblem, patientHistory } = state.patientReducer;
+    // console.log("testCatList",testCatList)
     return {
         doctorAppoinementList,
         favoriteList,
@@ -612,7 +614,6 @@ function mapStateToProps(state) {
         rxList,
         symtomsList,
         testCatList,
-        testByCatList,
         clinicList,
         healthProblem,
         successMessage,

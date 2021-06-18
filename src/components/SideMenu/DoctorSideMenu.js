@@ -58,6 +58,7 @@ export class DoctorSideMenu extends React.Component {
                             </div>
                         </li>                         
                         
+                        <li className="nav-item"><Link className="nav-link" to="/completed"><i className="fa fa-stethoscope" aria-hidden="true"></i> Completed</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/my-patients"><i className="fa fa-stethoscope" aria-hidden="true"></i> My Patients</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/doctor-referral"><i className="fa fa-share-alt" aria-hidden="true"></i> Referral Patients</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/doctor-referred"><i className="fa fa-handshake" aria-hidden="true"></i> Referred Patients</Link></li>
@@ -65,6 +66,7 @@ export class DoctorSideMenu extends React.Component {
                         <li className="nav-item"><Link className="nav-link" to="/doctor-profile"><i className="fa fa-user" aria-hidden="true"></i> Profile</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/manage-calendar"><i className="fa fa-calendar" aria-hidden="true"></i> Manage Calendar</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/report"><i className="fa fa-medkit" aria-hidden="true"></i> Report</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/clinic-report"><i className="fa fa-medkit" aria-hidden="true"></i> Clinic Report</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/rx"><i className="fa fa-medkit" aria-hidden="true"></i> RX</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/dashboard"><i className="fa fa-medkit" aria-hidden="true"></i> Health Tips</Link></li>
                         

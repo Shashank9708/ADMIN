@@ -78,12 +78,11 @@ class UpcomingAppointments extends React.Component {
             addReferToDoctorShow: false,
             startDate: new Date(), 
             endDate: new Date(),
-            inputList: [{ medicine: "", days: "", whentotake: "", dosage: "", dosage_from: "", instructions: "" }],
+            inputList: [{ medicine: "", days: "", whentotake: "", dosage: "", dosage_form: "", instructions: "" }],
             typing_area: '',
             symptoms: '',
             purpose: '',
             appointment_id:  '',
-            test_category:  '',
             test:  '',
             patient_id: '',
             followup_date: '',
@@ -150,7 +149,7 @@ class UpcomingAppointments extends React.Component {
        dispatch(rxActions.getRXList());
        dispatch(doctorActions.getAllSymtoms());
        dispatch(doctorActions.getAllTestCat());
-       this.setState({ addDigitalPrescriptionShow: true, patient_id: row.patient_id, appointment_id: row.appointment_id });
+       this.setState({ addDigitalPrescriptionShow: true, patient_id: row.patient_id, appointment_id: row.appointment_id, purpose: row.purpose });
      }
 
     /**
@@ -185,7 +184,7 @@ class UpcomingAppointments extends React.Component {
       if(name === "medicine"){
         list[index].dosage = selectedOption.value.dosage || '';
         list[index].instructions = selectedOption.value.instructions || '';
-        list[index].dosage_from = {label: selectedOption.value.dosage_from, value: selectedOption.value.dosage_from} || '';
+        list[index].dosage_form = {label: selectedOption.value.dosage_form, value: selectedOption.value.dosage_form} || '';
       }
       this.setState({inputList: list})
     };
@@ -193,10 +192,10 @@ class UpcomingAppointments extends React.Component {
     // handle input change
     handleSelectDP (selectedOption, name){
       this.setState({[name]: selectedOption})
-      if(name === 'test_category'){
-        const { dispatch }   = this.props;
-        dispatch(doctorActions.getAllTestByCat(selectedOption.value));
-      }
+      // if(name === 'test_category'){
+      //   const { dispatch }   = this.props;
+      //   dispatch(doctorActions.getAllTestByCat(selectedOption.value));
+      // }
     };
 
     // handle click event of the Remove button
@@ -209,7 +208,7 @@ class UpcomingAppointments extends React.Component {
     // handle click event of the Add button
     handleAddClick () {
       const { inputList } = this.state;
-      inputList.push({ medicine: "", days: "", whentotake: "", dosage: "", dosage_from: "", instructions: "" })
+      inputList.push({ medicine: "", days: "", whentotake: "", dosage: "", dosage_form: "", instructions: "" })
       this.setState({inputList: inputList});
     };
 
@@ -220,8 +219,14 @@ class UpcomingAppointments extends React.Component {
           if(row.days.label){
             row.days= row.days.value
           }
+          if(row.medicine.label){
+            row.medicine= row.medicine.value.name ? row.medicine.value.name: row.medicine.value
+          }
           if(row.whentotake.label){
             row.whentotake= row.whentotake.value
+          }
+          if(row.dosage_form.label){
+            row.dosage_form= row.dosage_form.value
           }
         })
 
@@ -248,7 +253,6 @@ class UpcomingAppointments extends React.Component {
           formData.append('typing_area', this.state.typing_area);
           formData.append('followup_date', format(new Date(this.state.followup_date), 'yyyy-MM-dd'));
           formData.append('signature', this.state.signature);
-          formData.append('test_category', this.state.test_category.label);
           let test = []
           if(this.state.test.length > 0){
             this.state.test.map(row=> {
@@ -615,8 +619,7 @@ class UpcomingAppointments extends React.Component {
                       prescriptionURL = {this.props.uploaded_url}
                       medicineList = {this.props.rxList.length > 0 ? this.props.rxList[0] : [] }
                       symtomsList = {this.props.symtomsList}
-                      testCatList = {this.props.testCatList}
-                      testByCatList = {this.props.testByCatList}
+                      testByCatList = {this.props.testCatList}
                       payload = {this.state}
                     />
 
@@ -643,7 +646,7 @@ class UpcomingAppointments extends React.Component {
  */
 
 function mapStateToProps(state) {
-    const { doctorAppoinementList, doctorAppoinement, symtomsList, testCatList, testByCatList, favoriteList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete, uploaded_url } = state.doctorReducer;
+    const { doctorAppoinementList, doctorAppoinement, symtomsList, testCatList, favoriteList,pages,referStatus,loader,successMessage,sendingRequest,errorMsg, isUserNotValid, status, complete, uploaded_url } = state.doctorReducer;
     const { clinicList } = state.clinicReducer;
     const { rxList } = state.rxReducer;
     const { healthProblem, patientHistory } = state.patientReducer;
@@ -654,7 +657,6 @@ function mapStateToProps(state) {
         rxList,
         symtomsList,
         testCatList,
-        testByCatList,
         isUserNotValid,
         loader,
         clinicList,

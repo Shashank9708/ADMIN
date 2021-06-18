@@ -39,10 +39,7 @@ class AddUpcomingAppointmentsContainer extends React.Component {
               validate : {
                   name : { isValid : true, message : '' },
                   contact_no : { isValid : true, message : '' },
-                  health_problem_id : { isValid : true, message : '' },
-                  clinic_id : { isValid : true, message : '' },
-                  appointment_date : { isValid : true, message : '' },
-                  appointment_time : { isValid : true, message : '' }
+                  clinic_id : { isValid : true, message : '' }
               }
           }
       }

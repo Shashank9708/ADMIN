@@ -56,6 +56,7 @@ function PatientDetail(
                 <div className="card-body__profile-details-combo__details-section">
                   <div>Name: {patientDetail.name}</div>
                   <div>Age: {patientDetail.age ||  patientDetail.dob}</div>
+                  <div>Purpose: {patientDetail.purpose}</div>
                   <div>Health Problem: {patientDetail.health_problem_title}</div>
                   {!actionButton &&
                     <>
