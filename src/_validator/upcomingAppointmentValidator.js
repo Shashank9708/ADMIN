@@ -26,7 +26,7 @@ function is_upcomingAppointmentValid(that) {
     const { detail } = that.state.Form;
     const { validate } = that.state.Form;
     const validationState = {};
-
+    console.log("detail",detail)
     if (validator.isEmpty(validator.trim(detail.name))) {
         validationState.name = {
             isValid : false,

@@ -68,6 +68,7 @@ export class DoctorSideMenu extends React.Component {
                         <li className="nav-item"><Link className="nav-link" to="/report"><i className="fa fa-medkit" aria-hidden="true"></i> Report</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/clinic-report"><i className="fa fa-medkit" aria-hidden="true"></i> Clinic Report</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/rx"><i className="fa fa-medkit" aria-hidden="true"></i> RX</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/settings"><i className="fa fa-medkit" aria-hidden="true"></i> Settings</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/dashboard"><i className="fa fa-medkit" aria-hidden="true"></i> Health Tips</Link></li>
                         
                        

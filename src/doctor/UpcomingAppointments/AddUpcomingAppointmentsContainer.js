@@ -35,6 +35,9 @@ class AddUpcomingAppointmentsContainer extends React.Component {
                   'gender' : '',
                   'is_first_time' : '',
                   'is_followup' : '',
+                  'appointment_type' : '',
+                  'appointment_method' : '',
+                  'fees' : '',
               },
               validate : {
                   name : { isValid : true, message : '' },
@@ -85,10 +88,11 @@ class AddUpcomingAppointmentsContainer extends React.Component {
                             ...detail,
                             'name' : res.data.name,
                             'email' : res.data.email,
+                            'contact_no' : value,
                             'age' : res.data.age,
                             'gender' : res.data.gender,
                             'is_first_time' : res.data.is_first_time,
-                            'is_followup' : res.data.is_followup
+                            'is_followup' : res.data.is_followup,
                         }
                     }  
                 });
@@ -105,13 +109,13 @@ class AddUpcomingAppointmentsContainer extends React.Component {
   * @return                Nothing
   */
   handleSelectChange(selectedOption, name) {
-      // console.log('selectedOption',selectedOption, name)
         const { detail, validate } = this.state.Form;
         this.setState({
             Form : {
                 detail : {
                     ...detail,
-                    [name] : selectedOption
+                    [name] : selectedOption,
+                    fees : selectedOption.clinic_fees
                 },
                 validate : {
                     ...validate,
@@ -140,11 +144,7 @@ class AddUpcomingAppointmentsContainer extends React.Component {
         this.setState({
             Form : {
                 validate:{
-                    ...validate,
-                    'appointment_date': {
-                        isValid: true,
-                        message: ''
-                    }
+                    ...validate
                 },
                 detail : {
                     ...detail,
@@ -169,11 +169,7 @@ class AddUpcomingAppointmentsContainer extends React.Component {
         this.setState({
             Form : {
                 validate:{
-                    ...validate,
-                    'appointment_time': {
-                        isValid: true,
-                        message: ''
-                    }
+                    ...validate
                 },
                 detail : {
                     ...detail,
@@ -197,7 +193,7 @@ class AddUpcomingAppointmentsContainer extends React.Component {
   }
 
   handleSaveUpcomingAppointments() {
-    // if(upcomingAppointmentValidator.is_upcomingAppointmentValid(this)) {
+    if(upcomingAppointmentValidator.is_upcomingAppointmentValid(this)) {
         const { detail } = this.state.Form;
         // console.log(detail)
 
@@ -209,6 +205,8 @@ class AddUpcomingAppointmentsContainer extends React.Component {
                       "doc_id": JSON.parse(localStorage.user).doc_id,
                       "appointment_date": detail.appointment_date,
                       "appointment_time": detail.appointment_time,
+                      "appointment_type": detail.appointment_type,
+                      "appointment_method": detail.appointment_method,
                       'purpose' : detail.purpose,
                       'email' : detail.email,
                       'age' : detail.age,
@@ -220,7 +218,7 @@ class AddUpcomingAppointmentsContainer extends React.Component {
             // console.log("----------",data)
         const { dispatch } = this.props;
         dispatch(doctorActions.newPatientAppointment(data));
-    // }
+    }
   }
 
   /**
