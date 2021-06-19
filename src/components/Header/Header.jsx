@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom"; 
 import { configConstants } from '../../_constants';
 import logo from '../../assets/img/logo.svg'
+import './Header.scss';
 
 export const Header = (props) => {
 
@@ -11,13 +12,17 @@ export const Header = (props) => {
                   <button className="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                   </button>
-                {/* <input className="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" /> */}
-                <ul className="navbar-nav px-3">
-                    <li className="nav-item text-nowrap">
-                        <a className="nav-link" href="#" onClick={props.handle_logout} >
-                        <img className="header-profile-image" src={props.user_image ? configConstants.API_BASE_PATH+"/"+props.user_image : "https://www.michiganlutheran.org/wp-content/uploads/2019/09/placeholder-profile-sq.jpg"} /> Welcome {props.logged_in_user_name}</a>
-                    </li>
-                </ul>
+                  
+                    <ul className="navbar-nav px-3" id="top-navigation-user-logout">
+                        <li className="nav-item text-nowrap">
+                          <a className="nav-link">
+                            <img className="header-profile-image" src={props.user_image ? configConstants.API_BASE_PATH+"/"+props.user_image : "https://www.michiganlutheran.org/wp-content/uploads/2019/09/placeholder-profile-sq.jpg"} /> Welcome {props.logged_in_user_name}
+                          </a>
+                        </li>
+                        <li className="nav-item">
+                            <a href="#" alt="Logout" className="navigation-logout-link" onClick={props.handle_logout}><i class="fa fa-power-off" aria-hidden="true"></i></a>
+                        </li>                    
+                    </ul>
             </nav>
           ); 
 }

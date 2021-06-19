@@ -1,0 +1,14 @@
+@import "../../assets/scss/Variable";
+
+#top-navigation-user-logout {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  .navigation-logout-link {
+    color: $fill-white;
+    margin-left: 15px;
+    &:hover {
+      color: $fill-red;
+    }
+  }
+}
